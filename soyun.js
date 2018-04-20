@@ -1,27 +1,33 @@
 const Discord = require("discord.js");
 const Twitter = require("twitter");
-const config = require("./config.json");
-const emitterDiscord = require('events');
-
-const hookTwitter = new Discord.WebhookClient(config.DISCORD_WEBHOOK_ID, config.DISCORD_WEBHOOK_TOKEN);
+const secret = require("./secret.json");
 
 const clientDiscord = new Discord.Client();
+const hookTwitter = new Discord.WebhookClient(secret.DISCORD_WEBHOOK_ID, secret.DISCORD_WEBHOOK_TOKEN);
 const clientTwitter = new Twitter({
-	consumer_key: config.TWITTER_CONSUMER_KEY,
-	consumer_secret: config.TWITTER_CONSUMER_SECRET,
-	access_token_key: config.TWITTER_ACCESS_TOKEN_KEY,
-	access_token_secret: config.TWITTER_ACCESS_TOKEN_SECRET
+	consumer_key: secret.TWITTER_CONSUMER_KEY,
+	consumer_secret: secret.TWITTER_CONSUMER_SECRET,
+	access_token_key: secret.TWITTER_ACCESS_TOKEN_KEY,
+	access_token_secret: secret.TWITTER_ACCESS_TOKEN_SECRET
   });
 
 // Default class list
 var classArr = ["blade master", "destroyer", "summoner", "force master", "kung fu master", "assassin", "blade dancer", "warlock", "soul fighter", "gunslinger"];
+
+// Querry payload status
+var payloadStatus = "rejected";
+var querryStatus = false;
+
+var defaultMemberGate = "welcome";
+var defaultTextChannel = "random-chats";
+
 // Twitter hook variables
 var twtUsername;
+var twtScreenName
 var twtText;
 var twtAvatar;
 var twtCreatedAt;
 var twtTimestamp;
-
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
@@ -38,7 +44,7 @@ clientDiscord.on("guildMemberAdd", (member) => {
 	member.addRole(member.guild.roles.find("name", "cricket"));
 	
 	// Welcoming message and guide to join
-	member.guild.channels.find("name", "welcome").send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres a one thing you need to do before you can talk with others, can you tell me your in-game nickname and your main class? to do that please write ***!join "username here" "your class here"***, here is an example: ***!join "Jinsoyun" "Blade Master"***, thank you! ^^ ');
+	member.guild.channels.find("name", defaultMemberGate).send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres a one thing you need to do before you can talk with others, can you tell me your in-game nickname and your main class? to do that please write ***!join "username here" "your class here"***, here is an example: ***!join "Jinsoyun" "Blade Master"***, thank you! ^^ \nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
 	console.log(" [ "+Date.now()+" ] > "+member.user.username+" has joined");
@@ -61,7 +67,7 @@ clientDiscord.on("message", (message) => {
 
 				switch(soyunQuerry[0]){
 					case 'help':
-						message.channel.send('Here is some stuff you can ask me to do:\n\n> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry ;) )\n> For changing class you can do `!class "desired class"`\n\nIf you need more assistance you can ***@mention*** available officers');
+						message.channel.send('Here is some stuff you can ask me to do:\n\n> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n\nIf you need sone assistance you can **@mention** or **DM** availble officers');
 					break;
 
 					default:
@@ -79,23 +85,39 @@ clientDiscord.on("message", (message) => {
 				var joinClass = (joinQuerry[3]);
 								
 				joinClass = joinClass.toLowerCase(); // Converting class value to lower case so input wont be missmatched
+				
+				// Checking the class input
+				for(i = 0; i < classArr.length;){
+					// Class input verification (inefficient af)
+					if(joinClass == classArr[i]){
+						querryStatus = true;
+						break;
+					};
+					i++
+				};
 
-				// Convert to capitalize to make it easy and 'prettier'
-				joinUsername = joinUsername.replace(/\b\w/g, l => l.toUpperCase());
-				
-				// Setting user role to match the user class
-				message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", joinClass));
-				// Adding "member" role so user can talk
-				message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", "member"));
-				// Removing "cricket" role
-				message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", "cricket"));
-				
-				// Setting message author username (guild owner or lower)
-				message.guild.members.get(message.author.id).setNickname(joinUsername);
+				// Checking the verification
+				if(querryStatus == true){
+					// Convert to capitalize to make it easy and 'prettier'
+					joinUsername = joinUsername.replace(/\b\w/g, l => l.toUpperCase());
+					
+					// Setting user role to match the user class
+					message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", joinClass));
+					// Adding "member" role so user can talk
+					message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", "member"));
+					// Removing "cricket" role
+					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", "cricket"));
+					
+					// Setting message author username (guild owner or lower)
+					message.guild.members.get(message.author.id).setNickname(joinUsername);
 
-				// Welcoming message on general channel
-				clientDiscord.channels.find("name", "general").send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
-				
+					// Welcoming message on general channel
+					clientDiscord.channels.find("name", defaultTextChannel).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+				}else{
+					// Telling them whats wrong
+					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
+				}
+
 				// Console logging
 				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
 			break;
@@ -119,6 +141,7 @@ clientDiscord.on("message", (message) => {
 				var classQuerry = message.toString().substring(1).split('"');
 				var classValue = (classQuerry[1]);
 				var classUserRolesArr = message.author.role; // Array of author roles
+				var querryStatus;
 				var i; // for loop, ignore
 
 				classValue = classValue.toLowerCase(); // Converting class value to lower case so input wont be missmatched
@@ -126,30 +149,39 @@ clientDiscord.on("message", (message) => {
 				// Removing user current class
 				// I know this is stupid way to do it, but it have to do for now
 				for(i = 0; i < classArr.length;){
+					// Class input verification (inefficient af)
+					if(classValue == classArr[i]){
+						querryStatus = true;
+						break;
+					};
 					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", classArr[i]));
 					i++
 				};
 
-				// Adding new role to user according their command
-				message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", classValue));
+				// Checking the verification
+				if(querryStatus == true){
+					// Adding new role to user according their command
+					message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", classValue));
 
-				// Output so user know it class changed
-				message.channel.send("Your class changed to **"+classValue+"**");
-
+					// Telling the user class has been changed
+					message.channel.send("Your class changed to **"+classValue+"**");
+				}else{
+					// Telling them whats wrong
+					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
+				}
 				// Console logging
 				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
 			break;
 
 			case 'twcon':
-				clientDiscord.channels.find("name", "lab").send("triggered, payload:\n `"+twtUsername+"`\n `"+twtText+"`\n `"+twtTimestamp+"`\n `"+twtAvatar+"`");
-				hookTwitter.send("["+twtUsername+" - "+twtCreatedAt+" UTC]\n`"+twtText+"`");
+				hookTwitter.send("["+twtUsername+" - @"+twtScreenName+"]\n`"+twtText+"`");
 
-				/* Got limited, moved to comment for now
+				/* Moved to comment, still cant get it working
 				hookTwitter.sendSlackMessage({
 					"attachments": 	[{
 							"color": "#ffa500",
 							"title": twtUsername,
-							"title_link": "https://twitter.com/BladeAndSoulOps",
+							"title_link": "https://twitter.com/"+twtScreenName,
 							"text": twtText,
 							"footer": twtUsername,
 							"footer_icon": twtAvatar,
@@ -159,30 +191,45 @@ clientDiscord.on("message", (message) => {
 				*/
 
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > !twcon happened "+message);
+				console.log(" [ "+Date.now()+" ] > !twcon triggered, "+message);
+			break;
+
+			case 'setup':
+				console.log(" [ "+Date.now()+" ] > !setup triggered, "+message);
+				for(i = 0; i < classArr.length;){
+					message.guild.createRole({
+						name: classArr[i]
+					}).catch(console.error);
+					i++;
+					console.log(" [ "+Date.now()+" ] > "+classArr[i]+" role created");
+				};
 			break;
          }
      }
 });
 
 // Bot token here
-clientDiscord.login(config.DISCORD_APP_TOKEN);
+clientDiscord.login(secret.DISCORD_APP_TOKEN);
 
 // Twitter hook
 // Getting user tweet, parameter used: user id, e.g: "12345". You can get user id via http://gettwitterid.com/
-clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  function(stream) {
+
+clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID[0], follow: secret.TWITTER_STREAM_ID[1]},  function(stream) {
 	stream.on('data', function(tweet) {
 		// Filtering data so it only getting data from specified user
-		if(tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME){
+		if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[1]){
+			// Payload loading
 			twtUsername = tweet.user.name;
+			twtScreenName = tweet.user.screen_name;
 			twtText = tweet.text;
 			twtAvatar = tweet.user.profile_image_url;
 			twtCreatedAt = tweet.created_at;
 			twtTimestamp = tweet.timestamp_ms;
+			payloadStatus = "received"
 
 			clientDiscord.emit("message", "!twcon");
 		}
-		console.log(" [ "+Date.now()+" ] > Tweet recived from "+tweet.user.screen_name);
+		console.log(" [ "+Date.now()+" ] > Tweet recived from "+tweet.user.screen_name+", status: "+payloadStatus);
 	});
   
 	stream.on('error', function(error) {
