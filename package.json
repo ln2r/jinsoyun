@@ -1,15 +1,16 @@
 {
-  "name": "ln2r-test",
+  "name": "jinsoyun-rc",
   "version": "1.0.0",
-  "description": "",
+  "description": "Grumpy Butts very own discord bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "ln2r",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.3.2"
+    "discord.js": "^11.3.2",
+    "twitter": "^1.7.1"
   }
 }
