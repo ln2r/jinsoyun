@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const Twitter = require("twitter");
 const secret = require("./secret.json");
+const config = require("./config.json");
 
 const clientDiscord = new Discord.Client();
 const hookTwitter = new Discord.WebhookClient(secret.DISCORD_WEBHOOK_ID, secret.DISCORD_WEBHOOK_TOKEN);
@@ -44,7 +45,7 @@ clientDiscord.on("guildMemberAdd", (member) => {
 	member.addRole(member.guild.roles.find("name", "cricket"));
 	
 	// Welcoming message and guide to join
-	member.guild.channels.find("name", defaultMemberGate).send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres a one thing you need to do before you can talk with others, can you tell me your in-game nickname and your main class? to do that please write ***!join "username here" "your class here"***, here is an example: ***!join "Jinsoyun" "Blade Master"***, thank you! ^^ \nIf you need some assistance you can **@mention** or **DM** available officers');
+	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres a one thing you need to do before you can talk with others, can you tell me your in-game nickname and your main class? to do that please write ***!join "username here" "your class here"***, here is an example: ***!join "Jinsoyun" "Blade Master"***, thank you! ^^ \nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
 	console.log(" [ "+Date.now()+" ] > "+member.user.username+" has joined");
@@ -112,7 +113,7 @@ clientDiscord.on("message", (message) => {
 					message.guild.members.get(message.author.id).setNickname(joinUsername);
 
 					// Welcoming message on general channel
-					clientDiscord.channels.find("name", defaultTextChannel).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+					clientDiscord.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 				}else{
 					// Telling them whats wrong
 					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
