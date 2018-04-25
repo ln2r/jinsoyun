@@ -222,7 +222,7 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN);
 
 // Twitter hook
 // Getting user tweet, parameter used: user id, e.g: "3521186773". You can get user id via http://gettwitterid.com/
-clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID[0], follow: secret.TWITTER_STREAM_ID[1]},  function(stream) {
+clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  function(stream) {
 	stream.on('data', function(tweet) {
 		// Filtering data so it only getting data from specified user
 		if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[1]){
@@ -236,7 +236,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID[0], fo
 			payloadStatus = "received"
 
 			// Making the color different for different user
-			if(tweet.user.screen_name == TWITTER_STREAM_SCREENNAME[0]){
+			if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0]){
 				twtColor = 16753920;
 			}else{
 				twtColor = 1879160;
