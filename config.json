@@ -1,4 +1,5 @@
 {
     "DEFAULT_TEXT_CHANNEL" : "random-chats",
-    "DEFAULT_MEMBER_GATE" : "welcome"
+    "DEFAULT_MEMBER_GATE" : "welcome",
+    "DEFAULT_NEWS_CHANNEL": "news"
 }

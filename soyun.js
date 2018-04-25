@@ -4,7 +4,6 @@ const secret = require("./secret.json");
 const config = require("./config.json");
 
 const clientDiscord = new Discord.Client();
-const hookTwitter = new Discord.WebhookClient(secret.DISCORD_WEBHOOK_ID, secret.DISCORD_WEBHOOK_TOKEN);
 const clientTwitter = new Twitter({
 	consumer_key: secret.TWITTER_CONSUMER_KEY,
 	consumer_secret: secret.TWITTER_CONSUMER_SECRET,
@@ -29,6 +28,7 @@ var twtText;
 var twtAvatar;
 var twtCreatedAt;
 var twtTimestamp;
+var twtColor;
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
@@ -114,13 +114,17 @@ clientDiscord.on("message", (message) => {
 
 					// Welcoming message on general channel
 					clientDiscord.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+					payloadStatus = "received"
+					querryStatus = false;
 				}else{
 					// Telling them whats wrong
 					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
+					querryStatus = false;
 				}
 
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				payloadStatus = "rejected";
 			break;
 			
 			// Username change
@@ -166,30 +170,34 @@ clientDiscord.on("message", (message) => {
 
 					// Telling the user class has been changed
 					message.channel.send("Your class changed to **"+classValue+"**");
+					payloadStatus = "received"
+					querryStatus = false;
 				}else{
 					// Telling them whats wrong
 					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
+					querryStatus = false;
 				}
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				payloadStatus = "rejected";
 			break;
 
 			case 'twcon':
-				hookTwitter.send("["+twtUsername+" - @"+twtScreenName+"]\n`"+twtText+"`");
-
-				/* Moved to comment, still cant get it working
-				hookTwitter.sendSlackMessage({
-					"attachments": 	[{
-							"color": "#ffa500",
-							"title": twtUsername,
-							"title_link": "https://twitter.com/"+twtScreenName,
-							"text": twtText,
-							"footer": twtUsername,
-							"footer_icon": twtAvatar,
-							"ts": twtTimestamp
-					}]
-				}).catch(console.error);
-				*/
+				clientDiscord.channels.find("name", config.DEFAULT_NEWS_CHANNEL).send({
+					"embed":{
+						"color": twtColor,
+						"timestamp" : new Date(),
+						"description": twtText,
+						"author":{
+							"name": twtUsername,
+							"url": "https://twitter.com/"+twtScreenName,
+						},
+						"footer":{
+							"text": twtUsername,
+							"icon_url": twtAvatar
+						}
+					}
+				});
 
 				// Console logging
 				console.log(" [ "+Date.now()+" ] > !twcon triggered, "+message);
@@ -213,24 +221,32 @@ clientDiscord.on("message", (message) => {
 clientDiscord.login(secret.DISCORD_APP_TOKEN);
 
 // Twitter hook
-// Getting user tweet, parameter used: user id, e.g: "12345". You can get user id via http://gettwitterid.com/
-
+// Getting user tweet, parameter used: user id, e.g: "3521186773". You can get user id via http://gettwitterid.com/
 clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID[0], follow: secret.TWITTER_STREAM_ID[1]},  function(stream) {
 	stream.on('data', function(tweet) {
 		// Filtering data so it only getting data from specified user
 		if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[1]){
 			// Payload loading
-			twtUsername = tweet.user.name;
-			twtScreenName = tweet.user.screen_name;
-			twtText = tweet.text;
-			twtAvatar = tweet.user.profile_image_url;
-			twtCreatedAt = tweet.created_at;
-			twtTimestamp = tweet.timestamp_ms;
+			twtUsername = tweet.user.name.toString();
+			twtScreenName = tweet.user.screen_name.toString();
+			twtText = tweet.text.toString();
+			twtAvatar = tweet.user.profile_image_url.toString();
+			twtCreatedAt = tweet.created_at.toString();
+			twtTimestamp = tweet.timestamp_ms.toString();
 			payloadStatus = "received"
 
+			// Making the color different for different user
+			if(tweet.user.screen_name == TWITTER_STREAM_SCREENNAME[0]){
+				twtColor = 16753920;
+			}else{
+				twtColor = 1879160;
+			};
+
+			// Tringgering the !twcon so the bot will write a message with content from twitter
 			clientDiscord.emit("message", "!twcon");
 		}
 		console.log(" [ "+Date.now()+" ] > Tweet recived from "+tweet.user.screen_name+", status: "+payloadStatus);
+		payloadStatus = "rejected";
 	});
   
 	stream.on('error', function(error) {
