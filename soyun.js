@@ -18,9 +18,6 @@ var classArr = ["blade master", "destroyer", "summoner", "force master", "kung f
 var payloadStatus = "rejected";
 var querryStatus = false;
 
-var defaultMemberGate = "welcome";
-var defaultTextChannel = "random-chats";
-
 // Twitter hook variables
 var twtUsername;
 var twtScreenName
@@ -29,6 +26,7 @@ var twtAvatar;
 var twtCreatedAt;
 var twtTimestamp;
 var twtColor;
+var twtFilter;
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
@@ -225,25 +223,33 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN);
 clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  function(stream) {
 	stream.on('data', function(tweet) {
 		// Filtering data so it only getting data from specified user
-		if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[1]){
-			// Payload loading
-			twtUsername = tweet.user.name.toString();
-			twtScreenName = tweet.user.screen_name.toString();
-			twtText = tweet.text.toString();
-			twtAvatar = tweet.user.profile_image_url.toString();
-			twtCreatedAt = tweet.created_at.toString();
-			twtTimestamp = tweet.timestamp_ms.toString();
-			payloadStatus = "received"
+		if((tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[1]) || (tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[2])){
+			// Variable for filtering
+			twtFilter = tweet.text.toString().substring(0).split(" ");
 
-			// Making the color different for different user
-			if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0]){
-				twtColor = 16753920;
-			}else{
-				twtColor = 1879160;
-			};
+			// Filtering the "RT" and "mention" stuff
+			if(twtFilter[0] == "RT" || twtFilter[0].charAt(0) == "@"){
+				payloadStatus = "rejected";
+			}else{		
+				// Payload loading
+				twtUsername = tweet.user.name.toString();
+				twtScreenName = tweet.user.screen_name.toString();
+				twtText = tweet.text.toString();
+				twtAvatar = tweet.user.profile_image_url.toString();
+				twtCreatedAt = tweet.created_at.toString();
+				twtTimestamp = tweet.timestamp_ms.toString();
+				payloadStatus = "received"
 
-			// Tringgering the !twcon so the bot will write a message with content from twitter
-			clientDiscord.emit("message", "!twcon");
+				// Making the color different for different user
+				if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0]){
+					twtColor = 16753920;
+				}else{
+					twtColor = 1879160;
+				};
+
+				// Tringgering the !twcon so the bot will write a message with content from twitter
+				clientDiscord.emit("message", "!twcon");
+			}
 		}
 		console.log(" [ "+Date.now()+" ] > Tweet recived from "+tweet.user.screen_name+", status: "+payloadStatus);
 		payloadStatus = "rejected";
