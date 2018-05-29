@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const Twitter = require("twitter");
 const secret = require("./secret.json");
 const config = require("./config.json");
+const dc = require("./daily-challenges.json");
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -32,7 +33,7 @@ var twtFilter;
 clientDiscord.on("ready", () => {
 	console.log(" [ "+Date.now()+" ] > bot is alive and ready for command(s)");
 	
-	clientDiscord.user.setUsername("Jinsoyun - Beta");
+	clientDiscord.user.setUsername("Jinsoyun");
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 		.catch(console.error);
 });
@@ -43,11 +44,11 @@ clientDiscord.on("guildMemberAdd", (member) => {
 	member.addRole(member.guild.roles.find("name", "cricket"));
 	
 	// Welcoming message and guide to join
-	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres a one thing you need to do before you can talk with others, can you tell me your in-game nickname and your main class? to do that please write ***!join "username here" "your class here"***, here is an example: ***!join "Jinsoyun" "Blade Master"***, thank you! ^^ \nIf you need some assistance you can **@mention** or **DM** available officers');
+	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
 	console.log(" [ "+Date.now()+" ] > "+member.user.username+" has joined");
-	console.log(" [ "+Date.now()+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !join");
+	console.log(" [ "+Date.now()+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
 });
 
 // User commands
@@ -66,7 +67,7 @@ clientDiscord.on("message", (message) => {
 
 				switch(soyunQuerry[0]){
 					case 'help':
-						message.channel.send('Here is some stuff you can ask me to do:\n\n> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n\nIf you need sone assistance you can **@mention** or **DM** availble officers');
+						message.channel.send('Here is some stuff you can ask me to do:\n\n> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!dc`\n\nIf you need some assistance you can **@mention** or **DM** availble officers');
 					break;
 
 					default:
@@ -78,7 +79,7 @@ clientDiscord.on("message", (message) => {
             break;
 			
 			// Server join = username change and role add
-			case 'join':
+			case 'reg':
 				var joinQuerry = message.toString().substring(1).split('"');
 				var joinUsername = (joinQuerry[1]);
 				var joinClass = (joinQuerry[3]);
@@ -111,8 +112,8 @@ clientDiscord.on("message", (message) => {
 					message.guild.members.get(message.author.id).setNickname(joinUsername);
 
 					// Welcoming message on general channel
-					clientDiscord.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
-					payloadStatus = "received"
+					message.guild.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+					payloadStatus = "received";
 					querryStatus = false;
 				}else{
 					// Telling them whats wrong
@@ -131,6 +132,8 @@ clientDiscord.on("message", (message) => {
 				var usernameValue = (usernameQuerry[1]);
 				var usernameTemp = message.author.username; // temporary username storage for logging
 				
+				usernameValue = usernameValue.replace(/\b\w/g, l => l.toUpperCase());
+
 				// Changing message author username
 				message.guild.members.get(message.author.id).setNickname(usernameValue);
 				message.channel.send("Your username changed to "+usernameValue);
@@ -168,7 +171,7 @@ clientDiscord.on("message", (message) => {
 
 					// Telling the user class has been changed
 					message.channel.send("Your class changed to **"+classValue+"**");
-					payloadStatus = "received"
+					payloadStatus = "received";
 					querryStatus = false;
 				}else{
 					// Telling them whats wrong
@@ -201,15 +204,142 @@ clientDiscord.on("message", (message) => {
 				console.log(" [ "+Date.now()+" ] > !twcon triggered, "+message);
 			break;
 
+			// First time setup (making roles and necesarry channels)
 			case 'setup':
+				// Console logging
 				console.log(" [ "+Date.now()+" ] > !setup triggered, "+message);
+
+				// Making the roles with class array as reference
 				for(i = 0; i < classArr.length;){
 					message.guild.createRole({
 						name: classArr[i]
 					}).catch(console.error);
 					i++;
+					// Console logging
 					console.log(" [ "+Date.now()+" ] > "+classArr[i]+" role created");
 				};
+
+				// Making "news" channel
+				message.guild.createChannel(config.DEFAULT_NEWS_CHANNEL, "text");
+				// Console logging
+				console.log(" [ "+Date.now()+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
+			break;
+
+			// Testing channel making (remove for release)
+			case 'chmake':
+				message.guild.createChannel("test-channel", "text");
+			break;
+			
+			// Today daily challenge
+			case 'daily':
+				// Getting the current date
+				var dcDay = new Date();
+
+				var dcColor;
+				var dcQuests;
+
+				var dcReward1;
+				var dcReward2;
+				var dcReward3;
+				var dcReward4;
+
+				// Checking the day and inserting the payload
+				switch(dcDay.getUTCDay()){
+					case 0:
+						dcColor = dc.sunday.color;
+						dcQuests = dc.sunday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.sunday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.sunday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.sunday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.sunday.rewards[3]);
+
+						payloadStatus = "received";
+					break;
+
+					case 1:
+						dcColor = dc.monday.color;
+						dcQuests = dc.monday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.monday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.monday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.monday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.monday.rewards[3]);
+
+						payloadStatus = "received";
+					break;
+					
+					case 2:
+						dcColor = dc.tuesday.color;
+						dcQuests = dc.tuesday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.tuesday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.tuesday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.tuesday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.tuesday.rewards[3]);
+
+						payloadStatus = "received";
+					break;
+
+					case 3:
+						dcColor = dc.wednesday.color;
+						dcQuests = dc.wednesday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.wednesday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.wednesday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.wednesday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.wednesday.rewards[3]);
+
+						payloadStatus = "received";
+					break;
+
+					case 4:
+						dcColor = dc.thursday.color;
+						dcQuests = dc.thursday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.thursday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.thursday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.thursday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.thursday.rewards[3]);
+
+						payloadStatus = "received";
+					break;
+
+					case 5:
+						dcColor = dc.friday.color;
+						dcQuests = dc.friday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.friday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.friday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.friday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.friday.rewards[3]);
+
+						payloadStatus = "received";
+					break;
+
+					case 6:
+						dcColor = dc.saturday.color;
+						dcQuests = dc.saturday.quests;
+						dcReward1 = clientDiscord.emojis.find("name", dc.saturday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", dc.saturday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", dc.saturday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", dc.saturday.rewards[3]);
+
+						payloadStatus = "received";			
+					break;
+				}
+				
+				// Sending out the payload
+				message.channel.send("Today Daily Challenges", {
+					"embed":{
+						"color": dcColor,
+						"description": dcQuests
+					}
+				}).then(function(message){
+					// Showing rewards as "reactions"
+					message.react(dcReward1);
+					message.react(dcReward2);
+					message.react(dcReward3);
+					message.react(dcReward4);
+				}).catch(console.error);
+
+				// Console logging
+				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				payloadStatus = "rejected";
 			break;
          }
      }
@@ -251,6 +381,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 				clientDiscord.emit("message", "!twcon");
 			}
 		}
+		// Console logging
 		console.log(" [ "+Date.now()+" ] > Tweet recived from "+tweet.user.screen_name+", status: "+payloadStatus);
 		payloadStatus = "rejected";
 	});

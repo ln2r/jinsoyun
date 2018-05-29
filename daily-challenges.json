@@ -1,0 +1,37 @@
+{
+    "monday":{
+        "rewards": ["treasurechest", "rewardchest", "voidstone", "pristineoil"],
+        "quests": "**In the Dead of Winter**\nCold Storage\n\n**The Umbral Mark**\nGloomdross Incursion\n\n**The Bonds that Bind Us**\nDesolate Tomb\n\n**Fathers Wounds**\nEbondrake Citadel\n\n**Horrors of the Hollow**\nHollow's Heart\n\n**Mastering the Marauders**\nOutlaw Island\n\n**Tag Match Win**\nArena Match\n\n**One Win in the Beluga Lagoon**\nBeluga Lagoon\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 16776960
+    },
+    "tuesday":{
+        "rewards": ["treasurechest", "rewardchest", "voidstone", "pristineoil"],
+        "quests": "**Rose from the Past**\nHeaven's Mandate\n\n**Zakhan's Blade**\nEbondrake Citadel\n\n**Gatecrasher at the Naryu Sanctum**\nNaryu Sanctum\n\n**Meeting the Mechanizer**\nIrontech Forge\n\n**Rolling in the Deeps**\nDrowning Deeps\n\n**Three Wins in the Tower**\nTower of Infinity\n\n**One on One**\nArena Match\n\n**One Whirlwind Victory**\nWhirlwind Valley\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 16761035
+    },
+    "wednesday":{
+        "rewards": ["treasurechest", "rewardchest", "voidstone", "pristineoil"],
+        "quests": "**Asura's Return**\nSogun's Lament\n\n**The Bonds that Bind Us**\nDesolate Tomb\n\n**Roar of the Furnace**\nNaryu Foundry\n\n**Meeting the Mechanizer**\nIrontech Forge\n\n**Live by the Sword**\nRansacked Treasury\n\n**A Raucous Reunion**\nMushin's Tower - 20th Floor\n\n**Tag Match Win**\nArena Match\n\n**Shot at Stardom**\nNova Core\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 65280
+    },
+    "thursday":{
+        "rewards": ["treasurechest", "rewardchest", "ravenfeather", "pristineoil"],
+        "quests": "**In the Dead of Winter**\nCold Storage\n\n**Roar of the Furnace**\nNaryu Foundry\n\n**Gatecrasher at the Naryu Sanctum**\nNaryu Sanctum\n\n**The Leader of the Pack**\nStarstone Mines\n\n**Mastering the Marauders**\nOutlaw Island\n\n**Mastering the Marauders**\nOutlaw Island\n\n**One on One**\nArena Match\n\n**One Win in the Beluga Lagoon**\nBeluga Lagoon\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 16744192
+    },
+    "friday":{
+        "rewards": ["treasurechest", "rewardchest", "ravenfeather", "pristineoil"],
+        "quests": "**Rose from the Past**\nHeaven's Mandate\n\n**Frozen Phantasm**\nAvalanche Den\n\n**Zakhan's Blade**\nEbondrake Citadel\n\n**Fathers Wounds**\nEbondrake Citadel\n\n**Horrors of the Hollow**\nHollow's Heart\n\n**A Raucous Reunion**\nMushin's Tower - 20th Floor\n\n**Tag Match Win**\nArena Match\n\n**One Whirlwind Victory**\nWhirlwind Valley\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 34047
+    },
+    "saturday":{
+        "rewards": ["treasurechest", "rewardchest", "blackstonefragment", "pristineoil"],
+        "quests": "**Phantom Waves**\nThe Shattered Masts\n\n**The Bound that Bind Us**\nDesolate Tomb\n\n**The Bonds that Bind Us**\nDesolate Tomb\n\n**Gatecrasher at the Naryu Sanctum**\nNaryu Sanctum\n\n**The Leader of the Pack**\nStarstone Mines\n\n**Live by the Sword**\nRansacked Treasury\n\n**Mastering the Marauders**\nOutlaw Island\n\n**Shot at Stardom**\nNova Core\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 8388736
+    },
+    "sunday":{
+        "rewards": ["treasurechest", "rewardchest", "hivequeenwing", "pristineoil"],
+        "quests": "**Ice in Their Veins**\nLair of the Frozen Fang\n\n**Zakhan's Blade**\nEbondrake Citadel\n\n**Roar of the Furnace**\nNaryu Foundry\n\n**Meeting the Mechanizer**\nIrontech Forge\n\n**Fathers Wounds**\nEbondrake Lair\n\n**Rolling in the Deeps**\nDrowning Deeps\n\n**A Raucous Reunion**\nMushin's Tower - 20th Floor\n\n**Three Win in the Tower**\nTower of Infinity\n\n**Brawl in the Basin**\nCelestial Basin\n\n**The Dragon's Lair**\nKoldrak's Lair",
+        "color": 16711680
+    }
+}
