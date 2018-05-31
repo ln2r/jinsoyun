@@ -1,8 +1,10 @@
 const Discord = require("discord.js");
 const Twitter = require("twitter");
+const ontime = require("ontime");
 const secret = require("./secret.json");
 const config = require("./config.json");
-const dc = require("./daily-challenges.json");
+const daily = require("./daily-challenges.json");
+const koldrakTime = require("./koldrak.json")
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -10,7 +12,7 @@ const clientTwitter = new Twitter({
 	consumer_secret: secret.TWITTER_CONSUMER_SECRET,
 	access_token_key: secret.TWITTER_ACCESS_TOKEN_KEY,
 	access_token_secret: secret.TWITTER_ACCESS_TOKEN_SECRET
-  });
+});
 
 // Default class list
 var classArr = ["blade master", "destroyer", "summoner", "force master", "kung fu master", "assassin", "blade dancer", "warlock", "soul fighter", "gunslinger"];
@@ -62,12 +64,17 @@ clientDiscord.on("message", (message) => {
             // Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
+				var soyunHelpTxt = '> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!daily` or `!daily tomorrow` for the one from tomorrow\n> For checking next **Koldraks Lair** you can do `!koldrak`\n';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
 				switch(soyunQuerry[0]){
 					case 'help':
-						message.channel.send('Here is some stuff you can ask me to do:\n\n> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!dc`\n\nIf you need some assistance you can **@mention** or **DM** availble officers');
+						if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+							soyunHelpTxt = soyunHelpTxt + '\n**Admin Only**\n> For making notification you can do `!say "title" "content"`\n';
+						};
+
+						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\nIf you need some assistance you can **@mention** or **DM** available **officers**.");
 					break;
 
 					default:
@@ -130,7 +137,6 @@ clientDiscord.on("message", (message) => {
 			case 'username':
 				var usernameQuerry = message.toString().substring(1).split('"');
 				var usernameValue = (usernameQuerry[1]);
-				var usernameTemp = message.author.username; // temporary username storage for logging
 				
 				usernameValue = usernameValue.replace(/\b\w/g, l => l.toUpperCase());
 
@@ -184,165 +190,312 @@ clientDiscord.on("message", (message) => {
 			break;
 
 			case 'twcon':
-				clientDiscord.channels.find("name", config.DEFAULT_NEWS_CHANNEL).send({
-					"embed":{
-						"color": twtColor,
-						"timestamp" : new Date(),
-						"description": twtText,
-						"author":{
-							"name": twtUsername,
-							"url": "https://twitter.com/"+twtScreenName,
-						},
-						"footer":{
-							"text": twtUsername,
-							"icon_url": twtAvatar
+				// Twitter's tweet output
+				clientDiscord.guilds.map((guild) => {
+					let found = 0;
+					guild.channels.map((ch) =>{
+						if(found == 0){
+							if(ch.name == config.DEFAULT_NEWS_CHANNEL){
+								ch.send({
+									"embed":{
+										"color": twtColor,
+										"timestamp" : new Date(),
+										"description": twtText,
+										"author":{
+											"name": twtUsername,
+											"url": "https://twitter.com/"+twtScreenName,
+										},
+										"footer":{
+											"text": twtUsername,
+											"icon_url": twtAvatar
+										}
+									}
+								});
+								found = 1;
+							}
 						}
-					}
+					});
 				});
-
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > !twcon triggered, "+message);
+				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
 			break;
+			
+			// Writing message via bot for announcement or notice, Admin only
+			case 'say':
+				if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+					var sayQuerry = message.toString().substring(1).split('"');
 
-			// First time setup (making roles and necesarry channels)
-			case 'setup':
-				// Console logging
-				console.log(" [ "+Date.now()+" ] > !setup triggered, "+message);
+					var sayTitle = (sayQuerry[1]);
+						sayTitle = sayTitle.replace(/\b\w/g, l => l.toUpperCase());
 
-				// Making the roles with class array as reference
-				for(i = 0; i < classArr.length;){
-					message.guild.createRole({
-						name: classArr[i]
-					}).catch(console.error);
-					i++;
-					// Console logging
-					console.log(" [ "+Date.now()+" ] > "+classArr[i]+" role created");
+						// Default title
+						if(sayTitle == ""){
+							sayTitle = "Announcement";
+						}
+
+					// Writing the content
+					message.guild.channels.find("name", config.DEFAULT_NEWS_CHANNEL).send({
+						"embed":{
+							"color": 16753920,
+							"timestamp" : new Date(),
+							"description": sayQuerry[3],
+							"author":{
+								"name": sayTitle,
+							},
+							"footer":{
+								"text": message.author.username,
+								"icon_url": message.author.avatarURL
+							}
+						}
+					});
+					payloadStatus = "recieved";
 				};
-
-				// Making "news" channel
-				message.guild.createChannel(config.DEFAULT_NEWS_CHANNEL, "text");
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
+				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				payloadStatus = "rejected";
 			break;
 
-			// Testing channel making (remove for release)
-			case 'chmake':
-				message.guild.createChannel("test-channel", "text");
+			// First time setup (making roles and necesarry channels), Admin only
+			case 'setup':
+				if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+					// Making the roles with class array as reference
+					for(i = 0; i < classArr.length;){
+						message.guild.createRole({
+							name: classArr[i]
+						}).catch(console.error);
+						i++;
+						// Console logging
+						console.log(" [ "+Date.now()+" ] > "+classArr[i]+" role created");
+					};
+
+					// Making "news" channel
+					message.guild.createChannel(config.DEFAULT_NEWS_CHANNEL, "text");
+					// Console logging
+					console.log(" [ "+Date.now()+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
+					
+					payloadStatus = "recieved";
+				};	
+				// Console logging
+				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				payloadStatus = "rejected";
 			break;
 			
 			// Today daily challenge
 			case 'daily':
 				// Getting the current date
 				var dcDay = new Date();
+				var dcDay = dcDay.getUTCDay();
 
 				var dcColor;
 				var dcQuests;
 
-				var dcReward1;
-				var dcReward2;
-				var dcReward3;
-				var dcReward4;
+				var dcRewards = [];
+
+				var dailyQuerry = message.toString().substring(1).split(' ');
+
+				dailyQuerry = dailyQuerry.splice(1);
+				// For checking tomorrow daily
+				switch(dailyQuerry[0]){
+					case 'tomorrow':
+						dcDay = dcDay + 1;
+					break;
+
+					default:
+						dcDay = dcDay;
+				};
 
 				// Checking the day and inserting the payload
-				switch(dcDay.getUTCDay()){
+				switch(dcDay){
 					case 0:
-						dcColor = dc.sunday.color;
-						dcQuests = dc.sunday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.sunday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.sunday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.sunday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.sunday.rewards[3]);
+						// Setting the color
+						dcColor = daily.sunday.color;
+						// Loading the quests name and location
+						dcQuests = daily.sunday.quests;
+						// Loading rewards by searching the id of rewards item emoji
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.sunday.rewards[i]);
+							i++;
+						}
 
+						/* Backup
+						dcReward1 = clientDiscord.emojis.find("name", daily.sunday.rewards[0]);
+						dcReward2 = clientDiscord.emojis.find("name", daily.sunday.rewards[1]);
+						dcReward3 = clientDiscord.emojis.find("name", daily.sunday.rewards[2]);
+						dcReward4 = clientDiscord.emojis.find("name", daily.sunday.rewards[3]);
+						*/
+
+						// For logging
 						payloadStatus = "received";
 					break;
 
 					case 1:
-						dcColor = dc.monday.color;
-						dcQuests = dc.monday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.monday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.monday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.monday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.monday.rewards[3]);
+						dcColor = daily.monday.color;
+						dcQuests = daily.monday.quests;
+
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.monday.rewards[i]);
+							i++;
+						}
 
 						payloadStatus = "received";
 					break;
 					
 					case 2:
-						dcColor = dc.tuesday.color;
-						dcQuests = dc.tuesday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.tuesday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.tuesday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.tuesday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.tuesday.rewards[3]);
+						dcColor = daily.tuesday.color;
+						dcQuests = daily.tuesday.quests;
+						
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.tuesday.rewards[i]);
+							i++;
+						}
 
 						payloadStatus = "received";
 					break;
 
 					case 3:
-						dcColor = dc.wednesday.color;
-						dcQuests = dc.wednesday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.wednesday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.wednesday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.wednesday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.wednesday.rewards[3]);
+						dcColor = daily.wednesday.color;
+						dcQuests = daily.wednesday.quests;
+						
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.wednesday.rewards[i]);
+							i++;
+						}
 
 						payloadStatus = "received";
 					break;
 
 					case 4:
-						dcColor = dc.thursday.color;
-						dcQuests = dc.thursday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.thursday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.thursday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.thursday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.thursday.rewards[3]);
+						dcColor = daily.thursday.color;
+						dcQuests = daily.thursday.quests;
+						
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.thursday.rewards[i]);
+							i++;
+						}
 
 						payloadStatus = "received";
 					break;
 
 					case 5:
-						dcColor = dc.friday.color;
-						dcQuests = dc.friday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.friday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.friday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.friday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.friday.rewards[3]);
+						dcColor = daily.friday.color;
+						dcQuests = daily.friday.quests;
+						
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.friday.rewards[i]);
+							i++;
+						}
 
 						payloadStatus = "received";
 					break;
 
 					case 6:
-						dcColor = dc.saturday.color;
-						dcQuests = dc.saturday.quests;
-						dcReward1 = clientDiscord.emojis.find("name", dc.saturday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", dc.saturday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", dc.saturday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", dc.saturday.rewards[3]);
+						dcColor = daily.saturday.color;
+						dcQuests = daily.saturday.quests;
+						
+						for(var i = 0; i < 4;){
+							dcRewards[i] = clientDiscord.emojis.find("name", daily.saturday.rewards[i]);
+							i++;
+						}
 
 						payloadStatus = "received";			
 					break;
 				}
 				
 				// Sending out the payload
-				message.channel.send("Today Daily Challenges", {
+				message.channel.send({
 					"embed":{
 						"color": dcColor,
 						"description": dcQuests
 					}
 				}).then(function(message){
 					// Showing rewards as "reactions"
-					message.react(dcReward1);
+					for(var i = 0; i < 4;){
+						message.react(dcRewards[i]);
+						i++;
+					};
+					/* Backup
 					message.react(dcReward2);
 					message.react(dcReward3);
 					message.react(dcReward4);
+					*/
 				}).catch(console.error);
 
 				// Console logging
 				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
-         }
-     }
+			
+			// Koldrak's lair notification and closest time
+			case 'koldrak':
+				var koldrakQuerry = message.toString().substring(1).split(' ');
+					koldrakQuerry = koldrakQuerry.splice(1);
+
+				switch(koldrakQuerry[0]){
+					// Doing "Alert" at specific time(s)
+					case 'alert':
+						clientDiscord.channels.find("name", config.DEFAULT_NEWS_CHANNEL).send({
+							"embed":{
+								"color": 8388736,
+								"timestamp" : new Date(),
+								"description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
+								"author":{
+									"name": "Epic Challange Alert",
+								}
+							}
+						});
+
+						console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+					break;
+					
+					// Showing when is the closest Koldrak's lair time
+					default:
+						var koldrakTimeNow = new Date();
+						// Getting the hour of UTC+1
+						var koldrakTimeHourNow = koldrakTimeNow.getUTCHours() + 1;
+						var koldrakTimeMinutesNow = koldrakTimeNow.getUTCMinutes();
+
+						// Cheating the search so it will still put hour even if the smallest time is 24
+						var koldrakTimeLeft = 25;
+
+						// Making new date data with details from above variable
+						koldrakTimeNow = new Date(0, 0, 0, koldrakTimeHourNow, koldrakTimeMinutesNow, 0);
+
+						// Searching when is the closest one
+						for(var i = 0; i < 5;){
+							// Making new date data with details from koldrak's schedule (koldrak.json)
+							var koldrakTimeNext = new Date(0, 0, 0, koldrakTime.time[i], 0, 0);
+							// Getting the time difference
+							var koldrakTimeDiff = koldrakTimeNext.getTime() - koldrakTimeNow.getTime();
+
+							// Formating
+							var koldrakTimeHours = Math.floor(koldrakTimeDiff / 1000 / 60 / 60);
+
+								koldrakTimeDiff -= koldrakTimeHours * 1000 * 60 * 60;
+							
+							var koldrakTimeMinutes = Math.floor(koldrakTimeDiff / 1000 / 60);
+
+							// Making it 24 hours format
+							if(koldrakTimeHours < 0){
+								koldrakTimeHours = koldrakTimeHours + 24;
+							}
+							
+							// Storing the closest one to the variable
+							if(koldrakTimeHours <= koldrakTimeLeft){
+								koldrakTimeLeft = koldrakTimeHours;
+							}
+
+							i++;
+						}
+
+						// Output
+						message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
+
+						// Console Logging
+						console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+				};
+			break;
+         };
+     };
 });
 
 // Bot token here
@@ -368,6 +521,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 				twtAvatar = tweet.user.profile_image_url.toString();
 				twtCreatedAt = tweet.created_at.toString();
 				twtTimestamp = tweet.timestamp_ms.toString();
+
 				payloadStatus = "received"
 
 				// Making the color different for different user
@@ -390,3 +544,14 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 	  console.log(error);
 	});
   });
+
+  // Koldrak (Dragon) notification
+
+  ontime({
+	  cycle: ['21:50:00', '00:50:00']
+  }, function (koldrak){
+	  clientDiscord.emit("message", "!koldrak alert");
+	  koldrak.done();
+	  return;
+  }
+) 

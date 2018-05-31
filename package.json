@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.3.2",
+    "ontime": "0.0.4",
     "twitter": "^1.7.1"
   }
 }

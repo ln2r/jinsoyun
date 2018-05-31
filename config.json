@@ -1,5 +1,6 @@
 {
     "DEFAULT_TEXT_CHANNEL" : "random-chats",
     "DEFAULT_MEMBER_GATE" : "introduce-yourself",
-    "DEFAULT_NEWS_CHANNEL": "news"
+    "DEFAULT_NEWS_CHANNEL": "news",
+    "DEFAULT_ADMIN_CHANNEL": "high-council"
 }
