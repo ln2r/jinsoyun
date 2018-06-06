@@ -21,6 +21,9 @@ var classArr = ["blade master", "destroyer", "summoner", "force master", "kung f
 var payloadStatus = "rejected";
 var querryStatus = false;
 
+// Global date variable
+var dateVariable = new Date();
+
 // Twitter hook variables
 var twtUsername;
 var twtScreenName
@@ -64,7 +67,7 @@ clientDiscord.on("message", (message) => {
             // Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!daily` or `!daily tomorrow` for the one from tomorrow\n> For checking next **Koldraks Lair** you can do `!koldrak`\n';
+				var soyunHelpTxt = '> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!daily` or `!daily tomorrow` for the one from tomorrow\n> For checking next **Koldrak\'s Lair** you can do `!koldrak`\n';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -217,7 +220,7 @@ clientDiscord.on("message", (message) => {
 					});
 				});
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+				console.log(" [ "+Date.now()+" ] > !twcon triggered");
 			break;
 			
 			// Writing message via bot for announcement or notice, Admin only
@@ -283,8 +286,7 @@ clientDiscord.on("message", (message) => {
 			// Today daily challenge
 			case 'daily':
 				// Getting the current date
-				var dcDay = new Date();
-				var dcDay = dcDay.getUTCDay();
+				var dcDay = dateVariable.getUTCDay();
 
 				var dcColor;
 				var dcQuests;
@@ -316,13 +318,6 @@ clientDiscord.on("message", (message) => {
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.sunday.rewards[i]);
 							i++;
 						}
-
-						/* Backup
-						dcReward1 = clientDiscord.emojis.find("name", daily.sunday.rewards[0]);
-						dcReward2 = clientDiscord.emojis.find("name", daily.sunday.rewards[1]);
-						dcReward3 = clientDiscord.emojis.find("name", daily.sunday.rewards[2]);
-						dcReward4 = clientDiscord.emojis.find("name", daily.sunday.rewards[3]);
-						*/
 
 						// For logging
 						payloadStatus = "received";
@@ -413,13 +408,8 @@ clientDiscord.on("message", (message) => {
 						message.react(dcRewards[i]);
 						i++;
 					};
-					/* Backup
-					message.react(dcReward2);
-					message.react(dcReward3);
-					message.react(dcReward4);
-					*/
-				}).catch(console.error);
 
+				}).catch(console.error);
 				// Console logging
 				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
 				payloadStatus = "rejected";
@@ -430,35 +420,76 @@ clientDiscord.on("message", (message) => {
 				var koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
 
+				var koldrakAlertSystem = true;
 				switch(koldrakQuerry[0]){
-					// Doing "Alert" at specific time(s)
-					case 'alert':
-						clientDiscord.channels.find("name", config.DEFAULT_NEWS_CHANNEL).send({
+					
+					// Disabling the alert
+					case 'disable':
+						if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+							koldrakAlertSystem = false;
+							console.log(" [ "+Date.now()+" ] > !koldrak alert is now disabled");
+						}else{
+							console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: rejected");
+						};
+					break;
+					
+					// Enabling the alert
+					case 'enable':
+						if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+							koldrakAlertSystem = true;
+							console.log(" [ "+Date.now()+" ] > !koldrak alert is now enabled");
+						}else{
+							console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: rejected");
+						};
+					break;
+					
+					// Debug message when alert is disabled (delete for stable)
+					case 'debug':
+						message.guild.find("name", "lab").send({
 							"embed":{
-								"color": 8388736,
-								"timestamp" : new Date(),
-								"description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
-								"author":{
-									"name": "Epic Challange Alert",
-								}
+								"color": 16753920, 
+								"description": "!koldrak debug triggered"
 							}
 						});
+					break;
 
-						console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+					// Doing "Alert" at specific time(s)
+					case 'alert':
+						// Sending "Alert" to every "news" channel
+						clientDiscord.guilds.map((guild) => {
+							let found = 0;
+							guild.channels.map((ch) =>{
+								if(found == 0){
+									if(ch.name == config.DEFAULT_NEWS_CHANNEL){
+										ch.send({
+											"embed":{
+												"color": 8388736,
+												"timestamp" : new Date(),
+												"description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
+												"author":{
+													"name": "Epic Challenge Alert",
+												}
+											}
+										});
+										found = 1;
+									}
+								}
+							});
+						});
+						console.log(" [ "+Date.now()+" ] > !koldrak alert triggered");
 					break;
 					
 					// Showing when is the closest Koldrak's lair time
 					default:
-						var koldrakTimeNow = new Date();
 						// Getting the hour of UTC+1
-						var koldrakTimeHourNow = koldrakTimeNow.getUTCHours() + 1;
-						var koldrakTimeMinutesNow = koldrakTimeNow.getUTCMinutes();
+						var koldrakTimeHourNow = dateVariable.getUTCHours() + 1;
+						var koldrakTimeMinutesNow = dateVariable.getUTCMinutes();
 
 						// Cheating the search so it will still put hour even if the smallest time is 24
 						var koldrakTimeLeft = 25;
 
 						// Making new date data with details from above variable
-						koldrakTimeNow = new Date(0, 0, 0, koldrakTimeHourNow, koldrakTimeMinutesNow, 0);
+						var koldrakTimeNow = new Date(0, 0, 0, koldrakTimeHourNow, koldrakTimeMinutesNow, 0);
 
 						// Searching when is the closest one
 						for(var i = 0; i < 5;){
@@ -467,7 +498,7 @@ clientDiscord.on("message", (message) => {
 							// Getting the time difference
 							var koldrakTimeDiff = koldrakTimeNext.getTime() - koldrakTimeNow.getTime();
 
-							// Formating
+							// Formatting
 							var koldrakTimeHours = Math.floor(koldrakTimeDiff / 1000 / 60 / 60);
 
 								koldrakTimeDiff -= koldrakTimeHours * 1000 * 60 * 60;
@@ -479,9 +510,14 @@ clientDiscord.on("message", (message) => {
 								koldrakTimeHours = koldrakTimeHours + 24;
 							}
 							
-							// Storing the closest one to the variable
+							// UTC + 1 formatting
+							koldrakTimeHours = koldrakTimeHours - 1;
+							
+							// Storing the closest for later
 							if(koldrakTimeHours <= koldrakTimeLeft){
-								koldrakTimeLeft = koldrakTimeHours;
+								if(koldrakTimeHours >= 0){
+									koldrakTimeLeft = koldrakTimeHours;
+								}
 							}
 
 							i++;
@@ -531,12 +567,12 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 					twtColor = 1879160;
 				};
 
-				// Tringgering the !twcon so the bot will write a message with content from twitter
+				// Tringgering the !twcon so the bot will write a message with content from twitter (see "!twcon" for details)
 				clientDiscord.emit("message", "!twcon");
 			}
 		}
 		// Console logging
-		console.log(" [ "+Date.now()+" ] > Tweet recived from "+tweet.user.screen_name+", status: "+payloadStatus);
+		console.log(" [ "+Date.now()+" ] > Tweet recived, status: "+payloadStatus);
 		payloadStatus = "rejected";
 	});
   
@@ -548,10 +584,18 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
   // Koldrak (Dragon) notification
 
   ontime({
-	  cycle: ['21:50:00', '00:50:00']
+		// Time format is on UTC
+		cycle: ['00:00'], 
+		utc: true
   }, function (koldrak){
-	  clientDiscord.emit("message", "!koldrak alert");
-	  koldrak.done();
-	  return;
+		// Triggering "!koldrak alert" so the bot will write the alert (see "!koldrak" for details)
+		if(koldrakAlertSystem == false){
+			clientDiscord.emit("message", "!koldrak debug");
+		}else{
+			clientDiscord.emit("message", "!koldrak alert");
+		};
+		console.log(" [ "+Date.now()+" ] > it's now "+dateVariable.getUTCHours()+":"+dateVariable.getUTCMinutes()); // delete when fixed
+		koldrak.done();
+		return;
   }
 ) 
