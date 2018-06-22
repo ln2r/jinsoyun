@@ -1,10 +1,12 @@
 const Discord = require("discord.js");
 const Twitter = require("twitter");
 const ontime = require("ontime");
+const fetch = require('node-fetch');
+
 const secret = require("./secret.json");
 const config = require("./config.json");
 const daily = require("./daily-challenges.json");
-const koldrakTime = require("./koldrak.json")
+const koldrakTime = require("./koldrak.json");
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -21,8 +23,8 @@ var classArr = ["blade master", "destroyer", "summoner", "force master", "kung f
 var payloadStatus = "rejected";
 var querryStatus = false;
 
-// Global date variable
-var dateVariable = new Date();
+// Global variable
+var koldrakAlertSystem = true;
 
 // Twitter hook variables
 var twtUsername;
@@ -33,6 +35,15 @@ var twtCreatedAt;
 var twtTimestamp;
 var twtColor;
 var twtFilter;
+
+// Timer variables
+var timerStartedTime;
+var timerValue;
+var timerStatus = false;
+
+// silveress API point
+const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
+const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/"
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
@@ -67,7 +78,7 @@ clientDiscord.on("message", (message) => {
             // Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!daily` or `!daily tomorrow` for the one from tomorrow\n> For checking next **Koldrak\'s Lair** you can do `!koldrak`\n';
+				var soyunHelpTxt = '> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!daily` or `!daily tomorrow` for the one from tomorrow\n> For checking next **Koldrak\'s Lair** you can do `!koldrak`\n> To roll some dice you can do `!roll` or `!roll (any start number)-(any end number)`\n> To let me pick between two things you can do `!pick "item a" or "item b"`\n> To find or look at a character you can do `!who "character name"`\n ';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -85,54 +96,60 @@ clientDiscord.on("message", (message) => {
 				};
 
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
             break;
 			
 			// Server join = username change and role add
 			case 'reg':
 				var joinQuerry = message.toString().substring(1).split('"');
 				var joinUsername = (joinQuerry[1]);
-				var joinClass = (joinQuerry[3]);
-								
-				joinClass = joinClass.toLowerCase(); // Converting class value to lower case so input wont be missmatched
 				
-				// Checking the class input
-				for(i = 0; i < classArr.length;){
-					// Class input verification (inefficient af)
-					if(joinClass == classArr[i]){
-						querryStatus = true;
-						break;
+				try{
+					var joinClass = (joinQuerry[3]);
+							
+					joinClass = joinClass.toLowerCase(); // Converting class value to lower case so input wont be missmatched
+					
+					// Checking the class input
+					for(i = 0; i < classArr.length;){
+						// Class input verification (inefficient af)
+						if(joinClass == classArr[i]){
+							querryStatus = true;
+							break;
+						};
+						i++
 					};
-					i++
+
+					// Checking the verification
+					if(querryStatus == true){
+						// Convert to capitalize to make it easy and 'prettier'
+						joinUsername = joinUsername.replace(/\b\w/g, l => l.toUpperCase());
+						
+						// Setting user role to match the user class
+						message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", joinClass));
+						// Adding "member" role so user can talk
+						message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", "member"));
+						// Removing "cricket" role
+						message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", "cricket"));
+						
+						// Setting message author username (guild owner or lower)
+						message.guild.members.get(message.author.id).setNickname(joinUsername);
+
+						// Welcoming message on general channel
+						message.guild.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+						payloadStatus = "received";
+						querryStatus = false;
+					}else{
+						// Telling them whats wrong
+						message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
+						querryStatus = false;
+					}
+				}catch(err){
+					message.channel.send('Im sorry i cant seems to catch that can you try again?\n\nExample: **!reg "Jinsoyun" "Blade Master"**');
+					payloadStatus = "rejected";
 				};
 
-				// Checking the verification
-				if(querryStatus == true){
-					// Convert to capitalize to make it easy and 'prettier'
-					joinUsername = joinUsername.replace(/\b\w/g, l => l.toUpperCase());
-					
-					// Setting user role to match the user class
-					message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", joinClass));
-					// Adding "member" role so user can talk
-					message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", "member"));
-					// Removing "cricket" role
-					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", "cricket"));
-					
-					// Setting message author username (guild owner or lower)
-					message.guild.members.get(message.author.id).setNickname(joinUsername);
-
-					// Welcoming message on general channel
-					message.guild.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
-					payloadStatus = "received";
-					querryStatus = false;
-				}else{
-					// Telling them whats wrong
-					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
-					querryStatus = false;
-				}
-
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
 			
@@ -148,7 +165,7 @@ clientDiscord.on("message", (message) => {
 				message.channel.send("Your username changed to "+usernameValue);
 
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
 			break;
 			
 			// Class change
@@ -188,7 +205,7 @@ clientDiscord.on("message", (message) => {
 					querryStatus = false;
 				}
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
 
@@ -220,7 +237,7 @@ clientDiscord.on("message", (message) => {
 					});
 				});
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > !twcon triggered");
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
 			break;
 			
 			// Writing message via bot for announcement or notice, Admin only
@@ -252,9 +269,11 @@ clientDiscord.on("message", (message) => {
 						}
 					});
 					payloadStatus = "recieved";
+				}else{
+					payloadStatus = 'rejected';
 				};
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
 
@@ -283,10 +302,52 @@ clientDiscord.on("message", (message) => {
 				payloadStatus = "rejected";
 			break;
 			
+			// pick between two things
+			case 'pick':
+				var pickQuerry = message.toString().substring(1).split('"');	
+				var pickFirstOption = pickQuerry[1];
+				var pickSecondOption = pickQuerry[3];
+
+				var pickResult = Math.floor(Math.random() * 2);
+				var pickResultValue;
+
+				if(pickResult == 0){
+					pickResultValue = pickFirstOption;
+				}else{
+					pickResultValue = pickSecondOption;
+				};
+
+				message.channel.send("Hmmm, I'll go with **"+pickResultValue+"**");
+				
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+			break;
+
+			// die roll
+			case 'roll':
+				var rollQuerry = message.toString().substring(1).split(' ');	
+				var rollStartNumber
+				var rollEndNumber;
+
+				if(rollQuerry[1] == null){
+					rollStartNumber = 1;
+					rollEndNumber = 7;
+				}else{
+					rollStartNumber = rollQuerry[1].charAt(0);
+					rollEndNumber = rollQuerry[1].charAt(2);
+				};
+
+				var rollResult = Math.floor(Math.random() * rollEndNumber) - rollStartNumber;
+
+				message.channel.send("You rolled **"+rollResult+"**");
+
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+			break;
+
 			// Today daily challenge
 			case 'daily':
+				var dcDate = new Date();
 				// Getting the current date
-				var dcDay = dateVariable.getUTCDay();
+				var dcDay = dcDate.getUTCDay();
 
 				var dcColor;
 				var dcQuests;
@@ -294,12 +355,17 @@ clientDiscord.on("message", (message) => {
 				var dcRewards = [];
 
 				var dailyQuerry = message.toString().substring(1).split(' ');
+				var dailyPartyAnnouncement = false;
 
 				dailyQuerry = dailyQuerry.splice(1);
 				// For checking tomorrow daily
 				switch(dailyQuerry[0]){
 					case 'tomorrow':
 						dcDay = dcDay + 1;
+					break;
+
+					case 'announce':
+						dailyPartyAnnouncement = true;
 					break;
 
 					default:
@@ -390,37 +456,61 @@ clientDiscord.on("message", (message) => {
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.saturday.rewards[i]);
 							i++;
-						}
-
+						};
 						payloadStatus = "received";			
 					break;
 				}
 				
 				// Sending out the payload
-				message.channel.send({
-					"embed":{
-						"color": dcColor,
-						"description": dcQuests
-					}
-				}).then(function(message){
-					// Showing rewards as "reactions"
-					for(var i = 0; i < 4;){
-						message.react(dcRewards[i]);
-						i++;
-					};
-
-				}).catch(console.error);
+				if(dailyPartyAnnouncement == false){
+					// default, normal payload
+					message.channel.send({
+						"embed":{
+							"color": dcColor,
+							"description": dcQuests
+						}
+					}).then(function(message){
+						// Showing rewards as "reactions"
+						for(var i = 0; i < 4;){
+							message.react(dcRewards[i]);
+							i++;
+						};
+					}).catch(console.error);
+				}else{
+					clientDiscord.guilds.map((guild) => {
+						let found = 0;
+						guild.channels.map((ch) =>{
+							if(found == 0){
+								if(ch.name == config.DEFAULT_PARTY_CHANNEL){
+									ch.send("Daily challenges has been reset, today's challenges are: ",{
+										"embed":{
+											"color": dcColor,
+											"description": dcQuests
+										}
+									}).then(function(message){
+										// Showing rewards as "reactions"
+										for(var i = 0; i < 4;){
+											message.react(dcRewards[i]);
+											i++;
+										};
+									}).catch(console.error);
+									found = 1;
+								}
+							}
+						});
+					});
+				};
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
-			
+
 			// Koldrak's lair notification and closest time
 			case 'koldrak':
+				var koldrakDateVariable = new Date();
 				var koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
 
-				var koldrakAlertSystem = true;
 				switch(koldrakQuerry[0]){
 					
 					// Disabling the alert
@@ -445,12 +535,13 @@ clientDiscord.on("message", (message) => {
 					
 					// Debug message when alert is disabled (delete for stable)
 					case 'debug':
-						message.guild.find("name", "lab").send({
+						clientDiscord.channels.find("name", "lab").send({
 							"embed":{
 								"color": 16753920, 
 								"description": "!koldrak debug triggered"
 							}
 						});
+						console.log(" [ "+Date.now()+" ] > it's now "+koldrakDateVariable.getUTCHours()+":"+koldrakDateVariable.getUTCMinutes()); // delete when fixed
 					break;
 
 					// Doing "Alert" at specific time(s)
@@ -460,7 +551,7 @@ clientDiscord.on("message", (message) => {
 							let found = 0;
 							guild.channels.map((ch) =>{
 								if(found == 0){
-									if(ch.name == config.DEFAULT_NEWS_CHANNEL){
+									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
 										ch.send({
 											"embed":{
 												"color": 8388736,
@@ -476,14 +567,15 @@ clientDiscord.on("message", (message) => {
 								}
 							});
 						});
+
 						console.log(" [ "+Date.now()+" ] > !koldrak alert triggered");
 					break;
 					
 					// Showing when is the closest Koldrak's lair time
 					default:
 						// Getting the hour of UTC+1
-						var koldrakTimeHourNow = dateVariable.getUTCHours() + 1;
-						var koldrakTimeMinutesNow = dateVariable.getUTCMinutes();
+						var koldrakTimeHourNow = koldrakDateVariable.getUTCHours() + 1;
+						var koldrakTimeMinutesNow = koldrakDateVariable.getUTCMinutes();
 
 						// Cheating the search so it will still put hour even if the smallest time is 24
 						var koldrakTimeLeft = 25;
@@ -527,8 +619,53 @@ clientDiscord.on("message", (message) => {
 						message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
 
 						// Console Logging
-						console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message);
+						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
 				};
+			break;
+
+			case 'who':
+				var whoQuerry = message.toString().substring(1).split('"');
+					whoQuerry = whoQuerry.splice(1);
+				
+				var silveressCharacterData;
+				
+				var silveressQuerry = silveressNA+whoQuerry[0]; // for the querry
+				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
+					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
+
+				// fetching data from api site
+				fetch(silveressQuerry)
+					.then(res => res.json())
+					.then(data => silveressCharacterData = data)
+					.then(() => {
+						message.channel.send({
+							"embed": {
+								"description": "\n**HP**: "+silveressCharacterData.hp+"\n**Attack Power**: "+silveressCharacterData.ap+"\n**Element**: "+silveressCharacterData.activeElement+"\n**Class**: "+silveressCharacterData.playerClass+"\n\n**Weapon**: "+silveressCharacterData.weaponName+"\n**Ring**: "+silveressCharacterData.ringName+"\n**Earring**: "+silveressCharacterData.earringName+"\n**Necklace**: "+silveressCharacterData.necklaceName+"\n**Bracelet**: "+silveressCharacterData.braceletName+"\n**Belt**: "+silveressCharacterData.beltName+"\n**Gloves**: "+silveressCharacterData.gloves+"\n**Soul**: "+silveressCharacterData.soulName+"\n**Pet**: "+silveressCharacterData.petAuraName+"\n**Soul Badge**: "+silveressCharacterData.soulBadgeName+"\n**Mystic Badge**: "+silveressCharacterData.mysticBadgeName+"\n\n**Server**: "+silveressCharacterData.server+"\n**Faction**: "+silveressCharacterData.faction+"\n**Guild**: "+silveressCharacterData.guild,
+								"color": Math.floor(Math.random() * 16777215) - 0,
+								"footer": {
+									"icon_url": "https://slate.silveress.ie/images/logo.png",
+									"text": "Powered by Silveress's BnS API"
+								},
+								"thumbnail": {
+									"url": silveressCharacterData.characterImg
+								},
+								"author": {
+									"name": silveressCharacterData.characterName+" - Lvl "+silveressCharacterData.playerLevel+" HM "+silveressCharacterData.playerLevelHM,
+									"url": bnstreeProfile
+														  
+								}
+							}
+					  	})
+					 	payloadStatus = 'recieved'
+					})
+					.then(() => payloadStatus = 'recieved')
+					.catch(err => {
+						console.log(err);
+						payloadStatus = 'rejected';
+					});
+					
+					console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
+					payloadStatus = "rejected";
 			break;
          };
      };
@@ -539,6 +676,7 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN);
 
 // Twitter hook
 // Getting user tweet, parameter used: user id, e.g: "3521186773". You can get user id via http://gettwitterid.com/
+
 clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  function(stream) {
 	stream.on('data', function(tweet) {
 		// Filtering data so it only getting data from specified user
@@ -585,7 +723,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 
   ontime({
 		// Time format is on UTC
-		cycle: ['00:00'], 
+		cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'], 
 		utc: true
   }, function (koldrak){
 		// Triggering "!koldrak alert" so the bot will write the alert (see "!koldrak" for details)
@@ -594,8 +732,17 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 		}else{
 			clientDiscord.emit("message", "!koldrak alert");
 		};
-		console.log(" [ "+Date.now()+" ] > it's now "+dateVariable.getUTCHours()+":"+dateVariable.getUTCMinutes()); // delete when fixed
 		koldrak.done();
 		return;
   }
 ) 
+
+// Daily reset notification
+ontime({
+	cycle: ['12:00:00'],
+	utc: true
+	}, function(daily){
+		clientDiscord.emit("message", "!daily announce");
+		daily.done();
+		return;
+});
