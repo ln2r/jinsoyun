@@ -60,7 +60,7 @@ clientDiscord.on("guildMemberAdd", (member) => {
 	member.addRole(member.guild.roles.find("name", "cricket"));
 	
 	// Welcoming message and guide to join
-	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi ***'+member.user.username+'***, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \nIf you need some assistance you can **@mention** or **DM** available officers');
+	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
 	console.log(" [ "+Date.now()+" ] > "+member.user.username+" has joined");
@@ -75,7 +75,7 @@ clientDiscord.on("message", (message) => {
        
         args = args.splice(1);
         switch(cmd) {
-            // Connection test
+			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
 				var soyunHelpTxt = '> For changing nickname you can do `!username "desired username"` (it will be automatically capitalized dont worry :wink: )\n> For changing class you can do `!class "desired class"`\n> For checking today daily challenges you can do `!daily` or `!daily tomorrow` for the one from tomorrow\n> For checking next **Koldrak\'s Lair** you can do `!koldrak`\n> To roll some dice you can do `!roll` or `!roll (any start number)-(any end number)`\n> To let me pick between two things you can do `!pick "item a" or "item b"`\n> To find or look at a character you can do `!who "character name"`\n ';
@@ -89,14 +89,31 @@ clientDiscord.on("message", (message) => {
 						};
 
 						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\nIf you need some assistance you can **@mention** or **DM** available **officers**.");
+						// Console logging
+						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+					break;
+
+					case 'status':
+						var statusRandom = 0;
+						
+						switch(statusRandom){
+							case 0:
+								clientDiscord.user.setActivity('!soyun help', {type: 'LISTENING' });
+								statusRandom = 1;
+							break;
+							
+							case 1:
+								clientDiscord.user.setActivity('with Hongmoon School', {type: 'PLAYING'});
+								statusRandom = 0;
+							break;
+						}
 					break;
 
 					default:
 						message.channel.send("Yes master?");
+						// Console logging
+						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
 				};
-
-				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
             break;
 			
 			// Server join = username change and role add
@@ -746,3 +763,12 @@ ontime({
 		daily.done();
 		return;
 });
+
+// Soyun activity changer
+ontime({
+    cycle: ['00:00', '05:00', '10:00', '15:00', '20:00', '25:00', '30:00', '35:00', '40:00', '45:00', '50:00', '55:00', ]
+}, function (soyunActivity) {
+    	clientDiscord.emit("message", "!soyun status");
+		soyunActivity.done();
+		return;
+})
