@@ -43,7 +43,10 @@ var timerStatus = false;
 
 // silveress API point
 const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
-const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/"
+const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
+
+// Soyun status
+var statusRandom = 0;
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
@@ -72,7 +75,8 @@ clientDiscord.on("message", (message) => {
   if (message.toString().substring(0, 1) == '!') {
         var args = message.toString().substring(1).split(' ');
         var cmd = args[0];
-       
+			cmd = cmd.toLowerCase();
+
         args = args.splice(1);
         switch(cmd) {
 			// Connection test
@@ -93,9 +97,7 @@ clientDiscord.on("message", (message) => {
 						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
 					break;
 
-					case 'status':
-						var statusRandom = 0;
-						
+					case 'status':						
 						switch(statusRandom){
 							case 0:
 								clientDiscord.user.setActivity('!soyun help', {type: 'LISTENING' });
@@ -766,7 +768,7 @@ ontime({
 
 // Soyun activity changer
 ontime({
-    cycle: ['00:00', '05:00', '10:00', '15:00', '20:00', '25:00', '30:00', '35:00', '40:00', '45:00', '50:00', '55:00', ]
+    cycle: ['00']
 }, function (soyunActivity) {
     	clientDiscord.emit("message", "!soyun status");
 		soyunActivity.done();
