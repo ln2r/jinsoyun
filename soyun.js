@@ -8,6 +8,7 @@ const dateformat = require('dateformat');
 const secret = require("./secret.json");
 const config = require("./config.json");
 const daily = require("./data/daily-challenges.json");
+const koldrakTime = require("./data/koldrak-time.json");
 
 const items = require("./data/list-item.json");
 const quests = require("./data/list-quest.json");
@@ -528,11 +529,7 @@ clientDiscord.on("message", (message) => {
 											"color": dcColor,
 											"description": dcQuests,
 											"author":{
-												"name": "Daily Challenges: "+dateformat(dcDayValue, "dddd"),
-											},
-											"footer":{
-												"text": message.author.username,
-												"icon_url": message.author.avatarURL
+												"name": "Daily Challenges: "+dcDayValue,
 											},
 											"timestamp": dcDate.toISOString()
 										}
@@ -892,8 +889,6 @@ clientDiscord.on("message", (message) => {
 				var marketQuerry = message.toString().substring(1).split('"');
 					marketQuerry = marketQuerry.splice(1);
 				
-				var silveressMarketData;
-					
 				// code "stolen" from silveress marketPage.js
 				// find the item id by searching item-list.json
 				function getID(name){
@@ -922,6 +917,7 @@ clientDiscord.on("message", (message) => {
 								}
 							}
 						}
+						// getting the highest matching number and store the item id to the variable
 						if(match > prevMatch){
 							prevMatch = match;
 							var id = items[i].id;
@@ -972,7 +968,10 @@ clientDiscord.on("message", (message) => {
 						// search if tradeable or not by looking at the item-list.json
 						message.channel.send("I'm sorry the item you are looking for it's not tradeable");
 					}else{
+						var silveressMarketData;
 						// fetching the market data
+						console.log(getID(marketQuerry[0]));
+						console.log(silveressMarket+marketItemID);
 						fetch(silveressMarket+marketItemID)
 						.then(res => res.json())
 						.then(data => silveressMarketData = data)
