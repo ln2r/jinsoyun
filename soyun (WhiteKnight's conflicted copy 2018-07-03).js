@@ -5,12 +5,17 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const dateformat = require('dateformat');
 
+const updateJsonFile = require('update-json-file');
+const loadJsonFile = require('load-json-file');
+const writeJsonFile = require('write-json-file');
+
+var jsonfileUpdater = require('jsonfile-updater')
+
 const secret = require("./secret.json");
 const config = require("./config.json");
-const daily = require("./data/daily-challenges.json");
-
-const items = require("./data/list-item.json");
-const quests = require("./data/list-quest.json");
+const daily = require("./daily-challenges.json");
+const koldrakTime = require("./koldrak.json");
+const items = require("./item-list.json");
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -50,7 +55,6 @@ const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
 const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
 const silveressItem = "https://api.silveress.ie/bns/v3/items";
 const silveressMarket = "https://api.silveress.ie/bns/v3/market/na/current/";
-const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
 
 // Soyun status
 var statusRandom = 0;
@@ -99,7 +103,7 @@ clientDiscord.on("message", (message) => {
 							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- Announcement: `!say "title" "content"`';
 						};
 
-						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items and quests list updated @ Wednesday 12AM UTC \n\t  Market listing updated every 1 hour```");
+						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Item list updated @ Wednesday 12AM UTC \n\t  Market listing updated every 1 hour```");
 						// Console logging
 						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
 					break;
@@ -407,7 +411,7 @@ clientDiscord.on("message", (message) => {
 						// Loading the quests name and location
 						dcQuests = daily.sunday.quests;
 						// Day value
-						dcDayValue = "Sunday";
+						dcDay
 						// Loading rewards by searching the id of rewards item emoji
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.sunday.rewards[i]);
@@ -421,7 +425,6 @@ clientDiscord.on("message", (message) => {
 					case 1:
 						dcColor = daily.monday.color;
 						dcQuests = daily.monday.quests;
-						dcDayValue = "Monday";
 
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.monday.rewards[i]);
@@ -434,7 +437,6 @@ clientDiscord.on("message", (message) => {
 					case 2:
 						dcColor = daily.tuesday.color;
 						dcQuests = daily.tuesday.quests;
-						dcDayValue = "Tuesday";
 						
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.tuesday.rewards[i]);
@@ -447,7 +449,6 @@ clientDiscord.on("message", (message) => {
 					case 3:
 						dcColor = daily.wednesday.color;
 						dcQuests = daily.wednesday.quests;
-						dcDayValue = "Wednesday";
 						
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.wednesday.rewards[i]);
@@ -460,7 +461,6 @@ clientDiscord.on("message", (message) => {
 					case 4:
 						dcColor = daily.thursday.color;
 						dcQuests = daily.thursday.quests;
-						dcDayValue = "Thursday";
 						
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.thursday.rewards[i]);
@@ -473,7 +473,6 @@ clientDiscord.on("message", (message) => {
 					case 5:
 						dcColor = daily.friday.color;
 						dcQuests = daily.friday.quests;
-						dcDayValue = "Friday";
 						
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.friday.rewards[i]);
@@ -486,7 +485,6 @@ clientDiscord.on("message", (message) => {
 					case 6:
 						dcColor = daily.saturday.color;
 						dcQuests = daily.saturday.quests;
-						dcDayValue = "Saturday";
 						
 						for(var i = 0; i < 4;){
 							dcRewards[i] = clientDiscord.emojis.find("name", daily.saturday.rewards[i]);
@@ -504,11 +502,9 @@ clientDiscord.on("message", (message) => {
 							"color": dcColor,
 							"description": dcQuests,
 							"author":{
-								"name": "Daily Challenges: "+dcDayValue,
+								"name": "Daily Challenges: "+dateformat(dcDate, "dddd"),
 							},
-							"footer": {
-								"text": dateformat(dcDate, "dddd, mmmm dS, yyyy, h:MM:ss TT")
-							}	
+							"timestamp": dcDate.toISOString()
 						}			
 					}).then(function(message){
 						// Showing rewards as "reactions"
@@ -528,7 +524,7 @@ clientDiscord.on("message", (message) => {
 											"color": dcColor,
 											"description": dcQuests,
 											"author":{
-												"name": "Daily Challenges: "+dateformat(dcDayValue, "dddd"),
+												"name": "Daily Challenges: "+dateformat(dcDate, "dddd"),
 											},
 											"footer":{
 												"text": message.author.username,
@@ -595,7 +591,7 @@ clientDiscord.on("message", (message) => {
 
 					// Doing "Alert" at specific time(s)
 					case 'alert':
-						// Sending "Alert" to every "party-forming" channel
+						// Sending "Alert" to every "news" channel
 						clientDiscord.guilds.map((guild) => {
 							let found = 0;
 							guild.channels.map((ch) =>{
@@ -604,13 +600,10 @@ clientDiscord.on("message", (message) => {
 										ch.send({
 											"embed":{
 												"color": 8388736,
+												"timestamp" : new Date(),
 												"description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
 												"author":{
 													"name": "Epic Challenge Alert",
-													
-												},
-												"footer":{
-													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1"
 												}
 											}
 										});
@@ -691,15 +684,9 @@ clientDiscord.on("message", (message) => {
 
 				var charaDataHP;
 				var charaDataAP;
-				var charaDataBossAP;
 				var charaDataElement;
 				var charaDataClass;
 				var charaDataWeapon;
-				
-				var charaDataCritHit;
-				var charaDataCritHitRate;
-				var charaDataCritDmg;
-				var charaDataCritDmgRate;
 
 				var charaDataGem1;
 				var charaDataGem2;
@@ -731,7 +718,6 @@ clientDiscord.on("message", (message) => {
 				var charaDataFaction;
 				var charaDataServer;
 				var charaDataGuild;
-				var charaDataFactionRank;
 
 				var silveressQuerry = silveressNA+whoQuerry[0]; // for the querry
 				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
@@ -749,22 +735,9 @@ clientDiscord.on("message", (message) => {
 
 						charaDataHP = silveressCharacterData.hp;
 						charaDataAP = silveressCharacterData.ap;
-						charaDataBossAP = silveressCharacterData.ap_boss;
 						charaDataElement = silveressCharacterData.activeElement;
 						charaDataClass = silveressCharacterData.playerClass;
 						charaDataWeapon = silveressCharacterData.weaponName;
-
-						charaDataCritHit = silveressCharacterData.crit;
-						charaDataCritHitRate = silveressCharacterData.critRate;
-						charaDataCritDmg = silveressCharacterData.critDamage;
-						charaDataCritDmgRate = silveressCharacterData.critDamageRate;
-
-						charaDataDef = silveressCharacterData.defence;
-						charaDataBossDef = silveressCharacterData.defence_boss;
-						charaDataEva = silveressCharacterData.evasion;
-						charaDataEvaRate = silveressCharacterData.evasionRate;
-						charaDataBlock = silveressCharacterData.block;
-						charaDataBlockRate = silveressCharacterData.blockRate;
 
 						charaDataGem1 = silveressCharacterData.gem1;
 						charaDataGem2 = silveressCharacterData.gem2;
@@ -796,7 +769,6 @@ clientDiscord.on("message", (message) => {
 						charaDataServer = silveressCharacterData.server;
 						charaDataFaction = silveressCharacterData.faction;
 						charaDataGuild = silveressCharacterData.guild;
-						charaDataFactionRank = silveressCharacterData.factionRank;
 					})
 					.then(() =>{
 						if(charaDataName == "undefined"){
@@ -806,65 +778,7 @@ clientDiscord.on("message", (message) => {
 						}else{
 							message.channel.send({
 								"embed": {
-									"author": {
-										"name": charaDataGuild+"\'s "+charaDataName	
-									},
-									"title": charaDataName+" is a Level "+charaDataLvl+" HM "+charaDataLvlHM+" "+charaDataElement+" "+charaDataClass,
-									"url": bnstreeProfile,
-									"fields": [
-										{
-										  "name": "Basic Stats",
-										  "value": "HP\nAttack Power",
-										  "inline": true
-										},
-										{
-											"name": "-",
-											"value": charaDataHP+"\n"+charaDataAP,
-											"inline": true
-										},
-										{
-											"name": "\nOffensive Stats",
-											"value": "Boss Attack Power\nCritical Hit\nCritical Damage\n",
-											"inline": true
-										},
-										{
-											"name": "-",
-											"value":charaDataBossAP+"\n"+charaDataCritHit+" ("+(charaDataCritHitRate*100).toFixed(2)+"%)\n"+charaDataCritDmg+" ("+(charaDataCritDmgRate*100).toFixed(2)+"%)",
-											"inline": true
-										},
-										{
-											"name": "\nDefensive Stats",
-											"value": "Defense\nBoss Defense\nEvasion\nBlock",
-											"inline": true
-										},
-										{
-											"name": "-",
-											"value": charaDataDef+"\n"+charaDataBossDef+"\n"+charaDataEva+" ("+(charaDataEvaRate*100).toFixed(2)+"%)\n"+charaDataBlock+" ("+(charaDataBlockRate*100).toFixed(2)+"%)",
-											"inline": true
-										},
-										{
-											"name": "Weapon",
-											"value": charaDataWeapon+"\n\n ",
-										},
-										{
-											"name": "Gems",
-											"value": charaDataGem1+"\n"+charaDataGem2+"\n"+charaDataGem3+"\n"+charaDataGem4+"\n"+charaDataGem5+"\n"+charaDataGem6+"\n",
-										},
-										{
-											"name": "Equipments",
-											"value": charaDataRing+"\n"+charaDataEarring+"\n"+charaDataNecklace+"\n"+charaDataBraclet+"\n"+charaDataBelt+"\n"+charaDataGloves+"\n"+charaDataSoul+"\n"+charaDataPet+"\n"+charaDataSoulBadge+"\n"+charaDataMysticBadge, 
-										},
-										{
-											"name": "Soulshield",
-											"value": charaDataSoulShield1+"\n"+charaDataSoulShield2+"\n"+charaDataSoulShield3+"\n"+charaDataSoulShield4+"\n"+charaDataSoulShield5+"\n"+charaDataSoulShield6+"\n"+charaDataSoulShield7+"\n"+charaDataSoulShield8, 
-										},
-										{
-											"name": "Miscellaneous",
-											"value": "Server: "+charaDataServer+"\nFaction: "+charaDataFaction+" ("+charaDataFactionRank+")",
-										}
-
-									],
-									"description": "",
+									"description": "\n**HP**: "+charaDataHP+"\n**Attack Power**: "+charaDataAP+"\n**Element**: "+charaDataElement+"\n**Class**: "+charaDataClass+"\n\n**Weapon**: "+charaDataWeapon+"\n**Gem**: "+charaDataGem1+"\n**Gem**: "+charaDataGem2+"\n**Gem**: "+charaDataGem3+"\n**Gem**: "+charaDataGem4+"\n**Gem**: "+charaDataGem5+"\n**Gem**: "+charaDataGem6+"\n\n**Ring**: "+charaDataRing+"\n**Earring**: "+charaDataEarring+"\n**Necklace**: "+charaDataNecklace+"\n**Bracelet**: "+charaDataBraclet+"\n**Belt**: "+charaDataBelt+"\n**Gloves**: "+charaDataGloves+"\n**Soul**: "+charaDataSoul+"\n**Pet**: "+charaDataPet+"\n**Soul Badge**: "+charaDataSoulBadge+"\n**Mystic Badge**: "+charaDataMysticBadge+"\n\n**Soul Shield**: "+charaDataSoulShield1+"\n**Soul Shield**: "+charaDataSoulShield2+"\n**Soul Shield**: "+charaDataSoulShield3+"\n**Soul Shield**: "+charaDataSoulShield4+"\n**Soul Shield**: "+charaDataSoulShield5+"\n**Soul Shield**: "+charaDataSoulShield6+"\n**Soul Shield**: "+charaDataSoulShield7+"\n**Soul Shield**: "+charaDataSoulShield8+"\n\n**Server**: "+charaDataServer+"\n**Faction**: "+charaDataFaction+"\n**Guild**: "+charaDataGuild,
 									"color": Math.floor(Math.random() * 16777215) - 0,
 									"footer": {
 										"icon_url": "https://slate.silveress.ie/images/logo.png",
@@ -872,6 +786,11 @@ clientDiscord.on("message", (message) => {
 									},
 									"thumbnail": {
 										"url": charaDataImg
+									},
+									"author": {
+										"name": charaDataName+" - Lvl "+charaDataLvl+" HM "+charaDataLvlHM,
+										"url": bnstreeProfile
+															
 									}
 								}
 							})
@@ -931,10 +850,10 @@ clientDiscord.on("message", (message) => {
 					return id
 				}
 				// find the item img url by searching item-list.json
-				function getItemImg(id){
+				function getItemImg(name){
 					var imgUrl;
 					for(i = 0; i < items.length; i++){
-						if(items[i].id == id){
+						if(items[i].name == name){
 							var imgUrl = items[i].img
 						}
 					}
@@ -995,7 +914,7 @@ clientDiscord.on("message", (message) => {
 										"text": "Powered by Silveress's BnS API"
 									},
 									"thumbnail": {
-										"url": getItemImg(marketItemID)
+										"url": getItemImg(marketQuerry[0])
 									},
 									"author": {
 										"name": "Current Lowest Listing",														
@@ -1017,9 +936,8 @@ clientDiscord.on("message", (message) => {
 				payloadStatus = "rejected";
 			break;
 
-			case 'getUpdate':
+			case 'update':
 				var silveressItemData;
-				var silveressQuestData;
 
 				fetch(silveressItem)
 					.then(res => res.json())
@@ -1028,30 +946,14 @@ clientDiscord.on("message", (message) => {
 						silveressItemData = JSON.stringify(silveressItemData);
 						payloadStatus = "recieved";
 
-						fs.writeFile('./data/list-item.json', silveressItemData, function (err) {
+						fs.writeFile('item-list.json', silveressItemData, function (err) {
 							if(err){
 								console.log(err);
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+Date.now()+" ] > Item data fetched, status: "+payloadStatus);
+						console.log(" [ "+Date.now()+" ] > Data fetched, status: "+payloadStatus);
 					});
-
-				fetch(silveressQuest)
-					.then(res => res.json())
-					.then(data => silveressQuestData = data)
-					.then(() =>{
-						silveressQuestData = JSON.stringify(silveressQuestData);
-						payloadStatus = "recieved";
-
-						fs.writeFile('./data/list-quest.json', silveressQuestData, function (err) {
-							if(err){
-								console.log(err);
-								payloadStatus = "rejected";
-							}
-						});
-						console.log(" [ "+Date.now()+" ] > Quest data fetched, status: "+payloadStatus);
-					})	
 			break;
          };
      };
@@ -1147,7 +1049,7 @@ ontime({
 	cycle: ['wed 00:00:00'],
 	utc: true
 }, function (soyunActivity) {
-    	clientDiscord.emit("message", "!getUpdate");
+    	clientDiscord.emit("message", "!update");
 		soyunActivity.done();
 		return;
 })
