@@ -3,15 +3,16 @@ const Twitter = require("twitter");
 const ontime = require("ontime");
 const fetch = require('node-fetch');
 const fs = require('fs');
-const dateformat = require('dateformat');
+const dateFormat = require('dateFormat');
 
 const secret = require("./secret.json");
 const config = require("./config.json");
+
 const daily = require("./data/daily-challenges.json");
 const koldrakTime = require("./data/koldrak-time.json");
-
 const items = require("./data/list-item.json");
 const quests = require("./data/list-quest.json");
+const rewards = require("./data/list-daily-rewards.json");
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -41,20 +42,108 @@ var twtTimestamp;
 var twtColor;
 var twtFilter;
 
-// Timer variables
-var timerStartedTime;
-var timerValue;
-var timerStatus = false;
-
 // silveress API point
 const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
 const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
 const silveressItem = "https://api.silveress.ie/bns/v3/items";
 const silveressMarket = "https://api.silveress.ie/bns/v3/market/na/current/";
 const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
+const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current";
 
 // Soyun status
 var statusRandom = 0;
+
+// function list
+// code "stolen" from silveress marketPage.js
+// find the item id by searching item-list.json
+function getID(name){
+	var id = "";
+	var match =  0;
+	var prevMatch = 0;
+	var itemQuerryLength = 1;
+
+	// searching the item using word match
+	for(i = 0; i < items.length; i++){
+		var itemSearchName = items[i].name;
+			itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
+		var itemSearchQuerry = name;
+			itemSearchQuerry = itemSearchQuerry.replace("'", "").toLowerCase().split(" ");
+
+		if(itemSearchName.length > itemSearchQuerry.length){
+			itemQuerryLength = itemSearchName.length;
+		}else{
+			itemQuerryLength = itemSearchQuerry.length;
+		}
+
+		for(j = 0; j < itemSearchName.length; j++){
+			for(k = 0; k < itemQuerryLength; k++){
+				if(itemSearchName[j] == itemSearchQuerry[k]){
+					match = match + 1;
+				}
+			}
+		}
+
+		// getting the highest matching number and store the item id to the variable
+		if(match > prevMatch){
+			prevMatch = match;
+			var id = items[i].id;
+		}
+		match = 0;
+	}
+	return id
+}
+
+// find the item img url by searching item-list.json
+function getItemImg(id){
+	var imgUrl;
+	for(i = 0; i < items.length; i++){
+		if(items[i].id == id){
+			var imgUrl = items[i].img
+		}
+	}
+	return imgUrl
+}
+
+// converting number (702501) only format to more readable format (70g 25s 01c)
+function currencyConvert(number){
+	var str = Math.round(number);
+	var str = str.toString()
+	var len = str.length
+	var gold = ""
+	var silver = ""
+	var copper = ""
+
+	if(len > 4){
+		var gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547> ";
+	}
+	if(len > 2){
+		var silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586> ";
+	}
+	if(len > 0){
+		var copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928> ";
+	} 
+
+	var total = gold + silver + copper; 
+	return total;
+}
+
+// getting quest day and returning array of matched quest index
+function getQuests(day){
+	var day = day.replace(/\b\w/g, l => l.toUpperCase());
+	var questsID = [0,0,0,0,0,0,0,0,0];
+	var k = 0;
+	for (i = 0; i < quests.length; i++){
+		for(j = 0; j < 6; j++){
+			if(quests[i].daily_challenge[j] == day){
+				var questMatchedLocation = i;
+				k = k+1;
+				questsID[k] = questMatchedLocation;
+			}
+		}
+	}
+	return questsID;	
+}
+
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
@@ -377,11 +466,6 @@ clientDiscord.on("message", (message) => {
 				// Getting the current date
 				var dcDay = dcDate.getUTCDay();
 
-				var dcColor;
-				var dcQuests;
-
-				var dcRewards = [];
-
 				var dailyQuerry = message.toString().substring(1).split(' ');
 				var dailyPartyAnnouncement = false;
 
@@ -400,145 +484,173 @@ clientDiscord.on("message", (message) => {
 						dcDay = dcDay;
 				};
 
-				// Checking the day and inserting the payload
 				switch(dcDay){
 					case 0:
-						// Setting the color
-						dcColor = daily.sunday.color;
-						// Loading the quests name and location
-						dcQuests = daily.sunday.quests;
-						// Day value
-						dcDayValue = "Sunday";
-						// Loading rewards by searching the id of rewards item emoji
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.sunday.rewards[i]);
-							i++;
-						}
-
-						// For logging
-						payloadStatus = "received";
+						var questsList = getQuests("sunday");
+						var questsListRewards = rewards.sunday.rewards;
+						var questsListRewardsEvent = rewards.sunday.event;
 					break;
-
 					case 1:
-						dcColor = daily.monday.color;
-						dcQuests = daily.monday.quests;
-						dcDayValue = "Monday";
-
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.monday.rewards[i]);
-							i++;
-						}
-
-						payloadStatus = "received";
+						var questsList = getQuests("monday");
+						var questsListRewards = rewards.monday.rewards;
+						var questsListRewardsEvent = rewards.monday.event;
 					break;
-					
 					case 2:
-						dcColor = daily.tuesday.color;
-						dcQuests = daily.tuesday.quests;
-						dcDayValue = "Tuesday";
-						
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.tuesday.rewards[i]);
-							i++;
-						}
-
-						payloadStatus = "received";
+						var questsList = getQuests("tuesday");
+						var questsListRewards = rewards.tuesday.rewards;
+						var questsListRewardsEvent = rewards.tuesday.event;
 					break;
-
 					case 3:
-						dcColor = daily.wednesday.color;
-						dcQuests = daily.wednesday.quests;
-						dcDayValue = "Wednesday";
-						
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.wednesday.rewards[i]);
-							i++;
-						}
-
-						payloadStatus = "received";
+						var questsList = getQuests("wednesday");
+						var questsListRewards = rewards.wednesday.rewards;
+						var questsListRewardsEvent = rewards.wednesday.event;
 					break;
-
 					case 4:
-						dcColor = daily.thursday.color;
-						dcQuests = daily.thursday.quests;
-						dcDayValue = "Thursday";
-						
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.thursday.rewards[i]);
-							i++;
-						}
-
-						payloadStatus = "received";
+						var questsList = getQuests("thursday");
+						var questsListRewards = rewards.thursday.rewards;
+						var questsListRewardsEvent = rewards.thursday.event;
 					break;
-
 					case 5:
-						dcColor = daily.friday.color;
-						dcQuests = daily.friday.quests;
-						dcDayValue = "Friday";
-						
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.friday.rewards[i]);
-							i++;
-						}
-
-						payloadStatus = "received";
+						var questsList = getQuests("friday");
+						var questsListRewards = rewards.friday.rewards;
+						var questsListRewardsEvent = rewards.friday.event;
 					break;
-
 					case 6:
-						dcColor = daily.saturday.color;
-						dcQuests = daily.saturday.quests;
-						dcDayValue = "Saturday";
-						
-						for(var i = 0; i < 4;){
-							dcRewards[i] = clientDiscord.emojis.find("name", daily.saturday.rewards[i]);
-							i++;
-						};
-						payloadStatus = "received";			
+						var questsList = getQuests("saturday");
+						var questsListRewards = rewards.saturday.rewards;
+						var questsListRewardsEvent = rewards.saturday.event;
 					break;
+				}
+
+				var questDungeonEventReward = ["","","","","","","","","","",""]
+				for(i = 0; i <questsList.length; i++){
+					for(j = 0; j < questsListRewardsEvent.length; j++){
+						if(questsList[i] == (questsListRewardsEvent[j]-1)){
+							questDungeonEventReward[i-1] = (rewards.event.emoji+" "+rewards.event.name+" (Event)");
+						}
+					}
 				}
 				
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
 					message.channel.send({
-						"embed":{
-							"color": dcColor,
-							"description": dcQuests,
+						"embed": {
 							"author":{
-								"name": "Daily Challenges: "+dcDayValue,
+								"name": "Daily Challenges: "+dateFormat(dcDate, "UTC:dddd"),
+								"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=0"
 							},
+							"title": "Completion Rewards",
+							"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n",
+							"color": 15025535,
 							"footer": {
-								"text": dateformat(dcDate, "dddd, mmmm dS, yyyy, h:MM:ss TT")
-							}	
-						}			
-					}).then(function(message){
-						// Showing rewards as "reactions"
-						for(var i = 0; i < 4;){
-							message.react(dcRewards[i]);
-							i++;
-						};
-					}).catch(console.error);
+								"text": dateFormat(dcDate, "UTC:dddd, mmmm dS, yyyy, h:MM:ss TT")+" UTC"
+							},
+							"fields":[
+								{
+									"name": quests[questsList[1]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)+"\n"+questDungeonEventReward[0] 								
+								},
+								{
+									"name": quests[questsList[2]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)+"\n"+questDungeonEventReward[1]								
+								},
+								{
+									"name": quests[questsList[3]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)+"\n"+questDungeonEventReward[2]								
+								},
+								{
+									"name": quests[questsList[4]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)+"\n"+questDungeonEventReward[3]								
+								},
+								{
+									"name": quests[questsList[5]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)+"\n"+questDungeonEventReward[4]								
+								},
+								{
+									"name": quests[questsList[6]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)+"\n"+questDungeonEventReward[5]								
+								},
+								{
+									"name": quests[questsList[7]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)+"\n"+questDungeonEventReward[6]								
+								},
+								{
+									"name": quests[questsList[8]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)+"\n"+questDungeonEventReward[7]								
+								},
+								{
+									"name": quests[questsList[9]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)+"\n"+questDungeonEventReward[8]								
+								},
+								{
+									"name": quests[questsList[10]].quest,
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[10]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[10]].gold)+"\n"+questDungeonEventReward[9]								
+								},
+							]
+						}
+					});
 				}else{
 					clientDiscord.guilds.map((guild) => {
 						let found = 0;
 						guild.channels.map((ch) =>{
 							if(found == 0){
 								if(ch.name == config.DEFAULT_PARTY_CHANNEL){
-									ch.send("Daily challenges has been reset, today's challenges are: ",{
-										"embed":{
-											"color": dcColor,
-											"description": dcQuests,
+									ch.send("Daily challenges has been reset, today's challenges are",{
+										"embed": {
 											"author":{
-												"name": "Daily Challenges: "+dcDayValue,
+												"name": "Daily Challenges: "+dateFormat(dcDate, "UTC:dddd"),
+												"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=0"
 											},
-											"timestamp": dcDate.toISOString()
+											"title": "Completion Rewards",
+											"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n",
+											"color": 15025535,
+											"footer": {
+												"text": dateFormat(dcDate, "UTC:dddd, mmmm dS, yyyy, h:MM:ss TT")+" UTC"
+											},
+											"fields":[
+												{
+													"name": quests[questsList[1]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)+"\n"+questDungeonEventReward[0] 								
+												},
+												{
+													"name": quests[questsList[2]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)+"\n"+questDungeonEventReward[1]								
+												},
+												{
+													"name": quests[questsList[3]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)+"\n"+questDungeonEventReward[2]								
+												},
+												{
+													"name": quests[questsList[4]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)+"\n"+questDungeonEventReward[3]								
+												},
+												{
+													"name": quests[questsList[5]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)+"\n"+questDungeonEventReward[4]								
+												},
+												{
+													"name": quests[questsList[6]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)+"\n"+questDungeonEventReward[5]								
+												},
+												{
+													"name": quests[questsList[7]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)+"\n"+questDungeonEventReward[6]								
+												},
+												{
+													"name": quests[questsList[8]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)+"\n"+questDungeonEventReward[7]								
+												},
+												{
+													"name": quests[questsList[9]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)+"\n"+questDungeonEventReward[8]								
+												},
+												{
+													"name": quests[questsList[10]].quest,
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[10]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[10]].gold)+"\n"+questDungeonEventReward[9]								
+												},
+											]
 										}
-									}).then(function(message){
-										// Showing rewards as "reactions"
-										for(var i = 0; i < 4;){
-											message.react(dcRewards[i]);
-											i++;
-										};
 									}).catch(console.error);
 									found = 1;
 								}
@@ -590,6 +702,25 @@ clientDiscord.on("message", (message) => {
 						console.log(" [ "+Date.now()+" ] > it's now "+koldrakDateVariable.getUTCHours()+":"+koldrakDateVariable.getUTCMinutes()); // delete when fixed
 					break;
 
+					case 'list':
+						message.channel.send({
+							"embed":{
+								"color": 8388736,
+								"description": "- `01:00:00 UTC`\n- `04:00:00 UTC`\n- `07:00:00 UTC`\n- `19:00:00 UTC`\n- `22:00:00 UTC`",
+								"author":{
+									"name": "Koldrak's Lair Timetable",
+									
+								},
+								"footer":{
+									"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
+									"text": "Koldrak's Lair"
+								}
+							}
+						})
+
+						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+					break;
+
 					// Doing "Alert" at specific time(s)
 					case 'alert':
 						// Sending "Alert" to every "party-forming" channel
@@ -607,7 +738,8 @@ clientDiscord.on("message", (message) => {
 													
 												},
 												"footer":{
-													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1"
+													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
+													"text": "Koldrak's Lair"
 												}
 											}
 										});
@@ -806,38 +938,20 @@ clientDiscord.on("message", (message) => {
 									"author": {
 										"name": charaDataGuild+"\'s "+charaDataName	
 									},
-									"title": charaDataName+" is a Level "+charaDataLvl+" HM "+charaDataLvlHM+" "+charaDataElement+" "+charaDataClass,
+									"title": charaDataName+" is a Level "+charaDataLvl+" HM "+charaDataLvlHM+" "+charaDataElement+" "+charaDataClass+"\n ",
 									"url": bnstreeProfile,
 									"fields": [
 										{
 										  "name": "Basic Stats",
-										  "value": "HP\nAttack Power",
-										  "inline": true
-										},
-										{
-											"name": "-",
-											"value": charaDataHP+"\n"+charaDataAP,
-											"inline": true
+										  "value": "HP: "+charaDataHP+"\nAttack Power: "+charaDataAP
 										},
 										{
 											"name": "\nOffensive Stats",
-											"value": "Boss Attack Power\nCritical Hit\nCritical Damage\n",
-											"inline": true
-										},
-										{
-											"name": "-",
-											"value":charaDataBossAP+"\n"+charaDataCritHit+" ("+(charaDataCritHitRate*100).toFixed(2)+"%)\n"+charaDataCritDmg+" ("+(charaDataCritDmgRate*100).toFixed(2)+"%)",
-											"inline": true
+											"value": "Boss Attack Power: "+charaDataBossAP+"\nCritical Hit: "+charaDataCritHit+" ("+(charaDataCritHitRate*100).toFixed(2)+"%)\nCritical Damage: "+charaDataCritDmg+" ("+(charaDataCritDmgRate*100).toFixed(2)+"%)",
 										},
 										{
 											"name": "\nDefensive Stats",
-											"value": "Defense\nBoss Defense\nEvasion\nBlock",
-											"inline": true
-										},
-										{
-											"name": "-",
-											"value": charaDataDef+"\n"+charaDataBossDef+"\n"+charaDataEva+" ("+(charaDataEvaRate*100).toFixed(2)+"%)\n"+charaDataBlock+" ("+(charaDataBlockRate*100).toFixed(2)+"%)",
-											"inline": true
+											"value": "Defense: "+charaDataDef+"\nBoss Defense: "+charaDataBossDef+"\nEvasion: "+charaDataEva+" ("+(charaDataEvaRate*100).toFixed(2)+"%)\nBlock: "+charaDataBlock+" ("+(charaDataBlockRate*100).toFixed(2)+"%)",
 										},
 										{
 											"name": "Weapon",
@@ -889,74 +1003,6 @@ clientDiscord.on("message", (message) => {
 				var marketQuerry = message.toString().substring(1).split('"');
 					marketQuerry = marketQuerry.splice(1);
 				
-				// code "stolen" from silveress marketPage.js
-				// find the item id by searching item-list.json
-				function getID(name){
-					var id = "";
-					var match =  0;
-					var prevMatch = 0;
-					var itemQuerryLength = 1;
-
-					// searching the item using word match
-					for(i = 0; i < items.length; i++){
-						var itemSearchName = items[i].name;
-							itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
-						var itemSearchQuerry = name;
-							itemSearchQuerry = itemSearchQuerry.replace("'", "").toLowerCase().split(" ");
-
-						if(itemSearchName.length > itemSearchQuerry.length){
-							itemQuerryLength = itemSearchName.length;
-						}else{
-							itemQuerryLength = itemSearchQuerry.length;
-						}
-
-						for(j = 0; j < itemSearchName.length; j++){
-							for(k = 0; k < itemQuerryLength; k++){
-								if(itemSearchName[j] == itemSearchQuerry[k]){
-									match = match + 1;
-								}
-							}
-						}
-						// getting the highest matching number and store the item id to the variable
-						if(match > prevMatch){
-							prevMatch = match;
-							var id = items[i].id;
-						}
-						match = 0;
-					}
-					return id
-				}
-				// find the item img url by searching item-list.json
-				function getItemImg(id){
-					var imgUrl;
-					for(i = 0; i < items.length; i++){
-						if(items[i].id == id){
-							var imgUrl = items[i].img
-						}
-					}
-					return imgUrl
-				}
-
-				// converting number (702501) only format to more readable format (70g 25s 01c)
-				function currencyConvert(number){
-					var str = Math.round(number);
-					var str = str.toString()
-					var len = str.length
-					var gold = ""
-					var silver = ""
-					var copper = ""
-					if(len > 4){
-						var gold = str.substring( 0 , len -4)+ "g ";
-					}
-					if(len > 2){
-						var silver = str.substring( len -2 ,len - 4 )+ "s ";
-					}
-					if(len > 0){
-						var copper = str.substring( len ,len -2 )+ "c ";
-					} 
-					var total = gold + silver + copper; 
-					return total;
-				}
 				if(marketQuerry[0] == null){
 					message.channel.send('I\'m sorry, i can\'t find the item you are looking for, can you try again?\n\nExample: **!market "moonstone"**');
 				}else{
@@ -970,8 +1016,6 @@ clientDiscord.on("message", (message) => {
 					}else{
 						var silveressMarketData;
 						// fetching the market data
-						console.log(getID(marketQuerry[0]));
-						console.log(silveressMarket+marketItemID);
 						fetch(silveressMarket+marketItemID)
 						.then(res => res.json())
 						.then(data => silveressMarketData = data)
@@ -986,7 +1030,7 @@ clientDiscord.on("message", (message) => {
 
 							message.channel.send({
 								"embed": {
-									"description": "**Name**: "+itemDataName+"\n**Price**: "+currencyConvert(itemDataPrice)+"\n**Count**: "+itemDataCount+"\n**Price Each**: "+currencyConvert(itemDataEach),
+									"description": "**Name**: "+itemDataName+" `"+marketItemID+"`\n**Price**: "+currencyConvert(itemDataPrice)+"\n**Count**: "+itemDataCount+"\n**Price Each**: "+currencyConvert(itemDataEach),
 									"color": Math.floor(Math.random() * 16777215) - 0,
 									"timestamp": itemData.ISO,
 									"footer": {
@@ -1015,10 +1059,11 @@ clientDiscord.on("message", (message) => {
 				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
-
-			case 'getUpdate':
+			
+			case 'getupdate':
 				var silveressItemData;
 				var silveressQuestData;
+				var silveressRecipeData
 
 				fetch(silveressItem)
 					.then(res => res.json())
@@ -1050,7 +1095,24 @@ clientDiscord.on("message", (message) => {
 							}
 						});
 						console.log(" [ "+Date.now()+" ] > Quest data fetched, status: "+payloadStatus);
-					})	
+					});
+				
+				fetch(silveressRecipe)
+					.then(res => res.json())
+					.then(data => silveressRecipeData = data)
+					.then(() =>{
+						silveressRecipeData = JSON.stringify(silveressRecipeData);
+						payloadStatus = "recieved";
+
+						fs.writeFile('./data/list-recipe.json', silveressRecipeData, function (err) {
+							if(err){
+								console.log(err);
+								payloadStatus = "rejected";
+							}
+						});
+						console.log(" [ "+Date.now()+" ] > Recipe data fetched, status: "+payloadStatus);
+					});
+					
 			break;
          };
      };
@@ -1146,7 +1208,7 @@ ontime({
 	cycle: ['wed 00:00:00'],
 	utc: true
 }, function (soyunActivity) {
-    	clientDiscord.emit("message", "!getUpdate");
+    	clientDiscord.emit("message", "!getupdate");
 		soyunActivity.done();
 		return;
 })
