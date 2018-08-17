@@ -4,15 +4,19 @@ const ontime = require("ontime");
 const fetch = require('node-fetch');
 const fs = require('fs');
 const dateFormat = require('dateFormat');
+const delay = require('delay');
 
 const secret = require("./secret.json");
 const config = require("./config.json");
 
-const daily = require("./data/daily-challenges.json");
 const koldrakTime = require("./data/koldrak-time.json");
 const items = require("./data/list-item.json");
 const quests = require("./data/list-quest.json");
 const rewards = require("./data/list-daily-rewards.json");
+const recipes = require("./data/list-recipe.json");
+const classDataSource = require("./data/list-classdata-source.json");
+const soyunDialogue = require("./data/list-soyundialogue.json");
+const event = require("./data/data-event.json");
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -42,28 +46,102 @@ var twtTimestamp;
 var twtColor;
 var twtFilter;
 
+// silveress character data
+var silveressCharacterData;
+
+var charaDataName;
+var charaDataImg;
+var charaDataLvl;
+var charaDataLvlHM;
+var charaDataHMAllocationDef;
+var charaDataHMAllocationAtk;
+
+var charaDataHP;
+var charaDataAP;
+var charaDataBossAP;
+var charaDataElement;
+var charaDataClass;
+var charaDataWeapon;
+
+var charaDataDef;
+var charaDataBossDef;
+var charaDataEva;
+var charaDataEvaRate;
+var charaDataBlock;
+var charaDataBlockRate;
+				
+var charaDataCritHit;
+var charaDataCritHitRate;
+var charaDataCritDmg;
+var charaDataCritDmgRate;
+
+var charaDataGem1;
+var charaDataGem2;
+var charaDataGem3;
+var charaDataGem4;
+var charaDataGem5;
+var charaDataGem6;
+
+var charaDataSoulShield1;
+var charaDataSoulShield2;
+var charaDataSoulShield3;
+var charaDataSoulShield4;
+var charaDataSoulShield5;
+var charaDataSoulShield6;
+var charaDataSoulShield7;
+var charaDataSoulShield8;
+
+var charaDataRing;
+var charaDataEarring;
+var charaDataNecklace;
+var charaDataBraclet;
+var charaDataBelt;
+var charaDataGloves;
+var charaDataSoul;
+var cahraDataHeart;
+var charaDataPet;
+var charaDataSoulBadge;
+var charaDataMysticBadge;
+
+var charaDataFaction;
+var charaDataServer;
+var charaDataGuild;
+var charaDataFactionRank;
+
+var charaDataPVPTotalGames;
+var charaDataPVPTotalWins;
+var charaDataPVPSoloWins;
+var charaDataPVPSoloTier;
+var charaDataPVPTagWins;
+var charaDataPVPTagTier;
+
 // silveress API point
 const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
 const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
 const silveressItem = "https://api.silveress.ie/bns/v3/items";
 const silveressMarket = "https://api.silveress.ie/bns/v3/market/na/current/";
 const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
-const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current";
+const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current?active=true";
 
 // Soyun status
 var statusRandom = 0;
 
+// celestial basin ticker
+var basinTime = 0;
+var basinStatus = "Announce: 43mins";
+var basinStatusMsgID;
+
 // function list
 // code "stolen" from silveress marketPage.js
 // find the item id by searching item-list.json
-function getID(name){
+function getItemID(name){
 	var id = "";
 	var match =  0;
 	var prevMatch = 0;
 	var itemQuerryLength = 1;
 
 	// searching the item using word match
-	for(i = 0; i < items.length; i++){
+	for(i = 31; i < items.length; i++){
 		var itemSearchName = items[i].name;
 			itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
 		var itemSearchQuerry = name;
@@ -129,11 +207,12 @@ function currencyConvert(number){
 
 // getting quest day and returning array of matched quest index
 function getQuests(day){
-	var day = day.replace(/\b\w/g, l => l.toUpperCase());
+	var day = day.toString().replace(/(^|\s)\S/g, l => l.toUpperCase());
 	var questsID = [0,0,0,0,0,0,0,0,0];
 	var k = 0;
+
 	for (i = 0; i < quests.length; i++){
-		for(j = 0; j < 6; j++){
+		for(j = 0; j < 7; j++){
 			if(quests[i].daily_challenge[j] == day){
 				var questMatchedLocation = i;
 				k = k+1;
@@ -141,13 +220,143 @@ function getQuests(day){
 			}
 		}
 	}
-	return questsID;	
+	return questsID;
 }
 
+// time difference return array of time [hour, minutes]
+function getTimeDifference(timeQuery){
+	var timeNow = new Date();
 
+	// Getting the hour of UTC+1
+	var timeNowHour = timeNow.getUTCHours() + 1;
+	var timeMinutesNow = timeNow.getUTCMinutes();
+
+	// Making new date data with details from above variable
+	var timeNow = new Date(0, 0, 0, timeNowHour, timeMinutesNow, 0);		
+
+	var timeDifferenceValue = [];
+	var timeDifference = timeQuery - timeNow;
+
+	// Formatting
+	var timeDifferenceHours = Math.floor(timeDifference / 1000 / 60 / 60);
+
+	timeDifference -= timeDifferenceHours * 1000 * 60 * 60;
+
+	var timeDifferenceMinutes = Math.floor(timeDifference / 1000 / 60);
+
+	// Making it 24 hours format
+	if(timeDifferenceHours < 0){
+		timeDifferenceHours = timeDifferenceHours + 24;
+	}
+
+	// UTC + 1 formatting
+	timeDifferenceHours = timeDifferenceHours - 1;
+
+	timeDifferenceValue[0] = timeDifferenceHours;
+	timeDifferenceValue[1] = timeDifferenceMinutes;
+
+	return timeDifferenceValue;
+}
+
+// time status receive array of time [hour, minutes] return status
+function getTimeStatus(time){
+	var timeQuery = new Date(0, 0, 0, time[0], 0, 0);
+	var timeCheck = getTimeDifference(timeQuery.getTime());
+	var timeHours = timeCheck[0];
+	var timeMinutes = timeCheck[1];
+	var timeStatus;
+
+	//formating
+	if(timeHours < 10){
+		var timeHours = "0"+timeHours;
+	}
+	if(timeMinutes < 10){
+		var timeMinutes = "0"+timeMinutes;
+	}
+
+	var timeStatus = timeHours+" hour(s) and "+timeMinutes+" minute(s) left"
+
+	return timeStatus;
+}
+
+// Empty data fetched handling, return data or "Nothing"
+function fetchData(data){
+	var data = data;
+		data = data.toString();
+
+	if(data == "" || data == null){
+		var data = "N/A"
+	}else{
+		var data = data;
+	}
+
+	return data;
+}
+
+// Getting PVP win rate, return percentage rate
+function getWinRate(game, win){
+	var game = game;
+		game = parseInt(game);
+
+	var win = win;
+		win = parseInt(win);
+	
+	if(game == 0 && win == 0){
+		var winRate = 0;
+	}else{
+		var winRate = ((win/game)*100).toFixed(2);
+	}
+
+	return winRate;	
+}
+
+// Data fetching
+async function getData(query) {
+	const response = await fetch(query);
+
+	return response.json()
+}
+
+// Get quest type, return "Dynamic" or "Event"
+function getQuestType(type){
+	var type = type;
+	var typeValue;
+
+	switch(type){
+		case 1:
+			typeValue = "(Dynamic)";
+		break;
+		case 2:
+			typeValue = "(Event)";
+		break;
+		default:
+			typeValue = "";
+		break;
+	}
+
+	return typeValue;
+}
+
+// Getting character skillset
+function getCharacterSkillset(charaClass, charaElement){
+	var charaClass = charaClass.toLowerCase();
+	var charaElement = charaElement.toLowerCase();
+	
+	for(var i = 0; i < classDataSource.length; i++){
+		if(classDataSource[i].name == charaClass){
+			var classIndex = i;
+		}
+	}
+
+	if(charaElement == "element"){
+		var charaSkillset = classDataSource[classIndex].skillsets[0];
+	}else{
+		var charaSkillset = classDataSource[classIndex].skillsets[1];
+	}
+}
 // Discord stuff start here
 clientDiscord.on("ready", () => {
-	console.log(" [ "+Date.now()+" ] > bot is alive and ready for command(s)");
+	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
 	
 	clientDiscord.user.setUsername("Jinsoyun");
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
@@ -163,15 +372,17 @@ clientDiscord.on("guildMemberAdd", (member) => {
 	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
-	console.log(" [ "+Date.now()+" ] > "+member.user.username+" has joined");
-	console.log(" [ "+Date.now()+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
+	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" has joined");
+	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
 });
 
 // User commands
-clientDiscord.on("message", (message) => {
+clientDiscord.on("message", async (message) => {
   if (message.toString().substring(0, 1) == '!') {
-        var args = message.toString().substring(1).split(' ');
-        var cmd = args[0];
+		//var args = message.toString().substring(1).split(' ');
+		var	args = message.toString().replace(/[‘’“”'']/g, '"');
+			args = args.substring(1).split(' ');
+		var cmd = args[0];
 			cmd = cmd.toLowerCase();
 
         args = args.splice(1);
@@ -179,7 +390,7 @@ clientDiscord.on("message", (message) => {
 			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade and Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`';
+				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -191,7 +402,7 @@ clientDiscord.on("message", (message) => {
 
 						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items and quests list updated @ Wednesday 12AM UTC \n\t  Market listing updated every 1 hour```");
 						// Console logging
-						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 					break;
 
 					case 'status':						
@@ -209,9 +420,10 @@ clientDiscord.on("message", (message) => {
 					break;
 
 					default:
-						message.channel.send("Yes master?");
+						var soyunSay = soyunDialogue
+						message.channel.send(soyunSay.text[Math.floor(Math.random() * soyunSay.text.length) - 0]);
 						// Console logging
-						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
 				};
             break;
 			
@@ -238,7 +450,7 @@ clientDiscord.on("message", (message) => {
 					// Checking the verification
 					if(querryStatus == true){
 						// Convert to capitalize to make it easy and 'prettier'
-						joinUsername = joinUsername.replace(/\b\w/g, l => l.toUpperCase());
+						joinUsername = joinUsername.replace(/(^|\s)\S/g, l => l.toUpperCase());
 						
 						// Setting user role to match the user class
 						message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", joinClass));
@@ -254,6 +466,10 @@ clientDiscord.on("message", (message) => {
 						message.guild.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 						payloadStatus = "received";
 						querryStatus = false;
+
+						message.guild.channels.find("name", config.DEFAULT_MEMBER_LOG).send(message.author.username+" joined `"+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM)+UTC`"),{
+
+						});
 					}else{
 						// Telling them whats wrong
 						message.channel.send("Im sorry, I cant find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
@@ -265,7 +481,7 @@ clientDiscord.on("message", (message) => {
 				};
 
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 			
@@ -275,14 +491,14 @@ clientDiscord.on("message", (message) => {
 				var usernameValue = (usernameQuerry[1]);
 				
 				// capitalizing
-				usernameValue = usernameValue.replace(/\b\w/g, l => l.toUpperCase());
+				usernameValue = usernameValue.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
 				// Changing message author username
 				message.guild.members.get(message.author.id).setNickname(usernameValue);
 				message.channel.send("Your username changed to "+usernameValue);
 
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 			break;
 			
 			// Class change
@@ -301,9 +517,8 @@ clientDiscord.on("message", (message) => {
 					// Class input verification (inefficient af)
 					if(classValue == classArr[i]){
 						querryStatus = true;
-						break;
 					};
-					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", classArr[i]));
+					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", classArr[i]));					
 					i++
 				};
 
@@ -322,7 +537,7 @@ clientDiscord.on("message", (message) => {
 					querryStatus = false;
 				}
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -354,7 +569,7 @@ clientDiscord.on("message", (message) => {
 					});
 				});
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 			break;
 			
 			// Writing message via bot for announcement or notice, Admin only
@@ -363,7 +578,7 @@ clientDiscord.on("message", (message) => {
 					var sayQuerry = message.toString().substring(1).split('"');
 
 					var sayTitle = (sayQuerry[1]);
-						sayTitle = sayTitle.replace(/\b\w/g, l => l.toUpperCase());
+						sayTitle = sayTitle.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
 						// Default title
 						if(sayTitle == ""){
@@ -390,7 +605,7 @@ clientDiscord.on("message", (message) => {
 					payloadStatus = 'rejected';
 				};
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -404,18 +619,18 @@ clientDiscord.on("message", (message) => {
 						}).catch(console.error);
 						i++;
 						// Console logging
-						console.log(" [ "+Date.now()+" ] > "+classArr[i]+" role created");
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classArr[i]+" role created");
 					};
 
 					// Making "news" channel
 					message.guild.createChannel(config.DEFAULT_NEWS_CHANNEL, "text");
 					// Console logging
-					console.log(" [ "+Date.now()+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
+					console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
 					
 					payloadStatus = "recieved";
 				};	
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
 			
@@ -436,7 +651,7 @@ clientDiscord.on("message", (message) => {
 
 				message.channel.send("Hmmm, I'll go with **"+pickResultValue+"**");
 				
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 			break;
 
 			// die roll
@@ -457,7 +672,7 @@ clientDiscord.on("message", (message) => {
 
 				message.channel.send("You rolled **"+rollResult+"**");
 
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 			break;
 
 			// Today daily challenge
@@ -467,9 +682,9 @@ clientDiscord.on("message", (message) => {
 				var dcDay = dcDate.getUTCDay();
 
 				var dailyQuerry = message.toString().substring(1).split(' ');
+					dailyQuerry = dailyQuerry.splice(1);
 				var dailyPartyAnnouncement = false;
-
-				dailyQuerry = dailyQuerry.splice(1);
+				
 				// For checking tomorrow daily
 				switch(dailyQuerry[0]){
 					case 'tomorrow':
@@ -483,54 +698,37 @@ clientDiscord.on("message", (message) => {
 					default:
 						dcDay = dcDay;
 				};
-
 				switch(dcDay){
 					case 0:
 						var questsList = getQuests("sunday");
 						var questsListRewards = rewards.sunday.rewards;
-						var questsListRewardsEvent = rewards.sunday.event;
 					break;
 					case 1:
 						var questsList = getQuests("monday");
 						var questsListRewards = rewards.monday.rewards;
-						var questsListRewardsEvent = rewards.monday.event;
 					break;
 					case 2:
 						var questsList = getQuests("tuesday");
 						var questsListRewards = rewards.tuesday.rewards;
-						var questsListRewardsEvent = rewards.tuesday.event;
 					break;
 					case 3:
 						var questsList = getQuests("wednesday");
 						var questsListRewards = rewards.wednesday.rewards;
-						var questsListRewardsEvent = rewards.wednesday.event;
 					break;
 					case 4:
 						var questsList = getQuests("thursday");
 						var questsListRewards = rewards.thursday.rewards;
-						var questsListRewardsEvent = rewards.thursday.event;
 					break;
 					case 5:
 						var questsList = getQuests("friday");
 						var questsListRewards = rewards.friday.rewards;
-						var questsListRewardsEvent = rewards.friday.event;
 					break;
 					case 6:
 						var questsList = getQuests("saturday");
 						var questsListRewards = rewards.saturday.rewards;
-						var questsListRewardsEvent = rewards.saturday.event;
 					break;
 				}
 
-				var questDungeonEventReward = ["","","","","","","","","","",""]
-				for(i = 0; i <questsList.length; i++){
-					for(j = 0; j < questsListRewardsEvent.length; j++){
-						if(questsList[i] == (questsListRewardsEvent[j]-1)){
-							questDungeonEventReward[i-1] = (rewards.event.emoji+" "+rewards.event.name+" (Event)");
-						}
-					}
-				}
-				
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
@@ -541,52 +739,49 @@ clientDiscord.on("message", (message) => {
 								"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=0"
 							},
 							"title": "Completion Rewards",
-							"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n",
+							"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n"+event.rewards.daily,
 							"color": 15025535,
 							"footer": {
-								"text": dateFormat(dcDate, "UTC:dddd, mmmm dS, yyyy, h:MM:ss TT")+" UTC"
+								"icon_url": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/3e/3edfd4aa006dae92488c6c7d7810cbc709957fbb_full.jpg",
+								"text": "Data provided by Maeyuka - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 							},
 							"fields":[
 								{
 									"name": quests[questsList[1]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)+"\n"+questDungeonEventReward[0] 								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)								
 								},
 								{
 									"name": quests[questsList[2]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)+"\n"+questDungeonEventReward[1]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)						
 								},
 								{
 									"name": quests[questsList[3]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)+"\n"+questDungeonEventReward[2]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)
 								},
 								{
 									"name": quests[questsList[4]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)+"\n"+questDungeonEventReward[3]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)
 								},
 								{
 									"name": quests[questsList[5]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)+"\n"+questDungeonEventReward[4]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)
 								},
 								{
 									"name": quests[questsList[6]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)+"\n"+questDungeonEventReward[5]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)
 								},
 								{
 									"name": quests[questsList[7]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)+"\n"+questDungeonEventReward[6]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)
 								},
 								{
 									"name": quests[questsList[8]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)+"\n"+questDungeonEventReward[7]								
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)
 								},
 								{
 									"name": quests[questsList[9]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)+"\n"+questDungeonEventReward[8]								
-								},
-								{
-									"name": quests[questsList[10]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[10]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[10]].gold)+"\n"+questDungeonEventReward[9]								
-								},
+									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)
+								}
 							]
 						}
 					});
@@ -603,52 +798,49 @@ clientDiscord.on("message", (message) => {
 												"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=0"
 											},
 											"title": "Completion Rewards",
-											"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n",
+											"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n"+event.rewards.daily,
 											"color": 15025535,
 											"footer": {
-												"text": dateFormat(dcDate, "UTC:dddd, mmmm dS, yyyy, h:MM:ss TT")+" UTC"
+												"icon_url": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/3e/3edfd4aa006dae92488c6c7d7810cbc709957fbb_full.jpg",
+												"text": "Data provided by Maeyuka - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 											},
 											"fields":[
 												{
 													"name": quests[questsList[1]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)+"\n"+questDungeonEventReward[0] 								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)								
 												},
 												{
 													"name": quests[questsList[2]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)+"\n"+questDungeonEventReward[1]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)							
 												},
 												{
 													"name": quests[questsList[3]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)+"\n"+questDungeonEventReward[2]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)							
 												},
 												{
 													"name": quests[questsList[4]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)+"\n"+questDungeonEventReward[3]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)								
 												},
 												{
 													"name": quests[questsList[5]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)+"\n"+questDungeonEventReward[4]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)								
 												},
 												{
 													"name": quests[questsList[6]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)+"\n"+questDungeonEventReward[5]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)								
 												},
 												{
 													"name": quests[questsList[7]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)+"\n"+questDungeonEventReward[6]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)								
 												},
 												{
 													"name": quests[questsList[8]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)+"\n"+questDungeonEventReward[7]								
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)								
 												},
 												{
 													"name": quests[questsList[9]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)+"\n"+questDungeonEventReward[8]								
-												},
-												{
-													"name": quests[questsList[10]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[10]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[10]].gold)+"\n"+questDungeonEventReward[9]								
-												},
+													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)								
+												}
 											]
 										}
 									}).catch(console.error);
@@ -659,7 +851,7 @@ clientDiscord.on("message", (message) => {
 					});
 				};
 				// Console logging
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -669,56 +861,34 @@ clientDiscord.on("message", (message) => {
 				var koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
 
-				switch(koldrakQuerry[0]){
-					
-					// Disabling the alert
-					case 'disable':
-						if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
-							koldrakAlertSystem = false;
-							console.log(" [ "+Date.now()+" ] > !koldrak alert is now disabled");
-						}else{
-							console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: rejected");
-						};
-					break;
-					
-					// Enabling the alert
-					case 'enable':
-						if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
-							koldrakAlertSystem = true;
-							console.log(" [ "+Date.now()+" ] > !koldrak alert is now enabled");
-						}else{
-							console.log(" [ "+Date.now()+" ] > "+message.author.username+" do "+message+", status: rejected");
-						};
-					break;
-					
-					// Debug message when alert is disabled (delete for stable)
-					case 'debug':
-						clientDiscord.channels.find("name", "lab").send({
-							"embed":{
-								"color": 16753920, 
-								"description": "!koldrak debug triggered"
-							}
-						});
-						console.log(" [ "+Date.now()+" ] > it's now "+koldrakDateVariable.getUTCHours()+":"+koldrakDateVariable.getUTCMinutes()); // delete when fixed
-					break;
+				// Getting the hour of UTC+1
+				var koldrakTimeHourNow = koldrakDateVariable.getUTCHours() + 1;
+				var koldrakTimeMinutesNow = koldrakDateVariable.getUTCMinutes();
+				
+				// Cheating the search so it will still put hour even if the smallest time is 24
+				var koldrakTimeLeft = 25;
+				
+				// Making new date data with details from above variable
+				var koldrakTimeNow = new Date(0, 0, 0, koldrakTimeHourNow, koldrakTimeMinutesNow, 0);	
 
+				switch(koldrakQuerry[0]){
 					case 'list':
 						message.channel.send({
 							"embed":{
 								"color": 8388736,
-								"description": "- `01:00:00 UTC`\n- `04:00:00 UTC`\n- `07:00:00 UTC`\n- `19:00:00 UTC`\n- `22:00:00 UTC`",
+								"description": "- `01:00:00 UTC ("+getTimeStatus([1,0])+")`\n- `04:00:00 UTC ("+getTimeStatus([4,0])+")`\n- `07:00:00 UTC ("+getTimeStatus([7,0])+")`\n- `19:00:00 UTC ("+getTimeStatus([19,0])+")`\n- `22:00:00 UTC ("+getTimeStatus([22,0])+")`",
 								"author":{
 									"name": "Koldrak's Lair Timetable",
 									
 								},
 								"footer":{
 									"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-									"text": "Koldrak's Lair"
+									"text": "Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 								}
 							}
 						})
 
-						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 					break;
 
 					// Doing "Alert" at specific time(s)
@@ -739,7 +909,7 @@ clientDiscord.on("message", (message) => {
 												},
 												"footer":{
 													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-													"text": "Koldrak's Lair"
+													"text": "Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 												}
 											}
 										});
@@ -749,50 +919,28 @@ clientDiscord.on("message", (message) => {
 							});
 						});
 
-						console.log(" [ "+Date.now()+" ] > !koldrak alert triggered");
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > !koldrak alert triggered");
 					break;
 					
 					// Showing when is the closest Koldrak's lair time
 					default:
-						// Getting the hour of UTC+1
-						var koldrakTimeHourNow = koldrakDateVariable.getUTCHours() + 1;
-						var koldrakTimeMinutesNow = koldrakDateVariable.getUTCMinutes();
-
-						// Cheating the search so it will still put hour even if the smallest time is 24
-						var koldrakTimeLeft = 25;
-
-						// Making new date data with details from above variable
-						var koldrakTimeNow = new Date(0, 0, 0, koldrakTimeHourNow, koldrakTimeMinutesNow, 0);
-
 						// Searching when is the closest one
 						for(var i = 0; i < 5;){
 							// Making new date data with details from koldrak's schedule (koldrak.json)
 							var koldrakTimeNext = new Date(0, 0, 0, koldrakTime.time[i], 0, 0);
 							// Getting the time difference
-							var koldrakTimeDiff = koldrakTimeNext.getTime() - koldrakTimeNow.getTime();
+							var koldrakTimeDiff = getTimeDifference(koldrakTimeNext.getTime());
 
 							// Formatting
-							var koldrakTimeHours = Math.floor(koldrakTimeDiff / 1000 / 60 / 60);
+							var koldrakTimeHours = koldrakTimeDiff[0];							
+							var koldrakTimeMinutes = koldrakTimeDiff[1];
 
-								koldrakTimeDiff -= koldrakTimeHours * 1000 * 60 * 60;
-							
-							var koldrakTimeMinutes = Math.floor(koldrakTimeDiff / 1000 / 60);
-
-							// Making it 24 hours format
-							if(koldrakTimeHours < 0){
-								koldrakTimeHours = koldrakTimeHours + 24;
-							}
-							
-							// UTC + 1 formatting
-							koldrakTimeHours = koldrakTimeHours - 1;
-							
 							// Storing the closest for later
 							if(koldrakTimeHours <= koldrakTimeLeft){
 								if(koldrakTimeHours >= 0){
 									koldrakTimeLeft = koldrakTimeHours;
 								}
 							}
-
 							i++;
 						}
 
@@ -800,7 +948,7 @@ clientDiscord.on("message", (message) => {
 						message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
 
 						// Console Logging
-						console.log(" [ "+Date.now()+" ] > "+message+" triggered");
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 				};
 			break;
 
@@ -811,192 +959,152 @@ clientDiscord.on("message", (message) => {
 				if(whoQuerry[0] == null){
 					whoQuerry = [message.member.nickname];
 				}				
-				var silveressCharacterData;
-
-				var charaDataName;
-				var charaDataImg;
-				var charaDataLvl;
-				var charaDataLvlHM;
-
-				var charaDataHP;
-				var charaDataAP;
-				var charaDataBossAP;
-				var charaDataElement;
-				var charaDataClass;
-				var charaDataWeapon;
-				
-				var charaDataCritHit;
-				var charaDataCritHitRate;
-				var charaDataCritDmg;
-				var charaDataCritDmgRate;
-
-				var charaDataGem1;
-				var charaDataGem2;
-				var charaDataGem3;
-				var charaDataGem4;
-				var charaDataGem5;
-				var charaDataGem6;
-
-				var charaDataSoulShield1;
-				var charaDataSoulShield2;
-				var charaDataSoulShield3;
-				var charaDataSoulShield4;
-				var charaDataSoulShield5;
-				var charaDataSoulShield6;
-				var charaDataSoulShield7;
-				var charaDataSoulShield8;
-
-				var charaDataRing;
-				var charaDataEarring;
-				var charaDataNecklace;
-				var charaDataBraclet;
-				var charaDataBelt;
-				var charaDataGloves;
-				var charaDataSoul;
-				var charaDataPet;
-				var charaDataSoulBadge;
-				var charaDataMysticBadge;
-
-				var charaDataFaction;
-				var charaDataServer;
-				var charaDataGuild;
-				var charaDataFactionRank;
 
 				var silveressQuerry = silveressNA+whoQuerry[0]; // for the querry
+
+				// fetching data from api site
 				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
 					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 
-				// fetching data from api site
 				fetch(silveressQuerry)
 					.then(res => res.json())
 					.then(data => silveressCharacterData = data)
 					.then(() => {
-						charaDataName = silveressCharacterData.characterName;
-						charaDataImg = silveressCharacterData.characterImg;
-						charaDataLvl = silveressCharacterData.playerLevel;
-						charaDataLvlHM = silveressCharacterData.playerLevelHM;
+						charaDataName = fetchData(silveressCharacterData.characterName);
+						charaDataImg = fetchData(silveressCharacterData.characterImg);
+						charaDataLvl = fetchData(silveressCharacterData.playerLevel);
+						charaDataLvlHM = fetchData(silveressCharacterData.playerLevelHM);
+						charaDataHMAllocationAtk = fetchData(silveressCharacterData.HMAttackPoint);
+						charaDataHMAllocationDef = fetchData(silveressCharacterData.HMDefencePoint);
 
-						charaDataHP = silveressCharacterData.hp;
-						charaDataAP = silveressCharacterData.ap;
-						charaDataBossAP = silveressCharacterData.ap_boss;
-						charaDataElement = silveressCharacterData.activeElement;
-						charaDataClass = silveressCharacterData.playerClass;
-						charaDataWeapon = silveressCharacterData.weaponName;
+						charaDataHP = fetchData(silveressCharacterData.hp);
+						charaDataAP = fetchData(silveressCharacterData.ap);
+						charaDataBossAP = fetchData(silveressCharacterData.ap_boss);
+						charaDataElement = fetchData(silveressCharacterData.activeElement);
+						charaDataClass = fetchData(silveressCharacterData.playerClass);
+						charaDataWeapon = fetchData(silveressCharacterData.weaponName);
 
-						charaDataCritHit = silveressCharacterData.crit;
-						charaDataCritHitRate = silveressCharacterData.critRate;
-						charaDataCritDmg = silveressCharacterData.critDamage;
-						charaDataCritDmgRate = silveressCharacterData.critDamageRate;
+						charaDataCritHit = fetchData(silveressCharacterData.crit);
+						charaDataCritHitRate = fetchData(silveressCharacterData.critRate);
+						charaDataCritDmg = fetchData(silveressCharacterData.critDamage);
+						charaDataCritDmgRate = fetchData(silveressCharacterData.critDamageRate);
 
-						charaDataDef = silveressCharacterData.defence;
-						charaDataBossDef = silveressCharacterData.defence_boss;
-						charaDataEva = silveressCharacterData.evasion;
-						charaDataEvaRate = silveressCharacterData.evasionRate;
-						charaDataBlock = silveressCharacterData.block;
-						charaDataBlockRate = silveressCharacterData.blockRate;
+						charaDataDef = fetchData(silveressCharacterData.defence);
+						charaDataBossDef = fetchData(silveressCharacterData.defence_boss);
+						charaDataEva = fetchData(silveressCharacterData.evasion);
+						charaDataEvaRate = fetchData(silveressCharacterData.evasionRate);
+						charaDataBlock = fetchData(silveressCharacterData.block);
+						charaDataBlockRate = fetchData(silveressCharacterData.blockRate);
 
-						charaDataGem1 = silveressCharacterData.gem1;
-						charaDataGem2 = silveressCharacterData.gem2;
-						charaDataGem3 = silveressCharacterData.gem3;
-						charaDataGem4 = silveressCharacterData.gem4;
-						charaDataGem5 = silveressCharacterData.gem5;
-						charaDataGem6 = silveressCharacterData.gem6;
+						charaDataGem1 = fetchData(silveressCharacterData.gem1);
+						charaDataGem2 = fetchData(silveressCharacterData.gem2);
+						charaDataGem3 = fetchData(silveressCharacterData.gem3);
+						charaDataGem4 = fetchData(silveressCharacterData.gem4);
+						charaDataGem5 = fetchData(silveressCharacterData.gem5);
+						charaDataGem6 = fetchData(silveressCharacterData.gem6);
 
-						charaDataSoulShield1 = silveressCharacterData.soulshield1;
-						charaDataSoulShield2 = silveressCharacterData.soulshield2;
-						charaDataSoulShield3 = silveressCharacterData.soulshield3;
-						charaDataSoulShield4 = silveressCharacterData.soulshield4;
-						charaDataSoulShield5 = silveressCharacterData.soulshield5;
-						charaDataSoulShield6 = silveressCharacterData.soulshield6;
-						charaDataSoulShield7 = silveressCharacterData.soulshield7;
-						charaDataSoulShield8 = silveressCharacterData.soulshield8;
+						charaDataSoulShield1 = fetchData(silveressCharacterData.soulshield1);
+						charaDataSoulShield2 = fetchData(silveressCharacterData.soulshield2);
+						charaDataSoulShield3 = fetchData(silveressCharacterData.soulshield3);
+						charaDataSoulShield4 = fetchData(silveressCharacterData.soulshield4);
+						charaDataSoulShield5 = fetchData(silveressCharacterData.soulshield5);
+						charaDataSoulShield6 = fetchData(silveressCharacterData.soulshield6);
+						charaDataSoulShield7 = fetchData(silveressCharacterData.soulshield7);
+						charaDataSoulShield8 = fetchData(silveressCharacterData.soulshield8);
 
-						charaDataRing = silveressCharacterData.ringName;
-						charaDataEarring = silveressCharacterData.earringName;
-						charaDataNecklace = silveressCharacterData.necklaceName;
-						charaDataBraclet = silveressCharacterData.braceletName;
-						charaDataBelt = silveressCharacterData.beltName;
-						charaDataGloves = silveressCharacterData.gloves;
-						charaDataSoul = silveressCharacterData.soulName;
-						charaDataPet = silveressCharacterData.petAuraName;
-						charaDataSoulBadge = silveressCharacterData.soulBadgeName;
-						charaDataMysticBadge = silveressCharacterData.mysticBadgeName;
+						charaDataRing = fetchData(silveressCharacterData.ringName);
+						charaDataEarring = fetchData(silveressCharacterData.earringName);
+						charaDataNecklace = fetchData(silveressCharacterData.necklaceName);
+						charaDataBraclet = fetchData(silveressCharacterData.braceletName);
+						charaDataBelt = fetchData(silveressCharacterData.beltName);
+						charaDataGloves = fetchData(silveressCharacterData.gloves);
+						charaDataSoul = fetchData(silveressCharacterData.soulName);
+						cahraDataHeart = fetchData(silveressCharacterData.soulName2);
+						charaDataPet = fetchData(silveressCharacterData.petAuraName);
+						charaDataSoulBadge = fetchData(silveressCharacterData.soulBadgeName);
+						charaDataMysticBadge = fetchData(silveressCharacterData.mysticBadgeName);
 
-						charaDataServer = silveressCharacterData.server;
-						charaDataFaction = silveressCharacterData.faction;
-						charaDataGuild = silveressCharacterData.guild;
-						charaDataFactionRank = silveressCharacterData.factionRank;
+						charaDataServer = fetchData(silveressCharacterData.server);
+						charaDataFaction = fetchData(silveressCharacterData.faction);
+						charaDataGuild = fetchData(silveressCharacterData.guild);
+						charaDataFactionRank = fetchData(silveressCharacterData.factionRank);
+
+						charaDataPVPTotalGames = fetchData(silveressCharacterData.tournamentTotalGames);
+						charaDataPVPTotalWins = fetchData(silveressCharacterData.tournamentTotalWins);
+
+						charaDataPVPSoloWins = fetchData(silveressCharacterData.tournamentSoloWins);
+						charaDataPVPSoloTier = fetchData(silveressCharacterData.tournamentSoloTier);
+
+						charaDataPVPTagWins = fetchData(silveressCharacterData.tournamentTagWins);
+						charaDataPVPTagTier = fetchData(silveressCharacterData.tournamentTagTier);
 					})
 					.then(() =>{
 						if(charaDataName == "undefined"){
-							message.channel.send('Im sorry i cant find the character you are looking for, can you try again?\n\nExample: **!who "Jinsoyun"**');
-
 							payloadStatus = 'rejected';
+
+							message.channel.send('Im sorry i cant find the character you are looking for, can you try again?\n\nExample: **!who "Jinsoyun"**');				
 						}else{
+							payloadStatus = 'recieved';
 							message.channel.send({
 								"embed": {
 									"author": {
-										"name": charaDataGuild+"\'s "+charaDataName	
+									"name": charaDataGuild+"\'s "+charaDataName	
 									},
 									"title": charaDataName+" is a Level "+charaDataLvl+" HM "+charaDataLvlHM+" "+charaDataElement+" "+charaDataClass+"\n ",
 									"url": bnstreeProfile,
 									"fields": [
-										{
-										  "name": "Basic Stats",
-										  "value": "HP: "+charaDataHP+"\nAttack Power: "+charaDataAP
-										},
-										{
-											"name": "\nOffensive Stats",
-											"value": "Boss Attack Power: "+charaDataBossAP+"\nCritical Hit: "+charaDataCritHit+" ("+(charaDataCritHitRate*100).toFixed(2)+"%)\nCritical Damage: "+charaDataCritDmg+" ("+(charaDataCritDmgRate*100).toFixed(2)+"%)",
-										},
-										{
-											"name": "\nDefensive Stats",
-											"value": "Defense: "+charaDataDef+"\nBoss Defense: "+charaDataBossDef+"\nEvasion: "+charaDataEva+" ("+(charaDataEvaRate*100).toFixed(2)+"%)\nBlock: "+charaDataBlock+" ("+(charaDataBlockRate*100).toFixed(2)+"%)",
-										},
-										{
-											"name": "Weapon",
-											"value": charaDataWeapon+"\n\n ",
-										},
-										{
-											"name": "Gems",
-											"value": charaDataGem1+"\n"+charaDataGem2+"\n"+charaDataGem3+"\n"+charaDataGem4+"\n"+charaDataGem5+"\n"+charaDataGem6+"\n",
-										},
-										{
-											"name": "Equipments",
-											"value": charaDataRing+"\n"+charaDataEarring+"\n"+charaDataNecklace+"\n"+charaDataBraclet+"\n"+charaDataBelt+"\n"+charaDataGloves+"\n"+charaDataSoul+"\n"+charaDataPet+"\n"+charaDataSoulBadge+"\n"+charaDataMysticBadge, 
-										},
-										{
-											"name": "Soulshield",
-											"value": charaDataSoulShield1+"\n"+charaDataSoulShield2+"\n"+charaDataSoulShield3+"\n"+charaDataSoulShield4+"\n"+charaDataSoulShield5+"\n"+charaDataSoulShield6+"\n"+charaDataSoulShield7+"\n"+charaDataSoulShield8, 
-										},
-										{
-											"name": "Miscellaneous",
-											"value": "Server: "+charaDataServer+"\nFaction: "+charaDataFaction+" ("+charaDataFactionRank+")",
-										}
-
-									],
+									{
+										"name": "Basic Stats",
+										"value": "HP: "+charaDataHP+"\nAttack Power: "+charaDataAP+"\nHongmoon Points Allocation (Atk - Def): "+charaDataHMAllocationAtk+" - "+charaDataHMAllocationDef
+									},
+									{
+										"name": "\nOffensive Stats",
+										"value": "Boss Attack Power: "+charaDataBossAP+"\nCritical Hit: "+charaDataCritHit+" ("+(charaDataCritHitRate*100).toFixed(2)+"%)\nCritical Damage: "+charaDataCritDmg+" ("+(charaDataCritDmgRate*100).toFixed(2)+"%)",
+									},
+									{
+										"name": "\nDefensive Stats",
+										"value": "Defense: "+charaDataDef+"\nBoss Defense: "+charaDataBossDef+"\nEvasion: "+charaDataEva+" ("+(charaDataEvaRate*100).toFixed(2)+"%)\nBlock: "+charaDataBlock+" ("+(charaDataBlockRate*100).toFixed(2)+"%)",
+									},
+									{
+										"name": "Weapon",
+										"value": charaDataWeapon+"\n\n ",
+									},
+									{
+										"name": "Gems",
+										"value": charaDataGem1+"\n"+charaDataGem2+"\n"+charaDataGem3+"\n"+charaDataGem4+"\n"+charaDataGem5+"\n"+charaDataGem6+"\n",
+									},
+									{
+										"name": "Equipments",
+										"value": "Ring: "+charaDataRing+"\nEarring: "+charaDataEarring+"\nNecklace: "+charaDataNecklace+"\nBraclet: "+charaDataBraclet+"\nBelt: "+charaDataBelt+"\nGloves: "+charaDataGloves+"\nSoul: "+charaDataSoul+"\nHeart: "+cahraDataHeart+"\nAura Pet: "+charaDataPet+"\nSoul Badge: "+charaDataSoulBadge+"\nMystic Badge: "+charaDataMysticBadge, 
+									},
+									{
+										"name": "Soulshield",
+										"value": charaDataSoulShield1+"\n"+charaDataSoulShield2+"\n"+charaDataSoulShield3+"\n"+charaDataSoulShield4+"\n"+charaDataSoulShield5+"\n"+charaDataSoulShield6+"\n"+charaDataSoulShield7+"\n"+charaDataSoulShield8, 
+									},
+									{
+										"name": "Arena Stats",
+										"value": "Games (Play - Win - Lose): "+charaDataPVPTotalGames+" - "+charaDataPVPTotalWins+" - "+(charaDataPVPTotalGames-charaDataPVPTotalWins)+" ("+getWinRate(charaDataPVPTotalGames, charaDataPVPTotalWins)+"% win rate)\nSolo Wins: "+charaDataPVPSoloWins+" ("+charaDataPVPSoloTier+")\nTag Team Wins: "+charaDataPVPTagWins+" ("+charaDataPVPTagTier+")"
+									},
+									{
+										"name": "Miscellaneous",
+										"value": "Server: "+charaDataServer+"\nFaction: "+charaDataFaction+" ("+charaDataFactionRank+")",
+									}],
 									"description": "",
 									"color": Math.floor(Math.random() * 16777215) - 0,
 									"footer": {
 										"icon_url": "https://slate.silveress.ie/images/logo.png",
-										"text": "Powered by Silveress's BnS API"
+										"text": "Powered by Silveress's BnS API - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 									},
 									"thumbnail": {
 										"url": charaDataImg
 									}
 								}
 							})
-							payloadStatus = 'recieved'
-						}
-					})
-					.then(() => payloadStatus = 'recieved')
-					.catch(err => {
-						console.log(err);
-						payloadStatus = 'rejected';
-					});
+						}		
+					})	
 					
-					console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
-					payloadStatus = "rejected";
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				payloadStatus = "rejected";
 			break;
 
 			case 'market':
@@ -1004,15 +1112,30 @@ clientDiscord.on("message", (message) => {
 					marketQuerry = marketQuerry.splice(1);
 				
 				if(marketQuerry[0] == null){
-					message.channel.send('I\'m sorry, i can\'t find the item you are looking for, can you try again?\n\nExample: **!market "moonstone"**');
+					message.channel.send('I\'m sorry, you haven\'t specified the item you are looking for, can you try again?\n\nExample: `!market "moonstone"`');
 				}else{
 					// formating so it can be searched
-					marketQuerry[0] = marketQuerry[0].replace(/\b\w/g, l => l.toUpperCase());
+					marketQuerry[0] = marketQuerry[0].replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-					var marketItemID = getID(marketQuerry[0]);
+					var marketItemID = getItemID(marketQuerry[0]);
 					if(marketItemID == ""){
 						// search if tradeable or not by looking at the item-list.json
-						message.channel.send("I'm sorry the item you are looking for it's not tradeable");
+						message.channel.send({
+							"embed": {
+								"description":"No result on ***"+marketQuerry[0]+"***\nItem might be untradable or not in marketplace.",
+								"color": Math.floor(Math.random() * 16777215) - 0,
+								"footer": {
+									"icon_url": "https://slate.silveress.ie/images/logo.png",
+									"text": "Powered by Silveress's BnS API - Retrieved at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								},
+								"thumbnail": {
+									"url": getItemImg(marketItemID)
+								},
+								"author": {
+									"name": marketQuerry[0]+" [N/A]",														
+								}
+							}
+						});
 					}else{
 						var silveressMarketData;
 						// fetching the market data
@@ -1022,30 +1145,77 @@ clientDiscord.on("message", (message) => {
 						.then(() => {
 							var itemData = silveressMarketData[0];
 							
-							var itemDataName = itemData.name;
-							var firstData = itemData.listings[0];
-							var itemDataPrice = firstData.price;
-							var itemDataCount = firstData.count;
-							var itemDataEach = firstData.each;
+							if(itemData == null){
+								message.channel.send({
+									"embed": {
+										"description":"No result on ***"+marketQuerry[0]+"***\nItem might be untradable or not in marketplace.",
+										"color": Math.floor(Math.random() * 16777215) - 0,
+										"footer": {
+											"icon_url": "https://slate.silveress.ie/images/logo.png",
+											"text": "Powered by Silveress's BnS API - Retrieved at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+										},
+										"thumbnail": {
+											"url": getItemImg(marketItemID)
+										},
+										"author": {
+											"name": marketQuerry[0]+" ["+marketItemID+"]",														
+										}
+									}
+								});
+							}else{
+								var itemDataName = itemData.name;
+								var firstData = itemData.listings[0];
+								var itemDataPrice = firstData.price;
+								var itemDataCount = firstData.count;
+								var itemDataEach = firstData.each;
 
-							message.channel.send({
-								"embed": {
-									"description": "**Name**: "+itemDataName+" `"+marketItemID+"`\n**Price**: "+currencyConvert(itemDataPrice)+"\n**Count**: "+itemDataCount+"\n**Price Each**: "+currencyConvert(itemDataEach),
-									"color": Math.floor(Math.random() * 16777215) - 0,
-									"timestamp": itemData.ISO,
-									"footer": {
-										"icon_url": "https://slate.silveress.ie/images/logo.png",
-										"text": "Powered by Silveress's BnS API"
-									},
-									"thumbnail": {
-										"url": getItemImg(marketItemID)
-									},
-									"author": {
-										"name": "Current Lowest Listing",														
+								var otherListingData = ["","","","",""];
+								var otherListingPrice = ["","","","",""];
+								var otherListingCount = ["","","","",""];
+								var otherListingEach = ["","","","",""];
+
+								if(itemData.totalListings > 1){							
+									for(i = 1; i < 6; i++){
+										otherListingData[i-1] = itemData.listings[i];
+										otherListingPrice[i-1] = otherListingData[i-1].price;
+										otherListingCount[i-1] = otherListingData[i-1].count;
+										otherListingEach[i-1] = otherListingData[i-1].each;
+									}
+								}else{
+									for(i = 1; i < 6; i++){
+										otherListingData[i-1] = "";
+										otherListingPrice[i-1] = 0;
+										otherListingCount[i-1] = 0;
+										otherListingEach[i-1] = 0;
 									}
 								}
-							});
 
+								message.channel.send({
+									"embed": {
+										"fields":[
+											{
+												"name": "Lowest Listing",
+												"value": "**Price**: "+currencyConvert(itemDataPrice)+"\n**Count**: "+itemDataCount+"\n**Price Each**: "+currencyConvert(itemDataEach)
+											},
+											{
+												"name": "Other Listing",
+												"value": "- "+currencyConvert(otherListingPrice[0])+" for "+otherListingCount[0]+"\n- "+currencyConvert(otherListingPrice[1])+" for "+otherListingCount[1]+"\n- "+currencyConvert(otherListingPrice[2])+" for "+otherListingCount[2]+"\n- "+currencyConvert(otherListingPrice[3])+" for "+otherListingCount[3]+"\n- "+currencyConvert(otherListingPrice[4])+" for "+otherListingCount[4]+"\n"
+											}
+										],
+										"color": Math.floor(Math.random() * 16777215) - 0,
+										"footer": {
+											"icon_url": "https://slate.silveress.ie/images/logo.png",
+											"text": "Powered by Silveress's BnS API - Retrieved at "+dateFormat(itemData.ISO, "UTC:dd-mm-yy @ hh:MM")+" UTC"
+										},
+										"thumbnail": {
+											"url": getItemImg(marketItemID)
+										},
+										"author": {
+											"name": itemDataName+" ["+marketItemID+"]",														
+										}
+									}
+								});
+							}
 							payloadStatus = "recieved";							
 						})
 						.catch(err => {
@@ -1056,8 +1226,83 @@ clientDiscord.on("message", (message) => {
 						});
 					}
 				}		 
-				console.log(" [ "+Date.now()+" ] > "+message+" triggered, status: "+payloadStatus);
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
+			break;
+
+			case 'event':
+				var eventList = event;
+				var eventToDo = eventList.rewards.sources;
+				var eventQuery = message.toString().substring(1).split(' ');
+					eventQuery = eventQuery.splice(1);
+				var eventQuests = "";
+
+				for(var i = 0; i < eventList.quests.length; i++){
+					eventQuests = eventQuests + ("**"+eventList.quests[i].location+"** - "+eventList.quests[i].quest+" "+getQuestType(eventList.quests[i].type)+"\n");
+				}
+
+				switch(eventQuery[0]){
+					case 'announce':
+						clientDiscord.guilds.map((guild) => {
+							let found = 0;
+							guild.channels.map((ch) =>{
+								if(found == 0){
+									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
+										ch.send(eventList.name+" event is on-going, here\'s the details",{
+											"embed": {
+												"author":{
+													"name": "Current Event",
+													"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+												},
+												"title": eventList.name,
+												"url": eventList.url,
+												"description": "**Duration**: "+eventList.duration+"\n**Event Item**: "+eventList.rewards.name+"\n**What to do**: "+eventToDo,
+												"color": 1879160,
+												"footer": {
+													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+													"text": "Blade & Soul Event - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+												},
+												"fields":[
+													{
+														"name": "Quests/Dungeons List",
+														"value": eventQuests 								
+													}
+												]
+											}
+										}).catch(console.error);
+										found = 1;
+									}
+								}
+							});
+						});
+					break;
+					default:
+						message.channel.send({
+							"embed": {
+								"author":{
+									"name": "Current Event",
+									"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+								},
+								"title": eventList.name,
+								"url": eventList.url,
+								"description": "**Duration**: "+eventList.duration+"\n**Event Item**: "+eventList.rewards.name+"\n**What to do**: "+eventToDo,
+								"color": 1879160,
+								"footer": {
+									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+									"text": "Blade & Soul Event - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								},
+								"fields":[
+									{
+										"name": "Quests/Dungeons List",
+										"value": eventQuests 								
+									}
+								]
+							}	
+						})
+					break;
+				};
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				payloadStatus = "rejected";				
 			break;
 			
 			case 'getupdate':
@@ -1069,7 +1314,7 @@ clientDiscord.on("message", (message) => {
 					.then(res => res.json())
 					.then(data => silveressItemData = data)
 					.then(() => {
-						silveressItemData = JSON.stringify(silveressItemData);
+						silveressItemData = JSON.stringify(silveressItemData, null, '\t');
 						payloadStatus = "recieved";
 
 						fs.writeFile('./data/list-item.json', silveressItemData, function (err) {
@@ -1078,14 +1323,16 @@ clientDiscord.on("message", (message) => {
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+Date.now()+" ] > Item data fetched, status: "+payloadStatus);
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Item data fetched, status: "+payloadStatus);
 					});
-
+				
+				/* 
+				> api data inaccurate, disable for now
 				fetch(silveressQuest)
 					.then(res => res.json())
 					.then(data => silveressQuestData = data)
 					.then(() =>{
-						silveressQuestData = JSON.stringify(silveressQuestData);
+						silveressQuestData = JSON.stringify(silveressQuestData, null, '\t');
 						payloadStatus = "recieved";
 
 						fs.writeFile('./data/list-quest.json', silveressQuestData, function (err) {
@@ -1094,14 +1341,15 @@ clientDiscord.on("message", (message) => {
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+Date.now()+" ] > Quest data fetched, status: "+payloadStatus);
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Quest data fetched, status: "+payloadStatus);
 					});
 				
+				> recipe data out of date
 				fetch(silveressRecipe)
 					.then(res => res.json())
 					.then(data => silveressRecipeData = data)
 					.then(() =>{
-						silveressRecipeData = JSON.stringify(silveressRecipeData);
+						silveressRecipeData = JSON.stringify(silveressRecipeData, null, '\t');
 						payloadStatus = "recieved";
 
 						fs.writeFile('./data/list-recipe.json', silveressRecipeData, function (err) {
@@ -1110,9 +1358,70 @@ clientDiscord.on("message", (message) => {
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+Date.now()+" ] > Recipe data fetched, status: "+payloadStatus);
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Recipe data fetched, status: "+payloadStatus);
 					});
+				*/	
+			break;
+
+			case 'getclassdata':
+				var classData = classDataSource;
+
+				for(var i = 0; i < classData.length; i++){
+					if(!fs.existsSync('./data/class/'+classData[i].name)){
+						fs.mkdirSync('./data/class/'+classData[i].name);
+
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classData[i].name+" directory made");
+					}
+
+					fs.writeFile('./data/class/'+classData[i].name+'/attributes.json', JSON.stringify(await getData(classData[i].attributes), null, '\t'), function (err) {
+						if(err){
+							console.log(err);
+						}
+					})
 					
+					console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classData[i].name+" fetched");					
+				}
+			break;
+
+			case 'basin':
+				var basinQuery = message.toString().substring(1).split(' ');
+					basinQuery = basinQuery.splice(1);
+				switch(basinQuery[0]){
+					case 'start':
+						basinStatus = "";
+						message.channel.send("Current *Celestial Basin* status: "+basinStatus)
+							.then(basinStatusMsgID = message.channel.lastMessageID);
+						console.log("id: "+basinStatusMsgID);
+						basinTime = 0;
+					break;
+					case 'sync':
+						basinTime = 0;
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Celestial Basin time has been reset");
+					break;
+					case 'status':
+						if(basinStatusMsgID != null || basinStatusMsgID != ""){
+
+						}
+					break;
+					default:
+						message.channel.send("Current *Celestial Basin* status: "+basinStatus);
+					break;
+				}
+			break;
+
+			case 'getdaily':
+				var dailydata = "https://api.silveress.ie/bns/v3/dungeons/daily";
+				var silveressDailyData;
+				fetch(dailydata)
+					.then(res => res.json())
+					.then(data => silveressDailyData = data)
+					.then(() => {
+						var dailyData = silveressDailyData;
+						var dailyDataCurrent = dailyData[0];
+						var dailyDataCurrent = JSON.stringify(dailyDataCurrent, null, '\t')
+
+						message.channel.send("Current Data:```"+dailyDataCurrent+"```");
+					});
 			break;
          };
      };
@@ -1136,9 +1445,14 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 				payloadStatus = "rejected";
 			}else{		
 				// Payload loading
+				if(tweet.extended_tweet == null){
+					twtText = tweet.text.toString().replace("&amp;","&");
+				}else{
+					twtText = tweet.extended_tweet.full_text.toString().replace("&amp;","&");
+				}
+
 				twtUsername = tweet.user.name.toString();
-				twtScreenName = tweet.user.screen_name.toString();
-				twtText = tweet.text.toString();
+				twtScreenName = tweet.user.screen_name.toString();				
 				twtAvatar = tweet.user.profile_image_url.toString();
 				twtCreatedAt = tweet.created_at.toString();
 				twtTimestamp = tweet.timestamp_ms.toString();
@@ -1157,7 +1471,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 			}
 		}
 		// Console logging
-		console.log(" [ "+Date.now()+" ] > Tweet recived, status: "+payloadStatus);
+		console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Tweet recived, status: "+payloadStatus);
 		payloadStatus = "rejected";
 	});
   
@@ -1190,6 +1504,7 @@ ontime({
 	utc: true
 	}, function(daily){
 		clientDiscord.emit("message", "!daily announce");
+		clientDiscord.emit("message", "!event announce");
 		daily.done();
 		return;
 });
@@ -1205,10 +1520,32 @@ ontime({
 
 // Data fetching
 ontime({
-	cycle: ['wed 00:00:00'],
+	cycle: ['thu 00:00:00'],
 	utc: true
-}, function (soyunActivity) {
+}, function (dataUpdate) {
     	clientDiscord.emit("message", "!getupdate");
-		soyunActivity.done();
+		dataUpdate.done();
 		return;
 })
+
+// basin status
+/*
+ontime({
+	cycle: ['00']
+	}, function (basinTicker){
+		if(basinTime <= 42){
+			basinStatus = "Announce: "+(43 - basinTime)+"mins"
+			//clientDiscord.emit("message", "!basin status");
+		}else if(basinTime >= 43 && basinTime <= 44 ){
+			basinStatus = "Spawn: "+(45 - basinTime)+"mins"
+			//clientDiscord.emit("message", "!basin status");
+		}else if(basinTime >= 45 && basinTime <= 55){
+			basinStatus = "End: "+(55 - basinTime)+"mins"
+			//clientDiscord.emit("message", "!basin status");
+		}
+		basinTime++;
+
+		basinTicker.done();
+		return;
+})
+*/

@@ -1,34 +1,23 @@
 {
     "monday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Void Fragments x3", "Goldsmith Chest x2"],
-        "event": [12, 83]
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Void Fragments x3", "Ephemeral Survival Charm x3"]
     },
     "tuesday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Lunar Twilight Flower x3", "Goldsmith Chest x2"],
-        "event": [11, 5]
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Lunar Twilight Flower x3", "Ephemeral Survival Charm x3"]
     },
     "wednesday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Galaxy Fragment x3", "Goldsmith Chest x2"],
-        "event": [6, 81]
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Galaxy Fragment x3", "Ephemeral Survival Charm x3"]
     },
     "thursday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Raven Feather", "Goldsmith Chest x2"],
-        "event": [5, 148]
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Raven Feather", "Ephemeral Survival Charm x3"]
     },
     "friday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Raven Feather", "Goldsmith Chest x2"],
-        "event": [83, 11]
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Raven Feather", "Ephemeral Survival Charm x3"]
     },
     "saturday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Blackstone Fragment x3", "Goldsmith Chest x2"],
-        "event": [148, 12]
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Blackstone Fragment x3", "Ephemeral Survival Charm x3"]
     },
     "sunday":{
-        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Hive Queen's Wing", "Goldsmith Chest x2"],
-        "event": [81, 6]
-    },
-    "event":{
-        "emoji" : "<:gildstone:459182373473353728>",
-        "name": "Gildstone"
+        "rewards": ["Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Hive Queen's Wing", "Ephemeral Survival Charm x3"]
     }
 }

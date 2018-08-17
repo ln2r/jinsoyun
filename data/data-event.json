@@ -1,0 +1,43 @@
+{
+    "name": "Frozen Firing Range",
+    "duration": "August 15 – September 5",
+    "url": "http://www.bladeandsoul.com/en/news/frozen-firing-range-event-dungeon-opens-august-15/",
+    "quests": [
+        {
+            "location": "Frozen Firing Range",
+            "quest": "Open Season",
+            "type": 2 
+        },
+        {
+            "location": "Cold Storage",
+            "quest": "In the Dead of Winter",
+            "type": 0 
+        },
+        {
+            "location": "Cold Storage",
+            "quest": "Lord Over It",
+            "type": 1 
+        },
+        {
+            "location": "Avalanche Den",
+            "quest": "Frozen Phantasm",
+            "type": 0 
+        },
+        {
+            "location": "Sogun's Lament",
+            "quest": "Asura's Return",
+            "type": 0 
+        },
+        {
+            "location": "Starstone Mines",
+            "quest": "The Leader of The Pack",
+            "type": 0 
+        }
+    ],
+    "rewards": {
+        "sources": ["Daily Challenges", "Event Quest", "Event Dungeon"],
+        "name": "Ice Pellets",
+        "daily": "Ice Pellets x5 (Event)",
+        "qty": 1
+    }
+}

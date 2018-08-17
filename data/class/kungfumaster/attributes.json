@@ -1,0 +1,12 @@
+{
+	"records": [
+		{
+			"attribute": "wind",
+			"no": 0
+		},
+		{
+			"attribute": "fire",
+			"no": 1
+		}
+	]
+}
