@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const dateFormat = require('dateFormat');
 const delay = require('delay');
+const https = require('https');
 
 const secret = require("./secret.json");
 const config = require("./config.json");
@@ -12,7 +13,7 @@ const config = require("./config.json");
 const koldrakTime = require("./data/koldrak-time.json");
 const items = require("./data/list-item.json");
 const quests = require("./data/list-quest.json");
-const rewards = require("./data/list-daily-rewards.json");
+const rewards = require("./data/list-challenges-rewards.json");
 const recipes = require("./data/list-recipe.json");
 const classDataSource = require("./data/list-classdata-source.json");
 const soyunDialogue = require("./data/list-soyundialogue.json");
@@ -324,17 +325,73 @@ function getQuestType(type){
 
 	switch(type){
 		case 1:
-			typeValue = "(Dynamic)";
+			typeValue = "Dynamic";
 		break;
 		case 2:
-			typeValue = "(Event)";
+			typeValue = "Event";
 		break;
 		default:
 			typeValue = "";
 		break;
 	}
 
+	if(typeValue != ""){
+		typeValue = "`"+typeValue+"`";
+	}
+
 	return typeValue;
+}
+
+// formating array data so it have space after coma (,)
+function setDataFormatting(data){
+	var data = data
+	for(var i = 1; i < data.length; i++){
+		data[i] = " "+data[i];
+	}
+	return data;
+};
+
+// Getting day value, get day (0-6), return monday (dddd)
+function getDay(day){
+	var day = day
+	switch(day){
+		case 0:
+			day = "Sunday";
+		break;
+		case 1:
+			day = "Monday";		
+		break;
+		case 2:
+			day = "Tuesday";
+		break;
+		case 3:
+			day = "Wednesday";
+		break;
+		case 4:
+			day = "Thursday";
+		break;
+		case 5:
+			day = "Friday";
+		break;
+		case 6:
+			day = "Saturday";
+		break;
+	}
+
+	return day;
+}
+
+// getting weekly data
+function getWeeklyQuests(){
+	var weekly = [];
+	var j = 0;
+	for(var i = 0; i < quests.length; i++){
+		if(quests[i].weekly_challenge == true){
+			weekly[j] = i;
+			j++;
+		}
+	}
+	return weekly;
 }
 
 // Getting character skillset
@@ -354,6 +411,7 @@ function getCharacterSkillset(charaClass, charaElement){
 		var charaSkillset = classDataSource[classIndex].skillsets[1];
 	}
 }
+
 // Discord stuff start here
 clientDiscord.on("ready", () => {
 	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
@@ -390,7 +448,7 @@ clientDiscord.on("message", async (message) => {
 			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`';
+				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -405,7 +463,7 @@ clientDiscord.on("message", async (message) => {
 						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 					break;
 
-					case 'status':						
+					case 'activity':						
 						switch(statusRandom){
 							case 0:
 								clientDiscord.user.setActivity('!soyun help', {type: 'LISTENING' });
@@ -419,11 +477,83 @@ clientDiscord.on("message", async (message) => {
 						}
 					break;
 
-					default:
-						var soyunSay = soyunDialogue
-						message.channel.send(soyunSay.text[Math.floor(Math.random() * soyunSay.text.length) - 0]);
+					case 'status':
+						const m = await message.channel.send("Checking...");      
+						  
+						var apiStatus = [];
+						var apiStatusList = [];
+						var apiAdress = config.API_ADDRESS;
+
+						function getDiscordStatus(){
+							return fetch('https://srhpyqt94yxb.statuspage.io/api/v2/status.json')
+										.then(res => {return res.json()});
+
+						};	
+						
+						async function getAPIStatus(){
+							var apiStatus = [];
+							var apiAdress = config.API_ADDRESS;
+
+							await https.get(apiAdress[0].address, function (res) {
+								apiStatus[0] = "alive";
+							}).on('error', function(e) {
+								apiStatus[0] = "dead";
+							});
+							await delay(1000);
+							await https.get(apiAdress[1].address, function (res) {
+								apiStatus[1] = "alive";
+							}).on('error', function(e) {
+								apiStatus[1] = "dead";
+							});
+							await delay(1000);
+
+							return apiStatus;
+						}
+						var discordStatus = await getDiscordStatus();
+						var apiStatus = await getAPIStatus();
+
+						apiStatusList = "**"+apiAdress[0].name+"** is "+apiStatus[0]+"\n **"+apiAdress[1].name+"** is "+apiStatus[1]+"\n";
+
+						//`Ping received, Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(clientDiscord.ping)}ms`
+						var msgLatency = (m.createdTimestamp - message.createdTimestamp) + "ms";
+						var apiLatency = Math.round(clientDiscord.ping) + "ms";
+						await delay(1000);
+						m.edit("Current Status",{
+							"embed": {
+								"author":{
+									"name": "Jinsoyun and API Status",
+									"icon_url": "https://cdn.discordapp.com/emojis/481356415332646912.png?v=1"
+								},
+								"title": "Jinsoyun Status",
+								"description": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency,
+								"color": 16753920,
+								"footer": {
+									"text": "Created and maintained by ln2r - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								},
+								"fields":[
+									{
+										"name": "Discord",
+										"value": "**Status**: "+discordStatus.status.description
+									},
+									{
+										"name": "API",
+										"value": apiStatusList
+									}
+								]
+							}
+						});
+
 						// Console logging
 						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
+					break;
+
+					default:
+						var soyunSay = soyunDialogue
+						message.channel.send("Hi master! I\'m hungry, please give me dumplings!");
+
+						// Console logging
+						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
+					break;	
 				};
             break;
 			
@@ -684,103 +814,81 @@ clientDiscord.on("message", async (message) => {
 				var dailyQuerry = message.toString().substring(1).split(' ');
 					dailyQuerry = dailyQuerry.splice(1);
 				var dailyPartyAnnouncement = false;
+				var dailyQuests = [];
+				var dailyRewards = [];
 				
-				// For checking tomorrow daily
 				switch(dailyQuerry[0]){
 					case 'tomorrow':
+						// For checking tomorrow daily
 						dcDay = dcDay + 1;
 					break;
 
 					case 'announce':
+						// Daily reset announcement
 						dailyPartyAnnouncement = true;
 					break;
 
 					default:
 						dcDay = dcDay;
 				};
+				
 				switch(dcDay){
 					case 0:
-						var questsList = getQuests("sunday");
-						var questsListRewards = rewards.sunday.rewards;
+						var questsDailyList = getQuests("sunday");
+						var questsDailyListRewards = rewards.sunday.rewards;
 					break;
 					case 1:
-						var questsList = getQuests("monday");
-						var questsListRewards = rewards.monday.rewards;
+						var questsDailyList = getQuests("monday");
+						var questsDailyListRewards = rewards.monday.rewards;
 					break;
 					case 2:
-						var questsList = getQuests("tuesday");
-						var questsListRewards = rewards.tuesday.rewards;
+						var questsDailyList = getQuests("tuesday");
+						var questsDailyListRewards = rewards.tuesday.rewards;
 					break;
 					case 3:
-						var questsList = getQuests("wednesday");
-						var questsListRewards = rewards.wednesday.rewards;
+						var questsDailyList = getQuests("wednesday");
+						var questsDailyListRewards = rewards.wednesday.rewards;
 					break;
 					case 4:
-						var questsList = getQuests("thursday");
-						var questsListRewards = rewards.thursday.rewards;
+						var questsDailyList = getQuests("thursday");
+						var questsDailyListRewards = rewards.thursday.rewards;
 					break;
 					case 5:
-						var questsList = getQuests("friday");
-						var questsListRewards = rewards.friday.rewards;
+						var questsDailyList = getQuests("friday");
+						var questsDailyListRewards = rewards.friday.rewards;
 					break;
 					case 6:
-						var questsList = getQuests("saturday");
-						var questsListRewards = rewards.saturday.rewards;
+						var questsDailyList = getQuests("saturday");
+						var questsDailyListRewards = rewards.saturday.rewards;
 					break;
 				}
 
+				for(var i = 0; i < questsDailyList.length; i++){
+					dailyQuests = dailyQuests + ("**"+quests[questsDailyList[i]].location+"** - "+quests[questsDailyList[i]].quest+" `"+quests[questsDailyList[i]].pve_or_pvp+"`\n");
+				}
+				for(var i = 0; i < questsDailyListRewards.length; i++){
+					dailyRewards = dailyRewards + (questsDailyListRewards[i]+"\n");
+				}
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
 					message.channel.send({
 						"embed": {
 							"author":{
-								"name": "Daily Challenges: "+dateFormat(dcDate, "UTC:dddd"),
-								"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=0"
+								"name": "Daily Challenges",
+								"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
 							},
 							"title": "Completion Rewards",
-							"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n"+event.rewards.daily,
+							"description": dailyRewards,
 							"color": 15025535,
 							"footer": {
-								"icon_url": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/3e/3edfd4aa006dae92488c6c7d7810cbc709957fbb_full.jpg",
-								"text": "Data provided by Maeyuka - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+								"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 							},
 							"fields":[
 								{
-									"name": quests[questsList[1]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)								
-								},
-								{
-									"name": quests[questsList[2]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)						
-								},
-								{
-									"name": quests[questsList[3]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)
-								},
-								{
-									"name": quests[questsList[4]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)
-								},
-								{
-									"name": quests[questsList[5]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)
-								},
-								{
-									"name": quests[questsList[6]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)
-								},
-								{
-									"name": quests[questsList[7]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)
-								},
-								{
-									"name": quests[questsList[8]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)
-								},
-								{
-									"name": quests[questsList[9]].quest,
-									"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)
+									"name": "Quests/Dungeons List (Location - Quest `Type`)",
+									"value": dailyQuests 								
 								}
 							]
 						}
@@ -794,52 +902,20 @@ clientDiscord.on("message", async (message) => {
 									ch.send("Daily challenges has been reset, today's challenges are",{
 										"embed": {
 											"author":{
-												"name": "Daily Challenges: "+dateFormat(dcDate, "UTC:dddd"),
-												"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=0"
+												"name": "Daily Challenges",
+												"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
 											},
 											"title": "Completion Rewards",
-											"description": questsListRewards[0]+"\n"+questsListRewards[1]+"\n"+questsListRewards[2]+"\n"+questsListRewards[3]+"\n"+event.rewards.daily,
+											"description": dailyRewards,
 											"color": 15025535,
 											"footer": {
-												"icon_url": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/3e/3edfd4aa006dae92488c6c7d7810cbc709957fbb_full.jpg",
-												"text": "Data provided by Maeyuka - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+												"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+												"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 											},
 											"fields":[
 												{
-													"name": quests[questsList[1]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[1]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[1]].gold)								
-												},
-												{
-													"name": quests[questsList[2]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[2]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[2]].gold)							
-												},
-												{
-													"name": quests[questsList[3]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[3]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[3]].gold)							
-												},
-												{
-													"name": quests[questsList[4]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[4]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[4]].gold)								
-												},
-												{
-													"name": quests[questsList[5]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[5]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[5]].gold)								
-												},
-												{
-													"name": quests[questsList[6]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[6]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[6]].gold)								
-												},
-												{
-													"name": quests[questsList[7]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[7]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[7]].gold)								
-												},
-												{
-													"name": quests[questsList[8]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[8]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[8]].gold)								
-												},
-												{
-													"name": quests[questsList[9]].quest,
-													"value": "\t<:dglocation:463569668045537290> "+quests[questsList[9]].location+"\n<:bank:464036617531686913> "+currencyConvert(quests[questsList[9]].gold)								
+													"name": "Quests/Dungeons List (Location - Quest `Type`)",
+													"value": dailyQuests 								
 												}
 											]
 										}
@@ -951,7 +1027,8 @@ clientDiscord.on("message", async (message) => {
 						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 				};
 			break;
-
+			
+			// for searching and showing character information, can be triggered via !who for character that have the same name with the nickname or use !who "chara name" for specific one
 			case 'who':
 				var whoQuerry = message.toString().substring(1).split('"');
 					whoQuerry = whoQuerry.splice(1);
@@ -1106,7 +1183,8 @@ clientDiscord.on("message", async (message) => {
 				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
-
+			
+			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
 				var marketQuerry = message.toString().substring(1).split('"');
 					marketQuerry = marketQuerry.splice(1);
@@ -1230,17 +1308,36 @@ clientDiscord.on("message", async (message) => {
 				payloadStatus = "rejected";
 			break;
 
+			// for getting the current event information
 			case 'event':
-				var eventList = event;
-				var eventToDo = eventList.rewards.sources;
+				var eventToDo = event.rewards.sources;
 				var eventQuery = message.toString().substring(1).split(' ');
 					eventQuery = eventQuery.splice(1);
 				var eventQuests = "";
+				var today = new Date();
+					today = today.getUTCDay();
+				var todayEvent = [];
+				var k = 0;
 
-				for(var i = 0; i < eventList.quests.length; i++){
-					eventQuests = eventQuests + ("**"+eventList.quests[i].location+"** - "+eventList.quests[i].quest+" "+getQuestType(eventList.quests[i].type)+"\n");
+				// getting index of event that have the same day with today
+				for(var i = 0; i < event.quests.length; i++){
+					for(var j = 0; j < 7; j++){
+						if(event.quests[i].day[j] == getDay(today)){
+							var idx = i;							
+							todayEvent[k] = idx;
+							k++;
+						}
+					}
 				}
 
+				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
+				for(var i = 0; i < event.quests.length; i++){
+					if(event.quests[i].id == todayEvent[i]){
+						eventQuests = eventQuests + ("**"+event.quests[i].location+"** - "+event.quests[i].quest+" "+getQuestType(event.quests[i].type)+"\n")
+					}
+				}
+				
+				// for either picking announcing the event details as daily notification or just normal query
 				switch(eventQuery[0]){
 					case 'announce':
 						clientDiscord.guilds.map((guild) => {
@@ -1248,15 +1345,15 @@ clientDiscord.on("message", async (message) => {
 							guild.channels.map((ch) =>{
 								if(found == 0){
 									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
-										ch.send(eventList.name+" event is on-going, here\'s the details",{
+										ch.send(event.name+" event is on-going, here\'s the details",{
 											"embed": {
 												"author":{
 													"name": "Current Event",
 													"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
 												},
-												"title": eventList.name,
-												"url": eventList.url,
-												"description": "**Duration**: "+eventList.duration+"\n**Event Item**: "+eventList.rewards.name+"\n**What to do**: "+eventToDo,
+												"title": event.name,
+												"url": event.url,
+												"description": "**Duration**: "+event.duration+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
 												"color": 1879160,
 												"footer": {
 													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
@@ -1264,7 +1361,7 @@ clientDiscord.on("message", async (message) => {
 												},
 												"fields":[
 													{
-														"name": "Quests/Dungeons List",
+														"name": "Quests/Dungeons List (Location - Quest `Type`)",
 														"value": eventQuests 								
 													}
 												]
@@ -1283,9 +1380,9 @@ clientDiscord.on("message", async (message) => {
 									"name": "Current Event",
 									"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
 								},
-								"title": eventList.name,
-								"url": eventList.url,
-								"description": "**Duration**: "+eventList.duration+"\n**Event Item**: "+eventList.rewards.name+"\n**What to do**: "+eventToDo,
+								"title": event.name,
+								"url": event.url,
+								"description": "**Duration**: "+event.duration+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
 								"color": 1879160,
 								"footer": {
 									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
@@ -1293,7 +1390,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"fields":[
 									{
-										"name": "Quests/Dungeons List",
+										"name": "Quests/Dungeons List (Location - Quest `Type`)",
 										"value": eventQuests 								
 									}
 								]
@@ -1303,6 +1400,83 @@ clientDiscord.on("message", async (message) => {
 				};
 				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";				
+			break;
+
+			case 'weekly':
+				var weeklyQuery = message.toString().substring(1).split(' ');
+					weeklyQuery = weeklyQuery.splice(1);
+				var weeklyIdxList = getWeeklyQuests();
+				var weeklyQuests = [];
+				var weeklyRewards = [];
+				
+				for(var i = 0; i < weeklyIdxList.length; i++){
+					weeklyQuests = weeklyQuests + ("**"+quests[weeklyIdxList[i]].location+"** - "+quests[weeklyIdxList[i]].quest+" `"+quests[weeklyIdxList[i]].pve_or_pvp+"`\n");				
+				}
+				for(var i = 0; i < rewards.weekly.rewards.length; i++){
+					weeklyRewards = weeklyRewards + (rewards.weekly.rewards[i]+"\n");
+				}
+				
+				switch(weeklyQuery[0]){
+					case 'announce':
+					//Weekly challenges has been reset, this week challenges are
+						clientDiscord.guilds.map((guild) => {
+							let found = 0;
+							guild.channels.map((ch) =>{
+								if(found == 0){
+									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
+										ch.send("Weekly challenges has been reset, this week challenges are",{
+											"embed": {
+												"author":{
+													"name": "Weekly Challenges",
+													"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
+												},
+												"title": "Completion Rewards",
+												"description": weeklyRewards,
+												"color": 6193367,
+												"footer": {
+													"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+													"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+												},
+												"fields":[
+													{
+														"name": "Quests/Dungeons List (Location - Quest `Type`)",
+														"value": weeklyQuests 								
+													}
+												]
+											}
+										}).catch(console.error);
+										found = 1;
+									}
+								}
+							});
+						});
+					break;
+					default:
+						message.channel.send({
+							"embed": {
+								"author":{
+									"name": "Weekly Challenges",
+									"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
+								},
+								"title": "Completion Rewards",
+								"description": weeklyRewards,
+								"color": 6193367,
+								"footer": {
+									"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+									"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								},
+								"fields":[
+									{
+										"name": "Quests/Dungeons List (Location - Quest `Type`)",
+										"value": weeklyQuests 								
+									}
+								]
+							}
+						});
+					break;
+				}
+				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				payloadStatus = "rejected";	
 			break;
 			
 			case 'getupdate':
@@ -1509,11 +1683,21 @@ ontime({
 		return;
 });
 
+// Weekly reset notification
+ontime({
+	cycle: ['wed 12:00:00'],
+	utc: true
+	}, function(weekly){
+		clientDiscord.emit("message", "!weekly announce");
+		weekly.done();
+		return;
+});
+
 // Soyun activity changer
 ontime({
     cycle: ['00']
 }, function (soyunActivity) {
-    	clientDiscord.emit("message", "!soyun status");
+    	clientDiscord.emit("message", "!soyun activity");
 		soyunActivity.done();
 		return;
 })

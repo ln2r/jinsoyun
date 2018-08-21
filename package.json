@@ -1,8 +1,8 @@
 {
   "name": "jinsoyun",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "Grumpy Butts very own discord bot",
-  "main": "index.js",
+  "main": "soyun.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

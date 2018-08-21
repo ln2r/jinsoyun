@@ -4,39 +4,100 @@
     "url": "http://www.bladeandsoul.com/en/news/frozen-firing-range-event-dungeon-opens-august-15/",
     "quests": [
         {
+            "id": 0,
             "location": "Frozen Firing Range",
             "quest": "Open Season",
+            "day": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
             "type": 2 
         },
         {
+            "id": 1,
             "location": "Cold Storage",
             "quest": "In the Dead of Winter",
+            "day": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
             "type": 0 
         },
         {
+            "id": 2,
             "location": "Cold Storage",
             "quest": "Lord Over It",
+            "day": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
             "type": 1 
         },
         {
+            "id": 3,
             "location": "Avalanche Den",
             "quest": "Frozen Phantasm",
+            "day": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
             "type": 0 
         },
         {
+            "id": 4,
             "location": "Sogun's Lament",
             "quest": "Asura's Return",
+            "day": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
             "type": 0 
         },
         {
+            "id": 5,
             "location": "Starstone Mines",
             "quest": "The Leader of The Pack",
+            "day": [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
             "type": 0 
         }
     ],
     "rewards": {
         "sources": ["Daily Challenges", "Event Quest", "Event Dungeon"],
-        "name": "Ice Pellets",
+        "name": ["Ice Pellets", "Frozen Fun Bag"],
+        "currency" : "Ice Pellets",
         "daily": "Ice Pellets x5 (Event)",
         "qty": 1
     }

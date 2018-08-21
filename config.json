@@ -4,5 +4,19 @@
     "DEFAULT_NEWS_CHANNEL": "news",
     "DEFAULT_ADMIN_CHANNEL": "high-council",
     "DEFAULT_PARTY_CHANNEL": "party-forming",
-    "DEFAULT_MEMBER_LOG": "member-log"
+    "DEFAULT_MEMBER_LOG": "member-log",
+    "API_ADDRESS" : [
+        {
+        "name": "Character API (silveressNA)",
+        "address": "https://api.silveress.ie/bns/v3/character/full/na/wquin%20hollow/"
+        },
+        {
+        "name": "Market data API (silveressMarket)",
+        "address": "https://api.silveress.ie/bns/v3/market/na/current/"
+        },
+        {
+        "name": "Discord",
+        "address": "https://srhpyqt94yxb.statuspage.io/api/v2/status.json"
+        }
+    ]
 }
