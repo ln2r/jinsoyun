@@ -1,0 +1,115 @@
+{
+	"records": [
+		{
+			"alias": "SSG_Stun_Filter",
+			"name": "Stun",
+			"descriptions": [
+				"Display skills that inflict Stun on enemies.",
+				" Enemies can’t use any skill except Escape skills that allow them to break the Stunned state."
+			],
+			"sort_no": 1,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_08.png\" /> Stun",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_kneel_Filter",
+			"name": "Daze",
+			"descriptions": [
+				"Display skills that inflict Daze on enemies.",
+				"Enemies can’t use any skill except Escape skills that allow them to break the Daze state."
+			],
+			"sort_no": 2,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_09.png\" /> Daze",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_Down_Filter",
+			"name": "Knockdown",
+			"descriptions": [
+				"Display skills that inflict Knockdown on enemies.",
+				" Enemies can’t use any skill except Escape skills that allows them to break the Knocked Down state."
+			],
+			"sort_no": 3,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /> Knockdown",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_Resist_Filter",
+			"name": "Resist",
+			"descriptions": [
+				"Display skills that can resist damage or status effects.",
+				"Some Boss enemy attacks will ignore resistance."
+			],
+			"sort_no": 4,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /> Resist",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_Defence_Filter",
+			"name": "Defense",
+			"descriptions": [
+				"Display skills that improve defense.",
+				"These skills repel enemy attacks or reduce damage received."
+			],
+			"sort_no": 5,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_14.png\" /> Defense",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_escape_Filter",
+			"name": "Escape",
+			"descriptions": [
+				"Display skills that can remove paralyzing states.",
+				"Can remove paralyzing states such as Stun, Daze, Knockdown, and Unconscious."
+			],
+			"sort_no": 6,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /> Escape",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_synergy_Filter",
+			"name": "Party",
+			"descriptions": [
+				"Display skills that apply to party members.",
+				"These skills can improve the attacking ability of party members or protect them from enemy attacks."
+			],
+			"sort_no": 7,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_19.png\" /> Party",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_Combat_Filter",
+			"name": "Combo Skills",
+			"descriptions": [
+				"Display Combo skills used in dungeons."
+			],
+			"sort_no": 50,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/buff_debuff_icon_08_crop_192x384x64x64.png\" /> Combo Skills",
+			"job_specific": false
+		},
+		{
+			"alias": "SSG_Soulfighter_Earth1",
+			"name": "Chi",
+			"descriptions": [
+				"Display skills that create and consume Chi.",
+				"Chi can be stacked up to 5 times on successful hits with Iron Shoulder, Whirlwind or Displace.",
+				"When Chi is stacked 5 times, Kingfist and Windstorm can be used."
+			],
+			"sort_no": 63,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/buff_debuff_icon_06_crop_0x192x64x64.png\" /> Chi",
+			"job_specific": true
+		},
+		{
+			"alias": "SSG_Soulfighter_Earth2",
+			"name": "Gold Dragon",
+			"descriptions": [
+				"Display skills that create a Gold Dragon effect.",
+				"Gold Dragon is created on a successful Kingfist or when Focus Chi is used.",
+				"When Gold Dragon is stacked 3 times, Kingstrike can be used."
+			],
+			"sort_no": 64,
+			"icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/buff_debuff_icon_07_crop_448x448x64x64.png\" /> Gold Dragon",
+			"job_specific": true
+		}
+	]
+}

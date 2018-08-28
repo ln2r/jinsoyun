@@ -1,0 +1,1924 @@
+{
+	"records": [
+		{
+			"pc_level": 1,
+			"id": 65001,
+			"complete_quest": 223,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Sprint",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_0x0x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 1,
+			"id": 65003,
+			"complete_quest": 223,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Glide",
+					"key": "key_space",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Space_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_0x64x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 1,
+			"id": 65010,
+			"complete_quest": 223,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Windwalk- Stage 1",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_448x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Windwalk- Stage 2",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_448x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Windwalk- Stage 3",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_448x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 14,
+					"variation_no": 4,
+					"name": "Windwalk- Stage 4",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_448x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 2,
+			"id": 25000,
+			"complete_quest": 237,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Mist Slash",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_15.png\" /><br/>HP Recovery",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x0x64x64.png\" />",
+					"groups": [
+						"SSG_heal_Symbol",
+						"SSG_Combat_Filter"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 51,
+					"variation_no": 1,
+					"name": "Mist Slash",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_21.png\" /><br/>Combo",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x0x64x64.png\" />",
+					"groups": [
+						"SSG_Combo_Symbol",
+						"SSG_heal_Symbol",
+						"SSG_Combat_Filter"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Mist Slash",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_15.png\" /><br/>Focus Recovery",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x0x64x64.png\" />",
+					"groups": [
+						"SSG_sp-heal_Symbol",
+						"SSG_Combat_Filter"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 52,
+					"variation_no": 2,
+					"name": "Mist Slash",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_21.png\" /><br/>Combo",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x0x64x64.png\" />",
+					"groups": [
+						"SSG_Combo_Symbol",
+						"SSG_sp-heal_Symbol",
+						"SSG_Assassin_Passive1",
+						"SSG_Combat_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 2,
+			"id": 25006,
+			"complete_quest": 238,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Landmine",
+					"key": "key_alphabet_z",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_Z.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /><br/>Knockdown",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x192x64x64.png\" />",
+					"groups": [
+						"SSG_Down_Symbol",
+						"SSG_Down_Filter",
+						"SSG_union_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_speeddown_Symbol",
+						"SSG_dash-B_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Ice Mine",
+					"key": "key_alphabet_z",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_Z.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_25.png\" /><br/>Frost Prison",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_256x64x64x64.png\" />",
+					"groups": [
+						"SSG_fastfreezing_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_dash-B_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Mine Toss",
+					"key": "key_alphabet_z",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_Z.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_448x448x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 2,
+			"id": 25008,
+			"complete_quest": 238,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shadow Dash",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_06.png\" /><br/>Approach",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x256x64x64.png\" />",
+					"groups": [
+						"SSG_Dash_Symbol",
+						"SSG_sp-heal_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Assassin_Passive1",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 2,
+			"id": 25120,
+			"complete_quest": 238,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Spinal Tap",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_08.png\" /><br/>Stun",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_256x128x64x64.png\" />",
+					"groups": [
+						"SSG_Stun_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_bleeding_Symbol",
+						"SSG_union_Symbol",
+						"SSG_Stun_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 4,
+			"id": 25003,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Heart Stab",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_448x0x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol",
+						"SSG_Combat_Filter"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 51,
+					"variation_no": 1,
+					"name": "Heart Stab",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_448x0x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol",
+						"SSG_Combat_Filter"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Bombard",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_16.png\" /><br/>Defense Piercing",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x384x64x64.png\" />",
+					"groups": [
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Damage_Symbol",
+						"SSG_Assassin_Passive1",
+						"SSG_Combat_Filter"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 52,
+					"variation_no": 2,
+					"name": "Bombard",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_16.png\" /><br/>Defense Piercing",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x384x64x64.png\" />",
+					"groups": [
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol",
+						"SSG_Assassin_Passive1",
+						"SSG_Combat_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 4,
+			"id": 25005,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Decoy",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_14.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x128x64x64.png\" />",
+					"groups": [
+						"SSG_defence_resist_Symbol",
+						"SSG_counter_Symbol",
+						"SSG_Defence_Filter",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_heal_Symbol",
+						"SSG_sp-heal_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 51,
+					"variation_no": 1,
+					"name": "Decoy",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_14.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x128x64x64.png\" />",
+					"groups": [
+						"SSG_defence_resist_Symbol",
+						"SSG_counter_Symbol",
+						"SSG_Defence_Filter",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_heal_Symbol",
+						"SSG_sp-heal_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Decoy",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_14.png\" /><br/>Daze",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x128x64x64.png\" />",
+					"groups": [
+						"SSG_defence_kneel_Symbol",
+						"SSG_counter_Symbol",
+						"SSG_Defence_Filter",
+						"SSG_kneel_Symbol",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_heal_Symbol",
+						"SSG_sp-heal_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 52,
+					"variation_no": 2,
+					"name": "Decoy",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_14.png\" /><br/>Daze",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x128x64x64.png\" />",
+					"groups": [
+						"SSG_defence_kneel_Symbol",
+						"SSG_counter_Symbol",
+						"SSG_Defence_Filter",
+						"SSG_kneel_Symbol",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_heal_Symbol",
+						"SSG_sp-heal_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 4,
+			"id": 25050,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Lightning Crash",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_15.png\" /><br/>Focus Recovery",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_384x64x64x64.png\" />",
+					"groups": [
+						"SSG_sp-heal_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 4,
+			"id": 25052,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Venom Pierce",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_384x128x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 5,
+			"id": 25007,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shadow Slash",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x64x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol",
+						"SSG_AddCast_Symbol"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 51,
+					"variation_no": 1,
+					"name": "Shadow Slash",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x64x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol",
+						"SSG_AddCast_Symbol",
+						"SSG_sp-heal_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Shadow Slash",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /><br/>Knockdown",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x64x64x64.png\" />",
+					"groups": [
+						"SSG_Down_Symbol",
+						"SSG_dash-B_Symbol",
+						"SSG_speeddown_Symbol",
+						"SSG_Down_Filter"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 52,
+					"variation_no": 2,
+					"name": "Shadow Slash",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /><br/>Knockdown",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x64x64x64.png\" />",
+					"groups": [
+						"SSG_Down_Symbol",
+						"SSG_dash-B_Symbol",
+						"SSG_speeddown_Symbol",
+						"SSG_Assassin_Passive1",
+						"SSG_RangeUp_Symbol",
+						"SSG_Down_Filter"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Venom Slash",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_192x128x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 53,
+					"variation_no": 3,
+					"name": "Venom Slash",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_192x128x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 5,
+			"id": 25026,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Turning Leaf",
+					"key": "key_tab",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Tab_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_28.png\" /><br/>Pulls enemies",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x256x64x64.png\" />",
+					"groups": [
+						"SSG_pull_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Dash_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 5,
+			"id": 25111,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Cyclone Sweep",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /><br/>Knockdown",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_320x128x64x64.png\" />",
+					"groups": [
+						"SSG_Down_Symbol",
+						"SSG_Down_Filter",
+						"SSG_speeddown_Symbol",
+						"SSG_union_Symbol",
+						"SSG_dash-B_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Cyclone Sweep",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_09.png\" /><br/>Daze",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_320x128x64x64.png\" />",
+					"groups": [
+						"SSG_kneel_Symbol",
+						"SSG_kneel_Filter",
+						"SSG_speeddown_Symbol",
+						"SSG_dash-B_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Shadow Drain",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_15.png\" /><br/>Focus Recovery",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_64x128x64x64.png\" />",
+					"groups": [
+						"SSG_sp-heal_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 5,
+			"id": 25127,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shadow Kick",
+					"key": "key_tab",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Tab_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Change Stance",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x384x64x64.png\" />",
+					"groups": [
+						"SSG_Stance_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 6,
+			"id": 25010,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Webbing",
+					"key": "key_tab",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Tab_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_256x192x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 7,
+			"id": 25012,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Poison Breath",
+					"key": "key_num_4",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_4.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_15.png\" /><br/>HP Recovery",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x320x64x64.png\" />",
+					"groups": [
+						"SSG_heal_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Choke Bomb",
+					"key": "key_num_4",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_4.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_22.png\" /><br/>Movement Speed Reduction",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_128x448x64x64.png\" />",
+					"groups": [
+						"SSG_speeddown_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Venom Swarm",
+					"key": "key_num_4",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_4.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_12.png\" /><br/>Disable Defense",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_128x448x64x64.png\" />",
+					"groups": [
+						"SSG_defence-B_Symbol",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 7,
+			"id": 25016,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shuriken",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x0x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_sp-heal_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Smoke Screen",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /><br/>Resist Projectiles",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_256x64x64x64.png\" />",
+					"groups": [
+						"SSG_immune-P_Symbol",
+						"SSG_Resist_Filter",
+						"SSG_heal_Symbol",
+						"SSG_sp-heal_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Smoke Screen",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_19.png\" /><br/>Protect Party",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_256x64x64x64.png\" />",
+					"groups": [
+						"SSG_PartyDefence_Symbol",
+						"SSG_synergy_Filter",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 7,
+			"id": 25024,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shadow Dance",
+					"key": "key_alphabet_q",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_Q.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x64x64x64.png\" />",
+					"groups": [
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_Resist_Filter",
+						"SSG_speedup_Symbol",
+						"SSG_hyper_tumbling_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 7,
+			"id": 25041,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Hook Kick",
+					"key": "key_tab",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Tab_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Change Stance",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_448x256x64x64.png\" />",
+					"groups": [
+						"SSG_Stance_Symbol",
+						"SSG_Assassin_Passive1",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 10,
+			"id": 25022,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Backstep",
+					"key": "key_alphabet_s",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_S.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x64x64x64.png\" />",
+					"groups": [
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_Resist_Filter",
+						"SSG_hyper_tumbling_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 10,
+			"id": 25025,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Guard Break",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_16.png\" /><br/>Break Defense",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_448x320x64x64.png\" />",
+					"groups": [
+						"SSG_defence-crush_Symbol",
+						"SSG_Stun_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 10,
+			"id": 25049,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shadowslip",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_06.png\" /><br/>Approach",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_448x64x64x64.png\" />",
+					"groups": [
+						"SSG_Dash_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 10,
+			"id": 25330,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shuriken Flurry",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x64x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 12,
+			"id": 25013,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shunpo",
+					"key": "key_alphabet_e",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_E.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_320x0x64x64.png\" />",
+					"groups": [
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_Resist_Filter",
+						"SSG_speedup_Symbol",
+						"SSG_hyper_tumbling_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 12,
+			"id": 25023,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Swiftstep",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_09.png\" /><br/>Daze",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x320x64x64.png\" />",
+					"groups": [
+						"SSG_kneel_Symbol",
+						"SSG_kneel_Filter",
+						"SSG_Dash_Symbol",
+						"SSG_union_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 12,
+			"id": 25029,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Straw Doll",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x256x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter",
+						"SSG_counter_Symbol",
+						"SSG_Stun_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 12,
+			"id": 25030,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Retreat",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_128x256x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 13,
+			"id": 65006,
+			"complete_quest": 439,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Air Dash",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_128x64x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 14,
+			"id": 65002,
+			"complete_quest": 313,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Ride Dragon Pulse",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_0x192x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 14,
+			"id": 65004,
+			"complete_quest": 425,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Water Dash",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_64x64x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 15,
+			"id": 25019,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Stealth",
+					"key": "key_tab",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Tab_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x0x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter",
+						"SSG_flash_Symbol",
+						"SSG_speeddown_Symbol",
+						"SSG_Assassin_Passive2",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 15,
+			"id": 25470,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Doubletime",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_64x192x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_projectile_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 16,
+			"id": 25034,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Dark Strike",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_448x128x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol",
+						"SSG_Combat_Filter",
+						"SSG_bleeding_Symbol",
+						"SSG_heal_drain_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Close Shave",
+					"key": "key_alphabet_f",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_F.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_320x192x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_heal_drain_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 16,
+			"id": 25142,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Lightning Rod",
+					"key": "key_num_4",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_4.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_15.png\" /><br/>Focus Recovery",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x448x64x64.png\" />",
+					"groups": [
+						"SSG_sp-heal_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Lightning Rod",
+					"key": "key_num_4",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_4.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_08.png\" /><br/>Stun",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x448x64x64.png\" />",
+					"groups": [
+						"SSG_Stun_Symbol",
+						"SSG_Stun_Filter",
+						"SSG_sp-heal_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 18,
+			"id": 25035,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Blink Step",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalking Skill",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Symbol",
+						"SSG_Dash_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 18,
+			"id": 25199,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Bolt Strike",
+					"key": "key_num_3",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_3.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_08.png\" /><br/>Stun",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_448x0x64x64.png\" />",
+					"groups": [
+						"SSG_Stun_Symbol",
+						"SSG_Stun_Filter",
+						"SSG_dash-B_Symbol",
+						"SSG_speeddown_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 18,
+			"id": 65008,
+			"complete_quest": 419,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Vault",
+					"key": "key_space",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Space_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_320x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 20,
+			"id": 25043,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Thrash",
+					"key": "key_num_1",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_1.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_192x0x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 20,
+			"id": 25044,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Slipping Lotus",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_256x320x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 26,
+			"id": 25031,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Sweeping Gale",
+					"key": "key_tab",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Tab_Big.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_27.png\" /><br/>Airborne",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_384x128x64x64.png\" />",
+					"groups": [
+						"SSG_midair_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 26,
+			"id": 25033,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Thunderstruck",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /><br/>Knockdown",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_448x192x64x64.png\" />",
+					"groups": [
+						"SSG_Down_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 28,
+			"id": 25032,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Volley",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_27.png\" /><br/>Airborne",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_128x384x64x64.png\" />",
+					"groups": [
+						"SSG_midair_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 28,
+			"id": 65005,
+			"complete_quest": 640,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Dive",
+					"key": "key_alphabet_s",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_S.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_192x64x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 28,
+			"id": 65009,
+			"complete_quest": 641,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Surge",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_384x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 30,
+			"id": 25037,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Highwire",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x384x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_stiff_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 30,
+			"id": 25038,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Highwire Act",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_10.png\" /><br/>Knockdown",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x448x64x64.png\" />",
+					"groups": [
+						"SSG_Down_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 30,
+			"id": 25039,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Pull Highwire Cord",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_28.png\" /><br/>Pulls enemies",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_256x448x64x64.png\" />",
+					"groups": [
+						"SSG_pull_Symbol",
+						"SSG_kneel_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 30,
+			"id": 25040,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "High Voltage",
+					"key": "key_alphabet_c",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_C.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_0x448x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 32,
+			"id": 25017,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Throwing Dagger",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_22.png\" /><br/>Movement Speed Reduction",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_128x64x64x64.png\" />",
+					"groups": [
+						"SSG_speeddown_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 32,
+			"id": 25018,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Sneak Attack",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_09.png\" /><br/>Daze",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_192x64x64x64.png\" />",
+					"groups": [
+						"SSG_kneel_Symbol",
+						"SSG_kneel_Filter",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_bleeding_Symbol",
+						"SSG_speeddown_Symbol",
+						"SSG_Dash_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 34,
+			"id": 25045,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Lightning Stride",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_384x0x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 34,
+			"id": 25128,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Time Bomb",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_09.png\" /><br/>Daze",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_320x256x64x64.png\" />",
+					"groups": [
+						"SSG_kneel_Symbol",
+						"SSG_kneel_Filter",
+						"SSG_defence-pierce_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 40,
+			"id": 25051,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Acrid Star",
+					"key": "key_alphabet_x",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_X.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Basic Skills",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_0x0x64x64.png\" />",
+					"groups": [
+						"SSG_Combat_sub_Symbol",
+						"SSG_bounce-pierce_Symbol",
+						"SSG_projectile_Symbol",
+						"SSG_Assassin_Passive1"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 40,
+			"id": 25405,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Protection Decoy",
+					"key": "key_num_2",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Num_2.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_19.png\" /><br/>Protect Party",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_192x192x64x64.png\" />",
+					"groups": [
+						"SSG_PartyDefence_Symbol",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_synergy_Filter",
+						"SSG_counter_Symbol",
+						"SSG_heal_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 41,
+			"id": 65007,
+			"complete_quest": 1276,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Wall Dash",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_256x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 45,
+			"id": 25009,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Lotus Fury",
+					"key": "key_alphabet_c",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_C.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x448x64x64.png\" />",
+					"groups": [
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_Resist_Filter",
+						"SSG_Dash_Symbol",
+						"SSG_heal_drain_Symbol"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 51,
+					"variation_no": 1,
+					"name": "Lotus Fury",
+					"key": "key_alphabet_c",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_C.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_13.png\" /><br/>Resist",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x448x64x64.png\" />",
+					"groups": [
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_Resist_Filter",
+						"SSG_Dash_Symbol",
+						"SSG_heal_drain_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Lotus Kick",
+					"key": "key_alphabet_c",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_C.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_08.png\" /><br/>Stun",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x448x64x64.png\" />",
+					"groups": [
+						"SSG_Stun_Symbol",
+						"SSG_Stun_Filter",
+						"SSG_Dash_Symbol",
+						"SSG_union_Symbol"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 52,
+					"variation_no": 2,
+					"name": "Lotus Kick",
+					"key": "key_alphabet_c",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_C.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_08.png\" /><br/>Stun",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_192x448x64x64.png\" />",
+					"groups": [
+						"SSG_Stun_Symbol",
+						"SSG_Stun_Filter",
+						"SSG_Dash_Symbol",
+						"SSG_union_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 45,
+			"id": 25214,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Lotus of Escape",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x320x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_pull_Symbol",
+						"SSG_sp-heal_Symbol"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 51,
+					"variation_no": 1,
+					"name": "Lotus of Escape",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_24.png\" /><br/>Escape",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_64x320x64x64.png\" />",
+					"groups": [
+						"SSG_escape_Symbol",
+						"SSG_escape_Filter",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_pull_Symbol",
+						"SSG_sp-heal_Symbol"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 12,
+					"variation_no": 2,
+					"name": "Lotus of Rescue",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_28.png\" /><br/>Pulls enemies",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_0x64x64x64.png\" />",
+					"groups": [
+						"SSG_pull_Symbol",
+						"SSG_speedup_Symbol",
+						"SSG_speedup_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 52,
+					"variation_no": 2,
+					"name": "Lotus of Rescue",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_28.png\" /><br/>Pulls enemies",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_0x64x64x64.png\" />",
+					"groups": [
+						"SSG_pull_Symbol",
+						"SSG_speedup_Symbol",
+						"SSG_speedup_Symbol",
+						"SSG_Assassin_Passive2"
+					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 13,
+					"variation_no": 3,
+					"name": "Fighting Spirit",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_19.png\" /><br/>Enhance Party",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_0x192x64x64.png\" />",
+					"groups": [
+						"SSG_PartyUp_Symbol",
+						"SSG_synergy_Filter",
+						"SSG_sp-heal_Symbol",
+						"SSG_heal_drain_Symbol",
+						"SSG_CriticalUp_Symbol"
+					]
+				},
+				{
+					"mastery": true,
+					"variation_index": 53,
+					"variation_no": 3,
+					"name": "Fighting Spirit",
+					"key": "key_alphabet_v",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_V.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_19.png\" /><br/>Enhance Party",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_0x192x64x64.png\" />",
+					"groups": [
+						"SSG_PartyUp_Symbol",
+						"SSG_synergy_Filter",
+						"SSG_sp-heal_Symbol",
+						"SSG_heal_drain_Symbol",
+						"SSG_CriticalUp_Symbol",
+						"SSG_enhance_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 45,
+			"id": 25265,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Awakened Heart Stab",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_384x192x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_Combat_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 55,
+			"id": 25481,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Blink Step",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_06.png\" /><br/>Evasive Movement",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_320x192x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_tumbling_Symbol",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol",
+						"SSG_Resist_Filter"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 55,
+			"id": 25490,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Shadow Step",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_33.png\" /><br/>Change Stance",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_0_crop_128x0x64x64.png\" />",
+					"groups": [
+						"SSG_Stance_Symbol",
+						"SSG_Assassin_Passive2",
+						"SSG_immune-damage_Symbol",
+						"SSG_immune-CC_Symbol"
+					]
+				}
+			]
+		},
+		{
+			"pc_level": 55,
+			"id": 25491,
+			"complete_quest": 0,
+			"variations": [
+				{
+					"mastery": false,
+					"variation_index": 11,
+					"variation_no": 1,
+					"name": "Viper Fang",
+					"key": null,
+					"key_icon_desc": null,
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_03.png\" /><br/>Damage",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/skill_icon_assassin_1_crop_256x192x64x64.png\" />",
+					"groups": [
+						"SSG_Damage_Symbol",
+						"SSG_DamageUp_Add_Symbol"
+					]
+				}
+			]
+		}
+	]
+}

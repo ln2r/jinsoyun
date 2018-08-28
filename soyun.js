@@ -3,9 +3,10 @@ const Twitter = require("twitter");
 const ontime = require("ontime");
 const fetch = require('node-fetch');
 const fs = require('fs');
-const dateFormat = require('dateFormat');
+const dateformat = require('dateformat');
 const delay = require('delay');
 const https = require('https');
+const ping = require('ping');
 
 const secret = require("./secret.json");
 const config = require("./config.json");
@@ -209,15 +210,15 @@ function currencyConvert(number){
 // getting quest day and returning array of matched quest index
 function getQuests(day){
 	var day = day.toString().replace(/(^|\s)\S/g, l => l.toUpperCase());
-	var questsID = [0,0,0,0,0,0,0,0,0];
-	var k = 0;
+	var questsID = [];
+	var idx = 0;
 
 	for (i = 0; i < quests.length; i++){
 		for(j = 0; j < 7; j++){
 			if(quests[i].daily_challenge[j] == day){
 				var questMatchedLocation = i;
-				k = k+1;
-				questsID[k] = questMatchedLocation;
+				questsID[idx] = questMatchedLocation;
+				idx++;
 			}
 		}
 	}
@@ -394,27 +395,34 @@ function getWeeklyQuests(){
 	return weekly;
 }
 
-// Getting character skillset
+// Getting character skillset, get: class;element, return: file loc
 function getCharacterSkillset(charaClass, charaElement){
+	var charaSkillsetData = require('./data/class/'+charaClass+'/'+charaElement+'.json');	
+
 	var charaClass = charaClass.toLowerCase();
 	var charaElement = charaElement.toLowerCase();
-	
-	for(var i = 0; i < classDataSource.length; i++){
-		if(classDataSource[i].name == charaClass){
-			var classIndex = i;
+	var charaSkillset = [];
+	var idx = 0;
+
+	for(var i = 0; i < charaSkillsetData.records.length; i++){
+		if(charaSkillsetData.records[i].variations.length > 1){
+			charaSkillset[idx] = i;
+			idx++;
 		}
 	}
 
-	if(charaElement == "element"){
-		var charaSkillset = classDataSource[classIndex].skillsets[0];
-	}else{
-		var charaSkillset = classDataSource[classIndex].skillsets[1];
-	}
+	return charaSkillset;	
+}
+
+// Getting skill type, get: group name, return: type (knockdown, stun, hp recovery)
+function getSkillType(charaClass, charaElement){
+	var charaSkillGroupList = require('./data/class/'+charaClass+'/'+charaElement+'-group.json');
+
 }
 
 // Discord stuff start here
 clientDiscord.on("ready", () => {
-	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
 	
 	clientDiscord.user.setUsername("Jinsoyun");
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
@@ -430,8 +438,8 @@ clientDiscord.on("guildMemberAdd", (member) => {
 	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
-	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" has joined");
-	console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" has joined");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
 });
 
 // User commands
@@ -448,7 +456,7 @@ clientDiscord.on("message", async (message) => {
 			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`';
+				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Try Me! `!soyun`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -460,7 +468,7 @@ clientDiscord.on("message", async (message) => {
 
 						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items and quests list updated @ Wednesday 12AM UTC \n\t  Market listing updated every 1 hour```");
 						// Console logging
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 					break;
 
 					case 'activity':						
@@ -483,7 +491,10 @@ clientDiscord.on("message", async (message) => {
 						var apiStatus = [];
 						var apiStatusList = [];
 						var apiAdress = config.API_ADDRESS;
-
+						var bnsIP = config.BLADE_AND_SOUL_IP;
+						var bnsServerStatus;
+						//var idx = 0;
+						
 						function getDiscordStatus(){
 							return fetch('https://srhpyqt94yxb.statuspage.io/api/v2/status.json')
 										.then(res => {return res.json()});
@@ -524,13 +535,15 @@ clientDiscord.on("message", async (message) => {
 									"name": "Jinsoyun and API Status",
 									"icon_url": "https://cdn.discordapp.com/emojis/481356415332646912.png?v=1"
 								},
-								"title": "Jinsoyun Status",
-								"description": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency,
 								"color": 16753920,
 								"footer": {
-									"text": "Created and maintained by ln2r - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Created and maintained by ln2r - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 								},
 								"fields":[
+									{
+										"name": "Jinsoyun `Bot`",
+										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency
+									},
 									{
 										"name": "Discord",
 										"value": "**Status**: "+discordStatus.status.description
@@ -544,15 +557,16 @@ clientDiscord.on("message", async (message) => {
 						});
 
 						// Console logging
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
 					break;
 
 					default:
 						var soyunSay = soyunDialogue
-						message.channel.send("Hi master! I\'m hungry, please give me dumplings!");
+						var soyunDialogueRNG = Math.floor(Math.random() * soyunSay.text.length) - 0;
+						message.channel.send(soyunSay.text[soyunDialogueRNG]);
 
 						// Console logging
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
 					break;	
 				};
             break;
@@ -597,7 +611,7 @@ clientDiscord.on("message", async (message) => {
 						payloadStatus = "received";
 						querryStatus = false;
 
-						message.guild.channels.find("name", config.DEFAULT_MEMBER_LOG).send(message.author.username+" joined `"+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM)+UTC`"),{
+						message.guild.channels.find("name", config.DEFAULT_MEMBER_LOG).send(message.author.username+" joined `"+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM)+UTC`"),{
 
 						});
 					}else{
@@ -611,7 +625,7 @@ clientDiscord.on("message", async (message) => {
 				};
 
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 			
@@ -628,7 +642,7 @@ clientDiscord.on("message", async (message) => {
 				message.channel.send("Your username changed to "+usernameValue);
 
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 			break;
 			
 			// Class change
@@ -667,7 +681,7 @@ clientDiscord.on("message", async (message) => {
 					querryStatus = false;
 				}
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -699,7 +713,7 @@ clientDiscord.on("message", async (message) => {
 					});
 				});
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 			break;
 			
 			// Writing message via bot for announcement or notice, Admin only
@@ -735,7 +749,7 @@ clientDiscord.on("message", async (message) => {
 					payloadStatus = 'rejected';
 				};
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -749,18 +763,18 @@ clientDiscord.on("message", async (message) => {
 						}).catch(console.error);
 						i++;
 						// Console logging
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classArr[i]+" role created");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classArr[i]+" role created");
 					};
 
 					// Making "news" channel
 					message.guild.createChannel(config.DEFAULT_NEWS_CHANNEL, "text");
 					// Console logging
-					console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
 					
 					payloadStatus = "recieved";
 				};	
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
 				payloadStatus = "rejected";
 			break;
 			
@@ -781,7 +795,7 @@ clientDiscord.on("message", async (message) => {
 
 				message.channel.send("Hmmm, I'll go with **"+pickResultValue+"**");
 				
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 			break;
 
 			// die roll
@@ -802,7 +816,7 @@ clientDiscord.on("message", async (message) => {
 
 				message.channel.send("You rolled **"+rollResult+"**");
 
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 			break;
 
 			// Today daily challenge
@@ -820,7 +834,12 @@ clientDiscord.on("message", async (message) => {
 				switch(dailyQuerry[0]){
 					case 'tomorrow':
 						// For checking tomorrow daily
-						dcDay = dcDay + 1;
+						dcDay = dcDay + 1;						
+						dcDate = dcDate.setDate(dcDate.getDate() + 1);
+
+						if(dcDay == 7){
+							dcDay = 0;
+						}
 					break;
 
 					case 'announce':
@@ -831,7 +850,7 @@ clientDiscord.on("message", async (message) => {
 					default:
 						dcDay = dcDay;
 				};
-				
+
 				switch(dcDay){
 					case 0:
 						var questsDailyList = getQuests("sunday");
@@ -869,13 +888,14 @@ clientDiscord.on("message", async (message) => {
 				for(var i = 0; i < questsDailyListRewards.length; i++){
 					dailyRewards = dailyRewards + (questsDailyListRewards[i]+"\n");
 				}
+				dailyRewards = dailyRewards + event.rewards.daily;
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
 					message.channel.send({
 						"embed": {
 							"author":{
-								"name": "Daily Challenges",
+								"name": "Daily Challenges - "+dateformat(dcDate, "UTC:dddd"),
 								"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
 							},
 							"title": "Completion Rewards",
@@ -883,7 +903,7 @@ clientDiscord.on("message", async (message) => {
 							"color": 15025535,
 							"footer": {
 								"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-								"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 							},
 							"fields":[
 								{
@@ -910,7 +930,7 @@ clientDiscord.on("message", async (message) => {
 											"color": 15025535,
 											"footer": {
 												"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-												"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+												"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 											},
 											"fields":[
 												{
@@ -927,7 +947,7 @@ clientDiscord.on("message", async (message) => {
 					});
 				};
 				// Console logging
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -959,12 +979,12 @@ clientDiscord.on("message", async (message) => {
 								},
 								"footer":{
 									"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-									"text": "Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 								}
 							}
 						})
 
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 					break;
 
 					// Doing "Alert" at specific time(s)
@@ -985,7 +1005,7 @@ clientDiscord.on("message", async (message) => {
 												},
 												"footer":{
 													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-													"text": "Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+													"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 												}
 											}
 										});
@@ -995,7 +1015,7 @@ clientDiscord.on("message", async (message) => {
 							});
 						});
 
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > !koldrak alert triggered");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > !koldrak alert triggered");
 					break;
 					
 					// Showing when is the closest Koldrak's lair time
@@ -1024,7 +1044,7 @@ clientDiscord.on("message", async (message) => {
 						message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
 
 						// Console Logging
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 				};
 			break;
 			
@@ -1170,7 +1190,7 @@ clientDiscord.on("message", async (message) => {
 									"color": Math.floor(Math.random() * 16777215) - 0,
 									"footer": {
 										"icon_url": "https://slate.silveress.ie/images/logo.png",
-										"text": "Powered by Silveress's BnS API - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+										"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 									},
 									"thumbnail": {
 										"url": charaDataImg
@@ -1180,7 +1200,7 @@ clientDiscord.on("message", async (message) => {
 						}		
 					})	
 					
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 			
@@ -1204,7 +1224,7 @@ clientDiscord.on("message", async (message) => {
 								"color": Math.floor(Math.random() * 16777215) - 0,
 								"footer": {
 									"icon_url": "https://slate.silveress.ie/images/logo.png",
-									"text": "Powered by Silveress's BnS API - Retrieved at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 								},
 								"thumbnail": {
 									"url": getItemImg(marketItemID)
@@ -1230,7 +1250,7 @@ clientDiscord.on("message", async (message) => {
 										"color": Math.floor(Math.random() * 16777215) - 0,
 										"footer": {
 											"icon_url": "https://slate.silveress.ie/images/logo.png",
-											"text": "Powered by Silveress's BnS API - Retrieved at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+											"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 										},
 										"thumbnail": {
 											"url": getItemImg(marketItemID)
@@ -1283,7 +1303,7 @@ clientDiscord.on("message", async (message) => {
 										"color": Math.floor(Math.random() * 16777215) - 0,
 										"footer": {
 											"icon_url": "https://slate.silveress.ie/images/logo.png",
-											"text": "Powered by Silveress's BnS API - Retrieved at "+dateFormat(itemData.ISO, "UTC:dd-mm-yy @ hh:MM")+" UTC"
+											"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(itemData.ISO, "UTC:dd-mm-yy @ hh:MM")+" UTC"
 										},
 										"thumbnail": {
 											"url": getItemImg(marketItemID)
@@ -1304,7 +1324,7 @@ clientDiscord.on("message", async (message) => {
 						});
 					}
 				}		 
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
 
@@ -1357,11 +1377,11 @@ clientDiscord.on("message", async (message) => {
 												"color": 1879160,
 												"footer": {
 													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-													"text": "Blade & Soul Event - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+													"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 												},
 												"fields":[
 													{
-														"name": "Quests/Dungeons List (Location - Quest `Type`)",
+														"name": "Today Quests/Dungeons List (Location - Quest `Type`)",
 														"value": eventQuests 								
 													}
 												]
@@ -1386,7 +1406,7 @@ clientDiscord.on("message", async (message) => {
 								"color": 1879160,
 								"footer": {
 									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-									"text": "Blade & Soul Event - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 								},
 								"fields":[
 									{
@@ -1398,7 +1418,7 @@ clientDiscord.on("message", async (message) => {
 						})
 					break;
 				};
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";				
 			break;
 
@@ -1435,7 +1455,7 @@ clientDiscord.on("message", async (message) => {
 												"color": 6193367,
 												"footer": {
 													"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-													"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+													"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 												},
 												"fields":[
 													{
@@ -1463,7 +1483,7 @@ clientDiscord.on("message", async (message) => {
 								"color": 6193367,
 								"footer": {
 									"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-									"text": "Data maintained by Grumpy Butts - Generated at "+dateFormat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 								},
 								"fields":[
 									{
@@ -1475,14 +1495,34 @@ clientDiscord.on("message", async (message) => {
 						});
 					break;
 				}
-				console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";	
 			break;
+
+			case 'skilltest':
+				var skilltestQuery = message.toString().substring(1).split(' ');
+					skilltestQuery = skilltestQuery.splice(1);
+
+				var charaSkillsetData = require('./data/class/'+skilltestQuery[0]+'/'+skilltestQuery[1]+'.json');	
+
+				var charaSkillsetClass = skilltestQuery[0];
+				var charaSkillsetElement = skilltestQuery[1];
+				var charaTrainableList = getCharacterSkillset(charaSkillsetClass, charaSkillsetElement);
+				var charaTrainableSkills;
+
+				for(var i = 0; i < charaTrainableList.length; i++){
+					charaTrainableSkills = charaTrainableSkills + ("**")
+				}
+
+				message.channel.send("``` trainable idx list: "+charaTrainableList+"\n```");
+				
+			break;
 			
+			// data gathering start from here
 			case 'getupdate':
 				var silveressItemData;
-				var silveressQuestData;
-				var silveressRecipeData
+				//var silveressQuestData;
+				//var silveressRecipeData
 
 				fetch(silveressItem)
 					.then(res => res.json())
@@ -1497,7 +1537,7 @@ clientDiscord.on("message", async (message) => {
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Item data fetched, status: "+payloadStatus);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Item data fetched, status: "+payloadStatus);
 					});
 				
 				/* 
@@ -1515,7 +1555,7 @@ clientDiscord.on("message", async (message) => {
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Quest data fetched, status: "+payloadStatus);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Quest data fetched, status: "+payloadStatus);
 					});
 				
 				> recipe data out of date
@@ -1532,28 +1572,69 @@ clientDiscord.on("message", async (message) => {
 								payloadStatus = "rejected";
 							}
 						});
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Recipe data fetched, status: "+payloadStatus);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Recipe data fetched, status: "+payloadStatus);
 					});
 				*/	
 			break;
 
 			case 'getclassdata':
 				var classData = classDataSource;
+				var errCount = 0;
+				var errLocation = [];
+				
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > starting update on class data..");
 
 				for(var i = 0; i < classData.length; i++){
+					// checking if directory is exist or not, if not make one
 					if(!fs.existsSync('./data/class/'+classData[i].name)){
-						fs.mkdirSync('./data/class/'+classData[i].name);
-
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classData[i].name+" directory made");
+						fs.mkdirSync('./data/class/'+classData[i].name, function (err) {
+							if(err){
+								console.log(err);
+								errCount++;
+								errLocation[errCount] = classData[i].name +" folder"
+							}
+						});
 					}
 
+					// getting and writing attributes data into a .json file
 					fs.writeFile('./data/class/'+classData[i].name+'/attributes.json', JSON.stringify(await getData(classData[i].attributes), null, '\t'), function (err) {
 						if(err){
 							console.log(err);
+							errCount++;
+							errLocation[errCount] = classData[i].name + " attributes data"
 						}
 					})
-					
-					console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classData[i].name+" fetched");					
+
+					await delay(500);
+
+					var classAttributeData = require('./data/class/'+classData[i].name+'/attributes.json');
+					// getting class attribute value
+					for(var j = 0; j < classAttributeData.records.length; j++){
+						var classAttributeValue = classAttributeData.records[j].attribute;							//console.log("current attribute @ "+classData[i].name+": "+classAttributeValue);
+
+						// getting and writing class skillset depending on its attribute
+						fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeValue+'.json', JSON.stringify(await getData(classData[i].skillsets[j]), null, '\t'), function (err) {
+							if(err){
+								console.log(err);
+								errCount++;
+								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset data"
+							}
+						})
+
+						// getting the respective groups for the current attribute
+						fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeValue+'-group.json', JSON.stringify(await getData(classData[i].groups[j]), null, '\t'), function (err) {
+							if(err){
+								console.log(err);
+								errCount++;
+								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset group data"
+							}
+						})
+					}				
+				}
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > all class data updated with "+errCount+" problem(s)");
+
+				if(errCount != 0){
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > problem occured on: "+errLocation);
 				}
 			break;
 
@@ -1570,7 +1651,7 @@ clientDiscord.on("message", async (message) => {
 					break;
 					case 'sync':
 						basinTime = 0;
-						console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Celestial Basin time has been reset");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Celestial Basin time has been reset");
 					break;
 					case 'status':
 						if(basinStatusMsgID != null || basinStatusMsgID != ""){
@@ -1582,21 +1663,6 @@ clientDiscord.on("message", async (message) => {
 					break;
 				}
 			break;
-
-			case 'getdaily':
-				var dailydata = "https://api.silveress.ie/bns/v3/dungeons/daily";
-				var silveressDailyData;
-				fetch(dailydata)
-					.then(res => res.json())
-					.then(data => silveressDailyData = data)
-					.then(() => {
-						var dailyData = silveressDailyData;
-						var dailyDataCurrent = dailyData[0];
-						var dailyDataCurrent = JSON.stringify(dailyDataCurrent, null, '\t')
-
-						message.channel.send("Current Data:```"+dailyDataCurrent+"```");
-					});
-			break;
          };
      };
 });
@@ -1607,10 +1673,10 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN);
 // Twitter hook
 // Getting user tweet, parameter used: user id, e.g: "3521186773". You can get user id via http://gettwitterid.com/
 
-clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  function(stream) {
+clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  function(stream) {
 	stream.on('data', function(tweet) {
 		// Filtering data so it only getting data from specified user
-		if((tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[1]) || (tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[2])){
+		if((tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[1]) || (tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[2])){
 			// Variable for filtering
 			twtFilter = tweet.text.toString().substring(0).split(" ");
 
@@ -1634,7 +1700,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 				payloadStatus = "received"
 
 				// Making the color different for different user
-				if(tweet.user.screen_name == secret.TWITTER_STREAM_SCREENNAME[0]){
+				if(tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[0]){
 					twtColor = 16753920;
 				}else{
 					twtColor = 1879160;
@@ -1645,7 +1711,7 @@ clientTwitter.stream('statuses/filter', {follow: secret.TWITTER_STREAM_ID},  fun
 			}
 		}
 		// Console logging
-		console.log(" [ "+dateFormat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Tweet recived, status: "+payloadStatus);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Tweet recived, status: "+payloadStatus);
 		payloadStatus = "rejected";
 	});
   

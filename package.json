@@ -15,6 +15,7 @@
     "discord.js": "^11.4.2",
     "node-fetch": "^2.2.0",
     "ontime": "0.0.4",
+    "ping": "^0.2.2",
     "twitter": "^1.7.1"
   }
 }

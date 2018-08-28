@@ -2,81 +2,121 @@
     {
         "name": "gunslinger",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/shooter.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/shooter/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/shooter/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/shooter/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/shooter/attributes/1.json"
         ]
     },
     {
         "name": "bladedancer",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/bladedancer.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/bladedancer/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/bladedancer/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/bladedancer/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/bladedancer/attributes/1.json"
         ]
     },
     {
         "name": "destroyer",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/destroyer.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/destroyer/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/destroyer/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/destroyer/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/destroyer/attributes/1.json"
         ]
     },
     {
         "name": "summoner",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/summoner.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/summoner/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/summoner/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/summoner/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/summoner/attributes/1.json"
         ]
     },
     {
         "name": "kungfumaster",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/kungfufighter.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/kungfufighter/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/kungfufighter/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/kungfufighter/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/kungfufighter/attributes/1.json"
         ]
     },
     {
         "name": "assassin",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/assassin.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/assassin/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/assassin/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/assassin/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/assassin/attributes/1.json"
         ]
     },
     {
         "name": "forcemaster",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/forcemaster.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/forcemaster/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/forcemaster/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/forcemaster/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/forcemaster/attributes/1.json"
         ]
     },
     {
         "name": "warlock",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/warlock.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/warlock/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/warlock/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/warlock/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/warlock/attributes/1.json"
         ]
     },
     {
         "name": "blademaster",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/blademaster.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/blademaster/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/blademaster/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/blademaster/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/blademaster/attributes/1.json"
         ]
     },
     {
         "name": "soulfighter",
         "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/soulfighter.json",
-        "skillsets": [
+        "groups": [
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/soulfighter/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/soulfighter/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/soulfighter/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/soulfighter/attributes/1.json"
         ]
     }
 ]

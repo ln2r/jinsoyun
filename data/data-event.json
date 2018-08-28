@@ -1,6 +1,6 @@
 {
     "name": "Frozen Firing Range",
-    "duration": "August 15 – September 5",
+    "duration": "August 15 – September 12",
     "url": "http://www.bladeandsoul.com/en/news/frozen-firing-range-event-dungeon-opens-august-15/",
     "quests": [
         {
@@ -98,7 +98,6 @@
         "sources": ["Daily Challenges", "Event Quest", "Event Dungeon"],
         "name": ["Ice Pellets", "Frozen Fun Bag"],
         "currency" : "Ice Pellets",
-        "daily": "Ice Pellets x5 (Event)",
-        "qty": 1
+        "daily": "Ice Pellets x5 (Event)"
     }
 }
