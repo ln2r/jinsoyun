@@ -48,75 +48,6 @@ var twtTimestamp;
 var twtColor;
 var twtFilter;
 
-// silveress character data
-var silveressCharacterData;
-
-var charaDataName;
-var charaDataImg;
-var charaDataLvl;
-var charaDataLvlHM;
-var charaDataHMAllocationDef;
-var charaDataHMAllocationAtk;
-
-var charaDataHP;
-var charaDataAP;
-var charaDataBossAP;
-var charaDataElement;
-var charaDataClass;
-var charaDataWeapon;
-
-var charaDataDef;
-var charaDataBossDef;
-var charaDataEva;
-var charaDataEvaRate;
-var charaDataBlock;
-var charaDataBlockRate;
-				
-var charaDataCritHit;
-var charaDataCritHitRate;
-var charaDataCritDmg;
-var charaDataCritDmgRate;
-
-var charaDataGem1;
-var charaDataGem2;
-var charaDataGem3;
-var charaDataGem4;
-var charaDataGem5;
-var charaDataGem6;
-
-var charaDataSoulShield1;
-var charaDataSoulShield2;
-var charaDataSoulShield3;
-var charaDataSoulShield4;
-var charaDataSoulShield5;
-var charaDataSoulShield6;
-var charaDataSoulShield7;
-var charaDataSoulShield8;
-
-var charaDataRing;
-var charaDataEarring;
-var charaDataNecklace;
-var charaDataBraclet;
-var charaDataBelt;
-var charaDataGloves;
-var charaDataSoul;
-var cahraDataHeart;
-var charaDataPet;
-var charaDataSoulBadge;
-var charaDataMysticBadge;
-
-var charaDataFaction;
-var charaDataServer;
-var charaDataGuild;
-var charaDataFactionRank;
-
-var charaDataPVPTotalGames;
-var charaDataPVPTotalWins;
-var charaDataPVPSoloWins;
-var charaDataPVPSoloTier;
-var charaDataPVPTagWins;
-var charaDataPVPTagTier;
-
 // silveress API point
 const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
 const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
@@ -410,14 +341,45 @@ function getCharacterSkillset(charaClass, charaElement){
 			idx++;
 		}
 	}
-
-	return charaSkillset;	
+	charaSkillset.shift(); // removing "windwalk" skill
+	return charaSkillset;
 }
 
 // Getting skill type, get: group name, return: type (knockdown, stun, hp recovery)
-function getSkillType(charaClass, charaElement){
-	var charaSkillGroupList = require('./data/class/'+charaClass+'/'+charaElement+'-group.json');
+async function getSkillset(charaClass, charaElement, charaName){
+	var charaSkillsetData = require('./data/class/'+charaClass+'/'+charaElement+'.json');
+	var charaAttributesList = require('./data/class/'+charaClass+'/attributes.json');
+	var charaElementIdx;
+	var charaName = charaName.replace(" ", "%20");
+	var charaElement = charaElement.toLowerCase();
+	var charaClass = charaClass.replace(" ", "");
 
+	// reference url: http://na-bns.ncsoft.com/ingame/api/skill/characters/Wquin%20Hollow/skills/pages/1.json
+	var userSkillset = await getData("http://na-bns.ncsoft.com/ingame/api/skill/characters/"+charaName+"/skills/pages/1.json");	
+		userSkillset = userSkillset.records;
+
+	var charaTrainableList = getCharacterSkillset(charaClass, charaElement);
+	var charaTrainableSkills = "";
+
+	var found = 0;
+
+	// searching skills with same variation_id
+	for(var i = 0; i < userSkillset.length; i++){
+		// if conditional so it will stop if it found all the match
+		if(found != charaTrainableList.length){
+		for(var j = 0; j < charaTrainableList.length; j++){
+				for(var k = 0; k < charaSkillsetData.records[charaTrainableList[j]].variations.length; k++){
+					if(userSkillset[i].variation_index == charaSkillsetData.records[charaTrainableList[j]].variations[k].variation_index){
+						charaTrainableSkills = charaTrainableSkills + (charaSkillsetData.records[charaTrainableList[j]].variations[k].name+" - "+(charaSkillsetData.records[charaTrainableList[j]].variations[k].training_icon_desc).replace(/<[^>]+>/g, "")+"\n");
+
+						found++;
+					}
+				}
+			}
+		}				
+	}
+
+	return charaTrainableSkills;		
 }
 
 // Discord stuff start here
@@ -1058,148 +1020,86 @@ clientDiscord.on("message", async (message) => {
 				}				
 
 				var silveressQuerry = silveressNA+whoQuerry[0]; // for the querry
+				var charaData = await getData(silveressQuerry);
+				var skillsetData = await getSkillset(charaData.playerClass.replace(" ", ""), charaData.activeElement, charaData.characterName)
+
+				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
+					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
+				
+				if(charaData.characterName == "undefined"){
+					message.channel.send('Im sorry i cant find the character you are looking for, can you try again?\n\nExample: **!who "Jinsoyun"**');
+
+					payloadStatus = 'rejected';
+					
+				}else{
+					message.channel.send({
+						"embed": {
+							"author": {
+							"name": fetchData(charaData.guild)+"\'s "+fetchData(charaData.characterName)	
+							},
+							"title": fetchData(charaData.characterName)+" is a Level "+fetchData(charaData.playerLevel)+" HM "+fetchData(charaData.playerLevelHM)+" "+fetchData(charaData.activeElement)+" "+fetchData(charaData.playerClass)+"\n ",
+							"url": bnstreeProfile,
+							"fields": [
+							{
+								"name": "Basic Stats",
+								"value": "HP: "+fetchData(charaData.hp)+"\nAttack Power: "+fetchData(charaData.ap)+"\nHongmoon Points Allocation (Atk - Def): "+fetchData(charaData.HMAttackPoint)+" - "+fetchData(charaData.HMDefencePoint)
+							},
+							{
+								"name": "\nOffensive Stats",
+								"value": "Boss Attack Power: "+charaData.ap_boss+"\nCritical Hit: "+charaData.crit+" ("+(charaData.critRate*100).toFixed(2)+"%)\nCritical Damage: "+charaData.critDamage+" ("+(charaData.critDamageRate*100).toFixed(2)+"%)",
+							},
+							{
+								"name": "\nDefensive Stats",
+								"value": "Defense: "+charaData.defence+"\nBoss Defense: "+charaData.defence_boss+"\nEvasion: "+charaData.evasion+" ("+(charaData.evasionRate*100).toFixed(2)+"%)\nBlock: "+charaData.block+" ("+(charaData.blockRate*100).toFixed(2)+"%)",
+							},
+							{
+								"name": "Weapon",
+								"value": fetchData(charaData.weaponName)+"\n\n ",
+							},
+							{
+								"name": "Gems",
+								"value": fetchData(charaData.gem1)+"\n"+fetchData(charaData.gem2)+"\n"+fetchData(charaData.gem3)+"\n"+fetchData(charaData.gem4)+"\n"+fetchData(charaData.gem5)+"\n"+fetchData(charaData.gem6)+"\n",
+							},
+							{
+								"name": "Equipments",
+								"value": "Ring: "+fetchData(charaData.ringName)+"\nEarring: "+fetchData(charaData.earringName)+"\nNecklace: "+fetchData(charaData.necklaceName)+"\nBraclet: "+fetchData(charaData.braceletName)+"\nBelt: "+fetchData(charaData.beltName)+"\nGloves: "+fetchData(charaData.gloves)+"\nSoul: "+fetchData(charaData.soulName)+"\nHeart: "+fetchData(charaData.soulName2)+"\nAura Pet: "+fetchData(charaData.petAuraName)+"\nSoul Badge: "+fetchData(charaData.soulBadgeName)+"\nMystic Badge: "+fetchData(charaData.mysticBadgeName), 
+							},
+							{
+								"name": "Soulshield",
+								"value": fetchData(charaData.soulshield1)+"\n"+fetchData(charaData.soulshield2)+"\n"+fetchData(charaData.soulshield3)+"\n"+fetchData(charaData.soulshield4)+"\n"+fetchData(charaData.soulshield5)+"\n"+fetchData(charaData.soulshield6)+"\n"+fetchData(charaData.soulshield7)+"\n"+fetchData(charaData.soulshield8), 
+							},
+							{
+								"name": "Arena Stats",
+								"value": "Games (Play - Win - Lose): "+charaData.tournamentTotalGames+" - "+charaData.tournamentTotalWins+" - "+(charaData.tournamentTotalGames-charaData.tournamentTotalWins)+" ("+getWinRate(charaData.tournamentTotalGames, charaData.tournamentTotalWins)+"% win rate)\nSolo Wins: "+charaData.tournamentSoloWins+" ("+charaData.tournamentSoloTier+")\nTag Team Wins: "+charaData.tournamentTagWins+" ("+charaData.tournamentTagTier+")"
+							},
+							{
+								"name": "Trainable Skills (Skill Name - Type)",
+								"value": skillsetData
+
+							},
+							{
+								"name": "Miscellaneous",
+								"value": "Server: "+fetchData(charaData.server)+"\nFaction: "+fetchData(charaData.faction)+" ("+fetchData(charaData.factionRank)+")",
+							}],
+							"description": "",
+							"color": Math.floor(Math.random() * 16777215) - 0,
+							"footer": {
+								"icon_url": "https://slate.silveress.ie/images/logo.png",
+								"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+							},
+							"thumbnail": {
+								"url": charaData.characterImg
+							}
+						}
+					})
+				}
+				var charaSkills;
 
 				// fetching data from api site
 				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
 					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 
-				fetch(silveressQuerry)
-					.then(res => res.json())
-					.then(data => silveressCharacterData = data)
-					.then(() => {
-						charaDataName = fetchData(silveressCharacterData.characterName);
-						charaDataImg = fetchData(silveressCharacterData.characterImg);
-						charaDataLvl = fetchData(silveressCharacterData.playerLevel);
-						charaDataLvlHM = fetchData(silveressCharacterData.playerLevelHM);
-						charaDataHMAllocationAtk = fetchData(silveressCharacterData.HMAttackPoint);
-						charaDataHMAllocationDef = fetchData(silveressCharacterData.HMDefencePoint);
-
-						charaDataHP = fetchData(silveressCharacterData.hp);
-						charaDataAP = fetchData(silveressCharacterData.ap);
-						charaDataBossAP = fetchData(silveressCharacterData.ap_boss);
-						charaDataElement = fetchData(silveressCharacterData.activeElement);
-						charaDataClass = fetchData(silveressCharacterData.playerClass);
-						charaDataWeapon = fetchData(silveressCharacterData.weaponName);
-
-						charaDataCritHit = fetchData(silveressCharacterData.crit);
-						charaDataCritHitRate = fetchData(silveressCharacterData.critRate);
-						charaDataCritDmg = fetchData(silveressCharacterData.critDamage);
-						charaDataCritDmgRate = fetchData(silveressCharacterData.critDamageRate);
-
-						charaDataDef = fetchData(silveressCharacterData.defence);
-						charaDataBossDef = fetchData(silveressCharacterData.defence_boss);
-						charaDataEva = fetchData(silveressCharacterData.evasion);
-						charaDataEvaRate = fetchData(silveressCharacterData.evasionRate);
-						charaDataBlock = fetchData(silveressCharacterData.block);
-						charaDataBlockRate = fetchData(silveressCharacterData.blockRate);
-
-						charaDataGem1 = fetchData(silveressCharacterData.gem1);
-						charaDataGem2 = fetchData(silveressCharacterData.gem2);
-						charaDataGem3 = fetchData(silveressCharacterData.gem3);
-						charaDataGem4 = fetchData(silveressCharacterData.gem4);
-						charaDataGem5 = fetchData(silveressCharacterData.gem5);
-						charaDataGem6 = fetchData(silveressCharacterData.gem6);
-
-						charaDataSoulShield1 = fetchData(silveressCharacterData.soulshield1);
-						charaDataSoulShield2 = fetchData(silveressCharacterData.soulshield2);
-						charaDataSoulShield3 = fetchData(silveressCharacterData.soulshield3);
-						charaDataSoulShield4 = fetchData(silveressCharacterData.soulshield4);
-						charaDataSoulShield5 = fetchData(silveressCharacterData.soulshield5);
-						charaDataSoulShield6 = fetchData(silveressCharacterData.soulshield6);
-						charaDataSoulShield7 = fetchData(silveressCharacterData.soulshield7);
-						charaDataSoulShield8 = fetchData(silveressCharacterData.soulshield8);
-
-						charaDataRing = fetchData(silveressCharacterData.ringName);
-						charaDataEarring = fetchData(silveressCharacterData.earringName);
-						charaDataNecklace = fetchData(silveressCharacterData.necklaceName);
-						charaDataBraclet = fetchData(silveressCharacterData.braceletName);
-						charaDataBelt = fetchData(silveressCharacterData.beltName);
-						charaDataGloves = fetchData(silveressCharacterData.gloves);
-						charaDataSoul = fetchData(silveressCharacterData.soulName);
-						cahraDataHeart = fetchData(silveressCharacterData.soulName2);
-						charaDataPet = fetchData(silveressCharacterData.petAuraName);
-						charaDataSoulBadge = fetchData(silveressCharacterData.soulBadgeName);
-						charaDataMysticBadge = fetchData(silveressCharacterData.mysticBadgeName);
-
-						charaDataServer = fetchData(silveressCharacterData.server);
-						charaDataFaction = fetchData(silveressCharacterData.faction);
-						charaDataGuild = fetchData(silveressCharacterData.guild);
-						charaDataFactionRank = fetchData(silveressCharacterData.factionRank);
-
-						charaDataPVPTotalGames = fetchData(silveressCharacterData.tournamentTotalGames);
-						charaDataPVPTotalWins = fetchData(silveressCharacterData.tournamentTotalWins);
-
-						charaDataPVPSoloWins = fetchData(silveressCharacterData.tournamentSoloWins);
-						charaDataPVPSoloTier = fetchData(silveressCharacterData.tournamentSoloTier);
-
-						charaDataPVPTagWins = fetchData(silveressCharacterData.tournamentTagWins);
-						charaDataPVPTagTier = fetchData(silveressCharacterData.tournamentTagTier);
-					})
-					.then(() =>{
-						if(charaDataName == "undefined"){
-							payloadStatus = 'rejected';
-
-							message.channel.send('Im sorry i cant find the character you are looking for, can you try again?\n\nExample: **!who "Jinsoyun"**');				
-						}else{
-							payloadStatus = 'recieved';
-							message.channel.send({
-								"embed": {
-									"author": {
-									"name": charaDataGuild+"\'s "+charaDataName	
-									},
-									"title": charaDataName+" is a Level "+charaDataLvl+" HM "+charaDataLvlHM+" "+charaDataElement+" "+charaDataClass+"\n ",
-									"url": bnstreeProfile,
-									"fields": [
-									{
-										"name": "Basic Stats",
-										"value": "HP: "+charaDataHP+"\nAttack Power: "+charaDataAP+"\nHongmoon Points Allocation (Atk - Def): "+charaDataHMAllocationAtk+" - "+charaDataHMAllocationDef
-									},
-									{
-										"name": "\nOffensive Stats",
-										"value": "Boss Attack Power: "+charaDataBossAP+"\nCritical Hit: "+charaDataCritHit+" ("+(charaDataCritHitRate*100).toFixed(2)+"%)\nCritical Damage: "+charaDataCritDmg+" ("+(charaDataCritDmgRate*100).toFixed(2)+"%)",
-									},
-									{
-										"name": "\nDefensive Stats",
-										"value": "Defense: "+charaDataDef+"\nBoss Defense: "+charaDataBossDef+"\nEvasion: "+charaDataEva+" ("+(charaDataEvaRate*100).toFixed(2)+"%)\nBlock: "+charaDataBlock+" ("+(charaDataBlockRate*100).toFixed(2)+"%)",
-									},
-									{
-										"name": "Weapon",
-										"value": charaDataWeapon+"\n\n ",
-									},
-									{
-										"name": "Gems",
-										"value": charaDataGem1+"\n"+charaDataGem2+"\n"+charaDataGem3+"\n"+charaDataGem4+"\n"+charaDataGem5+"\n"+charaDataGem6+"\n",
-									},
-									{
-										"name": "Equipments",
-										"value": "Ring: "+charaDataRing+"\nEarring: "+charaDataEarring+"\nNecklace: "+charaDataNecklace+"\nBraclet: "+charaDataBraclet+"\nBelt: "+charaDataBelt+"\nGloves: "+charaDataGloves+"\nSoul: "+charaDataSoul+"\nHeart: "+cahraDataHeart+"\nAura Pet: "+charaDataPet+"\nSoul Badge: "+charaDataSoulBadge+"\nMystic Badge: "+charaDataMysticBadge, 
-									},
-									{
-										"name": "Soulshield",
-										"value": charaDataSoulShield1+"\n"+charaDataSoulShield2+"\n"+charaDataSoulShield3+"\n"+charaDataSoulShield4+"\n"+charaDataSoulShield5+"\n"+charaDataSoulShield6+"\n"+charaDataSoulShield7+"\n"+charaDataSoulShield8, 
-									},
-									{
-										"name": "Arena Stats",
-										"value": "Games (Play - Win - Lose): "+charaDataPVPTotalGames+" - "+charaDataPVPTotalWins+" - "+(charaDataPVPTotalGames-charaDataPVPTotalWins)+" ("+getWinRate(charaDataPVPTotalGames, charaDataPVPTotalWins)+"% win rate)\nSolo Wins: "+charaDataPVPSoloWins+" ("+charaDataPVPSoloTier+")\nTag Team Wins: "+charaDataPVPTagWins+" ("+charaDataPVPTagTier+")"
-									},
-									{
-										"name": "Miscellaneous",
-										"value": "Server: "+charaDataServer+"\nFaction: "+charaDataFaction+" ("+charaDataFactionRank+")",
-									}],
-									"description": "",
-									"color": Math.floor(Math.random() * 16777215) - 0,
-									"footer": {
-										"icon_url": "https://slate.silveress.ie/images/logo.png",
-										"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
-									},
-									"thumbnail": {
-										"url": charaDataImg
-									}
-								}
-							})
-						}		
-					})	
-					
+				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";
 			break;
@@ -1498,47 +1398,69 @@ clientDiscord.on("message", async (message) => {
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";	
 			break;
-
-			case 'skilltest':
-				var skilltestQuery = message.toString().substring(1).split(' ');
-					skilltestQuery = skilltestQuery.splice(1);
-
-				var charaSkillsetData = require('./data/class/'+skilltestQuery[0]+'/'+skilltestQuery[1]+'.json');	
-
-				var charaSkillsetClass = skilltestQuery[0];
-				var charaSkillsetElement = skilltestQuery[1];
-				var charaTrainableList = getCharacterSkillset(charaSkillsetClass, charaSkillsetElement);
-				var charaTrainableSkills;
-
-				for(var i = 0; i < charaTrainableList.length; i++){
-					charaTrainableSkills = charaTrainableSkills + ("**")
-				}
-
-				message.channel.send("``` trainable idx list: "+charaTrainableList+"\n```");
-				
-			break;
 			
 			// data gathering start from here
-			case 'getupdate':
-				var silveressItemData;
-				//var silveressQuestData;
-				//var silveressRecipeData
+			case 'getupdate':				
+				var classData = classDataSource;
+				var errCount = 0;
+				var errLocation = [];
 
-				fetch(silveressItem)
-					.then(res => res.json())
-					.then(data => silveressItemData = data)
-					.then(() => {
-						silveressItemData = JSON.stringify(silveressItemData, null, '\t');
-						payloadStatus = "recieved";
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > starting data update..");
+				
+				// item data
+				fs.writeFile('./data/list-item.json', JSON.stringify(await getData(silveressItem), null, '\t'), function (err) {
+					if(err){
+						console.log(err);
+						errCount++;
+						errLocation[errCount] = "list-item data"
+					}
+				})	
 
-						fs.writeFile('./data/list-item.json', silveressItemData, function (err) {
+				// class data
+				for(var i = 0; i < classData.length; i++){
+					// checking if directory is exist or not, if not make one
+					if(!fs.existsSync('./data/class/'+classData[i].name)){
+						fs.mkdirSync('./data/class/'+classData[i].name, function (err) {
 							if(err){
 								console.log(err);
-								payloadStatus = "rejected";
+								errCount++;
+								errLocation[errCount] = classData[i].name +" folder"
 							}
 						});
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Item data fetched, status: "+payloadStatus);
-					});
+					}
+
+					// getting and writing attributes data into a .json file
+					fs.writeFile('./data/class/'+classData[i].name+'/attributes.json', JSON.stringify(await getData(classData[i].attributes), null, '\t'), function (err) {
+						if(err){
+							console.log(err);
+							errCount++;
+							errLocation[errCount] = classData[i].name + " attributes data"
+						}
+					})
+
+					await delay(500);
+
+					var classAttributeData = require('./data/class/'+classData[i].name+'/attributes.json');
+					// getting class attribute value
+					for(var j = 0; j < classAttributeData.records.length; j++){
+						var classAttributeValue = classAttributeData.records[j].attribute;
+						//console.log("current attribute @ "+classData[i].name+": "+classAttributeValue);
+
+						// getting and writing class skillset depending on its attribute
+						fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeValue+'.json', JSON.stringify(await getData(classData[i].skillsets[j]), null, '\t'), function (err) {
+							if(err){
+								console.log(err);
+								errCount++;
+								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset data"
+							}
+						})
+					}				
+				}
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > all data updated with "+errCount+" problem(s)");
+
+				if(errCount != 0){
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > problem occured on: "+errLocation);
+				}	
 				
 				/* 
 				> api data inaccurate, disable for now
@@ -1575,67 +1497,6 @@ clientDiscord.on("message", async (message) => {
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Recipe data fetched, status: "+payloadStatus);
 					});
 				*/	
-			break;
-
-			case 'getclassdata':
-				var classData = classDataSource;
-				var errCount = 0;
-				var errLocation = [];
-				
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > starting update on class data..");
-
-				for(var i = 0; i < classData.length; i++){
-					// checking if directory is exist or not, if not make one
-					if(!fs.existsSync('./data/class/'+classData[i].name)){
-						fs.mkdirSync('./data/class/'+classData[i].name, function (err) {
-							if(err){
-								console.log(err);
-								errCount++;
-								errLocation[errCount] = classData[i].name +" folder"
-							}
-						});
-					}
-
-					// getting and writing attributes data into a .json file
-					fs.writeFile('./data/class/'+classData[i].name+'/attributes.json', JSON.stringify(await getData(classData[i].attributes), null, '\t'), function (err) {
-						if(err){
-							console.log(err);
-							errCount++;
-							errLocation[errCount] = classData[i].name + " attributes data"
-						}
-					})
-
-					await delay(500);
-
-					var classAttributeData = require('./data/class/'+classData[i].name+'/attributes.json');
-					// getting class attribute value
-					for(var j = 0; j < classAttributeData.records.length; j++){
-						var classAttributeValue = classAttributeData.records[j].attribute;							//console.log("current attribute @ "+classData[i].name+": "+classAttributeValue);
-
-						// getting and writing class skillset depending on its attribute
-						fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeValue+'.json', JSON.stringify(await getData(classData[i].skillsets[j]), null, '\t'), function (err) {
-							if(err){
-								console.log(err);
-								errCount++;
-								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset data"
-							}
-						})
-
-						// getting the respective groups for the current attribute
-						fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeValue+'-group.json', JSON.stringify(await getData(classData[i].groups[j]), null, '\t'), function (err) {
-							if(err){
-								console.log(err);
-								errCount++;
-								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset group data"
-							}
-						})
-					}				
-				}
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > all class data updated with "+errCount+" problem(s)");
-
-				if(errCount != 0){
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > problem occured on: "+errLocation);
-				}
 			break;
 
 			case 'basin':
