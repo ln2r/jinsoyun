@@ -218,7 +218,7 @@ function fetchData(data){
 		data = data.toString();
 
 	if(data == "" || data == null){
-		var data = "N/A"
+		var data = "No data available"
 	}else{
 		var data = data;
 	}
@@ -327,7 +327,7 @@ function getWeeklyQuests(){
 }
 
 // Getting character skillset, get: class;element, return: file loc
-function getCharacterSkillset(charaClass, charaElement){
+function getTrainableSkills(charaClass, charaElement){
 	var charaSkillsetData = require('./data/class/'+charaClass+'/'+charaElement+'.json');	
 
 	var charaClass = charaClass.toLowerCase();
@@ -337,7 +337,7 @@ function getCharacterSkillset(charaClass, charaElement){
 
 	for(var i = 0; i < charaSkillsetData.records.length; i++){
 		if(charaSkillsetData.records[i].variations.length > 1){
-			charaSkillset[idx] = i;
+			charaSkillset[idx] = {"id": charaSkillsetData.records[i].id, "idx": i};
 			idx++;
 		}
 	}
@@ -345,11 +345,11 @@ function getCharacterSkillset(charaClass, charaElement){
 	return charaSkillset;
 }
 
-// Getting skill type, get: group name, return: type (knockdown, stun, hp recovery)
+// Getting skill type, get: chara class, element, name - return: skills, type
 async function getSkillset(charaClass, charaElement, charaName){
-	var charaSkillsetData = require('./data/class/'+charaClass+'/'+charaElement+'.json');
-	var charaAttributesList = require('./data/class/'+charaClass+'/attributes.json');
-	var charaElementIdx;
+	var charaSkillsetData = require("./data/class/"+charaClass+"/"+charaElement+".json");
+		charaSkillsetData = charaSkillsetData.records;
+
 	var charaName = charaName.replace(" ", "%20");
 	var charaElement = charaElement.toLowerCase();
 	var charaClass = charaClass.replace(" ", "");
@@ -358,28 +358,30 @@ async function getSkillset(charaClass, charaElement, charaName){
 	var userSkillset = await getData("http://na-bns.ncsoft.com/ingame/api/skill/characters/"+charaName+"/skills/pages/1.json");	
 		userSkillset = userSkillset.records;
 
-	var charaTrainableList = getCharacterSkillset(charaClass, charaElement);
+	var charaTrainableList = getTrainableSkills(charaClass, charaElement);
 	var charaTrainableSkills = "";
 
-	var found = 0;
-
-	// searching skills with same variation_id
+	// searching for match
 	for(var i = 0; i < userSkillset.length; i++){
-		// if conditional so it will stop if it found all the match
-		if(found != charaTrainableList.length){
 		for(var j = 0; j < charaTrainableList.length; j++){
-				for(var k = 0; k < charaSkillsetData.records[charaTrainableList[j]].variations.length; k++){
-					if(userSkillset[i].variation_index == charaSkillsetData.records[charaTrainableList[j]].variations[k].variation_index){
-						charaTrainableSkills = charaTrainableSkills + (charaSkillsetData.records[charaTrainableList[j]].variations[k].name+" - "+(charaSkillsetData.records[charaTrainableList[j]].variations[k].training_icon_desc).replace(/<[^>]+>/g, "")+"\n");
-
-						found++;
+			// checking if the skill_id is the same
+			if(userSkillset[i].skill_id == charaTrainableList[j].id){
+				// getting the correct variation
+				for(var k = 0; k < charaSkillsetData[charaTrainableList[j].idx].variations.length; k++){
+					if(userSkillset[i].variation_index == charaSkillsetData[charaTrainableList[j].idx].variations[k].variation_index){
+						charaTrainableSkills = charaTrainableSkills + (charaSkillsetData[charaTrainableList[j].idx].variations[k].name+": "+charaSkillsetData[charaTrainableList[j].idx].variations[k].training_icon_desc.replace(/<[^>]+>/g, "")+"\n")
 					}
-				}
+				}							
 			}
-		}				
+		}
 	}
 
-	return charaTrainableSkills;		
+	// error handling for character that haven't got trainable skills
+	if(charaTrainableSkills == null || charaTrainableSkills == "" || charaTrainableSkills == false){
+		return charaTrainableSkills = "No data available";
+	}else{
+		return charaTrainableSkills;		
+	}		
 }
 
 // Discord stuff start here
@@ -1073,7 +1075,7 @@ clientDiscord.on("message", async (message) => {
 								"value": "Games (Play - Win - Lose): "+charaData.tournamentTotalGames+" - "+charaData.tournamentTotalWins+" - "+(charaData.tournamentTotalGames-charaData.tournamentTotalWins)+" ("+getWinRate(charaData.tournamentTotalGames, charaData.tournamentTotalWins)+"% win rate)\nSolo Wins: "+charaData.tournamentSoloWins+" ("+charaData.tournamentSoloTier+")\nTag Team Wins: "+charaData.tournamentTagWins+" ("+charaData.tournamentTagTier+")"
 							},
 							{
-								"name": "Trainable Skills (Skill Name - Type)",
+								"name": "Trainable Skills (Skill Name: Type)",
 								"value": skillsetData
 
 							},
