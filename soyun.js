@@ -74,7 +74,7 @@ function getItemID(name){
 	var itemQuerryLength = 1;
 
 	// searching the item using word match
-	for(i = 31; i < items.length; i++){
+	for(var i = 0; i < items.length; i++){
 		var itemSearchName = items[i].name;
 			itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
 		var itemSearchQuerry = name;
@@ -125,13 +125,13 @@ function currencyConvert(number){
 	var copper = ""
 
 	if(len > 4){
-		var gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547> ";
+		var gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547>";
 	}
 	if(len > 2){
-		var silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586> ";
+		var silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586>";
 	}
 	if(len > 0){
-		var copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928> ";
+		var copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928>";
 	} 
 
 	var total = gold + silver + copper; 
@@ -382,6 +382,39 @@ async function getSkillset(charaClass, charaElement, charaName){
 	}else{
 		return charaTrainableSkills;		
 	}		
+}
+
+// formating the text
+function setTextFormat(text){
+	text = text.toLowerCase();
+	text = text.replace(/(^|\s)\S/g, l => l.toUpperCase());
+
+	return text;
+}
+
+// get an array of item id for item that contain query item
+function getItemIDArray(query){
+	var itemIDArray = [];
+	var idx = 0;
+
+	for(var i = 0; i < items.length; i++){
+		var itemSearchName = items[i].name;
+			itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
+		var itemSearchQuery = query;
+			itemSearchQuery = itemSearchQuery.replace("'", "").toLowerCase().split(" ");
+
+		if(items[i].name.includes(query)){
+			itemIDArray[idx] = items[i].id;
+			idx++;
+		}				
+	}
+	
+	// item exception
+	if(query == "Soulstone"){
+		itemIDArray = itemIDArray.slice(0, 4);
+	};
+
+	return itemIDArray;
 }
 
 // Discord stuff start here
@@ -886,7 +919,7 @@ clientDiscord.on("message", async (message) => {
 									ch.send("Daily challenges has been reset, today's challenges are",{
 										"embed": {
 											"author":{
-												"name": "Daily Challenges",
+												"name": "Daily Challenges - "+dateformat(dcDate, "UTC:dddd"),
 												"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
 											},
 											"title": "Completion Rewards",
@@ -1014,6 +1047,8 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching and showing character information, can be triggered via !who for character that have the same name with the nickname or use !who "chara name" for specific one
 			case 'who':
+				message.channel.startTyping();
+
 				var whoQuerry = message.toString().substring(1).split('"');
 					whoQuerry = whoQuerry.splice(1);
 
@@ -1028,6 +1063,8 @@ clientDiscord.on("message", async (message) => {
 				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
 					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 				
+				message.channel.stopTyping();
+
 				if(charaData.characterName == "undefined"){
 					message.channel.send('Im sorry i cant find the character you are looking for, can you try again?\n\nExample: **!who "Jinsoyun"**');
 
@@ -1095,140 +1132,63 @@ clientDiscord.on("message", async (message) => {
 						}
 					})
 				}
-				var charaSkills;
-
-				// fetching data from api site
-				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
-					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
-
 				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
-				payloadStatus = "rejected";
 			break;
 			
 			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
-				var marketQuerry = message.toString().substring(1).split('"');
-					marketQuerry = marketQuerry.splice(1);
-				
-				if(marketQuerry[0] == null){
-					message.channel.send('I\'m sorry, you haven\'t specified the item you are looking for, can you try again?\n\nExample: `!market "moonstone"`');
-				}else{
-					// formating so it can be searched
-					marketQuerry[0] = marketQuerry[0].replace(/(^|\s)\S/g, l => l.toUpperCase());
+				message.channel.startTyping();
 
-					var marketItemID = getItemID(marketQuerry[0]);
-					if(marketItemID == ""){
-						// search if tradeable or not by looking at the item-list.json
-						message.channel.send({
-							"embed": {
-								"description":"No result on ***"+marketQuerry[0]+"***\nItem might be untradable or not in marketplace.",
-								"color": Math.floor(Math.random() * 16777215) - 0,
-								"footer": {
-									"icon_url": "https://slate.silveress.ie/images/logo.png",
-									"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
-								},
-								"thumbnail": {
-									"url": getItemImg(marketItemID)
-								},
-								"author": {
-									"name": marketQuerry[0]+" [N/A]",														
-								}
-							}
-						});
-					}else{
-						var silveressMarketData;
-						// fetching the market data
-						fetch(silveressMarket+marketItemID)
-						.then(res => res.json())
-						.then(data => silveressMarketData = data)
-						.then(() => {
-							var itemData = silveressMarketData[0];
-							
-							if(itemData == null){
-								message.channel.send({
-									"embed": {
-										"description":"No result on ***"+marketQuerry[0]+"***\nItem might be untradable or not in marketplace.",
-										"color": Math.floor(Math.random() * 16777215) - 0,
-										"footer": {
-											"icon_url": "https://slate.silveress.ie/images/logo.png",
-											"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
-										},
-										"thumbnail": {
-											"url": getItemImg(marketItemID)
-										},
-										"author": {
-											"name": marketQuerry[0]+" ["+marketItemID+"]",														
-										}
-									}
-								});
-							}else{
-								var itemDataName = itemData.name;
-								var firstData = itemData.listings[0];
-								var itemDataPrice = firstData.price;
-								var itemDataCount = firstData.count;
-								var itemDataEach = firstData.each;
+				var marketQuery = message.toString().substring(1).split('"');
+					marketQuery = marketQuery.splice(1); // removing the command text
+					marketQuery = setTextFormat(marketQuery[0]);
 
-								var otherListingData = ["","","","",""];
-								var otherListingPrice = ["","","","",""];
-								var otherListingCount = ["","","","",""];
-								var otherListingEach = ["","","","",""];
+				var marketItemIDList = getItemIDArray(marketQuery);
+				var marketDataValue = "";
 
-								if(itemData.totalListings > 1){							
-									for(i = 1; i < 6; i++){
-										otherListingData[i-1] = itemData.listings[i];
-										otherListingPrice[i-1] = otherListingData[i-1].price;
-										otherListingCount[i-1] = otherListingData[i-1].count;
-										otherListingEach[i-1] = otherListingData[i-1].each;
-									}
-								}else{
-									for(i = 1; i < 6; i++){
-										otherListingData[i-1] = "";
-										otherListingPrice[i-1] = 0;
-										otherListingCount[i-1] = 0;
-										otherListingEach[i-1] = 0;
-									}
-								}
+				// getting set item of data
+				for(var i = 0; i < marketItemIDList.length; i++){
+					var marketData = await getData(silveressMarket+marketItemIDList[i]);
 
-								message.channel.send({
-									"embed": {
-										"fields":[
-											{
-												"name": "Lowest Listing",
-												"value": "**Price**: "+currencyConvert(itemDataPrice)+"\n**Count**: "+itemDataCount+"\n**Price Each**: "+currencyConvert(itemDataEach)
-											},
-											{
-												"name": "Other Listing",
-												"value": "- "+currencyConvert(otherListingPrice[0])+" for "+otherListingCount[0]+"\n- "+currencyConvert(otherListingPrice[1])+" for "+otherListingCount[1]+"\n- "+currencyConvert(otherListingPrice[2])+" for "+otherListingCount[2]+"\n- "+currencyConvert(otherListingPrice[3])+" for "+otherListingCount[3]+"\n- "+currencyConvert(otherListingPrice[4])+" for "+otherListingCount[4]+"\n"
-											}
-										],
-										"color": Math.floor(Math.random() * 16777215) - 0,
-										"footer": {
-											"icon_url": "https://slate.silveress.ie/images/logo.png",
-											"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(itemData.ISO, "UTC:dd-mm-yy @ hh:MM")+" UTC"
-										},
-										"thumbnail": {
-											"url": getItemImg(marketItemID)
-										},
-										"author": {
-											"name": itemDataName+" ["+marketItemID+"]",														
-										}
-									}
-								});
-							}
-							payloadStatus = "recieved";							
-						})
-						.catch(err => {
-							console.log(err);
-							if(err){
-								payloadStatus = 'rejected';
-							}
-						});
+					if(marketData.length != 0){
+						marketDataValue = marketDataValue + ("**"+marketData[0].name+"** `"+marketData[0].id+"`\n- Each: "+currencyConvert(marketData[0].listings[0].each)+"\n- Lowest: "+currencyConvert(marketData[0].listings[0].price)+" for "+marketData[0].listings[0].count+"\n");
 					}
-				}		 
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
-				payloadStatus = "rejected";
-			break;
+				}
+
+				if(marketDataValue == "" || marketDataValue == null){
+					marketDataValue = "*No result on **"+marketQuery+"**\n The item is either untradable, not in marketplace or maybe it's not exist*"
+				}
+
+				//console.log(marketData);
+				//message.channel.send(marketDataValue);
+				if(marketData == null){
+					var fetchTime = Date.now();
+				}else{
+					var fetchTime = marketData[0].ISO;
+				}
+
+				message.channel.stopTyping();
+
+				message.channel.send({
+					"embed": {
+						"author":{
+							"name": "Marketplace - "+marketQuery,
+							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
+						},
+						"description": marketDataValue,
+						"color": 16766720,
+						"footer": {
+							"icon_url": "https://slate.silveress.ie/images/logo.png",
+							"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(fetchTime, "UTC:dd-mm-yy @ hh:MM")+" UTC"
+						},
+						"thumbnail": {
+							"url": getItemImg(marketItemIDList[0])
+						},
+					}	
+				})		 
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				break;
 
 			// for getting the current event information
 			case 'event':
@@ -1526,7 +1486,7 @@ clientDiscord.on("message", async (message) => {
 					break;
 				}
 			break;
-         };
+		 };
      };
 });
 
@@ -1574,7 +1534,7 @@ clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  fun
 			}
 		}
 		// Console logging
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Tweet recived, status: "+payloadStatus);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Tweet received, status: "+payloadStatus);
 		payloadStatus = "rejected";
 	});
   
