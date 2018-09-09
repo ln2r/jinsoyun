@@ -429,14 +429,33 @@ clientDiscord.on("ready", () => {
 // User joined the guild
 clientDiscord.on("guildMemberAdd", (member) => {
 	// Add 'cricket' role so new member so they cant access anything until they do !join for organizing reason
-	member.addRole(member.guild.roles.find("name", "cricket"));
+	member.addRole(member.guild.roles.find(x => x.name == "cricket"));
 	
 	// Welcoming message and guide to join
-	member.guild.channels.find("name", config.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
+	member.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" has joined");
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
+});
+
+// User left the guild (kicked or just left)
+clientDiscord.on("guildMemberRemove", async (member) => {
+	var silveressQuerry = silveressNA+member.displayName; // for the querry
+	var charaData = await getData(silveressQuerry);
+
+	message.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+		"embed":{
+			"color": 15605837,
+			"author":{
+				"name": member.nickname+" ("+member.displayName+")",
+			},
+			"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
+			"footer": {
+				"text": "Left - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+			}
+		}
+	});
 });
 
 // User commands
@@ -579,37 +598,48 @@ clientDiscord.on("message", async (message) => {
 					joinClass = joinClass.toLowerCase(); // Converting class value to lower case so input wont be missmatched
 					
 					// Checking the class input
-					for(i = 0; i < classArr.length;){
+					for(var i = 0; i < classArr.length; i++){
 						// Class input verification (inefficient af)
 						if(joinClass == classArr[i]){
 							querryStatus = true;
 							break;
 						};
-						i++
 					};
 
 					// Checking the verification
 					if(querryStatus == true){
 						// Convert to capitalize to make it easy and 'prettier'
 						joinUsername = joinUsername.replace(/(^|\s)\S/g, l => l.toUpperCase());
-						
+						//#Collection.find(x => x.name === "name")
 						// Setting user role to match the user class
-						message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", joinClass));
+						message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == joinClass));
 						// Adding "member" role so user can talk
-						message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", "member"));
+						message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == "member"));
 						// Removing "cricket" role
-						message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", "cricket"));
+						message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == "cricket"));
 						
 						// Setting message author username (guild owner or lower)
 						message.guild.members.get(message.author.id).setNickname(joinUsername);
 
 						// Welcoming message on general channel
-						message.guild.channels.find("name", config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+						message.guild.channels.find(x => x.name == config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 						payloadStatus = "received";
 						querryStatus = false;
 
-						message.guild.channels.find("name", config.DEFAULT_MEMBER_LOG).send(message.author.username+" joined `"+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM)+UTC`"),{
+						var silveressQuerry = silveressNA+joinUsername; // for the querry
+						var charaData = await getData(silveressQuerry);
 
+						message.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+							"embed":{
+								"color": 1879160,
+								"author":{
+									"name": message.author.username+" ("+joinUsername+")",
+								},
+								"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
+								"footer": {
+									"text": "Joined - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								}
+							}
 						});
 					}else{
 						// Telling them whats wrong
@@ -659,14 +689,14 @@ clientDiscord.on("message", async (message) => {
 					if(classValue == classArr[i]){
 						querryStatus = true;
 					};
-					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find("name", classArr[i]));					
+					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == classArr[i]));					
 					i++
 				};
 
 				// Checking the verification
 				if(querryStatus == true){
 					// Adding new role to user according their command
-					message.guild.members.get(message.author.id).addRole(message.guild.roles.find("name", classValue));
+					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classValue));
 
 					// Telling the user class has been changed
 					message.channel.send("Your class changed to **"+classValue+"**");
@@ -727,7 +757,7 @@ clientDiscord.on("message", async (message) => {
 						}
 
 					// Writing the content
-					message.guild.channels.find("name", config.DEFAULT_NEWS_CHANNEL).send({
+					message.guild.channels.find(x => x.name == config.DEFAULT_NEWS_CHANNEL).send({
 						"embed":{
 							"color": 16753920,
 							"timestamp" : new Date(),
@@ -1138,21 +1168,25 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
-				message.channel.startTyping();
-
 				var marketQuery = message.toString().substring(1).split('"');
 					marketQuery = marketQuery.splice(1); // removing the command text
 					marketQuery = setTextFormat(marketQuery[0]);
 
 				var marketItemIDList = getItemIDArray(marketQuery);
 				var marketDataValue = "";
+				var marketData = [];
+
+				message.channel.startTyping();
 
 				// getting set item of data
 				for(var i = 0; i < marketItemIDList.length; i++){
-					var marketData = await getData(silveressMarket+marketItemIDList[i]);
+					
+					marketData = await getData(silveressMarket+marketItemIDList[i]);
 
 					if(marketData.length != 0){
 						marketDataValue = marketDataValue + ("**"+marketData[0].name+"** `"+marketData[0].id+"`\n- Each: "+currencyConvert(marketData[0].listings[0].each)+"\n- Lowest: "+currencyConvert(marketData[0].listings[0].price)+" for "+marketData[0].listings[0].count+"\n");
+
+						fetchTime = marketData[0].ISO
 					}
 				}
 
@@ -1160,15 +1194,16 @@ clientDiscord.on("message", async (message) => {
 					marketDataValue = "*No result on **"+marketQuery+"**\n The item is either untradable, not in marketplace or maybe it's not exist*"
 				}
 
+				message.channel.stopTyping();
+
 				//console.log(marketData);
 				//message.channel.send(marketDataValue);
+
 				if(marketData == null){
 					var fetchTime = Date.now();
 				}else{
-					var fetchTime = marketData[0].ISO;
+					var fetchTime = fetchTime;
 				}
-
-				message.channel.stopTyping();
 
 				message.channel.send({
 					"embed": {
