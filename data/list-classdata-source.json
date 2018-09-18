@@ -118,5 +118,17 @@
             "http://na-bns.ncsoft.com/ingame/api/skill/jobs/soulfighter/attributes/0.json", 
             "http://na-bns.ncsoft.com/ingame/api/skill/jobs/soulfighter/attributes/1.json"
         ]
+    },
+    {
+        "name": "warden",
+        "attributes": "http://na-bns.ncsoft.com/ingame/api/skill/attributes/jobs/warrior.json",
+        "groups": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/warrior/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/groups/jobs/warrior/attributes/1.json"
+        ],
+        "skillsets": [
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/warrior/attributes/0.json", 
+            "http://na-bns.ncsoft.com/ingame/api/skill/jobs/warrior/attributes/1.json"
+        ]
     }
 ]

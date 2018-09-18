@@ -19,6 +19,7 @@ const recipes = require("./data/list-recipe.json");
 const classDataSource = require("./data/list-classdata-source.json");
 const soyunDialogue = require("./data/list-soyundialogue.json");
 const event = require("./data/data-event.json");
+const eventNext = require("./data/data-event-next.json"); // For testing the next event data
 
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
@@ -29,7 +30,7 @@ const clientTwitter = new Twitter({
 });
 
 // Default class list
-var classArr = ["blade master", "destroyer", "summoner", "force master", "kung fu master", "assassin", "blade dancer", "warlock", "soul fighter", "gunslinger"];
+var classArr = ["blade master", "destroyer", "summoner", "force master", "kung fu master", "assassin", "blade dancer", "warlock", "soul fighter", "gunslinger", "warden"];
 
 // Querry payload status
 var payloadStatus = "rejected";
@@ -56,7 +57,7 @@ const silveressMarket = "https://api.silveress.ie/bns/v3/market/na/current/";
 const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
 const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current?active=true";
 
-// Soyun status
+// Soyun activity
 var statusRandom = 0;
 
 // celestial basin ticker
@@ -212,15 +213,14 @@ function getTimeStatus(time){
 	return timeStatus;
 }
 
-// Empty data fetched handling, return data or "Nothing"
+// Empty data fetched handling, return data or "Custom no data message"
 function fetchData(data){
 	var data = data;
-		data = data.toString();
 
 	if(data == "" || data == null){
-		var data = "No data available"
+		data = "No data available";
 	}else{
-		var data = data;
+		data = data;
 	}
 
 	return data;
@@ -257,10 +257,10 @@ function getQuestType(type){
 
 	switch(type){
 		case 1:
-			typeValue = "Dynamic";
+			typeValue = "Dynamic Quest";
 		break;
 		case 2:
-			typeValue = "Event";
+			typeValue = "Event Quest";
 		break;
 		default:
 			typeValue = "";
@@ -268,7 +268,7 @@ function getQuestType(type){
 	}
 
 	if(typeValue != ""){
-		typeValue = "`"+typeValue+"`";
+		typeValue = "("+typeValue+")";
 	}
 
 	return typeValue;
@@ -417,13 +417,52 @@ function getItemIDArray(query){
 	return itemIDArray;
 }
 
+				
+
+// twitter https://zjttvm6ql9lp.statuspage.io/api/v2/components.json
+// discord https://srhpyqt94yxb.statuspage.io/api/v2/status.json
+						
+async function getAPIStatus(){
+	var apiStatus = [];
+	var apiAdress = config.API_ADDRESS;
+
+	await https.get(apiAdress[0].address, function (res) {
+		apiStatus[0] = "Operational";
+	}).on('error', function(e) {
+		apiStatus[0] = "Unreachable";
+	});
+	await delay(1000);
+	await https.get(apiAdress[1].address, function (res) {
+		apiStatus[1] = "Operational";
+	}).on('error', function(e) {
+		apiStatus[1] = "Unreachable";
+	});
+	await delay(1000);
+
+	return apiStatus;
+}
+
 // Discord stuff start here
-clientDiscord.on("ready", () => {
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
-	
+
+// Starting up the bot
+clientDiscord.on("ready", async () => {
+	var apiStatus = await getAPIStatus();
+	var apiAdress = config.API_ADDRESS;
+	// statuspage stuff
+	var discordStatus = await getData("https://srhpyqt94yxb.statuspage.io/api/v2/status.json");
+	var twitterStatus = await getData("https://zjttvm6ql9lp.statuspage.io/api/v2/summary.json");
+
 	clientDiscord.user.setUsername("Jinsoyun");
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 		.catch(console.error);
+	
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
+
+	for(var i = 0; i < apiStatus.length; i++){
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+apiAdress[i].name+" service: "+apiStatus[i]);
+	}
 });
 
 // User joined the guild
@@ -444,7 +483,7 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 	var silveressQuerry = silveressNA+member.displayName; // for the querry
 	var charaData = await getData(silveressQuerry);
 
-	message.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+	member.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
 		"embed":{
 			"color": 15605837,
 			"author":{
@@ -456,6 +495,36 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 			}
 		}
 	});
+});
+
+clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
+	if(oldMember.nickname != newMember.displayName || oldMember.nickname != null){
+		oldMember.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+			"embed":{
+				"color": 16574595,
+				"author":{
+					"name": oldMember.nickname+" ("+newMember.displayName+")",
+				},
+				"description": "Display name changed ("+oldMember.displayName+" to "+newMember.displayName+")",
+				"footer": {
+					"text": "Edit - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+				}
+			}
+		});
+	}else{
+		oldMember.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+			"embed":{
+				"color": 16574595,
+				"author":{
+					"name": oldMember.nickname+" ("+newMember.displayName+")",
+				},
+				"description": "Role changed",
+				"footer": {
+					"text": "Edit - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+				}
+			}
+		});
+	}
 });
 
 // User commands
@@ -502,49 +571,26 @@ clientDiscord.on("message", async (message) => {
 					break;
 
 					case 'status':
-						const m = await message.channel.send("Checking...");      
+						const m = await message.channel.send("Checking...");
+
+						// statuspage stuff
+						var discordStatus = await getData("https://srhpyqt94yxb.statuspage.io/api/v2/status.json");
+						var twitterStatus = await getData("https://zjttvm6ql9lp.statuspage.io/api/v2/summary.json"); 
+						var soyunPackageData = require("./package.json");     
 						  
 						var apiStatus = [];
 						var apiStatusList = [];
 						var apiAdress = config.API_ADDRESS;
-						var bnsIP = config.BLADE_AND_SOUL_IP;
-						var bnsServerStatus;
 						//var idx = 0;
-						
-						function getDiscordStatus(){
-							return fetch('https://srhpyqt94yxb.statuspage.io/api/v2/status.json')
-										.then(res => {return res.json()});
 
-						};	
-						
-						async function getAPIStatus(){
-							var apiStatus = [];
-							var apiAdress = config.API_ADDRESS;
-
-							await https.get(apiAdress[0].address, function (res) {
-								apiStatus[0] = "alive";
-							}).on('error', function(e) {
-								apiStatus[0] = "dead";
-							});
-							await delay(1000);
-							await https.get(apiAdress[1].address, function (res) {
-								apiStatus[1] = "alive";
-							}).on('error', function(e) {
-								apiStatus[1] = "dead";
-							});
-							await delay(1000);
-
-							return apiStatus;
-						}
-						var discordStatus = await getDiscordStatus();
 						var apiStatus = await getAPIStatus();
 
-						apiStatusList = "**"+apiAdress[0].name+"** is "+apiStatus[0]+"\n **"+apiAdress[1].name+"** is "+apiStatus[1]+"\n";
+						apiStatusList = "**"+apiAdress[0].name+"**: "+apiStatus[0]+"\n **"+apiAdress[1].name+"**: "+apiStatus[1]+"\n";
 
 						//`Ping received, Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(clientDiscord.ping)}ms`
 						var msgLatency = (m.createdTimestamp - message.createdTimestamp) + "ms";
 						var apiLatency = Math.round(clientDiscord.ping) + "ms";
-						await delay(1000);
+
 						m.edit("Current Status",{
 							"embed": {
 								"author":{
@@ -558,11 +604,15 @@ clientDiscord.on("message", async (message) => {
 								"fields":[
 									{
 										"name": "Jinsoyun `Bot`",
-										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency
+										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency+"\n**Version**: "+soyunPackageData.version
 									},
 									{
 										"name": "Discord",
 										"value": "**Status**: "+discordStatus.status.description
+									},
+									{
+										"name": "Twitter",
+										"value": "**Status**: "+twitterStatus.status.description
 									},
 									{
 										"name": "API",
@@ -910,7 +960,7 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				for(var i = 0; i < questsDailyList.length; i++){
-					dailyQuests = dailyQuests + ("**"+quests[questsDailyList[i]].location+"** - "+quests[questsDailyList[i]].quest+" `"+quests[questsDailyList[i]].pve_or_pvp+"`\n");
+					dailyQuests = dailyQuests + ("**"+quests[questsDailyList[i]].location+"** - "+quests[questsDailyList[i]].quest+"\n");
 				}
 				for(var i = 0; i < questsDailyListRewards.length; i++){
 					dailyRewards = dailyRewards + (questsDailyListRewards[i]+"\n");
@@ -934,7 +984,7 @@ clientDiscord.on("message", async (message) => {
 							},
 							"fields":[
 								{
-									"name": "Quests/Dungeons List (Location - Quest `Type`)",
+									"name": "Quests/Dungeons List (Location - Quest)",
 									"value": dailyQuests 								
 								}
 							]
@@ -961,7 +1011,7 @@ clientDiscord.on("message", async (message) => {
 											},
 											"fields":[
 												{
-													"name": "Quests/Dungeons List (Location - Quest `Type`)",
+													"name": "Quests/Dungeons List (Location - Quest)",
 													"value": dailyQuests 								
 												}
 											]
@@ -1088,7 +1138,7 @@ clientDiscord.on("message", async (message) => {
 
 				var silveressQuerry = silveressNA+whoQuerry[0]; // for the querry
 				var charaData = await getData(silveressQuerry);
-				var skillsetData = await getSkillset(charaData.playerClass.replace(" ", ""), charaData.activeElement, charaData.characterName)
+				var skillsetData = await getSkillset(charaData.playerClass.toLowerCase().replace(" ", ""), charaData.activeElement, charaData.characterName)
 
 				var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
 					bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
@@ -1138,17 +1188,17 @@ clientDiscord.on("message", async (message) => {
 								"value": fetchData(charaData.soulshield1)+"\n"+fetchData(charaData.soulshield2)+"\n"+fetchData(charaData.soulshield3)+"\n"+fetchData(charaData.soulshield4)+"\n"+fetchData(charaData.soulshield5)+"\n"+fetchData(charaData.soulshield6)+"\n"+fetchData(charaData.soulshield7)+"\n"+fetchData(charaData.soulshield8), 
 							},
 							{
-								"name": "Arena Stats",
-								"value": "Games (Play - Win - Lose): "+charaData.tournamentTotalGames+" - "+charaData.tournamentTotalWins+" - "+(charaData.tournamentTotalGames-charaData.tournamentTotalWins)+" ("+getWinRate(charaData.tournamentTotalGames, charaData.tournamentTotalWins)+"% win rate)\nSolo Wins: "+charaData.tournamentSoloWins+" ("+charaData.tournamentSoloTier+")\nTag Team Wins: "+charaData.tournamentTagWins+" ("+charaData.tournamentTagTier+")"
-							},
-							{
 								"name": "Trainable Skills (Skill Name: Type)",
 								"value": skillsetData
 
 							},
 							{
+								"name": "Arena Stats",
+								"value": "Games (Play - Win - Lose): "+charaData.tournamentTotalGames+" - "+charaData.tournamentTotalWins+" - "+(charaData.tournamentTotalGames-charaData.tournamentTotalWins)+" ("+getWinRate(charaData.tournamentTotalGames, charaData.tournamentTotalWins)+"% win rate)\nSolo Wins: "+charaData.tournamentSoloWins+" ("+charaData.tournamentSoloTier+")\nTag Team Wins: "+charaData.tournamentTagWins+" ("+charaData.tournamentTagTier+")"
+							},
+							{
 								"name": "Miscellaneous",
-								"value": "Server: "+fetchData(charaData.server)+"\nFaction: "+fetchData(charaData.faction)+" ("+fetchData(charaData.factionRank)+")",
+								"value": "Server: "+fetchData(charaData.server)+"\nFaction: "+fetchData(charaData.faction)+" ("+fetchData(charaData.factionRank)+")\nBnS Tools Whale Score (PvE): "+fetchData(charaData.bnsToolsPvEScore),
 							}],
 							"description": "",
 							"color": Math.floor(Math.random() * 16777215) - 0,
@@ -1231,10 +1281,23 @@ clientDiscord.on("message", async (message) => {
 				var eventQuery = message.toString().substring(1).split(' ');
 					eventQuery = eventQuery.splice(1);
 				var eventQuests = "";
+				
 				var today = new Date();
+				var currentDate = today;
 					today = today.getUTCDay();
 				var todayEvent = [];
 				var k = 0;
+
+				// for checking tomorrow event quests
+				if(eventQuery[0] == "tomorrow"){
+					if(today == 6){
+						today = 0;
+						currentDate = currentDate.setDate(currentDate.getDate() - 6);	
+					}else{
+						today = today + 1;
+						currentDate = currentDate.setDate(currentDate.getDate() + 1);
+					}
+				}
 
 				// getting index of event that have the same day with today
 				for(var i = 0; i < event.quests.length; i++){
@@ -1248,10 +1311,8 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
-				for(var i = 0; i < event.quests.length; i++){
-					if(event.quests[i].id == todayEvent[i]){
-						eventQuests = eventQuests + ("**"+event.quests[i].location+"** - "+event.quests[i].quest+" "+getQuestType(event.quests[i].type)+"\n")
-					}
+				for(var i = 0; i < todayEvent.length; i++){
+						eventQuests = eventQuests + ("**"+event.quests[todayEvent[i]].location+"** - "+event.quests[todayEvent[i]].quest+" "+getQuestType(event.quests[todayEvent[i]].type)+"\n")
 				}
 				
 				// for either picking announcing the event details as daily notification or just normal query
@@ -1270,7 +1331,7 @@ clientDiscord.on("message", async (message) => {
 												},
 												"title": event.name,
 												"url": event.url,
-												"description": "**Duration**: "+event.duration+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
+												"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
 												"color": 1879160,
 												"footer": {
 													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
@@ -1278,7 +1339,7 @@ clientDiscord.on("message", async (message) => {
 												},
 												"fields":[
 													{
-														"name": "Today Quests/Dungeons List (Location - Quest `Type`)",
+														"name": dateformat(currentDate, "UTC:dddd")+" Quests/Dungeons List (Location - Quest (Type))",
 														"value": eventQuests 								
 													}
 												]
@@ -1307,7 +1368,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"fields":[
 									{
-										"name": "Quests/Dungeons List (Location - Quest `Type`)",
+										"name": dateformat(currentDate, "UTC:dddd")+" Quests/Dungeons List (Location - Quest (Type))",
 										"value": eventQuests 								
 									}
 								]
@@ -1315,6 +1376,60 @@ clientDiscord.on("message", async (message) => {
 						})
 					break;
 				};
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				payloadStatus = "rejected";				
+			break;
+
+			// For testing the next event data
+			case 'eventnext':
+				var eventToDo = eventNext.rewards.sources;
+				var eventQuery = message.toString().substring(1).split(' ');
+					eventQuery = eventQuery.splice(1);
+				var eventQuests = "";
+				var today = new Date();
+					today = today.getUTCDay();
+				var todayEvent = [];
+				var k = 0;
+
+				// getting index of event that have the same day with today
+				for(var i = 0; i < eventNext.quests.length; i++){
+					for(var j = 0; j < 7; j++){
+						if(eventNext.quests[i].day[j] == getDay(today)){
+							var idx = i;							
+							todayEvent[k] = idx;
+							k++;
+						}
+					}
+				}
+
+				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
+				for(var i = 0; i < todayEvent.length; i++){
+					eventQuests = eventQuests + ("**"+eventNext.quests[todayEvent[i]].location+"** - "+eventNext.quests[todayEvent[i]].quest+" "+getQuestType(eventNext.quests[todayEvent[i]].type)+"\n")
+				}
+				
+				// output
+				message.channel.send({
+					"embed": {
+						"author":{
+							"name": "Current Event",
+							"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+						},
+						"title": eventNext.name,
+						"url": eventNext.url,
+						"description": "**Duration**: "+eventNext.duration+"\n**Redemption Period**: "+eventNext.redeem+"\n**Event Item**: "+setDataFormatting(eventNext.rewards.name)+"\n**Event Currency**: "+setDataFormatting(eventNext.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
+						"color": 1879160,
+						"footer": {
+							"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+							"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+						},
+						"fields":[
+							{
+								"name": "Today Quests/Dungeons List (Location - Quest (Type))",
+								"value": eventQuests 								
+							}
+						]
+					}	
+				});
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
 				payloadStatus = "rejected";				
 			break;
@@ -1356,7 +1471,7 @@ clientDiscord.on("message", async (message) => {
 												},
 												"fields":[
 													{
-														"name": "Quests/Dungeons List (Location - Quest `Type`)",
+														"name": "Quests/Dungeons List (Location - Quest (Type))",
 														"value": weeklyQuests 								
 													}
 												]
@@ -1384,7 +1499,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"fields":[
 									{
-										"name": "Quests/Dungeons List (Location - Quest `Type`)",
+										"name": "Quests/Dungeons List (Location - Quest (Type))",
 										"value": weeklyQuests 								
 									}
 								]
@@ -1401,6 +1516,7 @@ clientDiscord.on("message", async (message) => {
 				var classData = classDataSource;
 				var errCount = 0;
 				var errLocation = [];
+				var errMsg = "";
 
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > starting data update..");
 				
@@ -1410,6 +1526,7 @@ clientDiscord.on("message", async (message) => {
 						console.log(err);
 						errCount++;
 						errLocation[errCount] = "list-item data"
+						errMsg = errMsg + (err + "\n");
 					}
 				})	
 
@@ -1422,6 +1539,7 @@ clientDiscord.on("message", async (message) => {
 								console.log(err);
 								errCount++;
 								errLocation[errCount] = classData[i].name +" folder"
+								errMsg = errMsg + (err + "\n");
 							}
 						});
 					}
@@ -1432,6 +1550,7 @@ clientDiscord.on("message", async (message) => {
 							console.log(err);
 							errCount++;
 							errLocation[errCount] = classData[i].name + " attributes data"
+							errMsg = errMsg + (err + "\n");
 						}
 					})
 
@@ -1449,6 +1568,7 @@ clientDiscord.on("message", async (message) => {
 								console.log(err);
 								errCount++;
 								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset data"
+								errMsg = errMsg + (err + "\n");
 							}
 						})
 					}				
@@ -1457,6 +1577,7 @@ clientDiscord.on("message", async (message) => {
 
 				if(errCount != 0){
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > problem occured on: "+errLocation);
+					message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+errLocation+"`\n```"+errMsg+"```");
 				}	
 				
 				/* 
@@ -1521,6 +1642,13 @@ clientDiscord.on("message", async (message) => {
 					break;
 				}
 			break;
+
+			// For error notification so I know when something went wrong
+			case 'err':
+				var errQuery = message.toString().substring(1).split('|');
+					errQuery = errQuery.splice(1);
+				message.guild.channels.find(x => x.name == "errors").send("Caught an error\n```"+errQuery[0]+"```");
+			break;
 		 };
      };
 });
@@ -1574,26 +1702,28 @@ clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  fun
 	});
   
 	stream.on('error', function(error) {
-	  console.log(error);
+		member.guild.channels.find(x => x.name == "errors").send("Caught an issue on `clientTwitter.stream`\n```"+error+"```");
+	  	console.log(error);
 	});
-  });
+});
+
 
   // Koldrak (Dragon) notification
 
-  ontime({
-		// Time format is on UTC
-		cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'], 
-		utc: true
-  }, function (koldrak){
-		// Triggering "!koldrak alert" so the bot will write the alert (see "!koldrak" for details)
-		if(koldrakAlertSystem == false){
-			clientDiscord.emit("message", "!koldrak debug");
-		}else{
-			clientDiscord.emit("message", "!koldrak alert");
-		};
-		koldrak.done();
-		return;
-  }
+ontime({
+	// Time format is on UTC
+	cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'], 
+	utc: true
+}, function (koldrak){
+	// Triggering "!koldrak alert" so the bot will write the alert (see "!koldrak" for details)
+	if(koldrakAlertSystem == false){
+		clientDiscord.emit("message", "!koldrak debug");
+	}else{
+		clientDiscord.emit("message", "!koldrak alert");
+	};
+	koldrak.done();
+	return;
+  	}
 ) 
 
 // Daily reset notification
@@ -1656,4 +1786,14 @@ ontime({
 		basinTicker.done();
 		return;
 })
+*/
+
+// Error catching (just for notification not handling)
+/*
+process.on('uncaughtException', function(err) {
+	clientDiscord.emit("message", "!err |"+err+"|")
+});
+process.on('unhandledRejection', function(err) {
+	clientDiscord.emit("message", "!err |"+err+"|")
+});
 */

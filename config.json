@@ -4,7 +4,7 @@
     "DEFAULT_NEWS_CHANNEL": "news",
     "DEFAULT_ADMIN_CHANNEL": "high-council",
     "DEFAULT_PARTY_CHANNEL": "party-forming",
-    "DEFAULT_MEMBER_LOG": "member-log",
+    "DEFAULT_MEMBER_LOG": "activity",
     "TWITTER_STREAM_ID" : "3521186773, 819625154",
     "TWITTER_STREAM_SCREENNAME" : ["BladeAndSoulOps", "bladeandsoul"],
     "API_ADDRESS" : [

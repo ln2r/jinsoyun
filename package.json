@@ -1,6 +1,6 @@
 {
   "name": "jinsoyun",
-  "version": "1.2.3",
+  "version": "1.11.3",
   "description": "Grumpy Butts very own discord bot",
   "main": "soyun.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "ln2r",
-  "license": "ISC",
+  "license": "CC BY-NC-SA 4.0",
   "dependencies": {
     "dateformat": "^3.0.3",
     "delay": "^3.0.0",
