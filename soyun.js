@@ -1380,60 +1380,6 @@ clientDiscord.on("message", async (message) => {
 				payloadStatus = "rejected";				
 			break;
 
-			// For testing the next event data
-			case 'eventnext':
-				var eventToDo = eventNext.rewards.sources;
-				var eventQuery = message.toString().substring(1).split(' ');
-					eventQuery = eventQuery.splice(1);
-				var eventQuests = "";
-				var today = new Date();
-					today = today.getUTCDay();
-				var todayEvent = [];
-				var k = 0;
-
-				// getting index of event that have the same day with today
-				for(var i = 0; i < eventNext.quests.length; i++){
-					for(var j = 0; j < 7; j++){
-						if(eventNext.quests[i].day[j] == getDay(today)){
-							var idx = i;							
-							todayEvent[k] = idx;
-							k++;
-						}
-					}
-				}
-
-				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
-				for(var i = 0; i < todayEvent.length; i++){
-					eventQuests = eventQuests + ("**"+eventNext.quests[todayEvent[i]].location+"** - "+eventNext.quests[todayEvent[i]].quest+" "+getQuestType(eventNext.quests[todayEvent[i]].type)+"\n")
-				}
-				
-				// output
-				message.channel.send({
-					"embed": {
-						"author":{
-							"name": "Current Event",
-							"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-						},
-						"title": eventNext.name,
-						"url": eventNext.url,
-						"description": "**Duration**: "+eventNext.duration+"\n**Redemption Period**: "+eventNext.redeem+"\n**Event Item**: "+setDataFormatting(eventNext.rewards.name)+"\n**Event Currency**: "+setDataFormatting(eventNext.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
-						"color": 1879160,
-						"footer": {
-							"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-							"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
-						},
-						"fields":[
-							{
-								"name": "Today Quests/Dungeons List (Location - Quest (Type))",
-								"value": eventQuests 								
-							}
-						]
-					}	
-				});
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
-				payloadStatus = "rejected";				
-			break;
-
 			case 'weekly':
 				var weeklyQuery = message.toString().substring(1).split(' ');
 					weeklyQuery = weeklyQuery.splice(1);
@@ -1617,30 +1563,111 @@ clientDiscord.on("message", async (message) => {
 				*/	
 			break;
 
-			case 'basin':
-				var basinQuery = message.toString().substring(1).split(' ');
-					basinQuery = basinQuery.splice(1);
-				switch(basinQuery[0]){
-					case 'start':
-						basinStatus = "";
-						message.channel.send("Current *Celestial Basin* status: "+basinStatus)
-							.then(basinStatusMsgID = message.channel.lastMessageID);
-						console.log("id: "+basinStatusMsgID);
-						basinTime = 0;
-					break;
-					case 'sync':
-						basinTime = 0;
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Celestial Basin time has been reset");
-					break;
-					case 'status':
-						if(basinStatusMsgID != null || basinStatusMsgID != ""){
+			// For testing the next event data
+			case 'eventnext':
+				var eventToDo = eventNext.rewards.sources;
+				var eventQuery = message.toString().substring(1).split(' ');
+					eventQuery = eventQuery.splice(1);
+				var eventQuests = "";
+				var today = new Date();
+					today = today.getUTCDay();
+				var todayEvent = [];
+				var k = 0;
 
+				// getting index of event that have the same day with today
+				for(var i = 0; i < eventNext.quests.length; i++){
+					for(var j = 0; j < 7; j++){
+						if(eventNext.quests[i].day[j] == getDay(today)){
+							var idx = i;							
+							todayEvent[k] = idx;
+							k++;
 						}
-					break;
-					default:
-						message.channel.send("Current *Celestial Basin* status: "+basinStatus);
-					break;
+					}
 				}
+
+				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
+				for(var i = 0; i < todayEvent.length; i++){
+					eventQuests = eventQuests + ("**"+eventNext.quests[todayEvent[i]].location+"** - "+eventNext.quests[todayEvent[i]].quest+" "+getQuestType(eventNext.quests[todayEvent[i]].type)+"\n")
+				}
+				
+				// output
+				message.channel.send({
+					"embed": {
+						"author":{
+							"name": "Current Event",
+							"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+						},
+						"title": eventNext.name,
+						"url": eventNext.url,
+						"description": "**Duration**: "+eventNext.duration+"\n**Redemption Period**: "+eventNext.redeem+"\n**Event Item**: "+setDataFormatting(eventNext.rewards.name)+"\n**Event Currency**: "+setDataFormatting(eventNext.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
+						"color": 1879160,
+						"footer": {
+							"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+							"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+						},
+						"fields":[
+							{
+								"name": "Today Quests/Dungeons List (Location - Quest (Type))",
+								"value": eventQuests 								
+							}
+						]
+					}	
+				});
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+				payloadStatus = "rejected";				
+			break;
+
+			// Fetching the market data
+			case 'getmarketdata':
+				var marketQuery = message.toString().substring(1).split(" ");
+					marketQuery = marketQuery.splice(1);
+				var marketFetchUrl = "https://api.silveress.ie/bns/v3/market/na/current/lowest";
+
+				var itemData = require("./data/list-item.json"); //item data
+				var marketDataCurrent = await getData(marketFetchUrl); //fecthing the current data (one listing, lowest)
+
+				var marketListCurrent = [];
+				var idx = 1;
+
+				// merging the data (item data and market data)
+				for(var i = 0; i < itemData.length; i++){
+					for(var j = 0; j < marketDataCurrent.length; j++){
+						if(itemData[i].id == marketDataCurrent[j].id){
+							marketListCurrent[idx] = 
+								{
+									"id": itemData[i].id,
+									"updated": marketDataCurrent[j].ISO,
+									"firstAdded": itemData[i].firstAdded,
+									"name": itemData[i].name,
+									"img": itemData[i].img,
+									"totalListings": marketDataCurrent[j].totalListings,
+									"priceEach": marketDataCurrent[j].priceEach,
+									"priceTotal": marketDataCurrent[j].priceTotal,
+									"quantity": marketDataCurrent[j].quantity
+								}
+							idx++;	
+						}
+					}
+				}
+
+				var updateDate = new Date();
+					updateDate = updateDate.toISOString();
+
+				// meta-data for comparing update time later
+				marketListCurrent[0] = {
+					"id": 0000000,
+					"name": "meta-data",
+					"update-time": updateDate,
+					"data-count": marketListCurrent.length - 1
+				}
+
+				// writing the data into a file
+				fs.writeFile('./data/list-market-data.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
+					if(err){
+						console.log(err);
+						message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+cmd+"`\n```"+err+"```");
+					}
+				})
 			break;
 
 			// For error notification so I know when something went wrong
