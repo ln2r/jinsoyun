@@ -14,7 +14,7 @@
         },
         {
         "name": "Market data API (silveressMarket)",
-        "address": "https://api.silveress.ie/bns/v3/market/na/current/"
+        "address": "https://api.silveress.ie/bns/v3/market/na/current/lowest"
         },
         {
         "name": "Discord",

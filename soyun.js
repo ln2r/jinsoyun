@@ -6,7 +6,6 @@ const fs = require('fs');
 const dateformat = require('dateformat');
 const delay = require('delay');
 const https = require('https');
-const ping = require('ping');
 
 const secret = require("./secret.json");
 const config = require("./config.json");
@@ -15,7 +14,7 @@ const koldrakTime = require("./data/koldrak-time.json");
 const items = require("./data/list-item.json");
 const quests = require("./data/list-quest.json");
 const rewards = require("./data/list-challenges-rewards.json");
-const recipes = require("./data/list-recipe.json");
+// const recipes = require("./data/list-recipe.json"); inacurate so disabled for now
 const classDataSource = require("./data/list-classdata-source.json");
 const soyunDialogue = require("./data/list-soyundialogue.json");
 const event = require("./data/data-event.json");
@@ -34,7 +33,6 @@ var classArr = ["blade master", "destroyer", "summoner", "force master", "kung f
 
 // Querry payload status
 var payloadStatus = "rejected";
-var querryStatus = false;
 
 // Global variable
 var koldrakAlertSystem = true;
@@ -51,21 +49,17 @@ var twtFilter;
 
 // silveress API point
 const silveressNA = "https://api.silveress.ie/bns/v3/character/full/na/";
-const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
+//const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
 const silveressItem = "https://api.silveress.ie/bns/v3/items";
 const silveressMarket = "https://api.silveress.ie/bns/v3/market/na/current/";
-const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
-const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current?active=true";
+//const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
+//const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current?active=true";
 
 // Soyun activity
 var statusRandom = 0;
 
-// celestial basin ticker
-var basinTime = 0;
-var basinStatus = "Announce: 43mins";
-var basinStatusMsgID;
-
 // function list
+
 // code "stolen" from silveress marketPage.js
 // find the item id by searching item-list.json
 function getItemID(name){
@@ -245,8 +239,8 @@ function getWinRate(game, win){
 
 // Data fetching
 async function getData(query) {
-	const response = await fetch(query);
 
+	const response = await fetch(query);
 	return response.json()
 }
 
@@ -392,33 +386,6 @@ function setTextFormat(text){
 	return text;
 }
 
-// get an array of item id for item that contain query item
-function getItemIDArray(query){
-	var itemIDArray = [];
-	var idx = 0;
-
-	for(var i = 0; i < items.length; i++){
-		var itemSearchName = items[i].name;
-			itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
-		var itemSearchQuery = query;
-			itemSearchQuery = itemSearchQuery.replace("'", "").toLowerCase().split(" ");
-
-		if(items[i].name.includes(query)){
-			itemIDArray[idx] = items[i].id;
-			idx++;
-		}				
-	}
-	
-	// item exception
-	if(query == "Soulstone"){
-		itemIDArray = itemIDArray.slice(0, 4);
-	};
-
-	return itemIDArray;
-}
-
-				
-
 // twitter https://zjttvm6ql9lp.statuspage.io/api/v2/components.json
 // discord https://srhpyqt94yxb.statuspage.io/api/v2/status.json
 						
@@ -442,6 +409,65 @@ async function getAPIStatus(){
 	return apiStatus;
 }
 
+// getting data from a file
+async function getFileData(path){
+	//const fs = require('fs').promises;
+	var content = "";
+
+	try{
+		var content = fs.readFileSync(path, 'utf8');
+			content = JSON.parse(content);
+	}catch(error){
+		clientDiscord.emit("message", "!err |"+error+"|")
+	};
+
+	return content;
+}
+
+async function getItemIndex(query){
+	var marketData = await getFileData("./data/list-market-data.json");	
+	var itemIDArray = [];
+	var idx = 0;
+
+	for(var i = 1; i < marketData.length; i++){
+		var itemSearchName = marketData[i].name;
+			itemSearchName = itemSearchName.replace("'", "").toLowerCase().split(" ");
+		var itemSearchQuery = query;
+			itemSearchQuery = itemSearchQuery.replace("'", "").toLowerCase().split(" ");
+	
+		if(marketData[i].name.includes(query)){
+			itemIDArray[idx] = i;
+			idx++;
+		}				
+	}
+		
+	// item exception
+	if(query == "Soulstone"){
+		itemIDArray = [1, 2, 1916]
+	};
+
+	return itemIDArray;
+}		
+
+function getPriceIndicator(priceOld, priceNew){
+	if(priceNew == priceOld){
+		var priceStatus = [("" + "0.00%"), "➖"];
+	}else{
+		var percentage = ((priceNew-priceOld)/ 100).toFixed(2);
+		
+		if(percentage < 0){
+			var symbol = "";
+			var emoji = "🔽";
+		}else{
+			var symbol = "+";
+			var emoji = "🔼";
+		}
+
+		var priceStatus = [(symbol + percentage+"%"), emoji];
+	}					
+
+	return priceStatus;
+}
 // Discord stuff start here
 
 // Starting up the bot
@@ -456,7 +482,7 @@ clientDiscord.on("ready", async () => {
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 		.catch(console.error);
 	
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > bot is alive and ready");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Bot service: Running");
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
 
@@ -541,7 +567,7 @@ clientDiscord.on("message", async (message) => {
 			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Try Me! `!soyun`';
+				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Bot and API status `!soyun status`\n- Try Me! `!soyun`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -551,7 +577,7 @@ clientDiscord.on("message", async (message) => {
 							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- Announcement: `!say "title" "content"`';
 						};
 
-						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items and quests list updated @ Wednesday 12AM UTC \n\t  Market listing updated every 1 hour```");
+						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items data list updated @ Wednesday 12AM UTC \n\t  Market data updated every 1 hour```");
 						// Console logging
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
 					break;
@@ -576,7 +602,9 @@ clientDiscord.on("message", async (message) => {
 						// statuspage stuff
 						var discordStatus = await getData("https://srhpyqt94yxb.statuspage.io/api/v2/status.json");
 						var twitterStatus = await getData("https://zjttvm6ql9lp.statuspage.io/api/v2/summary.json"); 
-						var soyunPackageData = require("./package.json");     
+						var marketData = await getFileData("./data/list-market-data.json");	
+						var soyunPackageData = require("./package.json");
+						     
 						  
 						var apiStatus = [];
 						var apiStatusList = [];
@@ -607,6 +635,10 @@ clientDiscord.on("message", async (message) => {
 										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency+"\n**Version**: "+soyunPackageData.version
 									},
 									{
+										"name": "Market Data",
+										"value": "**Last Update**: "+dateformat(marketData[0].updateTime, "UTC:ddd dd-mm-yy @ hh:mm:ss")+" UTC\n**Data Count**: "+marketData[0].dataCount
+									},
+									{
 										"name": "Discord",
 										"value": "**Status**: "+discordStatus.status.description
 									},
@@ -617,6 +649,10 @@ clientDiscord.on("message", async (message) => {
 									{
 										"name": "API",
 										"value": apiStatusList
+									},
+									{
+										"name": "About",
+										"value": "- Bot maintaned and developed by **[ln2r](https://ln2r.web.id/)** using **[discord.js](https://discord.js.org/)** node.js module. \n- Market and player data fetched using **[Silveress BnS API](https://bns.silveress.ie/)**. \n- Special thanks to **Grumpy Butts** discord server for letting me using their server for field testing."
 									}
 								]
 							}
@@ -629,6 +665,7 @@ clientDiscord.on("message", async (message) => {
 					default:
 						var soyunSay = soyunDialogue
 						var soyunDialogueRNG = Math.floor(Math.random() * soyunSay.text.length) - 0;
+
 						message.channel.send(soyunSay.text[soyunDialogueRNG]);
 
 						// Console logging
@@ -641,6 +678,8 @@ clientDiscord.on("message", async (message) => {
 			case 'reg':
 				var joinQuerry = message.toString().substring(1).split('"');
 				var joinUsername = (joinQuerry[1]);
+
+				var queryStatus = false;
 				
 				try{
 					var joinClass = (joinQuerry[3]);
@@ -651,13 +690,13 @@ clientDiscord.on("message", async (message) => {
 					for(var i = 0; i < classArr.length; i++){
 						// Class input verification (inefficient af)
 						if(joinClass == classArr[i]){
-							querryStatus = true;
+							queryStatus = true;
 							break;
 						};
 					};
 
 					// Checking the verification
-					if(querryStatus == true){
+					if(queryStatus == true){
 						// Convert to capitalize to make it easy and 'prettier'
 						joinUsername = joinUsername.replace(/(^|\s)\S/g, l => l.toUpperCase());
 						//#Collection.find(x => x.name === "name")
@@ -674,7 +713,7 @@ clientDiscord.on("message", async (message) => {
 						// Welcoming message on general channel
 						message.guild.channels.find(x => x.name == config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 						payloadStatus = "received";
-						querryStatus = false;
+						queryStatus = false;
 
 						var silveressQuerry = silveressNA+joinUsername; // for the querry
 						var charaData = await getData(silveressQuerry);
@@ -694,7 +733,7 @@ clientDiscord.on("message", async (message) => {
 					}else{
 						// Telling them whats wrong
 						message.channel.send("Im sorry, I cant find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
-						querryStatus = false;
+						queryStatus = false;
 					}
 				}catch(err){
 					message.channel.send('Im sorry, I cant read that, can you try again?\n\nExample: **!reg "Jinsoyun" "Blade Master"**');
@@ -726,8 +765,7 @@ clientDiscord.on("message", async (message) => {
 			case 'class':
 				var classQuerry = message.toString().substring(1).split('"');
 				var classValue = (classQuerry[1]);
-				var classUserRolesArr = message.author.role; // Array of author roles
-				var querryStatus;
+				var queryStatus;
 				var i; // for loop, ignore
 
 				classValue = classValue.toLowerCase(); // Converting class value to lower case so input wont be missmatched
@@ -737,25 +775,25 @@ clientDiscord.on("message", async (message) => {
 				for(i = 0; i < classArr.length;){
 					// Class input verification (inefficient af)
 					if(classValue == classArr[i]){
-						querryStatus = true;
+						queryStatus = true;
 					};
 					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == classArr[i]));					
 					i++
 				};
 
 				// Checking the verification
-				if(querryStatus == true){
+				if(queryStatus == true){
 					// Adding new role to user according their command
 					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classValue));
 
 					// Telling the user class has been changed
 					message.channel.send("Your class changed to **"+classValue+"**");
 					payloadStatus = "received";
-					querryStatus = false;
+					queryStatus = false;
 				}else{
 					// Telling them whats wrong
 					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
-					querryStatus = false;
+					queryStatus = false;
 				}
 				// Console logging
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
@@ -821,9 +859,8 @@ clientDiscord.on("message", async (message) => {
 							}
 						}
 					});
-					payloadStatus = "recieved";
 				}else{
-					payloadStatus = 'rejected';
+					message.channel.send("You don't have permission to use that command here.");
 				};
 				// Console logging
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
@@ -848,11 +885,9 @@ clientDiscord.on("message", async (message) => {
 					// Console logging
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
 					
-					payloadStatus = "recieved";
 				};	
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" do "+message+", status: "+payloadStatus);
-				payloadStatus = "rejected";
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" do "+message);
 			break;
 			
 			// pick between two things
@@ -965,7 +1000,9 @@ clientDiscord.on("message", async (message) => {
 				for(var i = 0; i < questsDailyListRewards.length; i++){
 					dailyRewards = dailyRewards + (questsDailyListRewards[i]+"\n");
 				}
+
 				dailyRewards = dailyRewards + event.rewards.daily;
+				
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
@@ -1030,19 +1067,11 @@ clientDiscord.on("message", async (message) => {
 
 			// Koldrak's lair notification and closest time
 			case 'koldrak':
-				var koldrakDateVariable = new Date();
 				var koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
-
-				// Getting the hour of UTC+1
-				var koldrakTimeHourNow = koldrakDateVariable.getUTCHours() + 1;
-				var koldrakTimeMinutesNow = koldrakDateVariable.getUTCMinutes();
 				
 				// Cheating the search so it will still put hour even if the smallest time is 24
 				var koldrakTimeLeft = 25;
-				
-				// Making new date data with details from above variable
-				var koldrakTimeNow = new Date(0, 0, 0, koldrakTimeHourNow, koldrakTimeMinutesNow, 0);	
 
 				switch(koldrakQuerry[0]){
 					case 'list':
@@ -1222,29 +1251,27 @@ clientDiscord.on("message", async (message) => {
 					marketQuery = marketQuery.splice(1); // removing the command text
 					marketQuery = setTextFormat(marketQuery[0]);
 
-				var marketItemIDList = getItemIDArray(marketQuery);
+				var marketData = await getFileData("./data/list-market-data.json");	
 				var marketDataValue = "";
-				var marketData = [];
 
-				message.channel.startTyping();
+				var marketItemIndex = await getItemIndex(marketQuery);
+				var imgSource = "https://cdn.discordapp.com/attachments/426043840714244097/493252746087235585/0ig1OR0.png";
 
 				// getting set item of data
-				for(var i = 0; i < marketItemIDList.length; i++){
-					
-					marketData = await getData(silveressMarket+marketItemIDList[i]);
-
+				for(var i = 0; i < marketItemIndex.length; i++){
 					if(marketData.length != 0){
-						marketDataValue = marketDataValue + ("**"+marketData[0].name+"** `"+marketData[0].id+"`\n- Each: "+currencyConvert(marketData[0].listings[0].each)+"\n- Lowest: "+currencyConvert(marketData[0].listings[0].price)+" for "+marketData[0].listings[0].count+"\n");
+						var priceStatus = getPriceIndicator(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
 
-						fetchTime = marketData[0].ISO
+						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"`\n- Each: "+currencyConvert(marketData[marketItemIndex[i]].priceEach)+" `"+priceStatus[0]+" "+priceStatus[1]+"`\n- Lowest: "+currencyConvert(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
+
+						fetchTime = marketData[0].updateTime;
+						imgSource = marketData[marketItemIndex[0]].img;
 					}
 				}
 
 				if(marketDataValue == "" || marketDataValue == null){
 					marketDataValue = "*No result on **"+marketQuery+"**\n The item is either untradable, not in marketplace or maybe it's not exist*"
 				}
-
-				message.channel.stopTyping();
 
 				//console.log(marketData);
 				//message.channel.send(marketDataValue);
@@ -1261,19 +1288,20 @@ clientDiscord.on("message", async (message) => {
 							"name": "Marketplace - "+marketQuery,
 							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
 						},
-						"description": marketDataValue,
+						"description": marketDataValue + "\n`*Data updated every hour`",
 						"color": 16766720,
 						"footer": {
 							"icon_url": "https://slate.silveress.ie/images/logo.png",
 							"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(fetchTime, "UTC:dd-mm-yy @ hh:MM")+" UTC"
 						},
 						"thumbnail": {
-							"url": getItemImg(marketItemIDList[0])
+							"url": imgSource
 						},
 					}	
-				})		 
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
-				break;
+				});
+
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+cmd+" command received");
+			break;
 
 			// for getting the current event information
 			case 'event':
@@ -1525,42 +1553,87 @@ clientDiscord.on("message", async (message) => {
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > problem occured on: "+errLocation);
 					message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+errLocation+"`\n```"+errMsg+"```");
 				}	
-				
-				/* 
-				> api data inaccurate, disable for now
-				fetch(silveressQuest)
-					.then(res => res.json())
-					.then(data => silveressQuestData = data)
-					.then(() =>{
-						silveressQuestData = JSON.stringify(silveressQuestData, null, '\t');
-						payloadStatus = "recieved";
+			break;
 
-						fs.writeFile('./data/list-quest.json', silveressQuestData, function (err) {
-							if(err){
-								console.log(err);
-								payloadStatus = "rejected";
-							}
-						});
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Quest data fetched, status: "+payloadStatus);
-					});
-				
-				> recipe data out of date
-				fetch(silveressRecipe)
-					.then(res => res.json())
-					.then(data => silveressRecipeData = data)
-					.then(() =>{
-						silveressRecipeData = JSON.stringify(silveressRecipeData, null, '\t');
-						payloadStatus = "recieved";
+			// Fetching the market data
+			case 'getmarketdata':
+				var marketQuery = message.toString().substring(1).split(" ");
+					marketQuery = marketQuery.splice(1);
 
-						fs.writeFile('./data/list-recipe.json', silveressRecipeData, function (err) {
-							if(err){
-								console.log(err);
-								payloadStatus = "rejected";
+				var itemData = require("./data/list-item.json"); //item data
+				var marketDataStored = await getFileData("./data/list-market-data.json"); //stored market data
+				var marketDataCurrent = await getData(config.API_ADDRESS[1].address); //fecthing the current data (one listing, lowest)
+
+				var marketListCurrent = [];
+				var storedPriceEach = 0;	
+
+				var idx = 1;
+				var found = false;
+				var k = 1;
+				
+				// merging the data (item data and market data)
+				for(var i = 0; i < itemData.length; i++){
+					for(var j = 1; j < marketDataCurrent.length; j++){
+						if(itemData[i].id == marketDataCurrent[j].id){
+							// getting and storing the old price for comparison
+							while(k < marketDataStored.length && found == false){
+								if(marketDataCurrent[j].id == marketDataStored[k].id){
+									storedPriceEach = marketDataStored[k].priceEach;
+									found = true;
+								}else{
+									storedPriceEach = marketDataCurrent[j].priceEach;
+								}
+								k++;
 							}
-						});
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Recipe data fetched, status: "+payloadStatus);
-					});
-				*/	
+							found = false;	
+
+							// storing data into array for saving later
+							marketListCurrent[idx] = 
+								{
+									"id": itemData[i].id,
+									"updated": marketDataCurrent[j].ISO,
+									"firstAdded": itemData[i].firstAdded,
+									"name": itemData[i].name,
+									"img": itemData[i].img,
+									"totalListings": marketDataCurrent[j].totalListings,
+									"priceEachOld": storedPriceEach,
+									"priceEach": marketDataCurrent[j].priceEach,
+									"priceTotal": marketDataCurrent[j].priceTotal,
+									"quantity": marketDataCurrent[j].quantity
+								}
+							idx++;
+						}
+					}
+				}
+
+				var updateDate = new Date();
+					updateDate = updateDate.toISOString();
+
+				// meta-data for comparing update time later
+				marketListCurrent[0] = {
+					"id": 0000000,
+					"name": "meta-data",
+					"updateTime": updateDate,
+					"dataCount": marketListCurrent.length - 1
+				}
+
+				// writing the data into a file
+				fs.writeFile('./data/list-market-data.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
+					if(err){
+						console.log(err);
+						clientDiscord.emit("message", "!err |"+err+"|");
+					}
+				})
+
+				// making a copy for archive
+				fs.writeFile('./archive/market-data-archive '+Date.now()+'.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
+					if(err){
+						console.log(err);
+						clientDiscord.emit("message", "!err |"+err+"|");
+					}
+				});
+				
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+(marketListCurrent.length - 1)+" market data updated and archived");
 			break;
 
 			// For testing the next event data
@@ -1617,64 +1690,21 @@ clientDiscord.on("message", async (message) => {
 				payloadStatus = "rejected";				
 			break;
 
-			// Fetching the market data
-			case 'getmarketdata':
-				var marketQuery = message.toString().substring(1).split(" ");
-					marketQuery = marketQuery.splice(1);
-				var marketFetchUrl = "https://api.silveress.ie/bns/v3/market/na/current/lowest";
-
-				var itemData = require("./data/list-item.json"); //item data
-				var marketDataCurrent = await getData(marketFetchUrl); //fecthing the current data (one listing, lowest)
-
-				var marketListCurrent = [];
-				var idx = 1;
-
-				// merging the data (item data and market data)
-				for(var i = 0; i < itemData.length; i++){
-					for(var j = 0; j < marketDataCurrent.length; j++){
-						if(itemData[i].id == marketDataCurrent[j].id){
-							marketListCurrent[idx] = 
-								{
-									"id": itemData[i].id,
-									"updated": marketDataCurrent[j].ISO,
-									"firstAdded": itemData[i].firstAdded,
-									"name": itemData[i].name,
-									"img": itemData[i].img,
-									"totalListings": marketDataCurrent[j].totalListings,
-									"priceEach": marketDataCurrent[j].priceEach,
-									"priceTotal": marketDataCurrent[j].priceTotal,
-									"quantity": marketDataCurrent[j].quantity
-								}
-							idx++;	
-						}
-					}
-				}
-
-				var updateDate = new Date();
-					updateDate = updateDate.toISOString();
-
-				// meta-data for comparing update time later
-				marketListCurrent[0] = {
-					"id": 0000000,
-					"name": "meta-data",
-					"update-time": updateDate,
-					"data-count": marketListCurrent.length - 1
-				}
-
-				// writing the data into a file
-				fs.writeFile('./data/list-market-data.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
-					if(err){
-						console.log(err);
-						message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+cmd+"`\n```"+err+"```");
-					}
-				})
-			break;
-
 			// For error notification so I know when something went wrong
 			case 'err':
 				var errQuery = message.toString().substring(1).split('|');
 					errQuery = errQuery.splice(1);
-				message.guild.channels.find(x => x.name == "errors").send("Caught an error\n```"+errQuery[0]+"```");
+					clientDiscord.guilds.map((guild) => {
+						let found = 0;
+						guild.channels.map((ch) =>{
+							if(found == 0){
+								if(ch.name == "errors"){
+									ch.send("Caught an error\n```"+errQuery[0]+"```").catch(console.error);
+									found = 1;
+								}
+							}
+						});
+					});
 			break;
 		 };
      };
@@ -1729,7 +1759,7 @@ clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  fun
 	});
   
 	stream.on('error', function(error) {
-		member.guild.channels.find(x => x.name == "errors").send("Caught an issue on `clientTwitter.stream`\n```"+error+"```");
+		clientDiscord.emit("message", "!err |"+error+"|")
 	  	console.log(error);
 	});
 });
@@ -1793,34 +1823,12 @@ ontime({
 		return;
 })
 
-// basin status
-/*
+// market data update
 ontime({
-	cycle: ['00']
-	}, function (basinTicker){
-		if(basinTime <= 42){
-			basinStatus = "Announce: "+(43 - basinTime)+"mins"
-			//clientDiscord.emit("message", "!basin status");
-		}else if(basinTime >= 43 && basinTime <= 44 ){
-			basinStatus = "Spawn: "+(45 - basinTime)+"mins"
-			//clientDiscord.emit("message", "!basin status");
-		}else if(basinTime >= 45 && basinTime <= 55){
-			basinStatus = "End: "+(55 - basinTime)+"mins"
-			//clientDiscord.emit("message", "!basin status");
-		}
-		basinTime++;
-
-		basinTicker.done();
-		return;
+	cycle: [ '00:00' ],
+	utc: true
+}, function (marketUpdate) {
+    clientDiscord.emit("message", "!getmarketdata");
+    marketUpdate.done();
+    return
 })
-*/
-
-// Error catching (just for notification not handling)
-/*
-process.on('uncaughtException', function(err) {
-	clientDiscord.emit("message", "!err |"+err+"|")
-});
-process.on('unhandledRejection', function(err) {
-	clientDiscord.emit("message", "!err |"+err+"|")
-});
-*/

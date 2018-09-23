@@ -1,4 +1,8 @@
 # Visual Code Workspace file
-
 *.code-workspace
+
+# Token file
 secret.json
+
+# Market data archive directory
+archive/

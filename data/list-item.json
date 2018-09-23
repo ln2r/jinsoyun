@@ -34,7 +34,7 @@
 	},
 	{
 		"id": 2280028,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.691Z",
 		"name": "5 Soulstone Bundle",
 		"itemTaxRate": 0.8,
@@ -46,7 +46,7 @@
 	{
 		"id": 2021120,
 		"stats": "Piercing 83, Block 144, Defense 161, HP 147",
-		"updated": "2018-09-19T00:00:03.632Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T13:03:41.193Z",
 		"name": "Abomination Necklace",
 		"itemTaxRate": 12.9,
@@ -91,7 +91,7 @@
 	{
 		"id": 3900540,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-04-04T21:05:45.829Z",
 		"name": "Agent Pet",
 		"itemTaxRate": 5.1,
@@ -102,7 +102,7 @@
 	},
 	{
 		"id": 2280130,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-06T16:04:05.358Z",
 		"name": "Air Assassin Design",
 		"itemTaxRate": 0.1,
@@ -113,7 +113,7 @@
 	},
 	{
 		"id": 910109,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.691Z",
 		"name": "Alley Cat",
 		"race": "Familiar",
@@ -125,7 +125,7 @@
 	},
 	{
 		"id": 910110,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.691Z",
 		"name": "Alley Cat Adornment",
 		"race": "Familiar",
@@ -137,7 +137,7 @@
 	},
 	{
 		"id": 910111,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.692Z",
 		"name": "Alley Cat Hair",
 		"race": "Familiar",
@@ -151,7 +151,7 @@
 		"id": 3900546,
 		"firstAdded": "2018-07-04T23:28:07.080Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/TN4QoIS.png",
 		"itemTaxRate": 5.1,
@@ -224,7 +224,7 @@
 	},
 	{
 		"id": 2603373,
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-03-04T14:04:25.869Z",
 		"name": "Alpine Dagger",
 		"itemTaxRate": 35.7,
@@ -250,7 +250,7 @@
 	},
 	{
 		"id": 2603369,
-		"updated": "2018-07-25T00:00:03.935Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-08T17:03:52.121Z",
 		"name": "Alpine Gauntlets",
 		"itemTaxRate": 35.7,
@@ -358,7 +358,7 @@
 	},
 	{
 		"id": 910127,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.693Z",
 		"name": "Apron of Jubilation",
 		"race": "Familiar",
@@ -370,7 +370,7 @@
 	},
 	{
 		"id": 910128,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.693Z",
 		"name": "Apron of Vanity",
 		"race": "Familiar",
@@ -382,7 +382,7 @@
 	},
 	{
 		"id": 2280151,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.970Z",
 		"name": "Archer Hairpin Design",
 		"itemTaxRate": 0.1,
@@ -407,7 +407,7 @@
 	},
 	{
 		"id": 4000019,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-17T12:06:17.253Z",
 		"name": "Artisanal Blight Illusion Bangle",
 		"itemTaxRate": 0.1,
@@ -450,7 +450,7 @@
 	{
 		"id": 4000503,
 		"firstAdded": "2018-09-19T16:03:57.361Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/YaXkLqG.png",
 		"itemTaxRate": 0.1,
@@ -630,7 +630,7 @@
 	{
 		"id": 4000434,
 		"firstAdded": "2018-07-13T03:03:17.112Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"AS"
@@ -644,7 +644,7 @@
 	{
 		"id": 4000430,
 		"firstAdded": "2018-06-27T21:02:17.001Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"KF"
@@ -658,7 +658,7 @@
 	{
 		"id": 4000501,
 		"firstAdded": "2018-09-12T20:06:10.666Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/0JyRBla.png",
 		"itemTaxRate": 0.1,
@@ -669,7 +669,7 @@
 	{
 		"id": 4000435,
 		"firstAdded": "2018-07-21T09:03:10.976Z",
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"characterLevel": 3,
 		"class": [
 			"SM"
@@ -683,7 +683,7 @@
 	{
 		"id": 4000438,
 		"firstAdded": "2018-07-08T12:01:43.597Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T19:00:03.264Z",
 		"characterLevel": 3,
 		"class": [
 			"GM"
@@ -738,7 +738,7 @@
 	},
 	{
 		"id": 4000036,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Artisanal Infernal Illusion Axe",
 		"itemTaxRate": 0.1,
@@ -752,7 +752,7 @@
 	},
 	{
 		"id": 4000035,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-14T02:06:48.304Z",
 		"name": "Artisanal Infernal Illusion Bangle",
 		"itemTaxRate": 0.1,
@@ -795,7 +795,7 @@
 	{
 		"id": 4000505,
 		"firstAdded": "2018-09-12T23:01:43.159Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/5kHi8fw.png",
 		"itemTaxRate": 0.1,
@@ -887,7 +887,7 @@
 	{
 		"id": 4000393,
 		"firstAdded": "2018-07-01T13:01:44.873Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"DE"
@@ -954,7 +954,7 @@
 	{
 		"id": 4000497,
 		"firstAdded": "2018-09-12T19:05:38.303Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/uWZ2DpQ.png",
 		"itemTaxRate": 0.1,
@@ -979,7 +979,7 @@
 	{
 		"id": 4000398,
 		"firstAdded": "2018-07-06T03:03:19.474Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"GM"
@@ -1112,7 +1112,7 @@
 	},
 	{
 		"id": 4000065,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-27T12:04:06.317Z",
 		"name": "Artisanal Pirate Illusion Gauntlets",
 		"itemTaxRate": 0.1,
@@ -1127,7 +1127,7 @@
 	{
 		"id": 4000509,
 		"firstAdded": "2018-09-14T14:03:11.667Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/O3C3B6g.png",
 		"itemTaxRate": 0.1,
@@ -1207,7 +1207,7 @@
 	},
 	{
 		"id": 4000083,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T09:10:08.818Z",
 		"name": "Artisanal Scorpio Illusion Bangle",
 		"itemTaxRate": 0.1,
@@ -1250,7 +1250,7 @@
 	{
 		"id": 4000511,
 		"firstAdded": "2018-09-14T13:02:55.681Z",
-		"updated": "2018-09-18T16:00:03.902Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/HxxUkTh.png",
 		"itemTaxRate": 0.1,
@@ -1331,7 +1331,7 @@
 	{
 		"id": 4000413,
 		"firstAdded": "2018-06-27T09:01:57.557Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"DE"
@@ -1359,7 +1359,7 @@
 	{
 		"id": 4000417,
 		"firstAdded": "2018-06-30T05:03:25.745Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"characterLevel": 3,
 		"img": "http://static.ncsoft.com/bns_resource/ui_resource/weapon/weapon_gt_020244_col1_7_1.png",
 		"itemTaxRate": 0.1,
@@ -1370,7 +1370,7 @@
 	{
 		"id": 4000414,
 		"firstAdded": "2018-07-06T20:01:46.535Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"AS"
@@ -1398,7 +1398,7 @@
 	{
 		"id": 4000499,
 		"firstAdded": "2018-09-13T00:07:29.940Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/lMmdG0V.png",
 		"itemTaxRate": 0.1,
@@ -1409,7 +1409,7 @@
 	{
 		"id": 4000415,
 		"firstAdded": "2018-06-28T21:01:58.991Z",
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T19:00:03.264Z",
 		"characterLevel": 3,
 		"class": [
 			"SM"
@@ -1451,7 +1451,7 @@
 	{
 		"id": 4000411,
 		"firstAdded": "2018-07-13T05:01:21.971Z",
-		"updated": "2018-09-19T13:00:03.795Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"SU"
@@ -1465,7 +1465,7 @@
 	{
 		"id": 4000409,
 		"firstAdded": "2018-06-27T09:01:57.557Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"BM"
@@ -1478,7 +1478,7 @@
 	},
 	{
 		"id": 829805,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Artisanal Shield Base Bundle",
 		"itemTaxRate": 1.1,
@@ -1524,7 +1524,7 @@
 	{
 		"id": 720835,
 		"stats": "Critical 254",
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T17:00:03.625Z",
 		"firstAdded": "2018-02-24T02:21:17.970Z",
 		"name": "Artisanal Silverfrost Critical Soul Shield Primer8",
 		"itemTaxRate": 21,
@@ -1582,7 +1582,7 @@
 	{
 		"id": 720841,
 		"stats": "Critical Defense 254",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T17:00:03.625Z",
 		"firstAdded": "2018-02-24T02:21:17.970Z",
 		"name": "Artisanal Silverfrost Reflex Soul Shield Primer8",
 		"itemTaxRate": 21,
@@ -1635,7 +1635,7 @@
 	},
 	{
 		"id": 4000049,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-26T11:04:06.006Z",
 		"name": "Artisanal Siren Illusion Gauntlets",
 		"itemTaxRate": 0.1,
@@ -1650,7 +1650,7 @@
 	{
 		"id": 4000507,
 		"firstAdded": "2018-09-18T13:02:11.035Z",
-		"updated": "2018-09-18T21:00:03.720Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/AMm90Pd.png",
 		"itemTaxRate": 0.1,
@@ -1741,7 +1741,7 @@
 	},
 	{
 		"id": 2022078,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Asura Ember",
 		"itemTaxRate": 0.2,
@@ -1777,7 +1777,7 @@
 	{
 		"id": 3900506,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Automaton Pet",
 		"itemTaxRate": 5.1,
@@ -1788,7 +1788,7 @@
 	},
 	{
 		"id": 829813,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Awakened Potion Chest",
 		"itemTaxRate": 1.1,
@@ -1823,7 +1823,7 @@
 	{
 		"id": 2021278,
 		"stats": "Critical 81, Additional Damage 7, Evasion 66, Attack Power 2",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Bearclaw Ring",
 		"itemTaxRate": 21.4,
@@ -1847,7 +1847,7 @@
 	{
 		"id": 4200880,
 		"firstAdded": "2018-08-16T15:02:22.159Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/QhOvT0D.png",
 		"itemTaxRate": 1.1,
@@ -1857,7 +1857,7 @@
 	},
 	{
 		"id": 3150155,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Black Cat",
 		"race": "Familiar",
@@ -1869,7 +1869,7 @@
 	},
 	{
 		"id": 3150156,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.694Z",
 		"name": "Black Cat Headpiece",
 		"race": "Familiar",
@@ -1881,7 +1881,7 @@
 	},
 	{
 		"id": 3150056,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-27T09:06:25.418Z",
 		"name": "Black Sun",
 		"itemTaxRate": 0.1,
@@ -1905,7 +1905,7 @@
 	{
 		"id": 710201,
 		"stats": "HP 10 Critical 5",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Blackram Critical Soul Shield2",
 		"itemTaxRate": 0.1,
@@ -1929,7 +1929,7 @@
 	{
 		"id": 710205,
 		"stats": "HP 10 Critical 6",
-		"updated": "2018-09-19T09:00:03.316Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Blackram Critical Soul Shield3",
 		"itemTaxRate": 0.1,
@@ -1941,7 +1941,7 @@
 	{
 		"id": 710987,
 		"stats": "HP 10 Critical 6",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-24T16:05:43.872Z",
 		"name": "Blackram Critical Soul Shield4",
 		"itemTaxRate": 0.1,
@@ -1953,7 +1953,7 @@
 	{
 		"id": 710988,
 		"stats": "HP 10 Critical 6",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Blackram Critical Soul Shield5",
 		"itemTaxRate": 0.1,
@@ -1965,7 +1965,7 @@
 	{
 		"id": 710989,
 		"stats": "HP 10 Critical 6",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Blackram Critical Soul Shield6",
 		"itemTaxRate": 0.1,
@@ -1977,7 +1977,7 @@
 	{
 		"id": 710990,
 		"stats": "HP 10 Critical 7",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Blackram Critical Soul Shield7",
 		"itemTaxRate": 0.1,
@@ -2149,7 +2149,7 @@
 	},
 	{
 		"id": 2820528,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T23:03:43.942Z",
 		"name": "Blackwyrm Roar Resistance Charm",
 		"itemTaxRate": 0.2,
@@ -3218,7 +3218,7 @@
 	{
 		"id": 2607818,
 		"firstAdded": "2018-09-19T01:04:04.070Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 45,
 		"class": [
 			"WL"
@@ -3427,7 +3427,7 @@
 	{
 		"id": 811392,
 		"stats": "120 Additional Damage · When an enemy is Stunned or Knocked Down",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-23T21:02:58.305Z",
 		"name": "Brilliant Hexagonal Citrine",
 		"itemTaxRate": 0.9,
@@ -3451,7 +3451,7 @@
 	{
 		"id": 814620,
 		"stats": "Additional Damage 28",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T20:00:03.419Z",
 		"firstAdded": "2018-02-25T21:04:57.465Z",
 		"name": "Brilliant Hexagonal Diamond",
 		"itemTaxRate": 0.9,
@@ -3463,7 +3463,7 @@
 	{
 		"id": 811402,
 		"stats": "Block 470",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-25T21:04:57.465Z",
 		"name": "Brilliant Hexagonal Diamond",
 		"itemTaxRate": 0.9,
@@ -3571,7 +3571,7 @@
 	{
 		"id": 815875,
 		"stats": "Increases Critical by 1. · Triggers on attack.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-20T12:03:29.553Z",
 		"name": "Brilliant Hexagonal Ruby",
 		"itemTaxRate": 0.9,
@@ -3618,7 +3618,7 @@
 	},
 	{
 		"id": 820355,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Brilliant Key",
 		"itemTaxRate": 0.2,
@@ -3832,7 +3832,7 @@
 	},
 	{
 		"id": 4200463,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Brilliant Sealing Charm",
 		"itemTaxRate": 0.1,
@@ -3843,7 +3843,7 @@
 	},
 	{
 		"id": 820169,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.971Z",
 		"name": "Brilliant Silverfrost Fortune Charm",
 		"itemTaxRate": 0.2,
@@ -3974,7 +3974,7 @@
 	},
 	{
 		"id": 816621,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-28T23:03:19.663Z",
 		"name": "Brilliant Square Gem Chest",
 		"itemTaxRate": 0.4,
@@ -3998,7 +3998,7 @@
 	{
 		"id": 811348,
 		"stats": "Immune for 3 sec. and Critical +40. · ,",
-		"updated": "2018-09-19T13:00:03.795Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-26T14:04:15.776Z",
 		"name": "Brilliant Square Peridot",
 		"itemTaxRate": 0.5,
@@ -4271,7 +4271,7 @@
 	},
 	{
 		"id": 3300079,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Broken Oathbreaker's Sword Blade",
 		"itemTaxRate": 0.7,
@@ -4282,7 +4282,7 @@
 	},
 	{
 		"id": 3300081,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.695Z",
 		"name": "Broken Oathbreaker's Sword Blade Point",
 		"itemTaxRate": 0.7,
@@ -4304,7 +4304,7 @@
 	},
 	{
 		"id": 818451,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.971Z",
 		"name": "Broken Piece",
 		"itemTaxRate": 0.1,
@@ -4523,7 +4523,7 @@
 	},
 	{
 		"id": 910113,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.696Z",
 		"name": "Buccaneer Adornment",
 		"race": "Familiar",
@@ -4535,7 +4535,7 @@
 	},
 	{
 		"id": 910114,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.971Z",
 		"name": "Buccaneer Eyepatch",
 		"race": "Familiar",
@@ -4584,7 +4584,7 @@
 	{
 		"id": 3300393,
 		"stats": "Piercing 154, Threat 515, Attack Power 8",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-03-03T22:04:19.231Z",
 		"name": "Bukka Bracelet",
 		"itemTaxRate": 51.5,
@@ -4704,7 +4704,7 @@
 	{
 		"id": 820879,
 		"stats": "Piercing 24, Block 45, Defense 67, HP 172",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-24T17:04:49.073Z",
 		"name": "Buried Offering Necklace - Stage 1",
 		"itemTaxRate": 0.4,
@@ -4798,7 +4798,7 @@
 	},
 	{
 		"id": 829810,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.696Z",
 		"name": "Cactus Potion Chest",
 		"itemTaxRate": 1.1,
@@ -4809,7 +4809,7 @@
 	},
 	{
 		"id": 3150614,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.696Z",
 		"name": "Carnation",
 		"itemTaxRate": 0.1,
@@ -4832,7 +4832,7 @@
 	{
 		"id": 3900518,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.696Z",
 		"name": "Chair Bear Pet",
 		"itemTaxRate": 5.1,
@@ -4855,7 +4855,7 @@
 	{
 		"id": 832072,
 		"firstAdded": "2018-09-13T05:09:23.791Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/2UfuZMe.png",
 		"itemTaxRate": 0,
@@ -4865,7 +4865,7 @@
 	},
 	{
 		"id": 4300289,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-21T17:01:36.269Z",
 		"name": "Chow Pal",
 		"itemTaxRate": 0.1,
@@ -4876,7 +4876,7 @@
 	},
 	{
 		"id": 815830,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Chungshil Kaoliang Ju",
 		"itemTaxRate": 18.1,
@@ -5214,7 +5214,7 @@
 	},
 	{
 		"id": 2601103,
-		"updated": "2018-08-18T02:00:03.750Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-03-10T12:03:37.535Z",
 		"name": "Cinderlands Lynblade",
 		"itemTaxRate": 0.3,
@@ -5516,7 +5516,7 @@
 	},
 	{
 		"id": 817076,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Cinderlands Thorn",
 		"itemTaxRate": 0.1,
@@ -5527,7 +5527,7 @@
 	},
 	{
 		"id": 817406,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Cinderlands Transformation Stone",
 		"itemTaxRate": 0.1,
@@ -5761,7 +5761,7 @@
 	},
 	{
 		"id": 610260,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.975Z",
 		"name": "Copper Assault Axe",
 		"itemTaxRate": 0.1,
@@ -5803,7 +5803,7 @@
 	},
 	{
 		"id": 610259,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Copper Calming Bangle",
 		"itemTaxRate": 0.1,
@@ -5817,7 +5817,7 @@
 	},
 	{
 		"id": 610261,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.975Z",
 		"name": "Copper Dagger",
 		"itemTaxRate": 0.1,
@@ -5859,7 +5859,7 @@
 	},
 	{
 		"id": 610257,
-		"updated": "2018-09-19T06:00:03.580Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Copper Heavy Gauntlets",
 		"itemTaxRate": 0.1,
@@ -5915,7 +5915,7 @@
 	},
 	{
 		"id": 610256,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.975Z",
 		"name": "Copper Sword",
 		"itemTaxRate": 0.1,
@@ -5982,7 +5982,7 @@
 	},
 	{
 		"id": 2600358,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-28T02:05:53.433Z",
 		"name": "Corrupted Axe",
 		"itemTaxRate": 0.3,
@@ -6077,7 +6077,7 @@
 	},
 	{
 		"id": 3000015,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-10T01:06:47.141Z",
 		"name": "Corrupted Bracer",
 		"itemTaxRate": 0.3,
@@ -6552,7 +6552,7 @@
 	},
 	{
 		"id": 4300185,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Countdown",
 		"itemTaxRate": 0.1,
@@ -6563,7 +6563,7 @@
 	},
 	{
 		"id": 830015,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Courage Token",
 		"itemTaxRate": 0.7,
@@ -6575,7 +6575,7 @@
 	{
 		"id": 4200807,
 		"firstAdded": "2018-06-27T09:01:57.565Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/Ullh3r9.png",
 		"itemTaxRate": 31,
@@ -6775,7 +6775,7 @@
 	},
 	{
 		"id": 610970,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-03T00:04:42.616Z",
 		"name": "Crafted Cold Iron Sword",
 		"itemTaxRate": 9.2,
@@ -6933,7 +6933,7 @@
 	},
 	{
 		"id": 610541,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T03:12:08.203Z",
 		"name": "Crafted Raw Iron Bangle",
 		"itemTaxRate": 0.2,
@@ -6947,7 +6947,7 @@
 	},
 	{
 		"id": 610543,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-13T23:06:57.875Z",
 		"name": "Crafted Raw Iron Dagger",
 		"itemTaxRate": 0.2,
@@ -6975,7 +6975,7 @@
 	},
 	{
 		"id": 610540,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-06T12:07:14.851Z",
 		"name": "Crafted Raw Iron Staff",
 		"itemTaxRate": 0.2,
@@ -6989,7 +6989,7 @@
 	},
 	{
 		"id": 610538,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T02:21:17.975Z",
 		"name": "Crafted Raw Iron Sword",
 		"itemTaxRate": 0.2,
@@ -7111,7 +7111,7 @@
 	},
 	{
 		"id": 2280143,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.698Z",
 		"name": "Culinary League Design",
 		"itemTaxRate": 0.1,
@@ -7218,7 +7218,7 @@
 	},
 	{
 		"id": 2280139,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-01T11:04:59.812Z",
 		"name": "Daybreak Bottom Design",
 		"itemTaxRate": 0.1,
@@ -7263,7 +7263,7 @@
 	{
 		"id": 2021210,
 		"stats": "Critical 34, Accuracy 17, Piercing 17, Attack Power 1",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T17:05:55.324Z",
 		"name": "Desert Earring",
 		"itemTaxRate": 0.3,
@@ -7275,7 +7275,7 @@
 	{
 		"id": 2021116,
 		"stats": "Critical 33, Additional Damage 3, Piercing 17, Attack Power 1",
-		"updated": "2018-09-19T02:00:03.760Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Desert Necklace",
 		"itemTaxRate": 0.2,
@@ -7287,7 +7287,7 @@
 	{
 		"id": 2021266,
 		"stats": "Critical 17, Accuracy 26, Evasion 17, Attack Power 1",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.976Z",
 		"name": "Desert Ring",
 		"itemTaxRate": 0.3,
@@ -7430,7 +7430,7 @@
 	{
 		"id": 2021223,
 		"stats": "Critical 161, Accuracy 83, Piercing 81, Attack Power 3",
-		"updated": "2018-09-19T10:00:04.374Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.976Z",
 		"name": "Dokkaebi Earring",
 		"itemTaxRate": 25.7,
@@ -7441,7 +7441,7 @@
 	},
 	{
 		"id": 2280134,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T09:10:08.822Z",
 		"name": "Dokkaebi Half Mask Design",
 		"itemTaxRate": 0.1,
@@ -7534,7 +7534,7 @@
 	},
 	{
 		"id": 2601416,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T13:03:41.206Z",
 		"name": "Dokumo Bangle",
 		"itemTaxRate": 35.7,
@@ -7576,7 +7576,7 @@
 	},
 	{
 		"id": 3000050,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-06T17:07:25.153Z",
 		"name": "Dokumo Bracers",
 		"itemTaxRate": 35.7,
@@ -7587,7 +7587,7 @@
 	},
 	{
 		"id": 2601426,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T02:04:55.094Z",
 		"name": "Dokumo Dagger",
 		"itemTaxRate": 35.7,
@@ -7767,7 +7767,7 @@
 	{
 		"id": 2021121,
 		"stats": "Piercing 115, Block 141, Defense 165, HP 387",
-		"updated": "2018-08-26T13:00:04.250Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-27T10:04:08.003Z",
 		"name": "Dokumo Necklace",
 		"itemTaxRate": 16.2,
@@ -7792,7 +7792,7 @@
 	},
 	{
 		"id": 2607801,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dokumo Razor",
 		"itemTaxRate": 35.7,
@@ -7989,7 +7989,7 @@
 	{
 		"id": 4300328,
 		"firstAdded": "2018-06-27T09:01:57.566Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/0jyy5Y0.png",
 		"itemTaxRate": 0.1,
@@ -7999,7 +7999,7 @@
 	},
 	{
 		"id": 810718,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dragon Bone Inscription",
 		"itemTaxRate": 0.2,
@@ -8011,7 +8011,7 @@
 	{
 		"id": 3900411,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dragon Pet",
 		"itemTaxRate": 5.1,
@@ -8022,7 +8022,7 @@
 	},
 	{
 		"id": 829809,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T14:05:19.909Z",
 		"name": "Dragon Soup Food Chest",
 		"itemTaxRate": 1.1,
@@ -8033,7 +8033,7 @@
 	},
 	{
 		"id": 3150605,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dragonfly",
 		"itemTaxRate": 0.1,
@@ -8046,7 +8046,7 @@
 		"id": 3900560,
 		"firstAdded": "2018-08-16T15:02:22.161Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/dePOm5U.png",
 		"itemTaxRate": 5.1,
@@ -8056,7 +8056,7 @@
 	},
 	{
 		"id": 824416,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dumpling",
 		"itemTaxRate": 0.1,
@@ -8067,7 +8067,7 @@
 	},
 	{
 		"id": 827332,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dungeon Antidote",
 		"itemTaxRate": 0.1,
@@ -8079,7 +8079,7 @@
 	{
 		"id": 2021264,
 		"stats": "Critical Damage 19, Critical 27, Evasion 13",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T04:14:16.493Z",
 		"name": "Dura's Ring",
 		"itemTaxRate": 0.2,
@@ -8186,7 +8186,7 @@
 	},
 	{
 		"id": 3300170,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Dye Polish",
 		"itemTaxRate": 0.1,
@@ -8287,7 +8287,7 @@
 	},
 	{
 		"id": 3150229,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Eboncat",
 		"race": "Familiar",
@@ -8299,7 +8299,7 @@
 	},
 	{
 		"id": 3150230,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Eboncat Adornment",
 		"race": "Familiar",
@@ -8311,7 +8311,7 @@
 	},
 	{
 		"id": 3150231,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Eboncat Mask",
 		"race": "Familiar",
@@ -8323,7 +8323,7 @@
 	},
 	{
 		"id": 625239,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-25T06:05:59.597Z",
 		"name": "Eidolon Bracers",
 		"itemTaxRate": 47.6,
@@ -8335,7 +8335,7 @@
 	{
 		"id": 628294,
 		"firstAdded": "2018-09-18T04:01:50.945Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/x86Mn0R.png",
 		"itemTaxRate": 47.6,
@@ -8359,7 +8359,7 @@
 	},
 	{
 		"id": 823507,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Elder Dragon Element",
 		"itemTaxRate": 0.1,
@@ -8370,7 +8370,7 @@
 	},
 	{
 		"id": 823510,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.699Z",
 		"name": "Elder Dragon Jewel",
 		"itemTaxRate": 0.1,
@@ -8382,7 +8382,7 @@
 	{
 		"id": 716724,
 		"stats": "HP 540 Critical 84",
-		"updated": "2018-09-19T09:00:03.322Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-04-20T07:05:23.036Z",
 		"name": "Elite Critical Soul Shield1",
 		"itemTaxRate": 9.2,
@@ -8406,7 +8406,7 @@
 	{
 		"id": 716726,
 		"stats": "HP 600 Critical 92",
-		"updated": "2018-09-19T08:00:04.113Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-05-05T15:02:21.359Z",
 		"name": "Elite Critical Soul Shield3",
 		"itemTaxRate": 9.2,
@@ -8430,7 +8430,7 @@
 	{
 		"id": 716728,
 		"stats": "HP 670 Critical 104",
-		"updated": "2018-09-19T09:00:03.322Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-29T16:02:32.516Z",
 		"name": "Elite Critical Soul Shield5",
 		"itemTaxRate": 9.2,
@@ -8477,7 +8477,7 @@
 	},
 	{
 		"id": 2280159,
-		"updated": "2018-09-19T11:00:04.396Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Elite Guard Headgear Design",
 		"itemTaxRate": 0.1,
@@ -8488,7 +8488,7 @@
 	},
 	{
 		"id": 3300016,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Elysian Orb",
 		"itemTaxRate": 0.1,
@@ -8499,7 +8499,7 @@
 	},
 	{
 		"id": 821996,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Empyrean Spirit Stone",
 		"itemTaxRate": 5.4,
@@ -8510,7 +8510,7 @@
 	},
 	{
 		"id": 3150434,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T09:10:08.824Z",
 		"name": "Enchanted Cat",
 		"race": "Familiar",
@@ -8522,7 +8522,7 @@
 	},
 	{
 		"id": 3150435,
-		"updated": "2018-09-18T21:00:03.720Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Enchanted Cat Adornment",
 		"race": "Familiar",
@@ -8558,7 +8558,7 @@
 	},
 	{
 		"id": 827323,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Escape Charm",
 		"itemTaxRate": 0.1,
@@ -8569,7 +8569,7 @@
 	},
 	{
 		"id": 823995,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Essence of Plog",
 		"itemTaxRate": 0.1,
@@ -8580,7 +8580,7 @@
 	},
 	{
 		"id": 2820631,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.700Z",
 		"name": "Evolved Stone",
 		"itemTaxRate": 0.2,
@@ -8602,7 +8602,7 @@
 	},
 	{
 		"id": 814642,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.977Z",
 		"name": "Expired Brilliant Pentagonal Diamond Pouch",
 		"itemTaxRate": 0.5,
@@ -8657,7 +8657,7 @@
 	},
 	{
 		"id": 811173,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-26T18:04:39.288Z",
 		"name": "Expired Pentagonal Gem Fragments",
 		"itemTaxRate": 0.2,
@@ -8734,7 +8734,7 @@
 	},
 	{
 		"id": 821597,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Fabric",
 		"itemTaxRate": 0.2,
@@ -8746,7 +8746,7 @@
 	{
 		"id": 4200812,
 		"firstAdded": "2018-06-27T09:01:57.568Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/59xMZrP.png",
 		"itemTaxRate": 31,
@@ -8767,7 +8767,7 @@
 	},
 	{
 		"id": 910051,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Fat Cat",
 		"race": "Familiar",
@@ -8779,7 +8779,7 @@
 	},
 	{
 		"id": 910045,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Fat Cat Adornment",
 		"race": "Familiar",
@@ -8791,7 +8791,7 @@
 	},
 	{
 		"id": 910046,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.978Z",
 		"name": "Fat Cat Hair",
 		"race": "Familiar",
@@ -8803,7 +8803,7 @@
 	},
 	{
 		"id": 827321,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Field Repair Tool",
 		"itemTaxRate": 0.1,
@@ -8870,7 +8870,7 @@
 	},
 	{
 		"id": 2603339,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-06T16:04:05.366Z",
 		"name": "Fiend Lynblade",
 		"itemTaxRate": 31.8,
@@ -8975,7 +8975,7 @@
 	{
 		"id": 3900565,
 		"firstAdded": "2018-09-12T18:03:23.513Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/MpK5Wd7.png",
 		"itemTaxRate": 5.1,
@@ -9010,7 +9010,7 @@
 	{
 		"id": 3900412,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.978Z",
 		"name": "Fleeso Pet",
 		"itemTaxRate": 5.1,
@@ -9022,7 +9022,7 @@
 	{
 		"id": 3900484,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Flower Carp Pet",
 		"itemTaxRate": 5.1,
@@ -9143,7 +9143,7 @@
 	},
 	{
 		"id": 4200611,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Forgekeeper Blight Phantom Weapon Chest",
 		"itemTaxRate": 1.8,
@@ -9155,7 +9155,7 @@
 	{
 		"id": 4200810,
 		"firstAdded": "2018-06-28T01:02:01.591Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/rz9WJEq.png",
 		"itemTaxRate": 1.8,
@@ -9288,7 +9288,7 @@
 	},
 	{
 		"id": 4200612,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Forgekeeper Infernal Phantom Weapon Chest",
 		"itemTaxRate": 1.8,
@@ -9300,7 +9300,7 @@
 	{
 		"id": 4200808,
 		"firstAdded": "2018-06-27T09:01:57.569Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/9CS85mg.png",
 		"itemTaxRate": 1.8,
@@ -9310,7 +9310,7 @@
 	},
 	{
 		"id": 4200614,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.707Z",
 		"name": "Forgekeeper Pirate Phantom Weapon Chest",
 		"itemTaxRate": 1.8,
@@ -9377,7 +9377,7 @@
 	{
 		"id": 4200809,
 		"firstAdded": "2018-06-27T09:01:57.569Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/1gK8yfd.png",
 		"itemTaxRate": 1.8,
@@ -9401,7 +9401,7 @@
 	},
 	{
 		"id": 4200613,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Forgekeeper Siren Phantom Weapon Chest",
 		"itemTaxRate": 1.8,
@@ -9414,7 +9414,7 @@
 		"id": 3900525,
 		"firstAdded": "2018-08-01T14:01:50.893Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/ukYG823.png",
 		"itemTaxRate": 5.1,
@@ -9424,7 +9424,7 @@
 	},
 	{
 		"id": 910106,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Fraidy Cat",
 		"race": "Familiar",
@@ -9500,7 +9500,7 @@
 	{
 		"id": 2020884,
 		"stats": "Damage Reduction 33, Defense 239, HP 1923",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.978Z",
 		"name": "Frostscale Belt",
 		"itemTaxRate": 51.5,
@@ -9537,7 +9537,7 @@
 	},
 	{
 		"id": 817842,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Frostscale Essence",
 		"itemTaxRate": 0.7,
@@ -9661,7 +9661,7 @@
 	{
 		"id": 2020860,
 		"stats": "Piercing 112, Block 220, Threat 558, Attack Power 7",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Frosty Bracelet",
 		"itemTaxRate": 48.6,
@@ -9781,7 +9781,7 @@
 	},
 	{
 		"id": 828811,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Fury Token",
 		"itemTaxRate": 0.7,
@@ -9792,7 +9792,7 @@
 	},
 	{
 		"id": 820378,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Fusion Powder",
 		"itemTaxRate": 0.1,
@@ -9803,7 +9803,7 @@
 	},
 	{
 		"id": 2820776,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Gem Hammer",
 		"itemTaxRate": 0.1,
@@ -9815,7 +9815,7 @@
 	{
 		"id": 3900405,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Ghost Pet",
 		"itemTaxRate": 5.1,
@@ -9827,7 +9827,7 @@
 	{
 		"id": 2021214,
 		"stats": "Accuracy 56, Evasion 81, Defense 109, HP 104",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Ghoulish Hungry Ghost Earring",
 		"itemTaxRate": 0.7,
@@ -9863,7 +9863,7 @@
 		"id": 81456,
 		"firstAdded": "2018-06-28T06:03:08.968Z",
 		"stats": "Attack Power 74",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/LA3l97R.png",
 		"itemTaxRate": 2,
@@ -9996,7 +9996,7 @@
 	},
 	{
 		"id": 2601052,
-		"updated": "2018-09-02T06:00:04.096Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-15T19:08:37.308Z",
 		"name": "Glacial Bangle",
 		"itemTaxRate": 0.6,
@@ -10537,7 +10537,7 @@
 	{
 		"id": 830945,
 		"firstAdded": "2018-06-27T09:01:57.571Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/b3iAaVU.png",
 		"itemTaxRate": 0.7,
@@ -10616,7 +10616,7 @@
 	{
 		"id": 2021112,
 		"stats": "Critical 29, Additional Damage 4, Accuracy 29, Attack Power 1",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.978Z",
 		"name": "Golden Deva Earring",
 		"itemTaxRate": 0.4,
@@ -10627,7 +10627,7 @@
 	},
 	{
 		"id": 810835,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Golden Deva's Essence",
 		"itemTaxRate": 0.3,
@@ -10639,7 +10639,7 @@
 	{
 		"id": 3900465,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Grand Phoenix Pet",
 		"itemTaxRate": 5.1,
@@ -10672,7 +10672,7 @@
 	},
 	{
 		"id": 815297,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Greenhollow Return Charm",
 		"itemTaxRate": 0.5,
@@ -10684,7 +10684,7 @@
 	{
 		"id": 3900415,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.986Z",
 		"name": "Griffin Pet",
 		"itemTaxRate": 5.1,
@@ -10803,7 +10803,7 @@
 	},
 	{
 		"id": 811537,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Hae Mujin's Machismo",
 		"itemTaxRate": 0.2,
@@ -10815,7 +10815,7 @@
 	{
 		"id": 2021109,
 		"stats": "Critical 108, Piercing 44, Attack Power 2",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.708Z",
 		"name": "Hakan Necklace",
 		"itemTaxRate": 0.3,
@@ -10839,7 +10839,7 @@
 	{
 		"id": 719409,
 		"stats": "HP 1780 Critical 164",
-		"updated": "2018-09-19T09:00:03.322Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-06-04T19:02:18.338Z",
 		"name": "Hao Society Critical Soul Shield6",
 		"itemTaxRate": 12.3,
@@ -10862,7 +10862,7 @@
 	},
 	{
 		"id": 824417,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.709Z",
 		"name": "Healing Tonic",
 		"itemTaxRate": 0.1,
@@ -10885,7 +10885,7 @@
 	{
 		"id": 81366,
 		"stats": "Defense 1130",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T19:04:54.276Z",
 		"name": "Heptagonal Diamond",
 		"itemTaxRate": 1.7,
@@ -10897,7 +10897,7 @@
 	{
 		"id": 81360,
 		"stats": "Attack Power 56",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-10T23:05:57.082Z",
 		"name": "Heptagonal Diamond",
 		"itemTaxRate": 1.7,
@@ -10908,7 +10908,7 @@
 	},
 	{
 		"id": 81418,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T17:04:49.077Z",
 		"name": "Heptagonal Diamond Pouch",
 		"itemTaxRate": 0.1,
@@ -11003,7 +11003,7 @@
 	{
 		"id": 81365,
 		"stats": "Defense 900",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T19:00:03.264Z",
 		"firstAdded": "2018-02-24T02:17:02.710Z",
 		"name": "Hexagonal Diamond",
 		"itemTaxRate": 1.3,
@@ -11015,7 +11015,7 @@
 	{
 		"id": 81359,
 		"stats": "Attack Power 48",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.710Z",
 		"name": "Hexagonal Diamond",
 		"itemTaxRate": 1.3,
@@ -11086,7 +11086,7 @@
 	},
 	{
 		"id": 81417,
-		"updated": "2018-09-19T07:00:03.634Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.710Z",
 		"name": "Hexagonal Diamond Pouch",
 		"itemTaxRate": 0.1,
@@ -11110,7 +11110,7 @@
 	{
 		"id": 811381,
 		"stats": "Recovers 400 HP over time ·  when blocking.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-20T21:04:19.155Z",
 		"name": "Hexagonal Emerald",
 		"itemTaxRate": 0.6,
@@ -11193,7 +11193,7 @@
 	},
 	{
 		"id": 2820071,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.710Z",
 		"name": "High Quality Fabric",
 		"itemTaxRate": 0.2,
@@ -11205,7 +11205,7 @@
 	{
 		"id": 2021314,
 		"stats": "Evasion 98, Block 94, Defense 167, HP 336",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-25T17:05:17.910Z",
 		"name": "Hogdonny Ring",
 		"itemTaxRate": 28.9,
@@ -11228,7 +11228,7 @@
 	},
 	{
 		"id": 816832,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T06:16:31.265Z",
 		"name": "Hogshead Return Charm",
 		"itemTaxRate": 0.5,
@@ -11239,7 +11239,7 @@
 	},
 	{
 		"id": 4200457,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.710Z",
 		"name": "Hongmoon Gem Fragment",
 		"itemTaxRate": 0.1,
@@ -11250,7 +11250,7 @@
 	},
 	{
 		"id": 4200458,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.711Z",
 		"name": "Hongmoon Gem Powder",
 		"itemTaxRate": 0.1,
@@ -11261,7 +11261,7 @@
 	},
 	{
 		"id": 821967,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T17:04:49.077Z",
 		"name": "Hongsil Kaoliang Ju",
 		"itemTaxRate": 18.1,
@@ -11307,7 +11307,7 @@
 	},
 	{
 		"id": 3300203,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.712Z",
 		"name": "Hot Artisanal Mamosu Stew",
 		"itemTaxRate": 23.8,
@@ -11330,7 +11330,7 @@
 	{
 		"id": 2021221,
 		"stats": "Critical 69, Additional Damage 7, Accuracy 71, Attack Power 3",
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T05:15:54.160Z",
 		"name": "Hujikar Earring",
 		"itemTaxRate": 22.7,
@@ -11342,7 +11342,7 @@
 	{
 		"id": 2021280,
 		"stats": "Critical 214, Piercing 94, Evasion 98, Attack Power 3",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.986Z",
 		"name": "Huren Ring",
 		"itemTaxRate": 28.9,
@@ -11353,7 +11353,7 @@
 	},
 	{
 		"id": 910142,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "I Can Haz Helm",
 		"race": "Familiar",
@@ -11365,7 +11365,7 @@
 	},
 	{
 		"id": 910143,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "I Can Haz Tail Adornment",
 		"race": "Familiar",
@@ -11389,7 +11389,7 @@
 	{
 		"id": 3900462,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.995Z",
 		"name": "Iksanun Pet",
 		"itemTaxRate": 5.1,
@@ -11401,7 +11401,7 @@
 	{
 		"id": 3900503,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Imp Pet",
 		"itemTaxRate": 5.1,
@@ -11524,7 +11524,7 @@
 	},
 	{
 		"id": 2600500,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-05-20T20:03:39.289Z",
 		"name": "Imperator Bangle",
 		"itemTaxRate": 22.4,
@@ -11924,7 +11924,7 @@
 	},
 	{
 		"id": 810849,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Infernal Lord's Horn",
 		"itemTaxRate": 0.1,
@@ -11936,7 +11936,7 @@
 	{
 		"id": 3900407,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.995Z",
 		"name": "Infernal Pet",
 		"itemTaxRate": 5.1,
@@ -11948,7 +11948,7 @@
 	{
 		"id": 4300382,
 		"firstAdded": "2018-09-12T18:03:23.515Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/VxzC09k.png",
 		"itemTaxRate": 0.1,
@@ -12053,7 +12053,7 @@
 	{
 		"id": 3300388,
 		"stats": "Evasion 463, Defense 618, HP 516",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-21T17:03:17.210Z",
 		"name": "Iron Juggernaut Earring",
 		"itemTaxRate": 51.5,
@@ -12076,7 +12076,7 @@
 	},
 	{
 		"id": 3150425,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Iron Kitty",
 		"race": "Familiar",
@@ -12088,7 +12088,7 @@
 	},
 	{
 		"id": 3150427,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Iron Kitty Hat",
 		"race": "Familiar",
@@ -12100,7 +12100,7 @@
 	},
 	{
 		"id": 3150426,
-		"updated": "2018-09-18T17:00:04.098Z",
+		"updated": "2018-09-19T21:00:03.739Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Iron Kitty Ornament",
 		"race": "Familiar",
@@ -12176,7 +12176,7 @@
 		"id": 3900574,
 		"firstAdded": "2018-08-29T19:01:36.511Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/UJ8t6l1.png",
 		"itemTaxRate": 5.1,
@@ -12186,7 +12186,7 @@
 	},
 	{
 		"id": 815295,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Jadestone Return Charm",
 		"itemTaxRate": 0.1,
@@ -12208,7 +12208,7 @@
 	},
 	{
 		"id": 4200785,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-05-09T17:02:20.501Z",
 		"name": "Jasmine Illusion Weapon Chest",
 		"itemTaxRate": 1.1,
@@ -12220,7 +12220,7 @@
 	{
 		"id": 3900537,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-07T16:04:11.395Z",
 		"name": "Jinsoyun Pet",
 		"itemTaxRate": 5.1,
@@ -12232,7 +12232,7 @@
 	{
 		"id": 3900459,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Jiwan Pet",
 		"itemTaxRate": 5.1,
@@ -12288,7 +12288,7 @@
 	},
 	{
 		"id": 827319,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Key",
 		"itemTaxRate": 0.1,
@@ -12353,7 +12353,7 @@
 	{
 		"id": 2820838,
 		"stats": "Accuracy 220, Evasion 335, Defense 446, HP 781",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T18:04:05.395Z",
 		"name": "King Earring",
 		"itemTaxRate": 48.6,
@@ -12378,7 +12378,7 @@
 	},
 	{
 		"id": 814366,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "King Kaari's Essence",
 		"itemTaxRate": 0.4,
@@ -12470,7 +12470,7 @@
 	},
 	{
 		"id": 829784,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.718Z",
 		"name": "Kirin Antler",
 		"itemTaxRate": 0,
@@ -12482,7 +12482,7 @@
 	{
 		"id": 3900521,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-21T17:01:36.280Z",
 		"name": "Kitsune Pet",
 		"itemTaxRate": 5.1,
@@ -12494,7 +12494,7 @@
 	{
 		"id": 3900543,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-04-19T14:02:35.747Z",
 		"name": "Koldrak Pet",
 		"itemTaxRate": 5.1,
@@ -12527,7 +12527,7 @@
 	},
 	{
 		"id": 815543,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.995Z",
 		"name": "Large Hibiscus Potion",
 		"itemTaxRate": 12.2,
@@ -12538,7 +12538,7 @@
 	},
 	{
 		"id": 810790,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Large Lingzhi Potion",
 		"itemTaxRate": 0.2,
@@ -12587,7 +12587,7 @@
 	{
 		"id": 3900478,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-01T16:03:20.930Z",
 		"name": "Ling Ling Pet",
 		"itemTaxRate": 5.1,
@@ -12599,7 +12599,7 @@
 	{
 		"id": 3900409,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Little Grizzly Pet",
 		"itemTaxRate": 5.1,
@@ -12610,7 +12610,7 @@
 	},
 	{
 		"id": 3300314,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:11:19.333Z",
 		"name": "Locked Be Ido's Phantom Weapon",
 		"itemTaxRate": 0.1,
@@ -12621,7 +12621,7 @@
 	},
 	{
 		"id": 3300488,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Locked Dusk Adder Phantom Weapon",
 		"itemTaxRate": 0.1,
@@ -12676,7 +12676,7 @@
 	},
 	{
 		"id": 2021835,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Lost Hongmoon Secret Technique - Volume 2, Chapter 1",
 		"itemTaxRate": 0.3,
@@ -12687,7 +12687,7 @@
 	},
 	{
 		"id": 2021836,
-		"updated": "2018-09-19T12:00:03.591Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T17:05:55.328Z",
 		"name": "Lost Hongmoon Secret Technique - Volume 2, Chapter 2",
 		"itemTaxRate": 0.3,
@@ -12698,7 +12698,7 @@
 	},
 	{
 		"id": 3300366,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Lost Hongmoon Secret Technique - Volume 3, Chapter 1",
 		"itemTaxRate": 0.3,
@@ -12743,7 +12743,7 @@
 	{
 		"id": 3900481,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T15:05:15.059Z",
 		"name": "Lucky Dragon Spirit Pet",
 		"itemTaxRate": 5.1,
@@ -12830,7 +12830,7 @@
 	},
 	{
 		"id": 2600870,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-05T10:03:38.672Z",
 		"name": "Lycan Axe",
 		"itemTaxRate": 19.8,
@@ -12942,7 +12942,7 @@
 	},
 	{
 		"id": 3000030,
-		"updated": "2018-09-19T05:00:03.700Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T11:19:54.449Z",
 		"name": "Lycan Bracers",
 		"itemTaxRate": 19.8,
@@ -13023,7 +13023,7 @@
 	},
 	{
 		"id": 2600853,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Lycan Gauntlet",
 		"itemTaxRate": 19.8,
@@ -13051,7 +13051,7 @@
 	},
 	{
 		"id": 2600857,
-		"updated": "2018-09-05T11:00:04.332Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-04T14:04:25.880Z",
 		"name": "Lycan Gauntlet",
 		"itemTaxRate": 19.8,
@@ -13065,7 +13065,7 @@
 	},
 	{
 		"id": 2600854,
-		"updated": "2018-08-19T22:00:04.955Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-15T23:07:48.428Z",
 		"name": "Lycan Gauntlet",
 		"itemTaxRate": 19.8,
@@ -13094,7 +13094,7 @@
 	{
 		"id": 3202437,
 		"firstAdded": "2018-09-13T03:01:44.534Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 38,
 		"img": "https://i.imgur.com/JuYK4bl.png",
 		"itemTaxRate": 19.8,
@@ -13175,7 +13175,7 @@
 	{
 		"id": 3900406,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Lycan Pet",
 		"itemTaxRate": 5.1,
@@ -13186,7 +13186,7 @@
 	},
 	{
 		"id": 2611523,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T07:16:26.281Z",
 		"name": "Lycan Pistols",
 		"itemTaxRate": 19.8,
@@ -13242,7 +13242,7 @@
 	},
 	{
 		"id": 2607785,
-		"updated": "2018-09-15T01:00:06.550Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-27T02:05:47.470Z",
 		"name": "Lycan Razor",
 		"itemTaxRate": 19.8,
@@ -13312,7 +13312,7 @@
 	},
 	{
 		"id": 2600860,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-11T14:03:30.375Z",
 		"name": "Lycan Staff",
 		"itemTaxRate": 19.8,
@@ -13410,7 +13410,7 @@
 	},
 	{
 		"id": 811205,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Lycan the Mighty's Essence",
 		"itemTaxRate": 0.4,
@@ -14040,7 +14040,7 @@
 	{
 		"id": 3300398,
 		"stats": "Damage Reduction 37, Defense 463, HP 1032",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-04T12:05:14.479Z",
 		"name": "Magolka Belt",
 		"itemTaxRate": 51.5,
@@ -14216,7 +14216,7 @@
 	},
 	{
 		"id": 827325,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Mass Revival Charm",
 		"itemTaxRate": 0.1,
@@ -14227,7 +14227,7 @@
 	},
 	{
 		"id": 2280158,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-25T00:05:05.717Z",
 		"name": "Master Chef Hat Design",
 		"itemTaxRate": 0.1,
@@ -14238,7 +14238,7 @@
 	},
 	{
 		"id": 829785,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Master Field Repair Tool",
 		"itemTaxRate": 1.1,
@@ -14261,7 +14261,7 @@
 	},
 	{
 		"id": 829806,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.719Z",
 		"name": "Masterwork Shield Base Bundle",
 		"itemTaxRate": 1.1,
@@ -14295,7 +14295,7 @@
 	},
 	{
 		"id": 4200619,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Meat Dumpling Food Chest",
 		"itemTaxRate": 0.1,
@@ -14307,7 +14307,7 @@
 	{
 		"id": 3900549,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-05-09T18:02:27.768Z",
 		"name": "Melody Pet",
 		"itemTaxRate": 5.1,
@@ -14448,7 +14448,7 @@
 	},
 	{
 		"id": 829807,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Mild Dumpling Food Chest",
 		"itemTaxRate": 1.1,
@@ -14614,7 +14614,7 @@
 	},
 	{
 		"id": 4200791,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-05-09T17:02:20.503Z",
 		"name": "Mirage Outfit Pouch",
 		"itemTaxRate": 31,
@@ -14625,7 +14625,7 @@
 	},
 	{
 		"id": 2820565,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Misty Woods Antidote",
 		"itemTaxRate": 0.5,
@@ -14636,7 +14636,7 @@
 	},
 	{
 		"id": 2820491,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Misty Woods Key",
 		"itemTaxRate": 0.2,
@@ -14649,7 +14649,7 @@
 		"id": 3900555,
 		"firstAdded": "2018-06-27T09:01:57.581Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/u26twx6.png",
 		"itemTaxRate": 5.1,
@@ -14670,7 +14670,7 @@
 	},
 	{
 		"id": 820005,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Moonstone",
 		"itemTaxRate": 0.2,
@@ -14874,7 +14874,7 @@
 	},
 	{
 		"id": 2601322,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-03-08T19:03:55.101Z",
 		"name": "Moonwater Dagger",
 		"itemTaxRate": 18.6,
@@ -14903,7 +14903,7 @@
 	{
 		"id": 2021220,
 		"stats": "Accuracy 60, Evasion 88, Defense 118, HP 112",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T13:03:41.236Z",
 		"name": "Moonwater Earring",
 		"itemTaxRate": 20.1,
@@ -15088,7 +15088,7 @@
 	{
 		"id": 2021119,
 		"stats": "Critical 77, Additional Damage 7, Piercing 60, Attack Power 2",
-		"updated": "2018-09-19T07:00:03.621Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.996Z",
 		"name": "Moonwater Necklace",
 		"itemTaxRate": 10.1,
@@ -15625,7 +15625,7 @@
 	},
 	{
 		"id": 2608574,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-25T04:04:45.383Z",
 		"name": "Moonwater Razor",
 		"itemTaxRate": 18.6,
@@ -15843,7 +15843,7 @@
 	},
 	{
 		"id": 817077,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Moonwater Tear",
 		"itemTaxRate": 0.2,
@@ -15854,7 +15854,7 @@
 	},
 	{
 		"id": 817407,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Moonwater Transformation Stone",
 		"itemTaxRate": 0.2,
@@ -15888,7 +15888,7 @@
 	{
 		"id": 3900456,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Mushin Pet",
 		"itemTaxRate": 5.1,
@@ -15899,7 +15899,7 @@
 	},
 	{
 		"id": 815831,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Mushin's Tower Training Dumpling",
 		"itemTaxRate": 18.1,
@@ -15935,7 +15935,7 @@
 	{
 		"id": 3300383,
 		"stats": "Block 463, Defense 618, HP 516",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-21T18:03:49.417Z",
 		"name": "Muwol Necklace",
 		"itemTaxRate": 51.5,
@@ -15981,7 +15981,7 @@
 	},
 	{
 		"id": 820628,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Nightshade Essence",
 		"itemTaxRate": 0.5,
@@ -15992,7 +15992,7 @@
 	},
 	{
 		"id": 3150621,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Nobility",
 		"itemTaxRate": 0.1,
@@ -16003,7 +16003,7 @@
 	},
 	{
 		"id": 4300189,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.997Z",
 		"name": "Noblesse",
 		"itemTaxRate": 0.1,
@@ -16098,7 +16098,7 @@
 	{
 		"id": 81367,
 		"stats": "Defense 1320",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Octagonal Diamond",
 		"itemTaxRate": 2,
@@ -16132,7 +16132,7 @@
 	},
 	{
 		"id": 3300294,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Offal of Darkness",
 		"itemTaxRate": 23.8,
@@ -16143,7 +16143,7 @@
 	},
 	{
 		"id": 3300293,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Offal of Silence",
 		"itemTaxRate": 23.8,
@@ -16154,7 +16154,7 @@
 	},
 	{
 		"id": 2280161,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T08:11:33.668Z",
 		"name": "Operative Design",
 		"itemTaxRate": 0.1,
@@ -16165,7 +16165,7 @@
 	},
 	{
 		"id": 3300009,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T15:03:43.841Z",
 		"name": "Ordinary Fragment Pouch",
 		"itemTaxRate": 0.4,
@@ -16176,7 +16176,7 @@
 	},
 	{
 		"id": 620545,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T16:04:00.156Z",
 		"name": "Orichalcum Axe",
 		"itemTaxRate": 10.4,
@@ -16345,7 +16345,7 @@
 	{
 		"id": 3900414,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Otter Pet",
 		"itemTaxRate": 5.1,
@@ -16356,7 +16356,7 @@
 	},
 	{
 		"id": 3150559,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Outlaw Cat",
 		"race": "Familiar",
@@ -16368,7 +16368,7 @@
 	},
 	{
 		"id": 3150560,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.720Z",
 		"name": "Outlaw Cat Hat",
 		"race": "Familiar",
@@ -16381,7 +16381,7 @@
 	{
 		"id": 3900410,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Panda Pet",
 		"itemTaxRate": 5.1,
@@ -16392,7 +16392,7 @@
 	},
 	{
 		"id": 3300171,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pattern Polish",
 		"itemTaxRate": 0.1,
@@ -16404,7 +16404,7 @@
 	{
 		"id": 3900487,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-21T17:01:36.294Z",
 		"name": "Pegasus Pet",
 		"itemTaxRate": 5.1,
@@ -16500,7 +16500,7 @@
 	{
 		"id": 81358,
 		"stats": "Attack Power 40",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pentagonal Diamond",
 		"itemTaxRate": 1,
@@ -16512,7 +16512,7 @@
 	{
 		"id": 81364,
 		"stats": "Defense 700",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pentagonal Diamond",
 		"itemTaxRate": 1,
@@ -16619,7 +16619,7 @@
 	{
 		"id": 811361,
 		"stats": "Immune to Status Effects for 2 sec. and Critical +50 · on Evasion.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-23T09:02:40.231Z",
 		"name": "Pentagonal Peridot",
 		"itemTaxRate": 0.5,
@@ -16691,7 +16691,7 @@
 	{
 		"id": 811357,
 		"stats": "4 sec. Movement Speed Reduction ·  when an enemy blocks or evades.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-08T19:03:55.110Z",
 		"name": "Pentagonal Sapphire",
 		"itemTaxRate": 0.5,
@@ -16702,7 +16702,7 @@
 	},
 	{
 		"id": 822981,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Peppered Accuracy Gnarlhorn Meatball",
 		"itemTaxRate": 17.9,
@@ -16713,7 +16713,7 @@
 	},
 	{
 		"id": 815546,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-26T22:04:31.624Z",
 		"name": "Peppered Gnarlhorn Meatball",
 		"itemTaxRate": 17.9,
@@ -16724,7 +16724,7 @@
 	},
 	{
 		"id": 822980,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.997Z",
 		"name": "Peppered Piercing Gnarlhorn Meatball",
 		"itemTaxRate": 17.9,
@@ -16735,7 +16735,7 @@
 	},
 	{
 		"id": 829812,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Persistence Potion Chest",
 		"itemTaxRate": 1.1,
@@ -16746,7 +16746,7 @@
 	},
 	{
 		"id": 830081,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pet Pod",
 		"itemTaxRate": 0.1,
@@ -16910,6 +16910,20 @@
 		]
 	},
 	{
+		"id": 2601294,
+		"firstAdded": "2018-09-19T17:01:53.254Z",
+		"updated": "2018-09-19T21:00:03.757Z",
+		"characterLevel": 43,
+		"class": [
+			"SM"
+		],
+		"img": "https://i.imgur.com/gwrPqit.png",
+		"itemTaxRate": 26.7,
+		"merchantValue": 10,
+		"name": "Phantom Lynblade",
+		"rank": 4
+	},
+	{
 		"id": 2611527,
 		"firstAdded": "2018-07-13T10:01:33.819Z",
 		"updated": "2018-07-24T20:00:04.528Z",
@@ -17009,7 +17023,7 @@
 	},
 	{
 		"id": 810836,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pinchy's Essence",
 		"itemTaxRate": 0.3,
@@ -17031,7 +17045,7 @@
 	},
 	{
 		"id": 810877,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pine Sap",
 		"itemTaxRate": 0.1,
@@ -17042,7 +17056,7 @@
 	},
 	{
 		"id": 4300192,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Pioneer",
 		"itemTaxRate": 0.1,
@@ -17075,7 +17089,7 @@
 	},
 	{
 		"id": 2600906,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-03-01T20:03:49.164Z",
 		"name": "Plague Axe",
 		"itemTaxRate": 0.2,
@@ -17131,7 +17145,7 @@
 	},
 	{
 		"id": 2600907,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-04-06T04:05:47.440Z",
 		"name": "Plague Axe",
 		"itemTaxRate": 0.2,
@@ -17340,7 +17354,7 @@
 	},
 	{
 		"id": 2600892,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.997Z",
 		"name": "Plague Gauntlet",
 		"itemTaxRate": 0.2,
@@ -17410,7 +17424,7 @@
 	},
 	{
 		"id": 2600917,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-27T14:06:17.390Z",
 		"name": "Plague Lynblade",
 		"itemTaxRate": 0.2,
@@ -17438,7 +17452,7 @@
 	},
 	{
 		"id": 2600913,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-27T23:06:00.056Z",
 		"name": "Plague Lynblade",
 		"itemTaxRate": 0.2,
@@ -17452,7 +17466,7 @@
 	},
 	{
 		"id": 2600915,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-20T22:04:05.769Z",
 		"name": "Plague Lynblade",
 		"itemTaxRate": 0.2,
@@ -17481,7 +17495,7 @@
 	{
 		"id": 2021107,
 		"stats": "Critical 25, Piercing 10, Attack Power 1",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T19:00:03.250Z",
 		"firstAdded": "2018-02-24T02:21:17.997Z",
 		"name": "Plague Necklace",
 		"itemTaxRate": 0.1,
@@ -17506,7 +17520,7 @@
 	},
 	{
 		"id": 2608529,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T21:00:03.739Z",
 		"firstAdded": "2018-02-25T03:05:19.258Z",
 		"name": "Plague Razor",
 		"itemTaxRate": 0.2,
@@ -17576,7 +17590,7 @@
 	},
 	{
 		"id": 2600897,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-26T18:06:14.517Z",
 		"name": "Plague Staff",
 		"itemTaxRate": 0.2,
@@ -17632,7 +17646,7 @@
 	},
 	{
 		"id": 2600895,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-28T20:05:25.907Z",
 		"name": "Plague Staff",
 		"itemTaxRate": 0.2,
@@ -17728,7 +17742,7 @@
 	},
 	{
 		"id": 811536,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Poharan's Perfume",
 		"itemTaxRate": 0.2,
@@ -17898,7 +17912,7 @@
 	},
 	{
 		"id": 821515,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Premium Transformation Stone",
 		"itemTaxRate": 0.2,
@@ -17909,7 +17923,7 @@
 	},
 	{
 		"id": 829811,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Prickly Pear Potion Chest",
 		"itemTaxRate": 1.1,
@@ -17960,7 +17974,7 @@
 	},
 	{
 		"id": 2610322,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-04T13:04:12.212Z",
 		"name": "Primal Bracers",
 		"itemTaxRate": 33.7,
@@ -18080,7 +18094,7 @@
 	},
 	{
 		"id": 811206,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Profane Jiangshi's Essence",
 		"itemTaxRate": 0.5,
@@ -18102,7 +18116,7 @@
 	},
 	{
 		"id": 810721,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Purification Jar",
 		"itemTaxRate": 1.7,
@@ -18158,7 +18172,7 @@
 	{
 		"id": 3900491,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Rainbow Unicorn Pet",
 		"itemTaxRate": 5.1,
@@ -18169,7 +18183,7 @@
 	},
 	{
 		"id": 2280133,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T19:00:03.264Z",
 		"firstAdded": "2018-02-25T14:04:36.824Z",
 		"name": "Raincoat Design",
 		"itemTaxRate": 0.1,
@@ -18180,7 +18194,7 @@
 	},
 	{
 		"id": 2280136,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Raincoat Headgear Design",
 		"itemTaxRate": 0.1,
@@ -18360,7 +18374,7 @@
 	{
 		"id": 2021270,
 		"stats": "Evasion 56, Defense 214, HP 104",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-27T16:04:39.475Z",
 		"name": "Raptor Ring",
 		"itemTaxRate": 0.7,
@@ -18382,7 +18396,7 @@
 	},
 	{
 		"id": 810694,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.721Z",
 		"name": "Raspberry Tonic",
 		"itemTaxRate": 0.1,
@@ -18393,7 +18407,7 @@
 	},
 	{
 		"id": 810717,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Raven Feather Fan",
 		"itemTaxRate": 1.2,
@@ -18404,7 +18418,7 @@
 	},
 	{
 		"id": 2280148,
-		"updated": "2018-09-18T07:00:03.737Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T17:04:49.084Z",
 		"name": "Ravenbeak Mask Design",
 		"itemTaxRate": 0.1,
@@ -19103,7 +19117,7 @@
 	},
 	{
 		"id": 3150664,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Red Raider",
 		"sex": "Female",
@@ -19128,7 +19142,7 @@
 	{
 		"id": 3900419,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Reindeer Pet",
 		"itemTaxRate": 5.1,
@@ -19139,7 +19153,7 @@
 	},
 	{
 		"id": 827320,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Repair Tool",
 		"itemTaxRate": 0.1,
@@ -19150,7 +19164,7 @@
 	},
 	{
 		"id": 829787,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Resuscitation Charm Bundle",
 		"itemTaxRate": 1.1,
@@ -19161,7 +19175,7 @@
 	},
 	{
 		"id": 4200367,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.998Z",
 		"name": "Retrieved Hongmoon Secret Technique - Volume 4",
 		"itemTaxRate": 27,
@@ -19172,7 +19186,7 @@
 	},
 	{
 		"id": 827331,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Revitalizers",
 		"itemTaxRate": 0.1,
@@ -19183,7 +19197,7 @@
 	},
 	{
 		"id": 827324,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Revival Charm",
 		"itemTaxRate": 0.1,
@@ -19194,7 +19208,7 @@
 	},
 	{
 		"id": 829786,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Revival Charm Bundle",
 		"itemTaxRate": 1.1,
@@ -19205,7 +19219,7 @@
 	},
 	{
 		"id": 910144,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Ribbon Hair",
 		"race": "Familiar",
@@ -19241,7 +19255,7 @@
 	},
 	{
 		"id": 3150561,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Rosethorn",
 		"itemTaxRate": 0.1,
@@ -19252,7 +19266,7 @@
 	},
 	{
 		"id": 3150565,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Rosethorn Cat",
 		"race": "Familiar",
@@ -19264,7 +19278,7 @@
 	},
 	{
 		"id": 4200698,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-04-09T21:02:45.205Z",
 		"name": "Roughhewn Earring",
 		"itemTaxRate": 31,
@@ -19275,7 +19289,7 @@
 	},
 	{
 		"id": 4200699,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-26T04:06:45.956Z",
 		"name": "Roughhewn Ring",
 		"itemTaxRate": 31,
@@ -19586,7 +19600,7 @@
 	},
 	{
 		"id": 820004,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Sacred Orb",
 		"itemTaxRate": 0.3,
@@ -19598,7 +19612,7 @@
 	{
 		"id": 2021212,
 		"stats": "Accuracy 47, Block 47, Defense 70, HP 183",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:17.998Z",
 		"name": "Samja's Earring",
 		"itemTaxRate": 0.6,
@@ -19610,7 +19624,7 @@
 	{
 		"id": 3302220,
 		"firstAdded": "2018-06-27T23:02:10.722Z",
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/mSXXx4N.png",
 		"itemTaxRate": 0.1,
@@ -19620,7 +19634,7 @@
 	},
 	{
 		"id": 910038,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Sandbox Kitty",
 		"race": "Familiar",
@@ -19632,7 +19646,7 @@
 	},
 	{
 		"id": 910041,
-		"updated": "2018-09-19T13:00:03.795Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Sandbox Kitty Adornment",
 		"race": "Familiar",
@@ -19644,7 +19658,7 @@
 	},
 	{
 		"id": 910042,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T12:15:46.352Z",
 		"name": "Sandbox Kitty Helm",
 		"race": "Familiar",
@@ -19667,7 +19681,7 @@
 	},
 	{
 		"id": 3150722,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-21T17:01:36.312Z",
 		"name": "Saving Lace",
 		"sex": "Female",
@@ -19690,7 +19704,7 @@
 	},
 	{
 		"id": 910050,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:17.998Z",
 		"name": "Scaredy Cat",
 		"race": "Familiar",
@@ -19702,7 +19716,7 @@
 	},
 	{
 		"id": 910043,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T04:14:16.605Z",
 		"name": "Scaredy Cat Adornment",
 		"race": "Familiar",
@@ -19714,7 +19728,7 @@
 	},
 	{
 		"id": 910044,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T04:14:16.605Z",
 		"name": "Scaredy Cat Hat",
 		"race": "Familiar",
@@ -19726,7 +19740,7 @@
 	},
 	{
 		"id": 827328,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Scorching Dragon Soup",
 		"itemTaxRate": 0.1,
@@ -19762,7 +19776,7 @@
 	{
 		"id": 820860,
 		"stats": "Accuracy 23, Piercing 14, Attack Power 1",
-		"updated": "2018-09-15T18:00:04.176Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-25T08:05:33.731Z",
 		"name": "Seafaring Offering Earring - Stage 1",
 		"itemTaxRate": 0.2,
@@ -19822,7 +19836,7 @@
 	{
 		"id": 820864,
 		"stats": "Piercing 6, Block 17, Defense 23, HP 27",
-		"updated": "2018-09-19T12:00:03.591Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-25T21:04:32.038Z",
 		"name": "Seafaring Offering Necklace - Stage 1",
 		"itemTaxRate": 0.1,
@@ -19917,7 +19931,7 @@
 	},
 	{
 		"id": 818632,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:12:08.220Z",
 		"name": "Sealed Abomination Necklace",
 		"itemTaxRate": 12.9,
@@ -19967,7 +19981,7 @@
 	},
 	{
 		"id": 2021409,
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.722Z",
 		"name": "Sealed Alpine Bracelet",
 		"itemTaxRate": 54.6,
@@ -20003,7 +20017,7 @@
 	},
 	{
 		"id": 2021408,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.723Z",
 		"name": "Sealed Alpine Earring",
 		"itemTaxRate": 54.6,
@@ -20028,7 +20042,7 @@
 	},
 	{
 		"id": 2020995,
-		"updated": "2018-09-18T01:00:04.317Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.012Z",
 		"name": "Sealed Alpine Lynblade",
 		"itemTaxRate": 53.4,
@@ -20042,7 +20056,7 @@
 	},
 	{
 		"id": 2021407,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T02:17:02.723Z",
 		"name": "Sealed Alpine Necklace",
 		"itemTaxRate": 68,
@@ -20053,7 +20067,7 @@
 	},
 	{
 		"id": 3301627,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.723Z",
 		"name": "Sealed Alpine Pistols",
 		"itemTaxRate": 53.4,
@@ -20081,7 +20095,7 @@
 	},
 	{
 		"id": 2021406,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T02:17:02.723Z",
 		"name": "Sealed Alpine Ring",
 		"itemTaxRate": 54.6,
@@ -20120,7 +20134,7 @@
 	},
 	{
 		"id": 817882,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.723Z",
 		"name": "Sealed Arcane Earring",
 		"itemTaxRate": 0.5,
@@ -20131,7 +20145,7 @@
 	},
 	{
 		"id": 817883,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.724Z",
 		"name": "Sealed Arcane Earring",
 		"itemTaxRate": 0.5,
@@ -20142,7 +20156,7 @@
 	},
 	{
 		"id": 817906,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.724Z",
 		"name": "Sealed Arcane Necklace",
 		"itemTaxRate": 0.3,
@@ -20153,7 +20167,7 @@
 	},
 	{
 		"id": 817907,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T17:00:03.637Z",
 		"firstAdded": "2018-02-24T04:11:33.330Z",
 		"name": "Sealed Arcane Necklace",
 		"itemTaxRate": 0.3,
@@ -20164,7 +20178,7 @@
 	},
 	{
 		"id": 817857,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.724Z",
 		"name": "Sealed Arcane Ring",
 		"itemTaxRate": 0.4,
@@ -20175,7 +20189,7 @@
 	},
 	{
 		"id": 817858,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:12:08.221Z",
 		"name": "Sealed Arcane Ring",
 		"itemTaxRate": 0.4,
@@ -20208,7 +20222,7 @@
 	},
 	{
 		"id": 822801,
-		"updated": "2018-09-19T00:00:03.632Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-18T22:06:24.659Z",
 		"name": "Sealed Artisanal Moonwater Critical Soul Shield Primer8",
 		"itemTaxRate": 14.7,
@@ -20241,7 +20255,7 @@
 	},
 	{
 		"id": 822822,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Artisanal Silverfrost Critical Soul Shield Primer8",
 		"itemTaxRate": 21,
@@ -20274,7 +20288,7 @@
 	},
 	{
 		"id": 822826,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.012Z",
 		"name": "Sealed Artisanal Silverfrost Piercing Soul Shield Primer8",
 		"itemTaxRate": 21,
@@ -20285,7 +20299,7 @@
 	},
 	{
 		"id": 822828,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T17:00:03.625Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Artisanal Silverfrost Reflex Soul Shield Primer8",
 		"itemTaxRate": 21,
@@ -20329,7 +20343,7 @@
 	},
 	{
 		"id": 818208,
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Augerite Earring",
 		"itemTaxRate": 24.2,
@@ -20376,7 +20390,7 @@
 	},
 	{
 		"id": 818641,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Bearclaw Ring",
 		"itemTaxRate": 21.4,
@@ -20415,7 +20429,7 @@
 	},
 	{
 		"id": 2820097,
-		"updated": "2018-09-18T03:00:03.599Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-04T01:04:25.561Z",
 		"name": "Sealed Blackram Supply Bangle",
 		"itemTaxRate": 30,
@@ -20524,7 +20538,7 @@
 	},
 	{
 		"id": 3301224,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Blackstone",
 		"itemTaxRate": 1.1,
@@ -20549,7 +20563,7 @@
 	},
 	{
 		"id": 819576,
-		"updated": "2018-09-18T23:00:03.563Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T14:05:16.670Z",
 		"name": "Sealed Bokgon Bangle",
 		"itemTaxRate": 0.6,
@@ -20563,7 +20577,7 @@
 	},
 	{
 		"id": 3300563,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T14:05:19.930Z",
 		"name": "Sealed Bokgon Bracers",
 		"itemTaxRate": 0.6,
@@ -20588,7 +20602,7 @@
 	},
 	{
 		"id": 819574,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T22:03:32.151Z",
 		"name": "Sealed Bokgon Gauntlet",
 		"itemTaxRate": 0.6,
@@ -20602,7 +20616,7 @@
 	},
 	{
 		"id": 819579,
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T16:04:00.166Z",
 		"name": "Sealed Bokgon Lynblade",
 		"itemTaxRate": 0.6,
@@ -20616,7 +20630,7 @@
 	},
 	{
 		"id": 3301709,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T18:04:05.413Z",
 		"name": "Sealed Bokgon Pistols",
 		"itemTaxRate": 0.6,
@@ -20644,7 +20658,7 @@
 	},
 	{
 		"id": 819575,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-24T03:11:19.342Z",
 		"name": "Sealed Bokgon Staff",
 		"itemTaxRate": 0.6,
@@ -20672,7 +20686,7 @@
 	},
 	{
 		"id": 3301721,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T18:00:04.086Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Brass Pistols",
 		"itemTaxRate": 0.1,
@@ -20686,7 +20700,7 @@
 	},
 	{
 		"id": 2020910,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Brigand Earring",
 		"itemTaxRate": 51.5,
@@ -20697,7 +20711,7 @@
 	},
 	{
 		"id": 818524,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.012Z",
 		"name": "Sealed Brightstone Axe",
 		"itemTaxRate": 26.7,
@@ -20711,7 +20725,7 @@
 	},
 	{
 		"id": 818523,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T19:04:21.541Z",
 		"name": "Sealed Brightstone Bangle",
 		"itemTaxRate": 26.7,
@@ -20750,7 +20764,7 @@
 	},
 	{
 		"id": 818521,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T10:10:54.914Z",
 		"name": "Sealed Brightstone Gauntlet",
 		"itemTaxRate": 26.7,
@@ -20806,7 +20820,7 @@
 	},
 	{
 		"id": 818245,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.012Z",
 		"name": "Sealed Brightstone Ring",
 		"itemTaxRate": 28.9,
@@ -20873,7 +20887,7 @@
 	},
 	{
 		"id": 822014,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-06T00:06:28.672Z",
 		"name": "Sealed Bronze Dagger",
 		"itemTaxRate": 0.1,
@@ -21027,7 +21041,7 @@
 	},
 	{
 		"id": 822009,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-26T08:05:42.968Z",
 		"name": "Sealed Bronze Sword",
 		"itemTaxRate": 0.1,
@@ -21096,7 +21110,7 @@
 	},
 	{
 		"id": 820938,
-		"updated": "2018-09-19T07:00:03.621Z",
+		"updated": "2018-09-19T19:00:03.264Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Buried Offering Earring",
 		"itemTaxRate": 0.7,
@@ -21107,7 +21121,7 @@
 	},
 	{
 		"id": 820939,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.013Z",
 		"name": "Sealed Buried Offering Necklace",
 		"itemTaxRate": 0.4,
@@ -21179,7 +21193,7 @@
 	},
 	{
 		"id": 3300606,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Cinderlands Bracers",
 		"itemTaxRate": 0.3,
@@ -21190,7 +21204,7 @@
 	},
 	{
 		"id": 817462,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T04:14:16.633Z",
 		"name": "Sealed Cinderlands Dagger",
 		"itemTaxRate": 0.3,
@@ -21204,7 +21218,7 @@
 	},
 	{
 		"id": 817596,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Cinderlands Earring",
 		"itemTaxRate": 0.3,
@@ -21265,7 +21279,7 @@
 	},
 	{
 		"id": 817586,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Cinderlands Necklace",
 		"itemTaxRate": 0.2,
@@ -21312,7 +21326,7 @@
 	},
 	{
 		"id": 826845,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T05:11:22.319Z",
 		"name": "Sealed Cinderlands Razor",
 		"itemTaxRate": 0.3,
@@ -21326,7 +21340,7 @@
 	},
 	{
 		"id": 817570,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Cinderlands Ring",
 		"itemTaxRate": 0.3,
@@ -21359,7 +21373,7 @@
 	},
 	{
 		"id": 817459,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Cinderlands Staff",
 		"itemTaxRate": 0.3,
@@ -21373,7 +21387,7 @@
 	},
 	{
 		"id": 817457,
-		"updated": "2018-09-19T01:00:03.720Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T04:14:16.633Z",
 		"name": "Sealed Cinderlands Sword",
 		"itemTaxRate": 0.3,
@@ -21580,7 +21594,7 @@
 	},
 	{
 		"id": 822007,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.725Z",
 		"name": "Sealed Copper Axe",
 		"itemTaxRate": 0.1,
@@ -21594,7 +21608,7 @@
 	},
 	{
 		"id": 822006,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Copper Bangle",
 		"itemTaxRate": 0.1,
@@ -21608,7 +21622,7 @@
 	},
 	{
 		"id": 822008,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Copper Dagger",
 		"itemTaxRate": 0.1,
@@ -21622,7 +21636,7 @@
 	},
 	{
 		"id": 822004,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Copper Gauntlet",
 		"itemTaxRate": 0.1,
@@ -21636,7 +21650,7 @@
 	},
 	{
 		"id": 822005,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Copper Staff",
 		"itemTaxRate": 0.1,
@@ -21650,7 +21664,7 @@
 	},
 	{
 		"id": 822003,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Copper Sword",
 		"itemTaxRate": 0.1,
@@ -21692,7 +21706,7 @@
 	},
 	{
 		"id": 3300562,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T18:00:04.086Z",
 		"firstAdded": "2018-02-24T13:03:41.250Z",
 		"name": "Sealed Corrupted Bracers",
 		"itemTaxRate": 0.3,
@@ -21703,7 +21717,7 @@
 	},
 	{
 		"id": 819571,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T17:00:03.637Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Corrupted Dagger",
 		"itemTaxRate": 0.3,
@@ -21823,7 +21837,7 @@
 	},
 	{
 		"id": 822780,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T18:00:04.086Z",
 		"firstAdded": "2018-02-24T02:21:18.013Z",
 		"name": "Sealed Crafted Cinderlands Critical Soul Shield Primer8",
 		"itemTaxRate": 0.3,
@@ -21845,7 +21859,7 @@
 	},
 	{
 		"id": 822783,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T17:00:03.625Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Crafted Cinderlands Evasion Soul Shield Primer8",
 		"itemTaxRate": 0.3,
@@ -21856,7 +21870,7 @@
 	},
 	{
 		"id": 822784,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-28T09:05:34.376Z",
 		"name": "Sealed Crafted Cinderlands Piercing Soul Shield Primer8",
 		"itemTaxRate": 0.3,
@@ -21900,7 +21914,7 @@
 	},
 	{
 		"id": 822794,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Crafted Moonwater Critical Soul Shield Primer8",
 		"itemTaxRate": 11,
@@ -21944,7 +21958,7 @@
 	},
 	{
 		"id": 822816,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T03:05:19.263Z",
 		"name": "Sealed Crafted Silverfrost Accuracy Soul Shield Primer8",
 		"itemTaxRate": 16.1,
@@ -21966,7 +21980,7 @@
 	},
 	{
 		"id": 822815,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Crafted Silverfrost Critical Soul Shield Primer8",
 		"itemTaxRate": 16.1,
@@ -22043,7 +22057,7 @@
 	},
 	{
 		"id": 822766,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.013Z",
 		"name": "Sealed Crafted Viridian Critical Soul Shield Primer8",
 		"itemTaxRate": 0.1,
@@ -22076,7 +22090,7 @@
 	},
 	{
 		"id": 822772,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-06-02T15:02:20.890Z",
 		"name": "Sealed Crafted Viridian Reflex Soul Shield Primer8",
 		"itemTaxRate": 0.1,
@@ -22294,7 +22308,7 @@
 	},
 	{
 		"id": 2020909,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Desperado Necklace",
 		"itemTaxRate": 64.2,
@@ -22306,7 +22320,7 @@
 	{
 		"id": 4200819,
 		"firstAdded": "2018-06-27T09:01:57.592Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "https://i.imgur.com/wppDwLI.png",
 		"itemTaxRate": 1.1,
@@ -22316,7 +22330,7 @@
 	},
 	{
 		"id": 817867,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Dokkaebi Earring",
 		"itemTaxRate": 25.7,
@@ -22327,7 +22341,7 @@
 	},
 	{
 		"id": 817845,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T15:03:43.856Z",
 		"name": "Sealed Dokkaebi Ring",
 		"itemTaxRate": 25.7,
@@ -22338,7 +22352,7 @@
 	},
 	{
 		"id": 818517,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T20:00:03.419Z",
 		"firstAdded": "2018-02-24T04:14:16.647Z",
 		"name": "Sealed Dokumo Axe",
 		"itemTaxRate": 30,
@@ -22377,7 +22391,7 @@
 	},
 	{
 		"id": 818518,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Dokumo Dagger",
 		"itemTaxRate": 30,
@@ -22391,7 +22405,7 @@
 	},
 	{
 		"id": 818514,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-27T08:06:27.760Z",
 		"name": "Sealed Dokumo Gauntlet",
 		"itemTaxRate": 30,
@@ -22430,7 +22444,7 @@
 	},
 	{
 		"id": 3301704,
-		"updated": "2018-09-19T13:00:03.795Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T17:05:55.338Z",
 		"name": "Sealed Dokumo Pistols",
 		"itemTaxRate": 30,
@@ -22444,7 +22458,7 @@
 	},
 	{
 		"id": 826858,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T05:15:54.172Z",
 		"name": "Sealed Dokumo Razor",
 		"itemTaxRate": 30,
@@ -22458,7 +22472,7 @@
 	},
 	{
 		"id": 818515,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Dokumo Staff",
 		"itemTaxRate": 30,
@@ -22472,7 +22486,7 @@
 	},
 	{
 		"id": 818513,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Dokumo Sword",
 		"itemTaxRate": 30,
@@ -22528,7 +22542,7 @@
 	},
 	{
 		"id": 818148,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Dura Ring",
 		"itemTaxRate": 0.2,
@@ -22539,7 +22553,7 @@
 	},
 	{
 		"id": 2820291,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.726Z",
 		"name": "Sealed Enigmatic Belt",
 		"itemTaxRate": 32.4,
@@ -22550,7 +22564,7 @@
 	},
 	{
 		"id": 2020958,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Fiend Axe",
 		"itemTaxRate": 37.8,
@@ -22564,7 +22578,7 @@
 	},
 	{
 		"id": 2020957,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Fiend Bangle",
 		"itemTaxRate": 37.8,
@@ -22673,7 +22687,7 @@
 	},
 	{
 		"id": 2020954,
-		"updated": "2018-09-17T01:00:03.788Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T13:03:41.251Z",
 		"name": "Sealed Fiend Sword",
 		"itemTaxRate": 37.8,
@@ -22709,7 +22723,7 @@
 	},
 	{
 		"id": 817875,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Forest Earring",
 		"itemTaxRate": 0.2,
@@ -22720,7 +22734,7 @@
 	},
 	{
 		"id": 817874,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Forest Earring",
 		"itemTaxRate": 0.2,
@@ -22731,7 +22745,7 @@
 	},
 	{
 		"id": 817898,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Forest Necklace",
 		"itemTaxRate": 0.1,
@@ -22742,7 +22756,7 @@
 	},
 	{
 		"id": 817899,
-		"updated": "2018-09-19T00:00:03.632Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Forest Necklace",
 		"itemTaxRate": 0.1,
@@ -22753,7 +22767,7 @@
 	},
 	{
 		"id": 817850,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Forest Ring",
 		"itemTaxRate": 0.1,
@@ -22764,7 +22778,7 @@
 	},
 	{
 		"id": 817849,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T03:11:19.345Z",
 		"name": "Sealed Forest Ring",
 		"itemTaxRate": 0.1,
@@ -22775,7 +22789,7 @@
 	},
 	{
 		"id": 3300793,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Forging Orb",
 		"itemTaxRate": 1.1,
@@ -22786,7 +22800,7 @@
 	},
 	{
 		"id": 2020919,
-		"updated": "2018-09-16T15:00:03.783Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Frost Bracelet",
 		"itemTaxRate": 48.6,
@@ -22822,7 +22836,7 @@
 	},
 	{
 		"id": 2020985,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Frostscale Bangle",
 		"itemTaxRate": 50.4,
@@ -22836,7 +22850,7 @@
 	},
 	{
 		"id": 2020923,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Frostscale Belt",
 		"itemTaxRate": 51.5,
@@ -22847,7 +22861,7 @@
 	},
 	{
 		"id": 2020922,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Frostscale Bracelet",
 		"itemTaxRate": 51.5,
@@ -22869,7 +22883,7 @@
 	},
 	{
 		"id": 2020987,
-		"updated": "2018-09-19T00:00:03.632Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frostscale Dagger",
 		"itemTaxRate": 50.4,
@@ -22897,7 +22911,7 @@
 	},
 	{
 		"id": 2020988,
-		"updated": "2018-09-17T17:00:03.453Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Frostscale Lynblade",
 		"itemTaxRate": 50.4,
@@ -22939,7 +22953,7 @@
 	},
 	{
 		"id": 2020984,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T17:00:03.637Z",
 		"firstAdded": "2018-02-24T10:10:54.919Z",
 		"name": "Sealed Frostscale Staff",
 		"itemTaxRate": 50.4,
@@ -22953,7 +22967,7 @@
 	},
 	{
 		"id": 2020982,
-		"updated": "2018-09-19T09:00:03.316Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frostscale Sword",
 		"itemTaxRate": 50.4,
@@ -22981,7 +22995,7 @@
 	},
 	{
 		"id": 2020971,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T21:00:03.739Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frosty Bangle",
 		"itemTaxRate": 44.9,
@@ -22995,7 +23009,7 @@
 	},
 	{
 		"id": 2020973,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frosty Dagger",
 		"itemTaxRate": 44.9,
@@ -23023,7 +23037,7 @@
 	},
 	{
 		"id": 2020974,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frosty Lynblade",
 		"itemTaxRate": 44.9,
@@ -23051,7 +23065,7 @@
 	},
 	{
 		"id": 2022507,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frosty Razor",
 		"itemTaxRate": 44.9,
@@ -23065,7 +23079,7 @@
 	},
 	{
 		"id": 2020970,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.014Z",
 		"name": "Sealed Frosty Staff",
 		"itemTaxRate": 44.9,
@@ -23079,7 +23093,7 @@
 	},
 	{
 		"id": 2020968,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.015Z",
 		"name": "Sealed Frosty Sword",
 		"itemTaxRate": 44.9,
@@ -23093,7 +23107,7 @@
 	},
 	{
 		"id": 817888,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:11:19.346Z",
 		"name": "Sealed Gemstone Earring",
 		"itemTaxRate": 24.2,
@@ -23104,7 +23118,7 @@
 	},
 	{
 		"id": 817889,
-		"updated": "2018-09-19T09:00:03.316Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T10:10:54.919Z",
 		"name": "Sealed Gemstone Earring",
 		"itemTaxRate": 24.2,
@@ -23115,7 +23129,7 @@
 	},
 	{
 		"id": 817912,
-		"updated": "2018-09-17T04:00:03.516Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T07:16:26.294Z",
 		"name": "Sealed Gemstone Necklace",
 		"itemTaxRate": 13.6,
@@ -23126,7 +23140,7 @@
 	},
 	{
 		"id": 817913,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T14:03:58.118Z",
 		"name": "Sealed Gemstone Necklace",
 		"itemTaxRate": 13.6,
@@ -23137,7 +23151,7 @@
 	},
 	{
 		"id": 817863,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Gemstone Ring",
 		"itemTaxRate": 21.4,
@@ -23148,7 +23162,7 @@
 	},
 	{
 		"id": 817864,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T15:03:43.859Z",
 		"name": "Sealed Gemstone Ring",
 		"itemTaxRate": 21.4,
@@ -23159,7 +23173,7 @@
 	},
 	{
 		"id": 818153,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Ghoulish Hungry Ghost Earring",
 		"itemTaxRate": 0.7,
@@ -23170,7 +23184,7 @@
 	},
 	{
 		"id": 817447,
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Glacial Axe",
 		"itemTaxRate": 0.6,
@@ -23184,7 +23198,7 @@
 	},
 	{
 		"id": 817446,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T10:10:54.919Z",
 		"name": "Sealed Glacial Bangle",
 		"itemTaxRate": 0.6,
@@ -23198,7 +23212,7 @@
 	},
 	{
 		"id": 3300604,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Glacial Bracers",
 		"itemTaxRate": 0.6,
@@ -23209,7 +23223,7 @@
 	},
 	{
 		"id": 817448,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.015Z",
 		"name": "Sealed Glacial Dagger",
 		"itemTaxRate": 0.6,
@@ -23223,7 +23237,7 @@
 	},
 	{
 		"id": 817444,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.727Z",
 		"name": "Sealed Glacial Gauntlet",
 		"itemTaxRate": 0.6,
@@ -23237,7 +23251,7 @@
 	},
 	{
 		"id": 817449,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T04:14:16.649Z",
 		"name": "Sealed Glacial Lynblade",
 		"itemTaxRate": 0.6,
@@ -23251,7 +23265,7 @@
 	},
 	{
 		"id": 3301695,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Glacial Pistols",
 		"itemTaxRate": 0.6,
@@ -23265,7 +23279,7 @@
 	},
 	{
 		"id": 826842,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:11:19.346Z",
 		"name": "Sealed Glacial Razor",
 		"itemTaxRate": 0.6,
@@ -23279,7 +23293,7 @@
 	},
 	{
 		"id": 817445,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Glacial Staff",
 		"itemTaxRate": 0.6,
@@ -23307,7 +23321,7 @@
 	},
 	{
 		"id": 2021354,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Golden Deva Earring",
 		"itemTaxRate": 0.4,
@@ -23318,7 +23332,7 @@
 	},
 	{
 		"id": 2021352,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Hakan Necklace",
 		"itemTaxRate": 0.3,
@@ -23340,7 +23354,7 @@
 	},
 	{
 		"id": 4200768,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-05-13T14:02:30.156Z",
 		"name": "Sealed Hive Queen's Barb",
 		"itemTaxRate": 0.2,
@@ -23354,7 +23368,7 @@
 	},
 	{
 		"id": 4200769,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-05-10T05:03:03.243Z",
 		"name": "Sealed Hive Queen's Husk",
 		"itemTaxRate": 0.2,
@@ -23368,7 +23382,7 @@
 	},
 	{
 		"id": 4200767,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-05-11T16:02:27.436Z",
 		"name": "Sealed Hive Queen's Rancor",
 		"itemTaxRate": 0.2,
@@ -23382,7 +23396,7 @@
 	},
 	{
 		"id": 818244,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Hogdonny Ring",
 		"itemTaxRate": 28.9,
@@ -23393,7 +23407,7 @@
 	},
 	{
 		"id": 818619,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Hujikar Earring",
 		"itemTaxRate": 22.7,
@@ -23404,7 +23418,7 @@
 	},
 	{
 		"id": 818643,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Huren Ring",
 		"itemTaxRate": 28.9,
@@ -23429,7 +23443,7 @@
 	},
 	{
 		"id": 818474,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T15:03:43.860Z",
 		"name": "Sealed Imperator Bangle",
 		"itemTaxRate": 22.4,
@@ -23524,7 +23538,7 @@
 	},
 	{
 		"id": 818473,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-26T01:04:54.360Z",
 		"name": "Sealed Imperator Staff",
 		"itemTaxRate": 22.4,
@@ -23538,7 +23552,7 @@
 	},
 	{
 		"id": 818471,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T04:14:16.683Z",
 		"name": "Sealed Imperator Sword",
 		"itemTaxRate": 22.4,
@@ -23647,7 +23661,7 @@
 	},
 	{
 		"id": 2020979,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed King Axe",
 		"itemTaxRate": 47.6,
@@ -23700,7 +23714,7 @@
 	},
 	{
 		"id": 2020918,
-		"updated": "2018-09-19T12:00:03.599Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed King Earring",
 		"itemTaxRate": 48.6,
@@ -23795,7 +23809,7 @@
 	},
 	{
 		"id": 2021843,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Legendary Gem Hammer",
 		"itemTaxRate": 0.1,
@@ -23806,7 +23820,7 @@
 	},
 	{
 		"id": 2820336,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Axe",
 		"itemTaxRate": 30,
@@ -23820,7 +23834,7 @@
 	},
 	{
 		"id": 2820335,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Bangle",
 		"itemTaxRate": 30,
@@ -23834,7 +23848,7 @@
 	},
 	{
 		"id": 3300601,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.015Z",
 		"name": "Sealed Lycan Bracers",
 		"itemTaxRate": 18.6,
@@ -23845,7 +23859,7 @@
 	},
 	{
 		"id": 2820337,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Dagger",
 		"itemTaxRate": 30,
@@ -23859,7 +23873,7 @@
 	},
 	{
 		"id": 2820333,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Gauntlet",
 		"itemTaxRate": 30,
@@ -23873,7 +23887,7 @@
 	},
 	{
 		"id": 2820338,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Lynblade",
 		"itemTaxRate": 30,
@@ -23887,7 +23901,7 @@
 	},
 	{
 		"id": 3301605,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Pistols",
 		"itemTaxRate": 30,
@@ -23901,7 +23915,7 @@
 	},
 	{
 		"id": 826848,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Razor",
 		"itemTaxRate": 30,
@@ -23915,7 +23929,7 @@
 	},
 	{
 		"id": 2820334,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Staff",
 		"itemTaxRate": 30,
@@ -23929,7 +23943,7 @@
 	},
 	{
 		"id": 2820332,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.728Z",
 		"name": "Sealed Lycan Sword",
 		"itemTaxRate": 30,
@@ -23957,7 +23971,7 @@
 	},
 	{
 		"id": 819583,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T23:05:07.705Z",
 		"name": "Sealed Lycandi Bangle",
 		"itemTaxRate": 19.8,
@@ -24066,7 +24080,7 @@
 	},
 	{
 		"id": 819580,
-		"updated": "2018-09-17T23:00:03.778Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T13:03:41.254Z",
 		"name": "Sealed Lycandi Sword",
 		"itemTaxRate": 19.8,
@@ -24113,7 +24127,7 @@
 	},
 	{
 		"id": 3300373,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.016Z",
 		"name": "Sealed Mengwol Ring",
 		"itemTaxRate": 51.5,
@@ -24124,7 +24138,7 @@
 	},
 	{
 		"id": 818496,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Axe",
 		"itemTaxRate": 18.6,
@@ -24138,7 +24152,7 @@
 	},
 	{
 		"id": 818495,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Bangle",
 		"itemTaxRate": 18.6,
@@ -24152,7 +24166,7 @@
 	},
 	{
 		"id": 3300608,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Bracers",
 		"itemTaxRate": 18.6,
@@ -24163,7 +24177,7 @@
 	},
 	{
 		"id": 818497,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Dagger",
 		"itemTaxRate": 18.6,
@@ -24177,7 +24191,7 @@
 	},
 	{
 		"id": 818618,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.016Z",
 		"name": "Sealed Moonwater Earring",
 		"itemTaxRate": 20.1,
@@ -24188,7 +24202,7 @@
 	},
 	{
 		"id": 818493,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Gauntlet",
 		"itemTaxRate": 18.6,
@@ -24202,7 +24216,7 @@
 	},
 	{
 		"id": 818498,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Lynblade",
 		"itemTaxRate": 18.6,
@@ -24216,7 +24230,7 @@
 	},
 	{
 		"id": 818631,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.016Z",
 		"name": "Sealed Moonwater Necklace",
 		"itemTaxRate": 10.1,
@@ -24227,7 +24241,7 @@
 	},
 	{
 		"id": 3301701,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Pistols",
 		"itemTaxRate": 18.6,
@@ -24241,7 +24255,7 @@
 	},
 	{
 		"id": 826855,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Razor",
 		"itemTaxRate": 18.6,
@@ -24255,7 +24269,7 @@
 	},
 	{
 		"id": 818639,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Ring",
 		"itemTaxRate": 20.1,
@@ -24266,7 +24280,7 @@
 	},
 	{
 		"id": 818494,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Staff",
 		"itemTaxRate": 18.6,
@@ -24280,7 +24294,7 @@
 	},
 	{
 		"id": 818492,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Moonwater Sword",
 		"itemTaxRate": 18.6,
@@ -24305,7 +24319,7 @@
 	},
 	{
 		"id": 816298,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.016Z",
 		"name": "Sealed Naryu Silver",
 		"itemTaxRate": 0.2,
@@ -24316,7 +24330,7 @@
 	},
 	{
 		"id": 822701,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Naryu Tablet",
 		"itemTaxRate": 5.4,
@@ -24327,7 +24341,7 @@
 	},
 	{
 		"id": 822061,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Orichalcum Axe",
 		"itemTaxRate": 10.4,
@@ -24341,7 +24355,7 @@
 	},
 	{
 		"id": 822060,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Orichalcum Bangle",
 		"itemTaxRate": 10.4,
@@ -24355,7 +24369,7 @@
 	},
 	{
 		"id": 822062,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Orichalcum Dagger",
 		"itemTaxRate": 10.4,
@@ -24369,7 +24383,7 @@
 	},
 	{
 		"id": 822058,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Orichalcum Gauntlet",
 		"itemTaxRate": 10.4,
@@ -24383,7 +24397,7 @@
 	},
 	{
 		"id": 822059,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Orichalcum Staff",
 		"itemTaxRate": 10.4,
@@ -24397,7 +24411,7 @@
 	},
 	{
 		"id": 822057,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Orichalcum Sword",
 		"itemTaxRate": 10.4,
@@ -24618,7 +24632,7 @@
 	},
 	{
 		"id": 817012,
-		"updated": "2018-09-19T03:00:03.546Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T08:16:20.672Z",
 		"name": "Sealed Plague Axe",
 		"itemTaxRate": 0.2,
@@ -24632,7 +24646,7 @@
 	},
 	{
 		"id": 817011,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Plague Bangle",
 		"itemTaxRate": 0.2,
@@ -24646,7 +24660,7 @@
 	},
 	{
 		"id": 3300558,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Plague Bracers",
 		"itemTaxRate": 0.2,
@@ -24671,7 +24685,7 @@
 	},
 	{
 		"id": 817009,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T18:00:04.073Z",
 		"firstAdded": "2018-02-24T19:04:54.298Z",
 		"name": "Sealed Plague Gauntlet",
 		"itemTaxRate": 0.2,
@@ -24699,7 +24713,7 @@
 	},
 	{
 		"id": 2021351,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.729Z",
 		"name": "Sealed Plague Necklace",
 		"itemTaxRate": 0.1,
@@ -24724,7 +24738,7 @@
 	},
 	{
 		"id": 2022470,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T11:11:29.070Z",
 		"name": "Sealed Plague Razor",
 		"itemTaxRate": 0.2,
@@ -24752,7 +24766,7 @@
 	},
 	{
 		"id": 817008,
-		"updated": "2018-09-19T01:00:03.720Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T06:16:31.295Z",
 		"name": "Sealed Plague Sword",
 		"itemTaxRate": 0.2,
@@ -24816,7 +24830,7 @@
 	},
 	{
 		"id": 2020966,
-		"updated": "2018-09-18T04:00:03.545Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T11:19:54.471Z",
 		"name": "Sealed Primal Dagger",
 		"itemTaxRate": 42.4,
@@ -24914,7 +24928,7 @@
 	},
 	{
 		"id": 822049,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raptor Iron Axe",
 		"itemTaxRate": 7.3,
@@ -24928,7 +24942,7 @@
 	},
 	{
 		"id": 822048,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raptor Iron Bangle",
 		"itemTaxRate": 7.3,
@@ -24942,7 +24956,7 @@
 	},
 	{
 		"id": 822050,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raptor Iron Dagger",
 		"itemTaxRate": 7.3,
@@ -24956,7 +24970,7 @@
 	},
 	{
 		"id": 822046,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raptor Iron Gauntlet",
 		"itemTaxRate": 7.3,
@@ -24984,7 +24998,7 @@
 	},
 	{
 		"id": 822047,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raptor Iron Staff",
 		"itemTaxRate": 7.3,
@@ -24998,7 +25012,7 @@
 	},
 	{
 		"id": 822045,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.016Z",
 		"name": "Sealed Raptor Iron Sword",
 		"itemTaxRate": 7.3,
@@ -25023,7 +25037,7 @@
 	},
 	{
 		"id": 818152,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T06:11:46.139Z",
 		"name": "Sealed Raptor Ring",
 		"itemTaxRate": 0.7,
@@ -25034,7 +25048,7 @@
 	},
 	{
 		"id": 4200604,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raven King's Animus",
 		"itemTaxRate": 0.2,
@@ -25048,7 +25062,7 @@
 	},
 	{
 		"id": 4200602,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raven King's Energy",
 		"itemTaxRate": 0.2,
@@ -25062,7 +25076,7 @@
 	},
 	{
 		"id": 4200603,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raven King's Ferocity",
 		"itemTaxRate": 0.2,
@@ -25076,7 +25090,7 @@
 	},
 	{
 		"id": 3300975,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Raven King's Soul",
 		"itemTaxRate": 1.1,
@@ -25185,7 +25199,7 @@
 	},
 	{
 		"id": 818502,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-25T05:04:38.723Z",
 		"name": "Sealed Razortusk Bangle",
 		"itemTaxRate": 26.7,
@@ -25210,7 +25224,7 @@
 	},
 	{
 		"id": 818504,
-		"updated": "2018-09-15T02:00:04.233Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Razortusk Dagger",
 		"itemTaxRate": 26.7,
@@ -25308,7 +25322,7 @@
 	},
 	{
 		"id": 820649,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Rugged Belt",
 		"itemTaxRate": 34.4,
@@ -25319,7 +25333,7 @@
 	},
 	{
 		"id": 820648,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Rugged Bracelet",
 		"itemTaxRate": 34.4,
@@ -25330,7 +25344,7 @@
 	},
 	{
 		"id": 820456,
-		"updated": "2018-09-19T08:00:04.079Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Rugged Earring",
 		"itemTaxRate": 34.4,
@@ -25352,7 +25366,7 @@
 	},
 	{
 		"id": 820457,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T19:00:03.250Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Rugged Necklace",
 		"itemTaxRate": 17.2,
@@ -25385,7 +25399,7 @@
 	},
 	{
 		"id": 820455,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Rugged Ring",
 		"itemTaxRate": 34.4,
@@ -25396,7 +25410,7 @@
 	},
 	{
 		"id": 4200176,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Sacred Oil",
 		"itemTaxRate": 1.1,
@@ -25418,7 +25432,7 @@
 	},
 	{
 		"id": 817600,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T06:16:31.296Z",
 		"name": "Sealed Samja's Earring",
 		"itemTaxRate": 0.6,
@@ -25473,7 +25487,7 @@
 	},
 	{
 		"id": 820935,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.017Z",
 		"name": "Sealed Seafaring Offering Earring",
 		"itemTaxRate": 0.2,
@@ -25484,7 +25498,7 @@
 	},
 	{
 		"id": 820936,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.730Z",
 		"name": "Sealed Seafaring Offering Necklace",
 		"itemTaxRate": 0.1,
@@ -25495,7 +25509,7 @@
 	},
 	{
 		"id": 820934,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.731Z",
 		"name": "Sealed Seafaring Offering Ring",
 		"itemTaxRate": 0.2,
@@ -25528,7 +25542,7 @@
 	},
 	{
 		"id": 817412,
-		"updated": "2018-09-18T02:00:04.378Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.731Z",
 		"name": "Sealed Sentinel's Axe",
 		"itemTaxRate": 0.3,
@@ -25542,7 +25556,7 @@
 	},
 	{
 		"id": 817411,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.731Z",
 		"name": "Sealed Sentinel's Bangle",
 		"itemTaxRate": 0.3,
@@ -25556,7 +25570,7 @@
 	},
 	{
 		"id": 3300559,
-		"updated": "2018-09-18T22:00:03.904Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T12:04:38.873Z",
 		"name": "Sealed Sentinel's Bracers",
 		"itemTaxRate": 0.3,
@@ -25567,7 +25581,7 @@
 	},
 	{
 		"id": 817413,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.731Z",
 		"name": "Sealed Sentinel's Dagger",
 		"itemTaxRate": 0.3,
@@ -25581,7 +25595,7 @@
 	},
 	{
 		"id": 817409,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T18:00:04.086Z",
 		"firstAdded": "2018-02-24T02:21:18.017Z",
 		"name": "Sealed Sentinel's Gauntlet",
 		"itemTaxRate": 0.3,
@@ -25595,7 +25609,7 @@
 	},
 	{
 		"id": 817414,
-		"updated": "2018-09-18T21:00:03.720Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:12:08.240Z",
 		"name": "Sealed Sentinel's Lynblade",
 		"itemTaxRate": 0.3,
@@ -25637,7 +25651,7 @@
 	},
 	{
 		"id": 2021403,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.731Z",
 		"name": "Sealed Sentinel's Ring",
 		"itemTaxRate": 0.4,
@@ -25648,7 +25662,7 @@
 	},
 	{
 		"id": 817410,
-		"updated": "2018-09-19T03:00:03.546Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T02:17:02.731Z",
 		"name": "Sealed Sentinel's Staff",
 		"itemTaxRate": 0.3,
@@ -25676,7 +25690,7 @@
 	},
 	{
 		"id": 3301738,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Silver Scale",
 		"itemTaxRate": 1.1,
@@ -25775,7 +25789,7 @@
 	},
 	{
 		"id": 818510,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-25T04:04:45.413Z",
 		"name": "Sealed Simyu Axe",
 		"itemTaxRate": 26.7,
@@ -25789,7 +25803,7 @@
 	},
 	{
 		"id": 818509,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-25T03:03:43.506Z",
 		"name": "Sealed Simyu Bangle",
 		"itemTaxRate": 26.7,
@@ -25814,7 +25828,7 @@
 	},
 	{
 		"id": 818511,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T04:04:45.414Z",
 		"name": "Sealed Simyu Dagger",
 		"itemTaxRate": 26.7,
@@ -25828,7 +25842,7 @@
 	},
 	{
 		"id": 818246,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:12:08.240Z",
 		"name": "Sealed Simyu Earring",
 		"itemTaxRate": 28.9,
@@ -25895,7 +25909,7 @@
 	},
 	{
 		"id": 818508,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Simyu Staff",
 		"itemTaxRate": 26.7,
@@ -25923,7 +25937,7 @@
 	},
 	{
 		"id": 821139,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Siren Bracelet",
 		"itemTaxRate": 36.4,
@@ -25989,7 +26003,7 @@
 	},
 	{
 		"id": 2020930,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Soulstone Belt",
 		"itemTaxRate": 54.6,
@@ -26000,7 +26014,7 @@
 	},
 	{
 		"id": 2020929,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Soulstone Bracelet",
 		"itemTaxRate": 54.6,
@@ -26011,7 +26025,7 @@
 	},
 	{
 		"id": 2020928,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Soulstone Earring",
 		"itemTaxRate": 54.6,
@@ -26022,7 +26036,7 @@
 	},
 	{
 		"id": 2020927,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Soulstone Necklace",
 		"itemTaxRate": 68,
@@ -26033,7 +26047,7 @@
 	},
 	{
 		"id": 2020926,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Soulstone Ring",
 		"itemTaxRate": 54.6,
@@ -26044,7 +26058,7 @@
 	},
 	{
 		"id": 2820320,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Axe",
 		"itemTaxRate": 1,
@@ -26058,7 +26072,7 @@
 	},
 	{
 		"id": 2820319,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Bangle",
 		"itemTaxRate": 1,
@@ -26072,7 +26086,7 @@
 	},
 	{
 		"id": 3300634,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Bracers",
 		"itemTaxRate": 0.1,
@@ -26083,7 +26097,7 @@
 	},
 	{
 		"id": 2820321,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Dagger",
 		"itemTaxRate": 1,
@@ -26097,7 +26111,7 @@
 	},
 	{
 		"id": 2820317,
-		"updated": "2018-09-19T10:00:04.394Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Gauntlet",
 		"itemTaxRate": 1,
@@ -26111,7 +26125,7 @@
 	},
 	{
 		"id": 2820322,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Lynblade",
 		"itemTaxRate": 1,
@@ -26125,7 +26139,7 @@
 	},
 	{
 		"id": 3301603,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Pistols",
 		"itemTaxRate": 1,
@@ -26139,7 +26153,7 @@
 	},
 	{
 		"id": 2022583,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Razor",
 		"itemTaxRate": 1,
@@ -26153,7 +26167,7 @@
 	},
 	{
 		"id": 2820318,
-		"updated": "2018-09-19T12:00:03.599Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.018Z",
 		"name": "Sealed Stalker Staff",
 		"itemTaxRate": 1,
@@ -26167,7 +26181,7 @@
 	},
 	{
 		"id": 2820316,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.733Z",
 		"name": "Sealed Stalker Sword",
 		"itemTaxRate": 1,
@@ -26181,7 +26195,7 @@
 	},
 	{
 		"id": 822031,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Steel Axe",
 		"itemTaxRate": 0.2,
@@ -26195,7 +26209,7 @@
 	},
 	{
 		"id": 822030,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Steel Bangle",
 		"itemTaxRate": 0.2,
@@ -26209,7 +26223,7 @@
 	},
 	{
 		"id": 822032,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Steel Dagger",
 		"itemTaxRate": 0.2,
@@ -26223,7 +26237,7 @@
 	},
 	{
 		"id": 822028,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Steel Gauntlet",
 		"itemTaxRate": 0.2,
@@ -26237,7 +26251,7 @@
 	},
 	{
 		"id": 3301725,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T19:00:03.264Z",
 		"firstAdded": "2018-02-25T00:03:39.724Z",
 		"name": "Sealed Steel Pistols",
 		"itemTaxRate": 0.2,
@@ -26251,7 +26265,7 @@
 	},
 	{
 		"id": 822029,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Steel Staff",
 		"itemTaxRate": 0.2,
@@ -26265,7 +26279,7 @@
 	},
 	{
 		"id": 822027,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Steel Sword",
 		"itemTaxRate": 0.2,
@@ -26363,7 +26377,7 @@
 	},
 	{
 		"id": 3300371,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Stone of Wisdom",
 		"itemTaxRate": 1.1,
@@ -26399,7 +26413,7 @@
 	},
 	{
 		"id": 2020917,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Talus Prison Necklace",
 		"itemTaxRate": 60.6,
@@ -26410,7 +26424,7 @@
 	},
 	{
 		"id": 2020916,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.019Z",
 		"name": "Sealed Talus Prison Ring",
 		"itemTaxRate": 48.6,
@@ -26422,7 +26436,7 @@
 	{
 		"id": 4200466,
 		"stats": "Contains items.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T13:03:41.259Z",
 		"name": "Sealed True Ascending Soul",
 		"itemTaxRate": 45.8,
@@ -26434,7 +26448,7 @@
 	{
 		"id": 4200470,
 		"stats": "Contains items.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-03-01T14:03:24.235Z",
 		"name": "Sealed True Cosmic Soul",
 		"itemTaxRate": 45.8,
@@ -26446,7 +26460,7 @@
 	{
 		"id": 4200467,
 		"stats": "Contains items.",
-		"updated": "2018-09-18T18:00:03.504Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T23:03:43.985Z",
 		"name": "Sealed True Hongmoon Energy",
 		"itemTaxRate": 45.8,
@@ -26469,7 +26483,7 @@
 	},
 	{
 		"id": 818150,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Ukaha's Ring",
 		"itemTaxRate": 0.5,
@@ -26481,7 +26495,7 @@
 	{
 		"id": 830071,
 		"firstAdded": "2018-07-27T22:01:55.913Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "http://static.ncsoft.com/bns_resource/ui_resource/grocery/pet_none_volve_col1_7_1.png",
 		"itemTaxRate": 81.1,
@@ -26502,7 +26516,7 @@
 	},
 	{
 		"id": 2020944,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T17:04:49.106Z",
 		"name": "Sealed Updraft Axe",
 		"itemTaxRate": 37.8,
@@ -26516,7 +26530,7 @@
 	},
 	{
 		"id": 2020943,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Updraft Bangle",
 		"itemTaxRate": 37.8,
@@ -26530,7 +26544,7 @@
 	},
 	{
 		"id": 2020902,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Updraft Belt",
 		"itemTaxRate": 45.8,
@@ -26541,7 +26555,7 @@
 	},
 	{
 		"id": 2020901,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Updraft Bracelet",
 		"itemTaxRate": 45.8,
@@ -26552,7 +26566,7 @@
 	},
 	{
 		"id": 2020945,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Updraft Dagger",
 		"itemTaxRate": 37.8,
@@ -26566,7 +26580,7 @@
 	},
 	{
 		"id": 2020900,
-		"updated": "2018-09-18T21:00:03.720Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Updraft Earring",
 		"itemTaxRate": 45.8,
@@ -26630,7 +26644,7 @@
 	},
 	{
 		"id": 2022504,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Updraft Razor",
 		"itemTaxRate": 37.8,
@@ -26655,7 +26669,7 @@
 	},
 	{
 		"id": 2020942,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.019Z",
 		"name": "Sealed Updraft Staff",
 		"itemTaxRate": 37.8,
@@ -26669,7 +26683,7 @@
 	},
 	{
 		"id": 2020940,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T13:03:41.271Z",
 		"name": "Sealed Updraft Sword",
 		"itemTaxRate": 37.8,
@@ -26683,7 +26697,7 @@
 	},
 	{
 		"id": 818157,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.019Z",
 		"name": "Sealed Vilray Necklace",
 		"itemTaxRate": 0.1,
@@ -26708,7 +26722,7 @@
 	},
 	{
 		"id": 817133,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Viridian Bangle",
 		"itemTaxRate": 0.1,
@@ -26722,7 +26736,7 @@
 	},
 	{
 		"id": 3300603,
-		"updated": "2018-09-18T20:00:04.270Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T05:15:54.192Z",
 		"name": "Sealed Viridian Bracers",
 		"itemTaxRate": 0.1,
@@ -26733,7 +26747,7 @@
 	},
 	{
 		"id": 817135,
-		"updated": "2018-09-19T07:00:03.621Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T03:12:08.242Z",
 		"name": "Sealed Viridian Dagger",
 		"itemTaxRate": 0.1,
@@ -26747,7 +26761,7 @@
 	},
 	{
 		"id": 817311,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Viridian Earring",
 		"itemTaxRate": 0.1,
@@ -26758,7 +26772,7 @@
 	},
 	{
 		"id": 817131,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T05:15:54.192Z",
 		"name": "Sealed Viridian Gauntlet",
 		"itemTaxRate": 0.1,
@@ -26772,7 +26786,7 @@
 	},
 	{
 		"id": 817136,
-		"updated": "2018-09-19T02:00:03.760Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-24T04:14:16.706Z",
 		"name": "Sealed Viridian Lynblade",
 		"itemTaxRate": 0.1,
@@ -26786,7 +26800,7 @@
 	},
 	{
 		"id": 817308,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.019Z",
 		"name": "Sealed Viridian Necklace",
 		"itemTaxRate": 0.1,
@@ -26797,7 +26811,7 @@
 	},
 	{
 		"id": 3301690,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T17:00:03.637Z",
 		"firstAdded": "2018-02-24T02:21:18.019Z",
 		"name": "Sealed Viridian Pistols",
 		"itemTaxRate": 0.1,
@@ -26811,7 +26825,7 @@
 	},
 	{
 		"id": 826839,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T03:11:19.363Z",
 		"name": "Sealed Viridian Razor",
 		"itemTaxRate": 0.1,
@@ -26825,7 +26839,7 @@
 	},
 	{
 		"id": 817298,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.734Z",
 		"name": "Sealed Viridian Ring",
 		"itemTaxRate": 0.1,
@@ -26836,7 +26850,7 @@
 	},
 	{
 		"id": 817132,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T17:00:03.625Z",
 		"firstAdded": "2018-02-24T02:21:18.020Z",
 		"name": "Sealed Viridian Staff",
 		"itemTaxRate": 0.1,
@@ -26850,7 +26864,7 @@
 	},
 	{
 		"id": 817130,
-		"updated": "2018-09-18T21:00:03.728Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T03:12:08.242Z",
 		"name": "Sealed Viridian Sword",
 		"itemTaxRate": 0.1,
@@ -26864,7 +26878,7 @@
 	},
 	{
 		"id": 3301223,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.735Z",
 		"name": "Sealed Void Fragment",
 		"itemTaxRate": 1.1,
@@ -26919,7 +26933,7 @@
 	},
 	{
 		"id": 821138,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.735Z",
 		"name": "Sealed Volcano Offering Belt",
 		"itemTaxRate": 32.4,
@@ -26930,7 +26944,7 @@
 	},
 	{
 		"id": 821137,
-		"updated": "2018-09-19T07:00:03.621Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.735Z",
 		"name": "Sealed Volcano Offering Bracelet",
 		"itemTaxRate": 32.4,
@@ -26941,7 +26955,7 @@
 	},
 	{
 		"id": 820941,
-		"updated": "2018-09-19T07:00:03.621Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.735Z",
 		"name": "Sealed Volcano Offering Earring",
 		"itemTaxRate": 32.4,
@@ -26952,7 +26966,7 @@
 	},
 	{
 		"id": 820942,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.735Z",
 		"name": "Sealed Volcano Offering Necklace",
 		"itemTaxRate": 16.2,
@@ -26963,7 +26977,7 @@
 	},
 	{
 		"id": 820940,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.735Z",
 		"name": "Sealed Volcano Offering Ring",
 		"itemTaxRate": 32.4,
@@ -26974,7 +26988,7 @@
 	},
 	{
 		"id": 3300575,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sealed Wind Bracers",
 		"itemTaxRate": 37.8,
@@ -26996,7 +27010,7 @@
 	},
 	{
 		"id": 2021353,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.020Z",
 		"name": "Sealed Wu Fu Earring",
 		"itemTaxRate": 0.2,
@@ -27007,7 +27021,7 @@
 	},
 	{
 		"id": 3300875,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sealed Xanos Disc",
 		"itemTaxRate": 1.1,
@@ -27018,7 +27032,7 @@
 	},
 	{
 		"id": 818158,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T15:05:01.344Z",
 		"name": "Sealed Yes Men Necklace",
 		"itemTaxRate": 0.3,
@@ -27029,7 +27043,7 @@
 	},
 	{
 		"id": 822986,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-27T06:06:01.517Z",
 		"name": "Seasoned Accuracy Mamosu Stew",
 		"itemTaxRate": 20.1,
@@ -27040,7 +27054,7 @@
 	},
 	{
 		"id": 815547,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Seasoned Gnarlhorn Meatball",
 		"itemTaxRate": 17.9,
@@ -27062,7 +27076,7 @@
 	},
 	{
 		"id": 822985,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.020Z",
 		"name": "Seasoned Piercing Mamosu Stew",
 		"itemTaxRate": 20.1,
@@ -27085,7 +27099,7 @@
 	{
 		"id": 3900500,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Seedling Pet",
 		"itemTaxRate": 5.1,
@@ -27502,7 +27516,7 @@
 	{
 		"id": 2021113,
 		"stats": "Critical 61, Piercing 25, Evasion 25, Attack Power 1",
-		"updated": "2018-09-17T22:00:03.630Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sentinel's Ring",
 		"itemTaxRate": 0.4,
@@ -27653,7 +27667,7 @@
 	},
 	{
 		"id": 2280144,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sentry Suit Design",
 		"itemTaxRate": 0.1,
@@ -27686,7 +27700,7 @@
 	},
 	{
 		"id": 810719,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Serpent Calling Bell",
 		"itemTaxRate": 0.2,
@@ -27697,7 +27711,7 @@
 	},
 	{
 		"id": 910103,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Shady Kitty",
 		"race": "Familiar",
@@ -27709,7 +27723,7 @@
 	},
 	{
 		"id": 910104,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.020Z",
 		"name": "Shady Kitty Adornment",
 		"race": "Familiar",
@@ -27721,7 +27735,7 @@
 	},
 	{
 		"id": 910105,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Shady Kitty Clip",
 		"race": "Familiar",
@@ -27758,7 +27772,7 @@
 	{
 		"id": 3900413,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Shiba Pet",
 		"itemTaxRate": 5.1,
@@ -27805,7 +27819,7 @@
 	},
 	{
 		"id": 829803,
-		"updated": "2018-09-19T03:00:03.578Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-25T16:04:34.185Z",
 		"name": "Shrinestone Chest",
 		"itemTaxRate": 1.1,
@@ -27860,7 +27874,7 @@
 	},
 	{
 		"id": 3150657,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Silver Saberfang",
 		"itemTaxRate": 0.1,
@@ -27871,7 +27885,7 @@
 	},
 	{
 		"id": 3150661,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Silver Saberfang Kitten",
 		"race": "Familiar",
@@ -27884,7 +27898,7 @@
 	{
 		"id": 3900522,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Silver Saberfang Pet",
 		"itemTaxRate": 5.1,
@@ -27917,7 +27931,7 @@
 	},
 	{
 		"id": 820003,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Silverfrost Mountains Dew",
 		"itemTaxRate": 0.2,
@@ -28086,7 +28100,7 @@
 	{
 		"id": 2021255,
 		"stats": "Accuracy 98, Block 94, Defense 141, HP 336",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-25T19:05:01.062Z",
 		"name": "Simyu Earring",
 		"itemTaxRate": 28.9,
@@ -28346,7 +28360,7 @@
 	},
 	{
 		"id": 910047,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sizzling Cat",
 		"race": "Familiar",
@@ -28358,7 +28372,7 @@
 	},
 	{
 		"id": 910048,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sizzling Cat Adornment",
 		"race": "Familiar",
@@ -28370,7 +28384,7 @@
 	},
 	{
 		"id": 910049,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Sizzling Cat Hair",
 		"race": "Familiar",
@@ -28383,7 +28397,7 @@
 	{
 		"id": 3900577,
 		"firstAdded": "2018-09-12T17:01:10.754Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/REvl8Xs.png",
 		"itemTaxRate": 5.1,
@@ -28393,7 +28407,7 @@
 	},
 	{
 		"id": 2021829,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Skypetal Feather",
 		"itemTaxRate": 0.1,
@@ -28404,7 +28418,7 @@
 	},
 	{
 		"id": 2021830,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Skypetal Flower",
 		"itemTaxRate": 0.1,
@@ -28465,7 +28479,7 @@
 		"id": 3900528,
 		"firstAdded": "2018-07-27T22:01:55.920Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "http://static.ncsoft.com/bns_resource/ui_resource/weapon/pet_none_snowkid_col1_5_1.png",
 		"itemTaxRate": 5.1,
@@ -28511,7 +28525,7 @@
 	},
 	{
 		"id": 2021832,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:12:08.250Z",
 		"name": "Soft Fur",
 		"itemTaxRate": 0.1,
@@ -28522,7 +28536,7 @@
 	},
 	{
 		"id": 810889,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-04-27T14:03:39.329Z",
 		"name": "Sorghum",
 		"itemTaxRate": 0.1,
@@ -28577,7 +28591,7 @@
 	},
 	{
 		"id": 810603,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.736Z",
 		"name": "Soulstone",
 		"itemTaxRate": 0.1,
@@ -28708,7 +28722,7 @@
 	},
 	{
 		"id": 3300101,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.737Z",
 		"name": "Soulstone Plains Key",
 		"itemTaxRate": 0.2,
@@ -28719,7 +28733,7 @@
 	},
 	{
 		"id": 824409,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.737Z",
 		"name": "Soulstone Plains Prestige Points Charm",
 		"itemTaxRate": 5.4,
@@ -28767,7 +28781,7 @@
 	},
 	{
 		"id": 4000011,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-27T18:04:46.392Z",
 		"name": "Sovereign Blight Phantom Bangle",
 		"itemTaxRate": 0.1,
@@ -28862,7 +28876,7 @@
 	},
 	{
 		"id": 4000010,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.738Z",
 		"name": "Sovereign Blight Phantom Staff",
 		"itemTaxRate": 0.1,
@@ -28876,7 +28890,7 @@
 	},
 	{
 		"id": 4000008,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T07:03:24.702Z",
 		"name": "Sovereign Blight Phantom Sword",
 		"itemTaxRate": 0.1,
@@ -28890,7 +28904,7 @@
 	},
 	{
 		"id": 2280142,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.738Z",
 		"name": "Sovereign Cloak Design",
 		"itemTaxRate": 0.1,
@@ -28916,7 +28930,7 @@
 	{
 		"id": 4000422,
 		"firstAdded": "2018-06-27T09:01:57.609Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"FM"
@@ -28955,7 +28969,7 @@
 	{
 		"id": 4000420,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"KF"
@@ -28969,7 +28983,7 @@
 	{
 		"id": 4000500,
 		"firstAdded": "2018-09-12T19:01:20.992Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/WsWFeIQ.png",
 		"itemTaxRate": 0.1,
@@ -28980,7 +28994,7 @@
 	{
 		"id": 4000425,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-18T04:00:03.545Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"SM"
@@ -29022,7 +29036,7 @@
 	{
 		"id": 4000421,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T21:00:03.739Z",
 		"characterLevel": 3,
 		"class": [
 			"SU"
@@ -29036,7 +29050,7 @@
 	{
 		"id": 4000419,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-19T02:00:03.760Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"BM"
@@ -29060,7 +29074,7 @@
 	},
 	{
 		"id": 4000028,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.738Z",
 		"name": "Sovereign Infernal Phantom Axe",
 		"itemTaxRate": 0.1,
@@ -29113,7 +29127,7 @@
 	},
 	{
 		"id": 4000025,
-		"updated": "2018-09-19T09:00:03.316Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-26T07:03:51.384Z",
 		"name": "Sovereign Infernal Phantom Gauntlet",
 		"itemTaxRate": 0.1,
@@ -29212,7 +29226,7 @@
 	{
 		"id": 4000382,
 		"firstAdded": "2018-06-29T15:02:09.846Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"FM"
@@ -29265,7 +29279,7 @@
 	{
 		"id": 4000496,
 		"firstAdded": "2018-09-12T19:05:38.368Z",
-		"updated": "2018-09-18T19:00:03.686Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/dD1NYxK.png",
 		"itemTaxRate": 0.1,
@@ -29276,7 +29290,7 @@
 	{
 		"id": 4000385,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"SM"
@@ -29290,7 +29304,7 @@
 	{
 		"id": 4000388,
 		"firstAdded": "2018-06-28T15:02:07.181Z",
-		"updated": "2018-09-18T19:00:03.709Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"GM"
@@ -29318,7 +29332,7 @@
 	{
 		"id": 4000381,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"SU"
@@ -29332,7 +29346,7 @@
 	{
 		"id": 4000379,
 		"firstAdded": "2018-06-27T09:01:57.610Z",
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"class": [
 			"BM"
@@ -29346,7 +29360,7 @@
 	{
 		"id": 4000508,
 		"firstAdded": "2018-09-13T10:01:51.383Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/VGVITLL.png",
 		"itemTaxRate": 0.1,
@@ -29479,7 +29493,7 @@
 	},
 	{
 		"id": 4000056,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-26T00:05:17.548Z",
 		"name": "Sovereign Pirate Phantom Sword",
 		"itemTaxRate": 0.1,
@@ -29494,7 +29508,7 @@
 	{
 		"id": 4000510,
 		"firstAdded": "2018-09-12T23:01:43.259Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/Exs5phz.png",
 		"itemTaxRate": 0.1,
@@ -29504,7 +29518,7 @@
 	},
 	{
 		"id": 4000076,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T05:15:54.194Z",
 		"name": "Sovereign Scorpio Phantom Axe",
 		"itemTaxRate": 0.1,
@@ -29613,7 +29627,7 @@
 	},
 	{
 		"id": 4000074,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-02T21:04:07.265Z",
 		"name": "Sovereign Scorpio Phantom Staff",
 		"itemTaxRate": 0.1,
@@ -29627,7 +29641,7 @@
 	},
 	{
 		"id": 4000072,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T07:16:26.317Z",
 		"name": "Sovereign Scorpio Phantom Sword",
 		"itemTaxRate": 0.1,
@@ -29642,7 +29656,7 @@
 	{
 		"id": 4000403,
 		"firstAdded": "2018-06-27T09:01:57.611Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T20:00:03.454Z",
 		"characterLevel": 3,
 		"class": [
 			"DE"
@@ -29709,7 +29723,7 @@
 	{
 		"id": 4000498,
 		"firstAdded": "2018-09-12T19:01:20.992Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/2zkE3O9.png",
 		"itemTaxRate": 0.1,
@@ -29748,7 +29762,7 @@
 	{
 		"id": 4000406,
 		"firstAdded": "2018-06-27T09:03:28.487Z",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"WL"
@@ -29762,7 +29776,7 @@
 	{
 		"id": 4000401,
 		"firstAdded": "2018-06-27T09:03:28.487Z",
-		"updated": "2018-09-19T12:00:03.599Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"characterLevel": 3,
 		"class": [
 			"SU"
@@ -29790,7 +29804,7 @@
 	{
 		"id": 4000506,
 		"firstAdded": "2018-09-12T23:01:43.260Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 3,
 		"img": "https://i.imgur.com/vrqZHN8.png",
 		"itemTaxRate": 0.1,
@@ -29800,7 +29814,7 @@
 	},
 	{
 		"id": 4000044,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T19:00:03.250Z",
 		"firstAdded": "2018-02-28T18:03:28.916Z",
 		"name": "Sovereign Siren Phantom Axe",
 		"itemTaxRate": 0.1,
@@ -29828,7 +29842,7 @@
 	},
 	{
 		"id": 3200791,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-09T17:07:04.765Z",
 		"name": "Sovereign Siren Phantom Bracers",
 		"itemTaxRate": 0.1,
@@ -29853,7 +29867,7 @@
 	},
 	{
 		"id": 4000041,
-		"updated": "2018-09-19T15:00:03.707Z",
+		"updated": "2018-09-19T20:00:03.419Z",
 		"firstAdded": "2018-02-25T18:05:01.399Z",
 		"name": "Sovereign Siren Phantom Gauntlet",
 		"itemTaxRate": 0.1,
@@ -29895,7 +29909,7 @@
 	},
 	{
 		"id": 4000047,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T19:04:54.306Z",
 		"name": "Sovereign Siren Phantom Razor",
 		"itemTaxRate": 0.1,
@@ -29923,7 +29937,7 @@
 	},
 	{
 		"id": 4000040,
-		"updated": "2018-09-19T06:00:03.571Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-02-28T10:03:57.602Z",
 		"name": "Sovereign Siren Phantom Sword",
 		"itemTaxRate": 0.1,
@@ -29974,7 +29988,7 @@
 	{
 		"id": 811415,
 		"stats": "Block 600",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T17:00:03.637Z",
 		"firstAdded": "2018-02-27T05:05:50.148Z",
 		"name": "Sparkling Hexagonal Diamond",
 		"itemTaxRate": 1.3,
@@ -30046,7 +30060,7 @@
 	{
 		"id": 811412,
 		"stats": "Recovers 400 HP over time ·  on Evasion.",
-		"updated": "2018-09-19T05:00:03.700Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-04-03T00:05:58.832Z",
 		"name": "Sparkling Hexagonal Peridot",
 		"itemTaxRate": 1.3,
@@ -30178,7 +30192,7 @@
 	{
 		"id": 815269,
 		"stats": "Additional Damage 25",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.738Z",
 		"name": "Sparkling Pentagonal Diamond",
 		"itemTaxRate": 1,
@@ -30190,7 +30204,7 @@
 	{
 		"id": 815272,
 		"stats": "Evasion 400",
-		"updated": "2018-09-18T03:00:03.593Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T13:03:41.274Z",
 		"name": "Sparkling Pentagonal Diamond",
 		"itemTaxRate": 1,
@@ -30319,7 +30333,7 @@
 	},
 	{
 		"id": 829808,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.738Z",
 		"name": "Spicy Dumpling Food Chest",
 		"itemTaxRate": 1.1,
@@ -30330,7 +30344,7 @@
 	},
 	{
 		"id": 810778,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.022Z",
 		"name": "Spicy Herbal Ox Noodle Soup",
 		"itemTaxRate": 0.3,
@@ -30378,7 +30392,7 @@
 	{
 		"id": 811336,
 		"stats": "50 Life Drain · On Critical Hit",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Amethyst",
 		"itemTaxRate": 0.4,
@@ -30390,7 +30404,7 @@
 	{
 		"id": 824026,
 		"stats": "60 Additional Damage · on Critical Hit.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T03:11:19.369Z",
 		"name": "Square Amethyst",
 		"itemTaxRate": 0.4,
@@ -30402,7 +30416,7 @@
 	{
 		"id": 824080,
 		"stats": "30 Drain · When an enemy is Stunned or Knocked Down",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Citrine",
 		"itemTaxRate": 0.4,
@@ -30414,7 +30428,7 @@
 	{
 		"id": 811327,
 		"stats": "35 Additional Damage · When an enemy is Stunned or Knocked Down",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T11:11:29.077Z",
 		"name": "Square Citrine",
 		"itemTaxRate": 0.4,
@@ -30426,7 +30440,7 @@
 	{
 		"id": 811328,
 		"stats": "35 Additional Damage · When an enemy is Stunned or Knocked Down",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T20:03:59.753Z",
 		"name": "Square Citrine",
 		"itemTaxRate": 0.4,
@@ -30498,7 +30512,7 @@
 	{
 		"id": 811329,
 		"stats": "Recovers 150 HP over time · when blocking.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Emerald",
 		"itemTaxRate": 0.4,
@@ -30510,7 +30524,7 @@
 	{
 		"id": 814646,
 		"stats": "60 Additional Damage · when blocking.",
-		"updated": "2018-09-18T22:00:03.931Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T22:05:35.087Z",
 		"name": "Square Emerald",
 		"itemTaxRate": 0.4,
@@ -30521,7 +30535,7 @@
 	},
 	{
 		"id": 816620,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T16:05:22.672Z",
 		"name": "Square Gem Chest",
 		"itemTaxRate": 0.4,
@@ -30533,7 +30547,7 @@
 	{
 		"id": 811334,
 		"stats": "Recovers 75 HP over time ·  On Evade.",
-		"updated": "2018-09-19T08:00:04.113Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Peridot",
 		"itemTaxRate": 0.4,
@@ -30545,7 +30559,7 @@
 	{
 		"id": 811335,
 		"stats": "Immune to Status Effects for 2 sec. and Critical +30 · on Evasion.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Peridot",
 		"itemTaxRate": 0.4,
@@ -30557,7 +30571,7 @@
 	{
 		"id": 811325,
 		"stats": "100 Additional Damage. · Triggers on attack.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Ruby",
 		"itemTaxRate": 0.4,
@@ -30569,7 +30583,7 @@
 	{
 		"id": 811326,
 		"stats": "Stuns for 1.5 sec. · Triggers on attack.",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Ruby",
 		"itemTaxRate": 0.4,
@@ -30581,7 +30595,7 @@
 	{
 		"id": 824047,
 		"stats": "50 Instant Recovery and 1 Critical Hit · when an enemy blocks or evades.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Sapphire",
 		"itemTaxRate": 0.4,
@@ -30593,7 +30607,7 @@
 	{
 		"id": 811332,
 		"stats": "20 Additional Damage · when an enemy blocks or evades.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Sapphire",
 		"itemTaxRate": 0.4,
@@ -30605,7 +30619,7 @@
 	{
 		"id": 811331,
 		"stats": "3 sec. Movement Speed Reduction ·  when an enemy blocks or evades.",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Square Sapphire",
 		"itemTaxRate": 0.4,
@@ -30630,7 +30644,7 @@
 	},
 	{
 		"id": 2600288,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-26T21:06:01.521Z",
 		"name": "Stalker Axe",
 		"itemTaxRate": 0.1,
@@ -30658,7 +30672,7 @@
 	},
 	{
 		"id": 2600290,
-		"updated": "2018-09-19T13:00:03.795Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-01T17:03:54.237Z",
 		"name": "Stalker Axe",
 		"itemTaxRate": 0.1,
@@ -30672,7 +30686,7 @@
 	},
 	{
 		"id": 2600291,
-		"updated": "2018-09-13T09:00:05.448Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-03-10T18:03:43.915Z",
 		"name": "Stalker Axe",
 		"itemTaxRate": 0.1,
@@ -30756,7 +30770,7 @@
 	},
 	{
 		"id": 3000006,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:11:19.369Z",
 		"name": "Stalker Bracers",
 		"itemTaxRate": 0.1,
@@ -30767,7 +30781,7 @@
 	},
 	{
 		"id": 2600292,
-		"updated": "2018-09-13T13:00:04.763Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T09:10:08.864Z",
 		"name": "Stalker Dagger",
 		"itemTaxRate": 0.1,
@@ -30837,7 +30851,7 @@
 	},
 	{
 		"id": 2600273,
-		"updated": "2018-09-17T21:00:03.602Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Stalker Gauntlet",
 		"itemTaxRate": 0.1,
@@ -30879,7 +30893,7 @@
 	},
 	{
 		"id": 2600275,
-		"updated": "2018-09-16T22:00:06.466Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-08T07:02:59.719Z",
 		"name": "Stalker Gauntlet",
 		"itemTaxRate": 0.1,
@@ -30907,7 +30921,7 @@
 	},
 	{
 		"id": 810143,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Stalker Jiangshi's Essence",
 		"itemTaxRate": 0.1,
@@ -30918,7 +30932,7 @@
 	},
 	{
 		"id": 2600301,
-		"updated": "2018-09-19T09:00:03.316Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-25T11:05:33.155Z",
 		"name": "Stalker Lynblade",
 		"itemTaxRate": 0.1,
@@ -30988,7 +31002,7 @@
 	},
 	{
 		"id": 3201634,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T23:05:07.720Z",
 		"name": "Stalker Pistols",
 		"itemTaxRate": 0.1,
@@ -31058,7 +31072,7 @@
 	},
 	{
 		"id": 2607758,
-		"updated": "2018-09-13T20:00:04.142Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-09T10:03:16.281Z",
 		"name": "Stalker Razor",
 		"itemTaxRate": 0.1,
@@ -31100,7 +31114,7 @@
 	},
 	{
 		"id": 2600277,
-		"updated": "2018-09-08T15:00:04.993Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-25T22:04:56.248Z",
 		"name": "Stalker Staff",
 		"itemTaxRate": 0.1,
@@ -31128,7 +31142,7 @@
 	},
 	{
 		"id": 2600278,
-		"updated": "2018-09-01T13:00:04.577Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-03-28T20:05:25.929Z",
 		"name": "Stalker Staff",
 		"itemTaxRate": 0.1,
@@ -31170,7 +31184,7 @@
 	},
 	{
 		"id": 2600269,
-		"updated": "2018-09-09T23:00:04.047Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T23:05:07.720Z",
 		"name": "Stalker Sword",
 		"itemTaxRate": 0.1,
@@ -31213,7 +31227,7 @@
 	{
 		"id": 3900472,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.739Z",
 		"name": "Starlet Pet",
 		"itemTaxRate": 5.1,
@@ -31225,7 +31239,7 @@
 	{
 		"id": 4200860,
 		"firstAdded": "2018-07-27T22:01:55.923Z",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 1,
 		"img": "http://static.ncsoft.com/bns_resource/ui_resource/grocery/grocery_event_clothbox_2_5_1.png",
 		"itemTaxRate": 1.1,
@@ -31277,7 +31291,7 @@
 	},
 	{
 		"id": 610403,
-		"updated": "2018-09-17T17:00:03.423Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Steel Calming Bangle",
 		"itemTaxRate": 0.2,
@@ -31358,7 +31372,7 @@
 	},
 	{
 		"id": 610402,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-26T11:05:37.128Z",
 		"name": "Steel Staff",
 		"itemTaxRate": 0.2,
@@ -31386,7 +31400,7 @@
 	},
 	{
 		"id": 610400,
-		"updated": "2018-09-18T00:00:03.596Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-25T10:03:53.962Z",
 		"name": "Steel Sword",
 		"itemTaxRate": 0.2,
@@ -31456,7 +31470,7 @@
 	},
 	{
 		"id": 610129,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-26T21:04:41.951Z",
 		"name": "Stone Dagger",
 		"itemTaxRate": 0.1,
@@ -31664,7 +31678,7 @@
 	},
 	{
 		"id": 820627,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Storm Essence",
 		"itemTaxRate": 0.5,
@@ -31675,7 +31689,7 @@
 	},
 	{
 		"id": 2280132,
-		"updated": "2018-09-19T01:00:03.638Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T17:04:49.123Z",
 		"name": "Strategic Guerrilla Bandana Design",
 		"itemTaxRate": 0.1,
@@ -31686,7 +31700,7 @@
 	},
 	{
 		"id": 3300010,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Stylish Fragment Pouch",
 		"itemTaxRate": 0.8,
@@ -31697,7 +31711,7 @@
 	},
 	{
 		"id": 2280149,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Stylish Guerilla Bandana Design",
 		"itemTaxRate": 0.1,
@@ -31708,7 +31722,7 @@
 	},
 	{
 		"id": 4300058,
-		"updated": "2018-09-19T15:00:03.693Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T03:12:08.252Z",
 		"name": "Sunrise Action Hero",
 		"itemTaxRate": 0.1,
@@ -31743,7 +31757,7 @@
 	{
 		"id": 3900416,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Tae Jangum Pet",
 		"itemTaxRate": 5.1,
@@ -31754,7 +31768,7 @@
 	},
 	{
 		"id": 910145,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Tail Ribbon",
 		"race": "Familiar",
@@ -31863,7 +31877,7 @@
 	{
 		"id": 2820815,
 		"stats": "Piercing 220, Block 335, Defense 446, HP 781",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Talus Prison Necklace",
 		"itemTaxRate": 60.6,
@@ -31875,7 +31889,7 @@
 	{
 		"id": 2820792,
 		"stats": "Evasion 220, Block 223, Defense 335, HP 1562",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.022Z",
 		"name": "Talus Prison Ring",
 		"itemTaxRate": 48.6,
@@ -31932,7 +31946,7 @@
 	},
 	{
 		"id": 810602,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "The Blight Fang",
 		"itemTaxRate": 0.1,
@@ -31955,7 +31969,7 @@
 	},
 	{
 		"id": 2021831,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.740Z",
 		"name": "Thigh Meat",
 		"itemTaxRate": 0.1,
@@ -31966,7 +31980,7 @@
 	},
 	{
 		"id": 820222,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Transformation Stone",
 		"itemTaxRate": 0.2,
@@ -32086,7 +32100,7 @@
 	{
 		"id": 811283,
 		"stats": "Attack Power 4",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-06-04T19:02:18.380Z",
 		"name": "Triangular Diamond",
 		"itemTaxRate": 0.2,
@@ -32228,7 +32242,7 @@
 	},
 	{
 		"id": 828349,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Tribute Token",
 		"itemTaxRate": 0.7,
@@ -32239,7 +32253,7 @@
 	},
 	{
 		"id": 829452,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Triumph Token",
 		"itemTaxRate": 0.7,
@@ -32261,7 +32275,7 @@
 	},
 	{
 		"id": 910037,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Twinkitty",
 		"race": "Familiar",
@@ -32273,7 +32287,7 @@
 	},
 	{
 		"id": 910039,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Twinkitty Adornment",
 		"race": "Familiar",
@@ -32285,7 +32299,7 @@
 	},
 	{
 		"id": 910040,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Twinkitty Helm",
 		"race": "Familiar",
@@ -32478,7 +32492,7 @@
 	{
 		"id": 2021268,
 		"stats": "Evasion 40, Defense 156, HP 79",
-		"updated": "2018-09-18T23:00:03.594Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Ukaha's Ring",
 		"itemTaxRate": 0.5,
@@ -32537,7 +32551,7 @@
 	},
 	{
 		"id": 827322,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Unsealing Charm",
 		"itemTaxRate": 0.1,
@@ -32646,7 +32660,7 @@
 	},
 	{
 		"id": 2603329,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T18:04:05.447Z",
 		"name": "Updraft Bangle",
 		"itemTaxRate": 33.7,
@@ -32710,7 +32724,7 @@
 	{
 		"id": 2820825,
 		"stats": "Accuracy 187, Evasion 285, Defense 380, HP 665",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T21:00:03.757Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Updraft Earring",
 		"itemTaxRate": 45.8,
@@ -32721,7 +32735,7 @@
 	},
 	{
 		"id": 2603327,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T22:00:03.863Z",
 		"firstAdded": "2018-03-14T11:07:52.307Z",
 		"name": "Updraft Gauntlet",
 		"itemTaxRate": 33.7,
@@ -32899,7 +32913,7 @@
 	},
 	{
 		"id": 2280146,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Vertigo Eyepatch Design",
 		"itemTaxRate": 0.1,
@@ -33045,7 +33059,7 @@
 	},
 	{
 		"id": 2600935,
-		"updated": "2018-09-11T03:00:04.029Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-03-20T16:04:01.212Z",
 		"name": "Viridian Bangle",
 		"itemTaxRate": 0.1,
@@ -33166,7 +33180,7 @@
 	{
 		"id": 2021209,
 		"stats": "Critical 8, Additional Damage 1, Accuracy 8",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:21:18.022Z",
 		"name": "Viridian Earring",
 		"itemTaxRate": 0.1,
@@ -33244,7 +33258,7 @@
 	},
 	{
 		"id": 2600925,
-		"updated": "2018-09-19T14:00:04.166Z",
+		"updated": "2018-09-19T17:00:03.637Z",
 		"firstAdded": "2018-05-16T21:02:02.258Z",
 		"name": "Viridian Gauntlet",
 		"itemTaxRate": 0.1,
@@ -33376,7 +33390,7 @@
 	},
 	{
 		"id": 817075,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Viridian Poison",
 		"itemTaxRate": 0.1,
@@ -33469,7 +33483,7 @@
 	{
 		"id": 2021265,
 		"stats": "Critical 16, Piercing 8, Evasion 8",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.741Z",
 		"name": "Viridian Ring",
 		"itemTaxRate": 0.1,
@@ -33620,7 +33634,7 @@
 	},
 	{
 		"id": 817060,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Viridian Transformation Stone",
 		"itemTaxRate": 0.1,
@@ -33632,7 +33646,7 @@
 	{
 		"id": 2021337,
 		"stats": "Damage Reduction 10, Defense 115, HP 471",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T22:00:03.888Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Volcanic Offering Belt",
 		"itemTaxRate": 32.4,
@@ -33655,7 +33669,7 @@
 	{
 		"id": 2021261,
 		"stats": "Accuracy 115, Evasion 165, Defense 220, HP 193",
-		"updated": "2018-09-18T17:00:04.091Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Volcanic Offering Earring",
 		"itemTaxRate": 32.4,
@@ -33667,7 +33681,7 @@
 	{
 		"id": 2021189,
 		"stats": "Piercing 90, Block 112, Defense 131, HP 314",
-		"updated": "2018-09-18T17:00:04.098Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Volcanic Offering Necklace",
 		"itemTaxRate": 13.6,
@@ -33679,7 +33693,7 @@
 	{
 		"id": 2021322,
 		"stats": "Evasion 115, Block 196, Defense 220, HP 193",
-		"updated": "2018-09-19T10:00:04.374Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Volcanic Offering Ring",
 		"itemTaxRate": 32.4,
@@ -33690,7 +33704,7 @@
 	},
 	{
 		"id": 3300121,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Warrior Token Chest",
 		"itemTaxRate": 0.1,
@@ -33723,7 +33737,7 @@
 	},
 	{
 		"id": 829832,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "White Orb",
 		"itemTaxRate": 0.2,
@@ -33745,7 +33759,7 @@
 	},
 	{
 		"id": 820156,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.023Z",
 		"name": "Wild Ginseng Potion",
 		"itemTaxRate": 13.7,
@@ -33757,7 +33771,7 @@
 	{
 		"id": 3900418,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Wildcat Pet",
 		"itemTaxRate": 5.1,
@@ -33780,7 +33794,7 @@
 	},
 	{
 		"id": 3150159,
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Working Cat",
 		"race": "Familiar",
@@ -33805,7 +33819,7 @@
 	{
 		"id": 2021110,
 		"stats": "Critical 23, Accuracy 12, Piercing 12, Attack Power 1",
-		"updated": "2018-09-19T10:00:04.394Z",
+		"updated": "2018-09-19T23:00:03.933Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Wu Fu Earring",
 		"itemTaxRate": 0.2,
@@ -33817,7 +33831,7 @@
 	{
 		"id": 3900408,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Yamato Pet",
 		"itemTaxRate": 5.1,
@@ -33828,7 +33842,7 @@
 	},
 	{
 		"id": 815296,
-		"updated": "2018-09-19T16:00:03.986Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Yehara's Mirage Return Charm",
 		"itemTaxRate": 0.1,
@@ -33887,7 +33901,7 @@
 	{
 		"id": 2021117,
 		"stats": "Critical 68, Additional Damage 5, Piercing 47, Attack Power 2",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:21:18.023Z",
 		"name": "Yes Men Necklace",
 		"itemTaxRate": 0.3,
@@ -33934,7 +33948,7 @@
 		"id": 3900552,
 		"firstAdded": "2018-06-27T09:01:57.618Z",
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"characterLevel": 50,
 		"img": "https://i.imgur.com/LuiRrpI.png",
 		"itemTaxRate": 5.1,
@@ -33969,7 +33983,7 @@
 	{
 		"id": 3900515,
 		"stats": "HP 2950",
-		"updated": "2018-09-19T16:00:03.970Z",
+		"updated": "2018-09-19T23:00:03.962Z",
 		"firstAdded": "2018-02-24T02:17:02.744Z",
 		"name": "Zulia Pet",
 		"itemTaxRate": 5.1,
