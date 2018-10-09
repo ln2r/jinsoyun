@@ -7,18 +7,27 @@
     "DEFAULT_MEMBER_LOG": "activity",
     "TWITTER_STREAM_ID" : "3521186773, 819625154",
     "TWITTER_STREAM_SCREENNAME" : ["BladeAndSoulOps", "bladeandsoul"],
+    "ARCHIVING": true,
     "API_ADDRESS" : [
         {
-        "name": "Character API (silveressNA)",
-        "address": "https://api.silveress.ie/bns/v3/character/full/na/wquin%20hollow/"
+            "name": "Silveress character API (NA)",
+            "address": "https://api.silveress.ie/bns/v3/character/full/na/"
         },
         {
-        "name": "Market data API (silveressMarket)",
-        "address": "https://api.silveress.ie/bns/v3/market/na/current/lowest"
+            "name": "Silveress market data API (NA)",
+            "address": "https://api.silveress.ie/bns/v3/market/na/current/lowest"
         },
         {
-        "name": "Discord",
-        "address": "https://srhpyqt94yxb.statuspage.io/api/v2/status.json"
+            "name": "Silveress item data API",
+            "address": "https://api.silveress.ie/bns/v3/items"
+        },
+        {
+            "name": "Discord",
+            "address": "https://srhpyqt94yxb.statuspage.io/api/v2/status.json"
+        },
+        {
+            "name": "Twitter",
+            "address": "https://zjttvm6ql9lp.statuspage.io/api/v2/summary.json"
         }
     ]
 }
