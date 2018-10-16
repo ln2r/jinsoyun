@@ -10,17 +10,6 @@ const https = require('https');
 const secret = require("./secret.json");
 const config = require("./config.json");
 
-const koldrakTime = require("./data/koldrak-time.json");
-//const items = require("./data/list-item.json"); disabled for future update
-const quests = require("./data/list-quest.json");
-const rewards = require("./data/list-challenges-rewards.json");
-const classDataSource = require("./data/list-classdata-source.json");
-const soyunDialogue = require("./data/list-soyundialogue.json");
-const event = require("./data/data-event.json");
-
-const eventNext = require("./data/data-event-next.json"); // For testing the next event data
-// const recipes = require("./data/list-recipe.json"); inacurate data, disable for now
-
 const clientDiscord = new Discord.Client();
 const clientTwitter = new Twitter({
 	consumer_key: secret.TWITTER_CONSUMER_KEY,
@@ -28,7 +17,6 @@ const clientTwitter = new Twitter({
 	access_token_key: secret.TWITTER_ACCESS_TOKEN_KEY,
 	access_token_secret: secret.TWITTER_ACCESS_TOKEN_SECRET
 })
-
 
 // Default class list
 var classArr = ["blade master", "destroyer", "summoner", "force master", "kung fu master", "assassin", "blade dancer", "warlock", "soul fighter", "gunslinger", "warden"];
@@ -52,13 +40,6 @@ var twtFilter;
 // silveress API point
 const silveressNA = config.API_ADDRESS[0].address;
 const silveressItem = config.API_ADDRESS[2].address;
-
-/* Data either obselete or not used
-const silveressEU = "https://api.silveress.ie/bns/v3/character/full/eu/";
-const silveressMarket = "https://api.silveress.ie/bns/v3/market/na/current/";
-const silveressQuest = "https://api.silveress.ie/bns/v3/dungeons/quests";
-const silveressRecipe = "https://api.silveress.ie/bns/v3/recipe/current?active=true";
-*/
 
 // Soyun activity
 var statusRandom = 0;
@@ -89,8 +70,11 @@ function setCurrencyFormat(number){
 }
 
 // getting quest day and returning array of matched quest index
-function getQuests(day){
+async function getQuests(day){
 	var day = day.toString().replace(/(^|\s)\S/g, l => l.toUpperCase());
+
+	var quests = await getFileData("./data/list-quest.json");
+	
 	var questsID = [];
 	var idx = 0;
 
@@ -272,7 +256,9 @@ function getDay(day){
 }
 
 // getting weekly data
-function getWeeklyQuests(){
+async function getWeeklyQuests(){
+	var quests = await getFileData("./data/list-quest.json");
+
 	var weekly = [];
 	var j = 0;
 	for(var i = 0; i < quests.length; i++){
@@ -437,6 +423,7 @@ function setCharacterPlacement(rank){
 
 	return pvpPlacement;
 }
+
 // Discord stuff start here
 
 // Bot token here
@@ -457,12 +444,12 @@ clientDiscord.on("ready", async () => {
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 		.catch(console.error);
 	
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Bot service: Running");
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Bot service: Started");
 	if(config.ARCHIVING == false){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Archiving system is disabled");
 	}
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
 
 	for(var i = 0; i < 2; i++){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+apiAdress[i].name+" service: "+apiStatus[i]);
@@ -626,7 +613,7 @@ clientDiscord.on("message", async (message) => {
 									},
 									{
 										"name": "About",
-										"value": "- Bot maintaned and developed by **[ln2r](https://ln2r.web.id/)** using **[discord.js](https://discord.js.org/)** node.js module. \n- Market and player data fetched using **[Silveress BnS API](https://bns.silveress.ie/)**. \n- Special thanks to **Grumpy Butts** discord server for letting me using their server for field testing.\n\n*Bot hosted using Glitch [jinsoyun-glitch](https://api.glitch.com/jinsoyun-glitch/git)*"
+										"value": "- Bot maintaned and developed by **[ln2r](https://ln2r.web.id/)** using **[discord.js](https://discord.js.org/)** node.js module. \n- Market and player data fetched using **[Silveress BnS API](https://bns.silveress.ie/)**. \n- Special thanks to **Grumpy Butts** discord server for letting me using their server for field testing."
 									}
 								]
 							}
@@ -637,7 +624,7 @@ clientDiscord.on("message", async (message) => {
 					break;
 
 					default:
-						var soyunSay = soyunDialogue
+						var soyunSay = await getFileData("./data/list-soyundialogue.json");
 						var soyunDialogueRNG = Math.floor(Math.random() * soyunSay.text.length) - 0;
 
 						message.channel.send(soyunSay.text[soyunDialogueRNG]);
@@ -903,6 +890,10 @@ clientDiscord.on("message", async (message) => {
 
 			// Today daily challenge
 			case 'daily':
+				var rewards = await getFileData("./data/list-challenges-rewards.json");
+				var event = await getFileData("./data/data-event.json");
+				var quests = await getFileData("./data/list-quest.json");
+
 				var dcDate = new Date();
 				// Getting the current date
 				var dcDay = dcDate.getUTCDay();
@@ -910,7 +901,7 @@ clientDiscord.on("message", async (message) => {
 				var dailyQuerry = message.toString().substring(1).split(' ');
 					dailyQuerry = dailyQuerry.splice(1);
 				var dailyPartyAnnouncement = false;
-				var dailyQuests = [];
+				var dailyQuests = "";
 				var dailyRewards = [];
 				
 				switch(dailyQuerry[0]){
@@ -935,32 +926,32 @@ clientDiscord.on("message", async (message) => {
 
 				switch(dcDay){
 					case 0:
-						var questsDailyList = getQuests("sunday");
-						var questsDailyListRewards = rewards.sunday.rewards;
+						var questsDailyList = await getQuests("sunday");
+						var questsDailyListRewards = rewards[0].rewards;
 					break;
 					case 1:
-						var questsDailyList = getQuests("monday");
-						var questsDailyListRewards = rewards.monday.rewards;
+						var questsDailyList = await getQuests("monday");
+						var questsDailyListRewards = rewards[1].rewards;
 					break;
 					case 2:
-						var questsDailyList = getQuests("tuesday");
-						var questsDailyListRewards = rewards.tuesday.rewards;
+						var questsDailyList = await getQuests("tuesday");
+						var questsDailyListRewards = rewards[2].rewards;
 					break;
 					case 3:
-						var questsDailyList = getQuests("wednesday");
-						var questsDailyListRewards = rewards.wednesday.rewards;
+						var questsDailyList = await getQuests("wednesday");
+						var questsDailyListRewards = rewards[3].rewards;
 					break;
 					case 4:
-						var questsDailyList = getQuests("thursday");
-						var questsDailyListRewards = rewards.thursday.rewards;
+						var questsDailyList = await getQuests("thursday");
+						var questsDailyListRewards = rewards[4].rewards;
 					break;
 					case 5:
-						var questsDailyList = getQuests("friday");
-						var questsDailyListRewards = rewards.friday.rewards;
+						var questsDailyList = await getQuests("friday");
+						var questsDailyListRewards = rewards[5].rewards;
 					break;
 					case 6:
-						var questsDailyList = getQuests("saturday");
-						var questsDailyListRewards = rewards.saturday.rewards;
+						var questsDailyList = await getQuests("saturday");
+						var questsDailyListRewards = rewards[6].rewards;
 					break;
 				}
 
@@ -972,7 +963,7 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				if(event.rewards.daily != ""){
-					var eventReward = event.rewards.daily + "(Event)";
+					var eventReward = event.rewards.daily + " (Event)";
 				}else{
 					var eventReward = "";
 				}
@@ -1044,6 +1035,7 @@ clientDiscord.on("message", async (message) => {
 			case 'koldrak':
 				var koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
+				var koldrakTime = await getFileData("./data/koldrak-time.json");	
 				
 				// Cheating the search so it will still put hour even if the smallest time is 24
 				var koldrakTimeLeft = 25;
@@ -1285,6 +1277,8 @@ clientDiscord.on("message", async (message) => {
 
 			// for getting the current event information
 			case 'event':
+				var event = await getFileData("./data/data-event.json");
+
 				var eventToDo = event.rewards.sources;
 				var eventQuery = message.toString().substring(1).split(' ');
 					eventQuery = eventQuery.splice(1);
@@ -1388,17 +1382,20 @@ clientDiscord.on("message", async (message) => {
 			break;
 
 			case 'weekly':
+				var rewards = await getFileData("./data/list-challenges-rewards.json");
+				var quests = await getFileData("./data/list-quest.json");
+
 				var weeklyQuery = message.toString().substring(1).split(' ');
 					weeklyQuery = weeklyQuery.splice(1);
-				var weeklyIdxList = getWeeklyQuests();
-				var weeklyQuests = [];
+				var weeklyIdxList = await getWeeklyQuests();
+				var weeklyQuests = "";
 				var weeklyRewards = [];
 				
 				for(var i = 0; i < weeklyIdxList.length; i++){
-					weeklyQuests = weeklyQuests + ("**"+quests[weeklyIdxList[i]].location+"** - "+quests[weeklyIdxList[i]].quest);				
+					weeklyQuests = weeklyQuests + ("**"+quests[weeklyIdxList[i]].location+"** - "+quests[weeklyIdxList[i]].quest+"\n");				
 				}
-				for(var i = 0; i < rewards.weekly.rewards.length; i++){
-					weeklyRewards = weeklyRewards + (rewards.weekly.rewards[i]+"\n");
+				for(var i = 0; i < rewards[7].rewards.length; i++){
+					weeklyRewards = weeklyRewards + (rewards[7].rewards[i]+"\n");
 				}
 				
 				switch(weeklyQuery[0]){
@@ -1465,12 +1462,12 @@ clientDiscord.on("message", async (message) => {
 			
 			// data gathering start from here
 			case 'getupdate':				
-				var classData = classDataSource;
+				var classData = await getFileData("./data/list-classdata-source.json");
 				var errCount = 0;
 				var errLocation = [];
 				var errMsg = "";
 
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > starting data update..");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Starting data update..");
 				
 				// item data
 				fs.writeFile('./data/list-item.json', JSON.stringify(await getSiteData(silveressItem), null, '\t'), function (err) {
@@ -1530,7 +1527,11 @@ clientDiscord.on("message", async (message) => {
 				if(errCount != 0){
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Problem occured on: "+errLocation+", please check the log");
 					message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+errLocation+"`\n```"+errMsg+"```");
-				}	
+				}
+				
+				if(message.channel.name == "high-council"){
+					message.channel.send("Data updated manually with "+errCount+" issue(s)");
+				}
 			break;
 
 			// Fetching the market data
@@ -1630,10 +1631,16 @@ clientDiscord.on("message", async (message) => {
 				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+foundCount+" market data updated, "+(marketListCurrent.length - 1)+" data archived");
 				foundCount = 0;
+
+				if(message.channel.name == "high-council"){
+					message.channel.send("Market data updated manually");
+				}
 			break;
 
 			// For testing the next event data
 			case 'eventnext':
+				var eventNext = await getFileData("./data/data-event-next.json");
+
 				var eventToDo = eventNext.rewards.sources;
 				var eventQuery = message.toString().substring(1).split(' ');
 					eventQuery = eventQuery.splice(1);
@@ -1676,7 +1683,7 @@ clientDiscord.on("message", async (message) => {
 						},
 						"fields":[
 							{
-								"name": "Today Quests/Dungeons List (Location - Quest (Type))",
+								"name": "Today Quests/Dungeons List (Location - Quest `Type`)",
 								"value": eventQuests 								
 							}
 						]

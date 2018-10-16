@@ -12,7 +12,6 @@
     "typeGuide": ["0 Daily Quest", "1 Dynamic Quest", "2 Event Quest"],
     "quests": [
         {
-            "id": 0,
             "location": "Desolate Tomb",
             "quest": "The Bonds that Bind Us",
             "day": [
@@ -22,7 +21,6 @@
             "type": 0 
         },
         {
-            "id": 1,
             "location": "Irontech Forge",
             "quest": "Meeting the Mechanizer",
             "day": [
@@ -32,7 +30,6 @@
             "type": 0 
         },
         {
-            "id": 2,
             "location": "Ebondrake Citadel",
             "quest": "Zakhan’s Blade",
             "day": [
@@ -42,7 +39,6 @@
             "type": 0
         },
         {
-            "id": 3,
             "location": "Naryu Sanctum",
             "quest": "Gatecrasher at the Naryu Sanctum",
             "day": [
@@ -52,7 +48,6 @@
             "type": 0 
         },
         {
-            "id": 4,
             "location": "Naryu Foundry",
             "quest": "Roar of the Furnace",
             "day": [
@@ -62,7 +57,6 @@
             "type": 0 
         },
         {
-            "id": 5,
             "location": "Ebondrake Lair",
             "quest": "Father Wounds",
             "day": [
@@ -72,7 +66,6 @@
             "type": 0 
         },
         {
-            "id": 6,
             "location": "Starstone Mines",
             "quest": "The Leader of the Pack",
             "day": [
@@ -82,7 +75,6 @@
             "type": 0 
         },
         {
-            "id": 7,
             "location": "Cold Storage",
             "quest": "Lord it Over",
             "day": [
@@ -97,7 +89,6 @@
             "type": 1 
         },
         {
-            "id": 8,
             "location": "Dawn of Khanda Vihar",
             "quest": "The Memory of Meganura",
             "day": [
@@ -112,7 +103,6 @@
             "type": 1
         },
         {
-            "id": 9,
             "location": "Fallen Aransu School",
             "quest": "Aransu Has Fallen",
             "day": [
@@ -127,7 +117,6 @@
             "type": 1
         },
         {
-            "id": 10,
             "location": "Snowjade Fortress",
             "quest": "The Eternal Champion",
             "day": [

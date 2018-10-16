@@ -1,26 +1,67 @@
-{
-    "monday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Void Fragments x3", "Ephemeral Survival Charm x3"]
-    },
-    "tuesday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Lunar Twilight Flower x3", "Ephemeral Survival Charm x3"]
-    },
-    "wednesday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Galaxy Fragment x3", "Ephemeral Survival Charm x3"]
-    },
-    "thursday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Raven Feather", "Ephemeral Survival Charm x3"]
-    },
-    "friday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Raven Feather", "Ephemeral Survival Charm x3"]
-    },
-    "saturday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Blackstone Fragment x3", "Ephemeral Survival Charm x3"]
-    },
-    "sunday":{
-        "rewards": ["Premium Daily Challenge Treasure Chest", "Daily Challenge Reward Chest", "Hive Queen's Wing", "Ephemeral Survival Charm x3"]
-    },
-    "weekly":{
-        "rewards": ["Raven Feather x3", "Hive Queen's Wing x3", "Excellent Hongmoon XP Charm x2", "Weekly Challenge Reward"]
-    }
-}
+[
+  {
+    "day": "monday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Void Fragments x3"
+    ]
+  },
+  {
+    "day": "tuesday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Lunar Twilight Flower x3"
+    ]
+  },
+  {
+    "day": "wednesday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Galaxy Fragment x3"
+    ]
+  },
+  {
+    "day": "thursday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Raven Feather"
+    ]
+  },
+  {
+    "day": "friday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Raven Feather"
+    ]
+  },
+  {
+    "day": "saturday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Blackstone Fragment x3"
+    ]
+  },
+  {
+    "day": "sunday",
+    "rewards": [
+      "Daily Challenge Treasure Chest",
+      "Daily Challenge Reward Chest",
+      "Hive Queen's Wing"
+    ]
+  },
+  {
+    "day": "weekly",
+    "rewards": [
+      "Raven Feather x3",
+      "Hive Queen's Wing x3",
+      "Excellent Hongmoon XP Charm x2",
+      "Weekly Challenge Reward"
+    ]
+  }
+]
