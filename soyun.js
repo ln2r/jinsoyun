@@ -521,7 +521,7 @@ clientDiscord.on("message", async (message) => {
 			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Bot and API status `!soyun status`\n- Try Me! `!soyun`';
+				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event` or `!event tomorrow`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Bot and API status `!soyun status`\n- Try Me! `!soyun`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -1370,7 +1370,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"fields":[
 									{
-										"name": dateformat(currentDate, "UTC:dddd")+" Quests/Dungeons List (Location - Quest `Type`",
+										"name": dateformat(currentDate, "UTC:dddd")+" Quests/Dungeons List (Location - Quest `Type`)",
 										"value": eventQuests 								
 									}
 								]
@@ -1631,10 +1631,6 @@ clientDiscord.on("message", async (message) => {
 				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+foundCount+" market data updated, "+(marketListCurrent.length - 1)+" data archived");
 				foundCount = 0;
-
-				if(message.channel.name == "high-council"){
-					message.channel.send("Market data updated manually");
-				}
 			break;
 
 			// For testing the next event data

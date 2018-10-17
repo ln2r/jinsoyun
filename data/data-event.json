@@ -1,82 +1,19 @@
 {
-    "name": "Way of the Warrior",
-    "duration": "September 12 – October 17",
-    "redeem": "September 12 – November 7",
-    "url": "http://www.bladeandsoul.com/en/news/way-of-the-warrior-event-juggernaut-jackpot-arrive-september-12/",
+    "name": "Blade & Ghoul",
+    "duration": "October 17 – November 7",
+    "redeem": "November 7 – December 5",
+    "url": "https://www.bladeandsoul.com/en/news/blade-ghoul-comes-alive-october-17/",
     "rewards": {
-        "sources": ["Daily Challenges", "Dynamic Quest"],
-        "name": ["Upgrade Emblems", "Fighter’s Fortune Chest"],
-        "currency" : "Upgrade Emblems",
-        "daily": "Fighter’s Fortune Chest"
+        "sources": ["Daily Challenges", "Dynamic Quest", "Zaiwei Ruins"],
+        "name": ["Killer Coin", "Thriller Coin"],
+        "currency" : "Killer Coin, Thriller Coin",
+        "daily": "Killer Coin x2"
     },
-    "typeGuide": ["0 Daily Quest", "1 Dynamic Quest", "2 Event Quest"],
+    "type-mean": ["0 Daily Quest", "1 Dynamic Quest", "2 Event Quest"],
     "quests": [
         {
-            "location": "Desolate Tomb",
-            "quest": "The Bonds that Bind Us",
-            "day": [
-                "Monday",
-                "Thursday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Irontech Forge",
-            "quest": "Meeting the Mechanizer",
-            "day": [
-                "Monday",
-                "Saturday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Ebondrake Citadel",
-            "quest": "Zakhan’s Blade",
-            "day": [
-                "Tuesday",
-                "Friday"
-            ],
-            "type": 0
-        },
-        {
-            "location": "Naryu Sanctum",
-            "quest": "Gatecrasher at the Naryu Sanctum",
-            "day": [
-                "Tuesday",
-                "Thursday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Naryu Foundry",
-            "quest": "Roar of the Furnace",
-            "day": [
-                "Wednesday",
-                "Saturday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Ebondrake Lair",
-            "quest": "Father Wounds",
-            "day": [
-                "Wednesday",
-                "Sunday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Starstone Mines",
-            "quest": "The Leader of the Pack",
-            "day": [
-                "Friday",
-                "Sunday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Cold Storage",
-            "quest": "Lord it Over",
+            "location": "Zaiwei Ruins",
+            "quest": "To the Pyre",
             "day": [
                 "Sunday",
                 "Monday",
@@ -86,11 +23,11 @@
                 "Friday",
                 "Saturday"
             ],
-            "type": 1 
+            "type": 0 
         },
         {
-            "location": "Dawn of Khanda Vihar",
-            "quest": "The Memory of Meganura",
+            "location": "Zaiwei Ruins",
+            "quest": "Taking The Sting Out",
             "day": [
                 "Sunday",
                 "Monday",
@@ -100,11 +37,11 @@
                 "Friday",
                 "Saturday"
             ],
-            "type": 1
+            "type": 0  
         },
         {
-            "location": "Fallen Aransu School",
-            "quest": "Aransu Has Fallen",
+            "location": "Zaiwei Ruins",
+            "quest": "Murk and the Mire",
             "day": [
                 "Sunday",
                 "Monday",
@@ -114,21 +51,7 @@
                 "Friday",
                 "Saturday"
             ],
-            "type": 1
-        },
-        {
-            "location": "Snowjade Fortress",
-            "quest": "The Eternal Champion",
-            "day": [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ],
-            "type": 1 
+            "type": 0 
         }
     ]
 }
