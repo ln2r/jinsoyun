@@ -73,7 +73,7 @@ function setCurrencyFormat(number){
 async function getQuests(day){
 	var day = day.toString().replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-	var quests = await getFileData("./data/list-quest.json");
+	var quests = await getFileData("./data/list-quests.json");
 	
 	var questsID = [];
 	var idx = 0;
@@ -257,7 +257,7 @@ function getDay(day){
 
 // getting weekly data
 async function getWeeklyQuests(){
-	var quests = await getFileData("./data/list-quest.json");
+	var quests = await getFileData("./data/list-quests.json");
 
 	var weekly = [];
 	var j = 0;
@@ -313,7 +313,7 @@ async function getSkillset(charaClass, charaElement, charaName){
 				// getting the correct variation
 				for(var k = 0; k < charaSkillsetData[charaTrainableList[j].idx].variations.length; k++){
 					if(userSkillset[i].variation_index == charaSkillsetData[charaTrainableList[j].idx].variations[k].variation_index){
-						charaTrainableSkills = charaTrainableSkills + (charaSkillsetData[charaTrainableList[j].idx].variations[k].name+": "+charaSkillsetData[charaTrainableList[j].idx].variations[k].training_icon_desc.replace(/<[^>]+>/g, "")+"\n")
+						charaTrainableSkills = charaTrainableSkills + (charaSkillsetData[charaTrainableList[j].idx].variations[k].name+": "+charaSkillsetData[charaTrainableList[j].idx].variations[k].training_icon_desc.replace(/<[^>]+>/g, "")+" (Move ")+charaSkillsetData[charaTrainableList[j].idx].variations[k].variation_no+(")\n")
 					}
 				}							
 			}
@@ -424,6 +424,37 @@ function setCharacterPlacement(rank){
 	return pvpPlacement;
 }
 
+// getting the active element damage
+async function getElementalDamage(activeElement, characterData){
+	var charaData = characterData;
+	var activeElement = activeElement.toLowerCase();
+
+	var elementalDamage = "No data available";
+
+	switch(activeElement){
+		case 'flame':
+			elementalDamage = charaData.flame + (" ("+(charaData.flameRate*100)+"%)");
+		break;
+		case 'frost':
+			elementalDamage = charaData.frost + (" ("+(charaData.frostRate*100)+"%)");
+		break;
+		case 'wind':
+			elementalDamage = charaData.wind + (" ("+(charaData.windRate*100)+"%)");
+		break;
+		case 'earth':
+			elementalDamage = charaData.earth + (" ("+(charaData.earthRate*100)+"%)");
+		break;
+		case 'lightning':
+			elementalDamage = charaData.lightning + (" ("+(charaData.lightningRate*100)+"%)");
+		break;
+		case 'shadow':
+			elementalDamage = charaData.shadow + (" ("+(charaData.shadowRate*100)+"%)");
+		break;
+	}
+
+	return elementalDamage;
+}
+
 // Discord stuff start here
 
 // Bot token here
@@ -454,6 +485,8 @@ clientDiscord.on("ready", async () => {
 	for(var i = 0; i < 2; i++){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+apiAdress[i].name+" service: "+apiStatus[i]);
 	}
+
+	console.log("");
 });
 
 // User joined the guild
@@ -474,37 +507,43 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 	var silveressQuerry = silveressNA+member.displayName; // for the querry
 	var charaData = await getSiteData(silveressQuerry);
 
-	member.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
-		"embed":{
-			"color": 15605837,
-			"author":{
-				"name": member.nickname+" ("+member.displayName+")",
-			},
-			"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
-			"footer": {
-				"text": "Left - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+	try{
+		member.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+			"embed":{
+				"color": 15605837,
+				"author":{
+					"name": member.nickname+" ("+member.displayName+")",
+				},
+				"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
+				"footer": {
+					"text": "Left - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+				}
 			}
-		}
-	});
+		});
+	}catch(error){
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
+		clientDiscord.emit("message", "!err |"+error.stack+"|");
+	}
 });
 
 clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
-	if(oldMember.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG) == true){
+	try{
 		oldMember.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
 			"embed":{
 				"color": 16574595,
 				"author":{
 					"name": newMember.displayName,
 				},
-				"description": "User detail changed (check audit log for details)",
+				"description": "User info changed (check audit log for details)",
 				"footer": {
 					"text": "Edit - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 				}
 			}
 		});
-	}else{
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to find"+config.DEFAULT_MEMBER_LOG+" channel, member log won't be saved");
-	};
+	}catch(error){
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
+		clientDiscord.emit("message", "!err |"+error.stack+"|");
+	}
 });
 
 // User commands
@@ -557,8 +596,10 @@ clientDiscord.on("message", async (message) => {
 
 					case 'status':
 						const m = await message.channel.send("Checking...");
+						/*
 						var dateNow = Date.now();
 							dateNow = dateNow.toISOString();
+						*/
 
 						// statuspage stuff
 						var discordStatus = await getSiteData(config.API_ADDRESS[3].address);
@@ -597,7 +638,7 @@ clientDiscord.on("message", async (message) => {
 									},
 									{
 										"name": "Market Data",
-										"value": "**Last Update**: "+dateformat(marketData[0].updateTime, "UTC:ddd dd-mm-yy @ hh:mm:ss")+" UTC\n**Data Updated**: "+marketData[0].dataUpdated+"\n**Data Age**: "+marketData[0].dataAge+"\n**Data Count**: "+marketData[0].dataCount
+										"value": "**Last Update**: "+dateformat(marketData[0].updateTime, "UTC:ddd dd-mm-yy @ hh:mm:ss")+" UTC\n**Data Updated**: "+marketData[0].dataUpdated+"\n**Data Count**: "+marketData[0].dataCount
 									},
 									{
 										"name": "Discord",
@@ -679,18 +720,23 @@ clientDiscord.on("message", async (message) => {
 						var silveressQuerry = silveressNA+joinUsername; // for the querry
 						var charaData = await getSiteData(silveressQuerry);
 
-						message.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
-							"embed":{
-								"color": 1879160,
-								"author":{
-									"name": message.author.username+" ("+joinUsername+")",
-								},
-								"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
-								"footer": {
-									"text": "Joined - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+						try{
+							message.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+								"embed":{
+									"color": 1879160,
+									"author":{
+										"name": message.author.username+" ("+joinUsername+")",
+									},
+									"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
+									"footer": {
+										"text": "Joined - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									}
 								}
-							}
-						});
+							});
+						}catch(error){
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
+							clientDiscord.emit("message", "!err |"+error.stack+"|");
+						}
 					}else{
 						// Telling them whats wrong
 						message.channel.send("Im sorry, I cant find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
@@ -892,7 +938,7 @@ clientDiscord.on("message", async (message) => {
 			case 'daily':
 				var rewards = await getFileData("./data/list-challenges-rewards.json");
 				var event = await getFileData("./data/data-event.json");
-				var quests = await getFileData("./data/list-quest.json");
+				var quests = await getFileData("./data/list-quests.json");
 
 				var dcDate = new Date();
 				// Getting the current date
@@ -1137,6 +1183,7 @@ clientDiscord.on("message", async (message) => {
 					var charaData = await getSiteData(silveressQuerry);
 					var charaClassValue = charaData.playerClass.toLowerCase().replace(" ", "");				
 					var skillsetData = await getSkillset(charaClassValue, charaData.activeElement, charaData.characterName)
+					var elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
 
 					var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
 						bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
@@ -1157,7 +1204,7 @@ clientDiscord.on("message", async (message) => {
 							},
 							{
 								"name": "\nOffensive Stats",
-								"value": "Boss Attack Power: "+charaData.ap_boss+"\nCritical Hit: "+charaData.crit+" ("+(charaData.critRate*100).toFixed(2)+"%)\nCritical Damage: "+charaData.critDamage+" ("+(charaData.critDamageRate*100).toFixed(2)+"%)",
+								"value": "Elemental Damage: "+elementalDamage+"\nBoss Attack Power: "+charaData.ap_boss+"\nCritical Hit: "+charaData.crit+" ("+(charaData.critRate*100).toFixed(2)+"%)\nCritical Damage: "+charaData.critDamage+" ("+(charaData.critDamageRate*100).toFixed(2)+"%)",
 							},
 							{
 								"name": "\nDefensive Stats",
@@ -1257,7 +1304,7 @@ clientDiscord.on("message", async (message) => {
 				message.channel.send({
 					"embed": {
 						"author":{
-							"name": "Marketplace - "+marketQuery,
+							"name": "Marketplace - Search result of "+marketQuery,
 							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
 						},
 						"description": marketDataValue + "\n`*Data updated every hour`",
@@ -1362,7 +1409,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"title": event.name,
 								"url": event.url,
-								"description": "**Duration**: "+event.duration+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
+								"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
 								"color": 1879160,
 								"footer": {
 									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
@@ -1383,7 +1430,7 @@ clientDiscord.on("message", async (message) => {
 
 			case 'weekly':
 				var rewards = await getFileData("./data/list-challenges-rewards.json");
-				var quests = await getFileData("./data/list-quest.json");
+				var quests = await getFileData("./data/list-quests.json");
 
 				var weeklyQuery = message.toString().substring(1).split(' ');
 					weeklyQuery = weeklyQuery.splice(1);
@@ -1449,7 +1496,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"fields":[
 									{
-										"name": "Quests/Dungeons List (Location - Quest (Type))",
+										"name": "Quests/Dungeons List (Location - Quest)",
 										"value": weeklyQuests 								
 									}
 								]
@@ -1529,8 +1576,12 @@ clientDiscord.on("message", async (message) => {
 					message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+errLocation+"`\n```"+errMsg+"```");
 				}
 				
-				if(message.channel.name == "high-council"){
-					message.channel.send("Data updated manually with "+errCount+" issue(s)");
+				try{
+					if(message.channel.name == "high-council"){
+						message.channel.send("Item and class data updated manually with "+errCount+" issue(s)");
+					}
+				}catch(error){
+
 				}
 			break;
 
@@ -1628,9 +1679,18 @@ clientDiscord.on("message", async (message) => {
 						clientDiscord.emit("message", "!err |"+err.stack+"|");
 					}
 				});
+
+				try{
+					if(message.channel.name == "high-council"){
+						message.channel.send(foundCount+" market data updated manually");
+					}
+				}catch(error){
+					
+				}
 				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+foundCount+" market data updated, "+(marketListCurrent.length - 1)+" data archived");
 				foundCount = 0;
+				
 			break;
 
 			// For testing the next event data

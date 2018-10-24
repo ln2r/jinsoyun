@@ -1747,6 +1747,19 @@
 					"groups": [
 						"SSG_hyper_Move_Symbol"
 					]
+				},
+				{
+					"mastery": false,
+					"variation_index": 15,
+					"variation_no": 5,
+					"name": "Windwalk - Stage 5",
+					"key": "key_alphabet_w",
+					"key_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/Key_Alphabet_W.png\" />",
+					"training_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/GameUI_Tag/skillability_29.png\" /><br/>Windwalk",
+					"skill_icon_desc": "<img src=\"http://static.ncsoft.com/bns_resource/ui_resource/raw/default_icon_00_crop_448x128x64x64.png\" />",
+					"groups": [
+						"SSG_hyper_Move_Symbol"
+					]
 				}
 			]
 		}
