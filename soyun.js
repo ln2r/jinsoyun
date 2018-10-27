@@ -455,6 +455,30 @@ async function getElementalDamage(activeElement, characterData){
 	return elementalDamage;
 }
 
+// getting user input
+function getUserInput(text){
+    var text = text.toString().split(" ");
+		text = text.splice(1);
+
+    var userInput = "";
+
+    if(text.length > 1){
+        for(var i = 0; i < text.length; i++){
+            userInput = userInput +" "+ text[i];
+        }
+        userInput = userInput.trim();
+    }else{
+        userInput = text[0];
+    }
+	
+	if(userInput == "" || userInput == null){
+		return userInput;
+	}else{
+		return userInput.replace(/(^|\s)\S/g, l => l.toUpperCase());
+	}
+	
+}
+
 // Discord stuff start here
 
 // Bot token here
@@ -466,6 +490,7 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN).catch(error => {
 clientDiscord.on("ready", async () => {
 	var apiStatus = await getAPIStatus();
 	var apiAdress = config.API_ADDRESS;
+	var packageFile = await getFileData("package.json");
 
 	// statuspage stuff
 	var discordStatus = await getSiteData(config.API_ADDRESS[3].address); 
@@ -475,7 +500,7 @@ clientDiscord.on("ready", async () => {
 	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 		.catch(console.error);
 	
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Bot service: Started");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+packageFile.name+" version "+packageFile.version+" started");
 	if(config.ARCHIVING == false){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Archiving system is disabled");
 	}
@@ -560,7 +585,7 @@ clientDiscord.on("message", async (message) => {
 			// Connection test
 			case 'soyun':
 				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `!username "desired nickname"`\n- Class: `!class "desired class"`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who "character name"`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market "item name"`\n- Current Event `!event` or `!event tomorrow`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Bot and API status `!soyun status`\n- Try Me! `!soyun`';
+				var soyunHelpTxt = '**Account**\n- Nickname: `!username desired nickname`\n- Class: `!class desired class`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who character name`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market item name`\n- Current Event `!event` or `!event tomorrow`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Bot and API status `!soyun status`\n- Try Me! `!soyun`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -752,34 +777,28 @@ clientDiscord.on("message", async (message) => {
 			
 			// Username change
 			case 'username':
-				var usernameQuerry = message.toString().substring(1).split('"');
-				var usernameValue = (usernameQuerry[1]);
-				
-				// capitalizing
-				usernameValue = usernameValue.replace(/(^|\s)\S/g, l => l.toUpperCase());
+				var usernameQuerry = getUserInput(message);
 
 				// Changing message author username
-				message.guild.members.get(message.author.id).setNickname(usernameValue);
-				message.channel.send("Your username changed to "+usernameValue);
+				message.guild.members.get(message.author.id).setNickname(usernameQuerry);
+				message.channel.send("Your username changed to "+usernameQuerry);
 
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: username change command received");
 			break;
 			
 			// Class change
 			case 'class':
-				var classQuerry = message.toString().substring(1).split('"');
-				var classValue = (classQuerry[1]);
-				var queryStatus;
-				var i; // for loop, ignore
+				var classQuerry = getUserInput(message);
+					classQuerry = classQuerry.toLowerCase(); // Converting class value to lower case so input wont be missmatched
 
-				classValue = classValue.toLowerCase(); // Converting class value to lower case so input wont be missmatched
+				var queryStatus;				
 
 				// Removing user current class
 				// I know this is stupid way to do it, but it have to do for now
-				for(i = 0; i < classArr.length;){
+				for(var i = 0; i < classArr.length;){
 					// Class input verification (inefficient af)
-					if(classValue == classArr[i]){
+					if(classQuerry == classArr[i]){
 						queryStatus = true;
 					};
 					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == classArr[i]));					
@@ -789,10 +808,10 @@ clientDiscord.on("message", async (message) => {
 				// Checking the verification
 				if(queryStatus == true){
 					// Adding new role to user according their command
-					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classValue));
+					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classQuerry));
 
 					// Telling the user class has been changed
-					message.channel.send("Your class changed to **"+classValue+"**");
+					message.channel.send("Your class changed to **"+classQuerry+"**");
 					payloadStatus = "received";
 					queryStatus = false;
 				}else{
@@ -801,7 +820,7 @@ clientDiscord.on("message", async (message) => {
 					queryStatus = false;
 				}
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: class change command received");
 			break;
 
 			case 'twcon':
@@ -1172,20 +1191,19 @@ clientDiscord.on("message", async (message) => {
 				try{
 					message.channel.startTyping();
 
-					var whoQuerry = message.toString().substring(1).split('"');
-						whoQuerry = whoQuerry.splice(1);
+					var whoQuerry = getUserInput(message);
 
-					if(whoQuerry[0] == null){
+					if(whoQuerry == null || whoQuerry == ""){
 						whoQuerry = [message.member.nickname];
 					}				
 
-					var silveressQuerry = silveressNA+whoQuerry[0]; // for the querry
+					var silveressQuerry = silveressNA+whoQuerry; // for the querry
 					var charaData = await getSiteData(silveressQuerry);
-					var charaClassValue = charaData.playerClass.toLowerCase().replace(" ", "");				
-					var skillsetData = await getSkillset(charaClassValue, charaData.activeElement, charaData.characterName)
+					var characlassQuerry = charaData.playerClass.toLowerCase().replace(" ", "");				
+					var skillsetData = await getSkillset(characlassQuerry, charaData.activeElement, charaData.characterName)
 					var elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
 
-					var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry[0]; // for author url so user can look at more detailed version
+					var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry; // for author url so user can look at more detailed version
 						bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 					
 					message.channel.stopTyping();
@@ -1262,9 +1280,7 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
-				var marketQuery = message.toString().substring(1).split('"');
-					marketQuery = marketQuery.splice(1); // removing the command text
-					marketQuery = setTextFormat(marketQuery[0]);
+				var marketQuery = getUserInput(message); // getting the user input
 
 				var marketDataPath = "./data/list-market-data.json";
 				var marketData = await getFileData(marketDataPath);	

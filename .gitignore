@@ -6,3 +6,7 @@ secret.json
 
 # Market data archive directory
 archive/
+
+#misc file
+.dropbox
+desktop.ini
