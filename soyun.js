@@ -1285,6 +1285,7 @@ clientDiscord.on("message", async (message) => {
 				var marketDataPath = "./data/list-market-data.json";
 				var marketData = await getFileData(marketDataPath);	
 				var marketDataValue = "";
+				var marketDataItemsCount = "";
 
 				// item exception
 				if(marketQuery == "Soulstone"){
@@ -1295,14 +1296,22 @@ clientDiscord.on("message", async (message) => {
 
 				var imgSource = "https://cdn.discordapp.com/attachments/426043840714244097/493252746087235585/0ig1OR0.png"; // default image for when data not found
 
+				if(marketItemIndex.length >= 5){
+					var marketDataItems = 5;
+					marketDataItemsCount = "\n**Showing "+marketDataItems+" from "+marketItemIndex.length+" total results*\n";
+				}else{
+					var marketDataItems = marketItemIndex.length;
+				}
+
+				var dataAge = marketData[0].updateTime;
+
 				// getting set item of data
-				for(var i = 0; i < marketItemIndex.length; i++){
+				for(var i = 0; i < marketDataItems; i++){
 					if(marketData.length != 0){
 						var priceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
 
 						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+priceStatus[0]+" "+priceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
 
-						fetchTime = marketData[0].updateTime;
 						imgSource = marketData[marketItemIndex[0]].img;
 					}
 				}
@@ -1311,23 +1320,17 @@ clientDiscord.on("message", async (message) => {
 					marketDataValue = "*No result on **"+marketQuery+"**\nThe item is either untradable, not in marketplace or maybe it doesn't exist*"
 				}
 
-				if(marketData == null){
-					var fetchTime = Date.now();
-				}else{
-					var fetchTime = fetchTime;
-				}
-
 				message.channel.send({
 					"embed": {
 						"author":{
 							"name": "Marketplace - Search result of "+marketQuery,
 							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
 						},
-						"description": marketDataValue + "\n`*Data updated every hour`",
+						"description": marketDataValue,
 						"color": 16766720,
 						"footer": {
 							"icon_url": "https://slate.silveress.ie/images/logo.png",
-							"text": "Powered by Silveress's BnS API - Retrieved at "+dateformat(fetchTime, "UTC:dd-mm-yy @ hh:MM")+" UTC"
+							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ hh:MM")+" UTC"
 						},
 						"thumbnail": {
 							"url": imgSource
