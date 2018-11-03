@@ -37,10 +37,6 @@ var twtTimestamp;
 var twtColor;
 var twtFilter;
 
-// silveress API point
-const silveressNA = config.API_ADDRESS[0].address;
-const silveressItem = config.API_ADDRESS[2].address;
-
 // Soyun activity
 var statusRandom = 0;
 
@@ -337,8 +333,10 @@ function setTextFormat(text){
 }
 						
 async function getAPIStatus(){
+	var configData = await getFileData("./config.json");
+
 	var apiStatus = [];
-	var apiAdress = config.API_ADDRESS;
+	var apiAdress = configData.API_ADDRESS;
 
 	await https.get(apiAdress[0].address, function (res) {
 		apiStatus[0] = "Operational";
@@ -479,6 +477,12 @@ function getUserInput(text){
 	
 }
 
+// getting configuration file
+async function getConfigFile(){
+	var configData = await getFileData("./config.json");
+	return configData;
+}
+
 // Discord stuff start here
 
 // Bot token here
@@ -488,20 +492,29 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN).catch(error => {
 
 // Starting up the bot
 clientDiscord.on("ready", async () => {
+	var configData = await getFileData("./config.json");
+	
 	var apiStatus = await getAPIStatus();
-	var apiAdress = config.API_ADDRESS;
+	var apiAdress = configData.API_ADDRESS;
 	var packageFile = await getFileData("package.json");
 
 	// statuspage stuff
-	var discordStatus = await getSiteData(config.API_ADDRESS[3].address); 
-	var twitterStatus = await getSiteData(config.API_ADDRESS[4].address);
+	var discordStatus = await getSiteData(configData.API_ADDRESS[3].address); 
+	var twitterStatus = await getSiteData(configData.API_ADDRESS[4].address);
 
 	clientDiscord.user.setUsername("Jinsoyun");
-	clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
+
+	if(configData.MAINTENANCE_MODE == false){
+		clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 		.catch(console.error);
+	}else{
+		clientDiscord.user.setPresence({ game: { name: 'MAINTENANCE MODE [!]' }, status: 'dnd' })
+		.catch(console.error);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Maintenance mode is enabled");
+	}	
 	
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+packageFile.name+" version "+packageFile.version+" started");
-	if(config.ARCHIVING == false){
+	if(configData.ARCHIVING == false){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Archiving system is disabled");
 	}
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
@@ -515,12 +528,14 @@ clientDiscord.on("ready", async () => {
 });
 
 // User joined the guild
-clientDiscord.on("guildMemberAdd", (member) => {
+clientDiscord.on("guildMemberAdd", async (member) => {
+	var configData = await getFileData("./config.json");
+
 	// Add 'cricket' role so new member so they cant access anything until they do !join for organizing reason
 	member.addRole(member.guild.roles.find(x => x.name == "cricket"));
 	
 	// Welcoming message and guide to join
-	member.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
+	member.guild.channels.find(x => x.name == configData.DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
 
 	// Console logging
 	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" has joined");
@@ -529,11 +544,14 @@ clientDiscord.on("guildMemberAdd", (member) => {
 
 // User left the guild (kicked or just left)
 clientDiscord.on("guildMemberRemove", async (member) => {
+	var configData = await getFileData("./config.json");
+	var silveressNA = configData.API_ADDRESS[0].address;
+
 	var silveressQuerry = silveressNA+member.displayName; // for the querry
 	var charaData = await getSiteData(silveressQuerry);
 
 	try{
-		member.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+		member.guild.channels.find(x => x.name == configData.DEFAULT_MEMBER_LOG).send({
 			"embed":{
 				"color": 15605837,
 				"author":{
@@ -552,8 +570,10 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 });
 
 clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
+	var configData = await getFileData("./config.json");
+
 	try{
-		oldMember.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+		oldMember.guild.channels.find(x => x.name == configData.DEFAULT_MEMBER_LOG).send({
 			"embed":{
 				"color": 16574595,
 				"author":{
@@ -584,6 +604,8 @@ clientDiscord.on("message", async (message) => {
         switch(cmd) {
 			// Connection test
 			case 'soyun':
+				var configData = await getFileData("./config.json");
+
 				var soyunQuerry = message.toString().substring(1).split(' ');
 				var soyunHelpTxt = '**Account**\n- Nickname: `!username desired nickname`\n- Class: `!class desired class`\n\n**Blade & Soul**\n- Character Search: `!who` or `!who character name`\n- Daily challenges `!daily` or `!daily tomorrow`\n- Weekly challenges `!weekly`\n- *Koldrak\'s Lair*  time: `!koldrak`\n- Marketplace `!market item name`\n- Current Event `!event` or `!event tomorrow`\n\n**Miscellaneous**\n- Pick: `!pick "item a" or "item b"`\n- Roll dice: `!roll` or `!roll (start number)-(end number)` example: `!roll 4-7`\n- Commands list: `!soyun help`\n- Bot and API status `!soyun status`\n- Try Me! `!soyun`';
 
@@ -591,7 +613,7 @@ clientDiscord.on("message", async (message) => {
 
 				switch(soyunQuerry[0]){
 					case 'help':
-						if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+						if(message.channel.name == configData.DEFAULT_ADMIN_CHANNEL){
 							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- Announcement: `!say "title" "content"`';
 						};
 
@@ -602,16 +624,18 @@ clientDiscord.on("message", async (message) => {
 
 					case 'activity':	
 						try{
-							switch(statusRandom){
-								case 0:
-									clientDiscord.user.setActivity('!soyun help', {type: 'LISTENING' });
-									statusRandom = 1;
-								break;
-								
-								case 1:
-									clientDiscord.user.setActivity('with Hongmoon School', {type: 'PLAYING'});
-									statusRandom = 0;
-								break;
+							if(configData.MAINTENANCE_MODE == false){
+								switch(statusRandom){
+									case 0:
+										clientDiscord.user.setActivity('!soyun help', {type: 'LISTENING' });
+										statusRandom = 1;
+									break;
+									
+									case 1:
+										clientDiscord.user.setActivity('with Hongmoon School', {type: 'PLAYING'});
+										statusRandom = 0;
+									break;
+								}
 							}
 						}catch(error){
 							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to change bot activity, "+error);	
@@ -627,15 +651,15 @@ clientDiscord.on("message", async (message) => {
 						*/
 
 						// statuspage stuff
-						var discordStatus = await getSiteData(config.API_ADDRESS[3].address);
-						var twitterStatus = await getSiteData(config.API_ADDRESS[4].address);
+						var discordStatus = await getSiteData(configData.API_ADDRESS[3].address);
+						var twitterStatus = await getSiteData(configData.API_ADDRESS[4].address);
 						var marketData = await getFileData("./data/list-market-data.json");	
 						var soyunPackageData = await getFileData("./package.json");
 						     
 						  
 						var apiStatus = [];
 						var apiStatusList = [];
-						var apiAdress = config.API_ADDRESS;
+						var apiAdress = configData.API_ADDRESS;
 						//var idx = 0;
 
 						var apiStatus = await getAPIStatus();
@@ -706,6 +730,9 @@ clientDiscord.on("message", async (message) => {
 				var joinQuerry = message.toString().substring(1).split('"');
 				var joinUsername = (joinQuerry[1]);
 
+				var configData = await getFileData("./config.json");
+				var silveressNA = configData.API_ADDRESS[0].address;
+
 				var queryStatus = false;
 				
 				try{
@@ -738,7 +765,7 @@ clientDiscord.on("message", async (message) => {
 						message.guild.members.get(message.author.id).setNickname(joinUsername);
 
 						// Welcoming message on general channel
-						message.guild.channels.find(x => x.name == config.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+						message.guild.channels.find(x => x.name == configData.DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 						payloadStatus = "received";
 						queryStatus = false;
 
@@ -746,7 +773,7 @@ clientDiscord.on("message", async (message) => {
 						var charaData = await getSiteData(silveressQuerry);
 
 						try{
-							message.guild.channels.find(x => x.name == config.DEFAULT_MEMBER_LOG).send({
+							message.guild.channels.find(x => x.name == configData.DEFAULT_MEMBER_LOG).send({
 								"embed":{
 									"color": 1879160,
 									"author":{
@@ -824,12 +851,14 @@ clientDiscord.on("message", async (message) => {
 			break;
 
 			case 'twcon':
+				var configData = await getFileData("./config.json");
+
 				// Twitter's tweet output
 				clientDiscord.guilds.map((guild) => {
 					let found = 0;
 					guild.channels.map((ch) =>{
 						if(found == 0){
-							if(ch.name == config.DEFAULT_NEWS_CHANNEL){
+							if(ch.name == configData.DEFAULT_NEWS_CHANNEL){
 								ch.send({
 									"embed":{
 										"color": twtColor,
@@ -856,7 +885,9 @@ clientDiscord.on("message", async (message) => {
 			
 			// Writing message via bot for announcement or notice, Admin only
 			case 'say':
-				if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+				var configData = await getFileData("./config.json");
+
+				if(message.channel.name == configData.DEFAULT_ADMIN_CHANNEL){
 					var sayQuerry = message.toString().substring(1).split('"');
 
 					var sayTitle = (sayQuerry[1]);
@@ -868,7 +899,7 @@ clientDiscord.on("message", async (message) => {
 						}
 
 					// Writing the content
-					message.guild.channels.find(x => x.name == config.DEFAULT_NEWS_CHANNEL).send({
+					message.guild.channels.find(x => x.name == configData.DEFAULT_NEWS_CHANNEL).send({
 						"embed":{
 							"color": 16753920,
 							"timestamp" : new Date(),
@@ -891,7 +922,9 @@ clientDiscord.on("message", async (message) => {
 
 			// First time setup (making roles and necesarry channels), Admin only
 			case 'setup':
-				if(message.channel.name == config.DEFAULT_ADMIN_CHANNEL){
+				var configData = await getFileData("./config.json");
+
+				if(message.channel.name == configData.DEFAULT_ADMIN_CHANNEL){
 					// Making the roles with class array as reference
 					for(i = 0; i < classArr.length;){
 						message.guild.createRole({
@@ -903,9 +936,9 @@ clientDiscord.on("message", async (message) => {
 					};
 
 					// Making "news" channel
-					message.guild.createChannel(config.DEFAULT_NEWS_CHANNEL, "text");
+					message.guild.createChannel(configData.DEFAULT_NEWS_CHANNEL, "text");
 					// Console logging
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+config.DEFAULT_NEWS_CHANNEL+" channel created");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+configData.DEFAULT_NEWS_CHANNEL+" channel created");
 					
 				};	
 				// Console logging
@@ -958,6 +991,7 @@ clientDiscord.on("message", async (message) => {
 				var rewards = await getFileData("./data/list-challenges-rewards.json");
 				var event = await getFileData("./data/data-event.json");
 				var quests = await getFileData("./data/list-quests.json");
+				var configData = await getFileData("./config.json");
 
 				var dcDate = new Date();
 				// Getting the current date
@@ -1064,7 +1098,7 @@ clientDiscord.on("message", async (message) => {
 						let found = 0;
 						guild.channels.map((ch) =>{
 							if(found == 0){
-								if(ch.name == config.DEFAULT_PARTY_CHANNEL){
+								if(ch.name == configData.DEFAULT_PARTY_CHANNEL){
 									ch.send("Daily challenges has been reset, today's challenges are",{
 										"embed": {
 											"author":{
@@ -1100,7 +1134,8 @@ clientDiscord.on("message", async (message) => {
 			case 'koldrak':
 				var koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
-				var koldrakTime = await getFileData("./data/koldrak-time.json");	
+				var koldrakTime = await getFileData("./data/koldrak-time.json");
+				var configData = await getFileData("./config.json");	
 				
 				// Cheating the search so it will still put hour even if the smallest time is 24
 				var koldrakTimeLeft = 25;
@@ -1132,7 +1167,7 @@ clientDiscord.on("message", async (message) => {
 							let found = 0;
 							guild.channels.map((ch) =>{
 								if(found == 0){
-									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
+									if(ch.name == configData.DEFAULT_PARTY_CHANNEL){
 										ch.send({
 											"embed":{
 												"color": 8388736,
@@ -1188,6 +1223,9 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching and showing character information, can be triggered via !who for character that have the same name with the nickname or use !who "chara name" for specific one
 			case 'who':
+				var configData = await getFileData("./config.json");
+				var silveressNA = configData.API_ADDRESS[0].address;
+
 				try{
 					message.channel.startTyping();
 
@@ -1199,7 +1237,7 @@ clientDiscord.on("message", async (message) => {
 
 					var silveressQuerry = silveressNA+whoQuerry; // for the querry
 					var charaData = await getSiteData(silveressQuerry);
-					var characlassQuerry = charaData.playerClass.toLowerCase().replace(" ", "");				
+					var characlassQuerry = charaData.playerClass.toLowerCase().replace(/\s/g, '');				
 					var skillsetData = await getSkillset(characlassQuerry, charaData.activeElement, charaData.characterName)
 					var elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
 
@@ -1260,7 +1298,7 @@ clientDiscord.on("message", async (message) => {
 							"description": "",
 							"color": Math.floor(Math.random() * 16777215) - 0,
 							"footer": {
-								"icon_url": "https://slate.silveress.ie/images/logo.png",
+								"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
 								"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
 							},
 							"thumbnail": {
@@ -1329,7 +1367,7 @@ clientDiscord.on("message", async (message) => {
 						"description": marketDataValue,
 						"color": 16766720,
 						"footer": {
-							"icon_url": "https://slate.silveress.ie/images/logo.png",
+							"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
 							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ hh:MM")+" UTC"
 						},
 						"thumbnail": {
@@ -1344,6 +1382,7 @@ clientDiscord.on("message", async (message) => {
 			// for getting the current event information
 			case 'event':
 				var event = await getFileData("./data/data-event.json");
+				var configData = await getFileData("./config.json");
 
 				var eventToDo = event.rewards.sources;
 				var eventQuery = message.toString().substring(1).split(' ');
@@ -1390,8 +1429,8 @@ clientDiscord.on("message", async (message) => {
 							let found = 0;
 							guild.channels.map((ch) =>{
 								if(found == 0){
-									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
-										ch.send(event.name+" event is on-going, here\'s the details",{
+									if(ch.name == configData.DEFAULT_PARTY_CHANNEL){
+										ch.send(event.name+" event is on-going, here\'s the summary",{
 											"embed": {
 												"author":{
 													"name": "Current Event",
@@ -1407,7 +1446,7 @@ clientDiscord.on("message", async (message) => {
 												},
 												"fields":[
 													{
-														"name": dateformat(currentDate, "UTC:dddd")+" Quests/Dungeons List (Location - Quest `Type`)",
+														"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
 														"value": eventQuests 								
 													}
 												]
@@ -1436,7 +1475,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"fields":[
 									{
-										"name": dateformat(currentDate, "UTC:dddd")+" Quests/Dungeons List (Location - Quest `Type`)",
+										"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
 										"value": eventQuests 								
 									}
 								]
@@ -1450,6 +1489,7 @@ clientDiscord.on("message", async (message) => {
 			case 'weekly':
 				var rewards = await getFileData("./data/list-challenges-rewards.json");
 				var quests = await getFileData("./data/list-quests.json");
+				var configData = await getFileData("./config.json");
 
 				var weeklyQuery = message.toString().substring(1).split(' ');
 					weeklyQuery = weeklyQuery.splice(1);
@@ -1471,7 +1511,7 @@ clientDiscord.on("message", async (message) => {
 							let found = 0;
 							guild.channels.map((ch) =>{
 								if(found == 0){
-									if(ch.name == config.DEFAULT_PARTY_CHANNEL){
+									if(ch.name == configData.DEFAULT_PARTY_CHANNEL){
 										ch.send("Weekly challenges has been reset, this week challenges are",{
 											"embed": {
 												"author":{
@@ -1529,6 +1569,10 @@ clientDiscord.on("message", async (message) => {
 			// data gathering start from here
 			case 'getupdate':				
 				var classData = await getFileData("./data/list-classdata-source.json");
+				var configData = await getFileData("./config.json");
+
+				var silveressItem = configData.API_ADDRESS[2].address;
+
 				var errCount = 0;
 				var errLocation = [];
 				var errMsg = "";
@@ -1596,7 +1640,7 @@ clientDiscord.on("message", async (message) => {
 				}
 				
 				try{
-					if(message.channel.name == "high-council"){
+					if(message.channel.name == configData.DEFAULT_ADMIN_CHANNEL){
 						message.channel.send("Item and class data updated manually with "+errCount+" issue(s)");
 					}
 				}catch(error){
@@ -1611,7 +1655,9 @@ clientDiscord.on("message", async (message) => {
 
 				var itemData = await getFileData("./data/list-item.json"); //item data
 				var marketDataStored = await getFileData("./data/list-market-data.json"); //stored market data
-				var marketDataCurrent = await getSiteData(config.API_ADDRESS[1].address); //fecthing the current data (one listing, lowest)
+				var configData = await getFileData("./config.json");
+
+				var marketDataCurrent = await getSiteData(configData.API_ADDRESS[1].address); //fecthing the current data (one listing, lowest)
 
 				var marketListCurrent = [];
 				var storedPriceEach = 0;	
@@ -1665,13 +1711,13 @@ clientDiscord.on("message", async (message) => {
 					"id": 0000000,
 					"name": "meta-data",
 					"updateTime": updateDate,
-					"dataAge": marketDataCurrent[1].ISO,
+					//"dataAge": marketDataCurrent[1].ISO, disabled until properly implemented
 					"dataUpdated": foundCount,
 					"dataCount": marketListCurrent.length - 1
 				}
 
 				// checking if archive directory exist or not
-				if(config.ARCHIVING == true){
+				if(configData.ARCHIVING == true){
 					if(!fs.existsSync('./archive')){
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: archive directory not found, creating the directory now...");
 						fs.mkdirSync('./archive', function (err) {
@@ -1700,7 +1746,7 @@ clientDiscord.on("message", async (message) => {
 				});
 
 				try{
-					if(message.channel.name == "high-council"){
+					if(message.channel.name == configData.DEFAULT_ADMIN_CHANNEL){
 						message.channel.send(foundCount+" market data updated manually");
 					}
 				}catch(error){
@@ -1758,13 +1804,102 @@ clientDiscord.on("message", async (message) => {
 						},
 						"fields":[
 							{
-								"name": "Today Quests/Dungeons List (Location - Quest `Type`)",
+								"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
 								"value": eventQuests 								
 							}
 						]
 					}	
 				});
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");			
+			break;
+
+			case 'maint':
+				var maintQuery = getUserInput(message);
+				var configData = await getFileData("./config.json");
+
+				switch(maintQuery){
+					case 'Enable':
+						var newconfigFile = {
+							"MAINTENANCE_MODE": true,
+							"ARCHIVING": configData.ARCHIVING,
+							"DEFAULT_TEXT_CHANNEL" : configData.DEFAULT_TEXT_CHANNEL,
+							"DEFAULT_MEMBER_GATE" : configData.DEFAULT_MEMBER_GATE,
+							"DEFAULT_NEWS_CHANNEL": configData.DEFAULT_NEWS_CHANNEL,
+							"DEFAULT_ADMIN_CHANNEL": configData.DEFAULT_ADMIN_CHANNEL,
+							"DEFAULT_PARTY_CHANNEL": configData.DEFAULT_PARTY_CHANNEL,
+							"DEFAULT_MEMBER_LOG": configData.DEFAULT_MEMBER_LOG,
+							"TWITTER_STREAM_ID" : configData.TWITTER_STREAM_ID,
+							"TWITTER_STREAM_SCREENNAME" : configData.TWITTER_STREAM_SCREENNAME,
+							"API_ADDRESS" : configData.API_ADDRESS
+						}
+
+						fs.writeFile('config.json', JSON.stringify(newconfigFile, null, '\t'), function (err) {
+							if(err){
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's an issue when updating 'config.json', "+err);
+								clientDiscord.emit("message", "!err |"+err.stack+"|");
+							}
+						})
+
+						clientDiscord.user.setPresence({ game: { name: 'MAINTENANCE MODE [!]' }, status: 'dnd' })
+							.catch(console.error);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Maintenance mode is enabled");	
+					break;
+					case 'Disable':
+						var newconfigFile = {
+							"MAINTENANCE_MODE": false,
+							"ARCHIVING": configData.ARCHIVING,
+							"DEFAULT_TEXT_CHANNEL" : configData.DEFAULT_TEXT_CHANNEL,
+							"DEFAULT_MEMBER_GATE" : configData.DEFAULT_MEMBER_GATE,
+							"DEFAULT_NEWS_CHANNEL": configData.DEFAULT_NEWS_CHANNEL,
+							"DEFAULT_ADMIN_CHANNEL": configData.DEFAULT_ADMIN_CHANNEL,
+							"DEFAULT_PARTY_CHANNEL": configData.DEFAULT_PARTY_CHANNEL,
+							"DEFAULT_MEMBER_LOG": configData.DEFAULT_MEMBER_LOG,
+							"TWITTER_STREAM_ID" : configData.TWITTER_STREAM_ID,
+							"TWITTER_STREAM_SCREENNAME" : configData.TWITTER_STREAM_SCREENNAME,
+							"API_ADDRESS" : configData.API_ADDRESS
+						}
+
+						fs.writeFile('config.json', JSON.stringify(newconfigFile, null, '\t'), function (err) {
+							if(err){
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's an issue when updating 'config.json', "+err);
+								clientDiscord.emit("message", "!err |"+err.stack+"|");
+							}
+						})
+
+						clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
+							.catch(console.error);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Maintenance mode is disabled");		
+					break;
+
+					// this command is for updating the current event data with the updated one
+					case 'Event':
+						if(configData.MAINTENANCE_MODE == true){
+							var nextEvent = await getFileData("./data/data-event-next.json");
+
+							var currentEvent = {
+								"name": nextEvent.name,
+								"duration": nextEvent.duration,
+								"redeem": nextEvent.redeem,
+								"url": nextEvent.url,
+								"rewards": nextEvent.rewards,
+								"typeMean": nextEvent.typeMean,
+								"quests": nextEvent.quests
+							}
+
+							fs.writeFile('./data/data-event.json', JSON.stringify(currentEvent, null, '\t'), function (err) {
+								if(err){
+									console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's an issue when updating 'data-event.json', "+err);
+									clientDiscord.emit("message", "!err |"+err.stack+"|");
+								}
+							})
+
+							message.channel.send("Event data has been updated");
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+nextEvent.name+" event data is now live");
+						}else{
+							message.channel.send("Maintenance mode is disabled, enable maintenance mode to use this command");
+						}
+					break;
+				}
 			break;
 
 			// For error notification so I know when something went wrong

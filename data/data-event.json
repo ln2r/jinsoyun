@@ -1,57 +1,67 @@
 {
-    "name": "Blade & Ghoul",
-    "duration": "October 17 – November 7",
-    "redeem": "November 7 – December 5",
-    "url": "https://www.bladeandsoul.com/en/news/blade-ghoul-comes-alive-october-17/",
-    "rewards": {
-        "sources": ["Daily Challenges", "Zaiwei Ruins"],
-        "name": ["Killer Coin", "Thriller Coin"],
-        "currency" : "Killer Coin, Thriller Coin",
-        "daily": "Killer Coin x2"
-    },
-    "type-mean": ["0 Daily Quest", "1 Dynamic Quest", "2 Event Quest"],
-    "quests": [
-        {
-            "location": "Zaiwei Ruins",
-            "quest": "To the Pyre",
-            "day": [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ],
-            "type": 0 
-        },
-        {
-            "location": "Zaiwei Ruins",
-            "quest": "Taking The Sting Out",
-            "day": [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ],
-            "type": 0  
-        },
-        {
-            "location": "Zaiwei Ruins",
-            "quest": "Murk and the Mire",
-            "day": [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ],
-            "type": 0 
-        }
-    ]
+	"name": "Blade & Ghoul",
+	"duration": "October 17 – November 7",
+	"redeem": "November 7 – December 5",
+	"url": "https://www.bladeandsoul.com/en/news/blade-ghoul-comes-alive-october-17/",
+	"rewards": {
+		"sources": [
+			"Daily Challenges",
+			"Zaiwei Ruins"
+		],
+		"name": [
+			"Killer Coin",
+			"Thriller Coin"
+		],
+		"currency": "Killer Coin, Thriller Coin",
+		"daily": "Killer Coin x2"
+	},
+	"typeMean": [
+		"0 Daily Quest",
+		"1 Dynamic Quest",
+		"2 Event Quest"
+	],
+	"quests": [
+		{
+			"location": "Zaiwei Ruins",
+			"quest": "To the Pyre",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 0
+		},
+		{
+			"location": "Zaiwei Ruins",
+			"quest": "Taking The Sting Out",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 0
+		},
+		{
+			"location": "Zaiwei Ruins",
+			"quest": "Murk and the Mire",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 0
+		}
+	]
 }
