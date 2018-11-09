@@ -1,11 +1,13 @@
 {
 	"MAINTENANCE_MODE": false,
 	"ARCHIVING": true,
+	"DEFAULT_BOT_ADMIN": "132712988875423745",
+	"DEFAULT_PREFIX": "!",
 	"DEFAULT_TEXT_CHANNEL": "random-chats",
-	"DEFAULT_MEMBER_GATE": "random-chats",
+	"DEFAULT_MEMBER_GATE": "introduce-yourself",
 	"DEFAULT_NEWS_CHANNEL": "news",
 	"DEFAULT_ADMIN_CHANNEL": "high-council",
-	"DEFAULT_PARTY_CHANNEL": "party-forming",
+	"DEFAULT_PARTY_CHANNEL": "party-forming-test",
 	"DEFAULT_MEMBER_LOG": "activity",
 	"TWITTER_STREAM_ID": "3521186773, 819625154",
 	"TWITTER_STREAM_SCREENNAME": [

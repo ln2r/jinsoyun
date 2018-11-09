@@ -1,0 +1,41 @@
+[
+	{
+		"GUILD_NAME": "Wunder",
+		"GUILD_ID": "426036695931158539",
+		"GUILD_ICON": "https://cdn.discordapp.com/icons/426036695931158539/08f2f68fe2be4d1132ba2789a4c01d39.jpg",
+		"SETUP_STATUS": true,
+		"PREFIX": "!",
+		"DEFAULT_TEXT_CHANNEL": "random-chats",
+		"DEFAULT_MEMBER_GATE": "introduce-yourself",
+		"DEFAULT_NEWS_CHANNEL": "news",
+		"DEFAULT_ADMIN_CHANNEL": "high-council",
+		"DEFAULT_PARTY_CHANNEL": "party-forming",
+		"DEFAULT_MEMBER_LOG": "activity"
+	},
+	{
+		"GUILD_NAME": "Grumpy Butts",
+		"GUILD_ID": "434004985227771905",
+		"GUILD_ICON": "n/a",
+		"SETUP_STATUS": true,
+		"PREFIX": "!",
+		"DEFAULT_TEXT_CHANNEL": "random-chats",
+		"DEFAULT_MEMBER_GATE": "introduce-yourself",
+		"DEFAULT_NEWS_CHANNEL": "news",
+		"DEFAULT_ADMIN_CHANNEL": "high-council",
+		"DEFAULT_PARTY_CHANNEL": "party-forming",
+		"DEFAULT_MEMBER_LOG": "activity"
+	},
+	{
+		"GUILD_NAME": "Black Citadel's Server",
+		"GUILD_ID": "398385609565011970",
+		"GUILD_ICON": "n/a",
+		"SETUP_STATUS": true,
+		"PREFIX": "!",
+		"DEFAULT_TEXT_CHANNEL": "disable",
+		"DEFAULT_MEMBER_GATE": "disable",
+		"DEFAULT_NEWS_CHANNEL": "news",
+		"DEFAULT_ADMIN_CHANNEL": "disable",
+		"DEFAULT_PARTY_CHANNEL": "party-forming",
+		"DEFAULT_MEMBER_LOG": "disable"
+	}
+]

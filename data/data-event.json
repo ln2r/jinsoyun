@@ -1,19 +1,28 @@
 {
-	"name": "Blade & Ghoul",
-	"duration": "October 17 – November 7",
-	"redeem": "November 7 – December 5",
-	"url": "https://www.bladeandsoul.com/en/news/blade-ghoul-comes-alive-october-17/",
+	"name": "Golden Harvest Festival",
+	"duration": "November 7 – December 5",
+	"redeem": "December 5 – January 16",
+	"url": "https://www.bladeandsoul.com/en/news/the-golden-harvest-festival-returns-november-7/",
 	"rewards": {
 		"sources": [
 			"Daily Challenges",
-			"Zaiwei Ruins"
+			"Solo Dungeon",
+			"Transmutation",
+			"Crafting",
+			"Stomach of Iron Achievement"
 		],
 		"name": [
-			"Killer Coin",
-			"Thriller Coin"
+			"Golden Harvest Crate",
+			"Harvest Wine",
+			"Thanksgiving Invitation",
+			"Hongmoon Jade",
+			"Harvest Feast – Kids’ Table",
+			"Harvest Feast – Grown-Ups’ Table",
+			"Harvest Feast – Elders’ Table",
+			"Thanksgiving Prize Wheel Pouch"
 		],
-		"currency": "Killer Coin, Thriller Coin",
-		"daily": "Killer Coin x2"
+		"currency": "N/A",
+		"daily": "Golden Harvest Crate"
 	},
 	"typeMean": [
 		"0 Daily Quest",
@@ -22,8 +31,8 @@
 	],
 	"quests": [
 		{
-			"location": "Zaiwei Ruins",
-			"quest": "To the Pyre",
+			"location": "Mushin’s Tower",
+			"quest": "16th Floor - 20th Floor",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -36,8 +45,8 @@
 			"type": 0
 		},
 		{
-			"location": "Zaiwei Ruins",
-			"quest": "Taking The Sting Out",
+			"location": "Outlaw Island",
+			"quest": "Boss 1 - 5",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -50,8 +59,8 @@
 			"type": 0
 		},
 		{
-			"location": "Zaiwei Ruins",
-			"quest": "Murk and the Mire",
+			"location": "Circle of Sundering",
+			"quest": "Boss 1 - 4",
 			"day": [
 				"Sunday",
 				"Monday",
