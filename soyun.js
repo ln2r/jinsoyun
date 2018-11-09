@@ -553,11 +553,12 @@ clientDiscord.on("ready", async () => {
 // bot joined the guild
 clientDiscord.on("guildCreate", async (guild) => {
 	var defaultConfig = await getFileData('config.json');
+	var guildConfig = await getFileData('./data/guilds.json');
 	var found = false;
 	
 	for(var i = 0; i < guildConfig.length; i ++){
-		if(message.guild.id == guildConfig[i].GUILD_ID){
-			//found = true;
+		if(guild.id == guildConfig[i].GUILD_ID){
+			found = true;
 		}
 	}
 
@@ -568,19 +569,20 @@ clientDiscord.on("guildCreate", async (guild) => {
 			"GUILD_ICON": guild.iconURL,
 			"SETUP_STATUS": false,
 			"PREFIX": defaultConfig.DEFAULT_PREFIX,
-			"DEFAULT_TEXT_CHANNEL": defaultConfig.DEFAULT_TEXT_CHANNEL,
-			"DEFAULT_MEMBER_GATE": defaultConfig.DEFAULT_MEMBER_GATE,
-			"DEFAULT_NEWS_CHANNEL": defaultConfig.DEFAULT_NEWS_CHANNEL,
-			"DEFAULT_ADMIN_CHANNEL": defaultConfig.DEFAULT_ADMIN_CHANNEL,
-			"DEFAULT_PARTY_CHANNEL": defaultConfig.DEFAULT_PARTY_CHANNEL,
-			"DEFAULT_MEMBER_LOG": defaultConfig.DEFAULT_MEMBER_LOG
+			"DEFAULT_TEXT_CHANNEL": "disable",
+			"DEFAULT_MEMBER_GATE": "disable",
+			"DEFAULT_NEWS_CHANNEL": "disable",
+			"DEFAULT_ADMIN_CHANNEL": "disable",
+			"DEFAULT_PARTY_CHANNEL": "disable",
+			"DEFAULT_MEMBER_LOG": "disable"
 		}
 		
 		guildConfig.push(configData);
 
 		setFileData('./data/guilds.json', guildConfig);
 
-		message.channel.send("Thank you for adding me to the server, default server configuration data has been added. To setup necessary channel do `"+defaultConfig.DEFAULT_PREFIX+"`setup, to see what can be configure use `"+defaultConfig.DEFAULT_PREFIX+"debug config`");
+		guild.members.find(x => x.id == guild.ownerID).send("Thank you for adding me to the server, default server configuration data has been added. To setup necessary channel do `"+defaultConfig.DEFAULT_PREFIX+"setup`, to see what can be configure use `"+defaultConfig.DEFAULT_PREFIX+"debug config`");
+;
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: Jinsoyun joined "+guild.name+", config data has been set to default");
 	}		
 });
@@ -1042,9 +1044,16 @@ clientDiscord.on("message", async (message) => {
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" did first time setup, "+message.guild.name+" setup status changed to true");
 
 					guildConfig[guildConfigIdx].SETUP_STATUS = true;
+					guildConfig[guildConfigIdx].DEFAULT_TEXT_CHANNEL = defaultConfig.DEFAULT_TEXT_CHANNEL;
+					guildConfig[guildConfigIdx].DEFAULT_MEMBER_GATE = defaultConfig.DEFAULT_MEMBER_GATE;
+					guildConfig[guildConfigIdx].DEFAULT_NEWS_CHANNEL = defaultConfig.DEFAULT_NEWS_CHANNEL;
+					guildConfig[guildConfigIdx].DEFAULT_ADMIN_CHANNEL = defaultConfig.DEFAULT_ADMIN_CHANNEL;
+					guildConfig[guildConfigIdx].DEFAULT_PARTY_CHANNEL = defaultConfig.DEFAULT_PARTY_CHANNEL;
+					guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG = defaultConfig.DEFAULT_MEMBER_LOG;
+
 					setFileData('./data/guilds.json', guildConfig);
 
-					message.channel.send("All necessary channel created");
+					message.channel.send("All necessary channel created, all channel setting set to default");
 				}else{
 					message.channel.send("I'm sorry you can't do that, this server already done first time setup");
 				}

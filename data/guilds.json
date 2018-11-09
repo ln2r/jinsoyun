@@ -37,5 +37,18 @@
 		"DEFAULT_ADMIN_CHANNEL": "disable",
 		"DEFAULT_PARTY_CHANNEL": "party-forming",
 		"DEFAULT_MEMBER_LOG": "disable"
+	},
+	{
+		"GUILD_NAME": "Rune Removers",
+		"GUILD_ID": "395302963616284683",
+		"GUILD_ICON": "https://cdn.discordapp.com/icons/395302963616284683/041b0c1ae00fadc989378c2f5f10dc47.jpg",
+		"SETUP_STATUS": false,
+		"PREFIX": "!",
+		"DEFAULT_TEXT_CHANNEL": "general",
+		"DEFAULT_MEMBER_GATE": "disable",
+		"DEFAULT_NEWS_CHANNEL": "news",
+		"DEFAULT_ADMIN_CHANNEL": "disable",
+		"DEFAULT_PARTY_CHANNEL": "party-forming",
+		"DEFAULT_MEMBER_LOG": "disable"
 	}
 ]
