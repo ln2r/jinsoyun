@@ -372,20 +372,28 @@ async function getFileData(path){
 async function getDataIndex(query, dataPath){
 	var data = await getFileData(dataPath);	
 	var dataIndex = [];
-	var fuzzTokenSetRatio = 0;
-	var fuzzRatioSimple = 0;
+	var itemFuzzRatioSimple = 0;
+	var itemFuzzRatioSimpleMatch = 0;
+	var i = 0;
 
-	for(var i = 1; i < data.length; i++){	
-		// fuzzy search using fuzzball package
-		if(fuzz.token_set_ratio(query, data[i].name) >= fuzzTokenSetRatio){
-			if(fuzz.ratio(query, data[i].name) >= fuzzRatioSimple || data[i].name.includes(query)){
-				fuzzTokenSetRatio = fuzz.token_set_ratio(query, data[i].name);
-				fuzzRatioSimple = fuzz.ratio(query, data[i].name);
+	while(i < data.length){
+		// data searching using fuzzball package
+		//
+		// checking if there's exact match with the query
+		// if there's one just check the ratio, if not only do ratio check
+		if(fuzz.token_set_ratio(query, data[i].name) == 100){
+			if(fuzz.ratio(query, data[i].name) >= itemFuzzRatioSimpleMatch){
+				itemFuzzRatioSimpleMatch = fuzz.ratio(query, data[i].name);
 				dataIndex[0] = i;
-			}			
-		}			
+			}
+		}else{
+			if(fuzz.ratio(query, data[i].name) >= itemFuzzRatioSimple){
+				itemFuzzRatioSimple = fuzz.ratio(query, data[i].name);
+				dataIndex[0] = i;
+			}
+		}
+		i++
 	}
-
 	return dataIndex;
 }		
 
@@ -2358,7 +2366,7 @@ clientDiscord.on("message", async (message) => {
 								message.channel.send("Maintenance mode is disabled, enable maintenance mode to use this command");
 							}
 
-							// writing when the data got updated
+							// save the time when the data got updated
 							fileData.EVENT_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
 
 							setFileData("./data/data-files.json", fileData);
