@@ -6,6 +6,7 @@ const fs = require('fs');
 const dateformat = require('dateformat');
 const delay = require('delay');
 const https = require('https');
+const fuzz = require('fuzzball');
 
 const secret = require("./secret.json");
 const config = require("./config.json");
@@ -17,9 +18,6 @@ const clientTwitter = new Twitter({
 	access_token_key: secret.TWITTER_ACCESS_TOKEN_KEY,
 	access_token_secret: secret.TWITTER_ACCESS_TOKEN_SECRET
 })
-
-// Default class list
-var classArr = ["blade master", "destroyer", "summoner", "force master", "kung fu master", "assassin", "blade dancer", "warlock", "soul fighter", "gunslinger", "warden"];
 
 // Querry payload status
 var payloadStatus = "rejected";
@@ -153,7 +151,7 @@ function setDataValue(data){
 			data = data;
 		}
 	}catch(error){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to handle fetched data using setDataValue, "+error);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to handle fetched data using setDataValue, "+error);
 		clientDiscord.emit("message", "!err |"+error.stack+"|");
 	}
 	return data;
@@ -183,7 +181,7 @@ async function getSiteData(query) {
 
 		return response.json();
 	}catch(error){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to fetch data using getSiteData, "+error);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getSiteData, "+error);
 		clientDiscord.emit("message", "!err |"+error.stack+"|");
 	}	
 }
@@ -363,32 +361,32 @@ async function getFileData(path){
 		var content = fs.readFileSync(path, 'utf8');
 			content = JSON.parse(content);
 	}catch(error){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to fetch data using getFileData, "+error);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getFileData, "+error);
 		clientDiscord.emit("message", "!err |"+error.stack+"|")
 	};
 
 	return content;
 }
 
-// Getting an array of the location of searched query data
+// Getting the location of searched query data in array
 async function getDataIndex(query, dataPath){
 	var data = await getFileData(dataPath);	
-	var dataIndexArray = [];
-	var idx = 0;
+	var dataIndex = [];
+	var fuzzTokenSetRatio = 0;
+	var fuzzRatioSimple = 0;
 
-	for(var i = 1; i < data.length; i++){
-		var dataSearchName = data[i].name;
-			dataSearchName = dataSearchName.replace("'", "").toLowerCase().split(" ");
-		var dataSearchQuery = query;
-			dataSearchQuery = dataSearchQuery.replace("'", "").toLowerCase().split(" ");
-	
-		if(data[i].name.includes(query)){
-			dataIndexArray[idx] = i;
-			idx++;
-		}				
+	for(var i = 1; i < data.length; i++){	
+		// fuzzy search using fuzzball package
+		if(fuzz.token_set_ratio(query, data[i].name) >= fuzzTokenSetRatio){
+			if(fuzz.ratio(query, data[i].name) >= fuzzRatioSimple || data[i].name.includes(query)){
+				fuzzTokenSetRatio = fuzz.token_set_ratio(query, data[i].name);
+				fuzzRatioSimple = fuzz.ratio(query, data[i].name);
+				dataIndex[0] = i;
+			}			
+		}			
 	}
 
-	return dataIndexArray;
+	return dataIndex;
 }		
 
 function getPriceStatus(priceOld, priceNew){
@@ -427,26 +425,27 @@ async function getElementalDamage(activeElement, characterData){
 	var charaData = characterData;
 	var activeElement = activeElement.toLowerCase();
 
-	var elementalDamage = "No data available";
-
 	switch(activeElement){
 		case 'flame':
-			elementalDamage = charaData.flame + (" ("+(charaData.flameRate*100)+"%)");
+			var elementalDamage = charaData.flame + (" ("+(charaData.flameRate*100).toFixed(2)+"%)");
 		break;
 		case 'frost':
-			elementalDamage = charaData.frost + (" ("+(charaData.frostRate*100)+"%)");
+			var elementalDamage = charaData.frost + (" ("+(charaData.frostRate*100).toFixed(2)+"%)");
 		break;
 		case 'wind':
-			elementalDamage = charaData.wind + (" ("+(charaData.windRate*100)+"%)");
+			var elementalDamage = charaData.wind + (" ("+(charaData.windRate*100).toFixed(2)+"%)");
 		break;
 		case 'earth':
-			elementalDamage = charaData.earth + (" ("+(charaData.earthRate*100)+"%)");
+			var elementalDamage = charaData.earth + (" ("+(charaData.earthRate*100).toFixed(2)+"%)");
 		break;
 		case 'lightning':
-			elementalDamage = charaData.lightning + (" ("+(charaData.lightningRate*100)+"%)");
+			var elementalDamage = charaData.lightning + (" ("+(charaData.lightningRate*100).toFixed(2)+"%)");
 		break;
 		case 'shadow':
-			elementalDamage = charaData.shadow + (" ("+(charaData.shadowRate*100)+"%)");
+			var elementalDamage = charaData.shadow + (" ("+(charaData.shadowRate*100).toFixed(2)+"%)");
+		break;
+		default:
+			var elementalDamage = "No data available";
 		break;
 	}
 
@@ -494,7 +493,7 @@ async function getGuildConfig(id){
 function setFileData(path, data){
 	fs.writeFile(path, JSON.stringify(data, null, '\t'), function (err) {
 		if(err){
-			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's an issue when updating '"+path+"', "+err);
+			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's an issue when updating '"+path+"', "+err);
 			clientDiscord.emit("message", "!err |"+err.stack+"|");
 		}
 	})
@@ -510,12 +509,13 @@ function getGuildName(item, index) {
 
 // Bot token here
 clientDiscord.login(secret.DISCORD_APP_TOKEN).catch(error => {
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to start the bot, "+error);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to start the bot, "+error);
 });
 
 // Starting up the bot
 clientDiscord.on("ready", async () => {
 	var configData = await getFileData("./config.json");
+	var fileData = await getFileData("./data/data-files.json");
 	
 	var apiStatus = await getAPIStatus();
 	var apiAdress = configData.API_ADDRESS;
@@ -533,19 +533,24 @@ clientDiscord.on("ready", async () => {
 	}else{
 		clientDiscord.user.setPresence({ game: { name: 'MAINTENANCE MODE [!]' }, status: 'dnd' })
 		.catch(console.error);
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Maintenance mode is enabled");
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Maintenance mode is enabled");
 	}	
 	
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+packageFile.name+" version "+packageFile.version+" started");
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+packageFile.name+" ver."+packageFile.version+" started");
 	if(configData.ARCHIVING == false){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Archiving system is disabled");
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Archiving system is disabled");
 	}
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
 
 	for(var i = 0; i < 2; i++){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+apiAdress[i].name+" service: "+apiStatus[i]);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+apiAdress[i].name+" service: "+apiStatus[i]);
 	}
+
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Market data last update: "+fileData.MARKET_DATA);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Item data last update: "+fileData.ITEM_DATA);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Class data last update: "+fileData.CLASS_DATA);
+	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Event data last update: "+fileData.EVENT_DATA);
 
 	console.log("");
 });
@@ -569,12 +574,15 @@ clientDiscord.on("guildCreate", async (guild) => {
 			"GUILD_ICON": guild.iconURL,
 			"SETUP_STATUS": false,
 			"PREFIX": defaultConfig.DEFAULT_PREFIX,
-			"DEFAULT_TEXT_CHANNEL": "disable",
-			"DEFAULT_MEMBER_GATE": "disable",
-			"DEFAULT_NEWS_CHANNEL": "disable",
-			"DEFAULT_ADMIN_CHANNEL": "disable",
-			"DEFAULT_PARTY_CHANNEL": "disable",
-			"DEFAULT_MEMBER_LOG": "disable"
+			"CHANNEL_DAILY_ANNOUNCE": "disable",
+			"CHANNEL_WEEKLY_ANNOUNCE": "disable",
+			"CHANNEL_EVENT_ANNOUNCE": "disable",
+			"CHANNEL_NEWS_ANNOUNCE": "disable",
+			"CHANNEL_KOLDRAK_ANNOUNCE": "disable",
+			"CHANNEL_TEXT_MAIN": "disable",
+			"CHANNEL_MEMBER_GATE": "disable",
+			"CHANNEL_ADMIN": "disable",
+			"CHANNEL_MEMBERACTIVITY": "disable",	
 		}
 		
 		guildConfig.push(configData);
@@ -583,27 +591,26 @@ clientDiscord.on("guildCreate", async (guild) => {
 
 		guild.members.find(x => x.id == guild.ownerID).send("Thank you for adding me to the server, default server configuration data has been added. To setup necessary channel do `"+defaultConfig.DEFAULT_PREFIX+"setup`, to see what can be configure use `"+defaultConfig.DEFAULT_PREFIX+"debug config`");
 ;
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: Jinsoyun joined "+guild.name+", config data has been set to default");
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Jinsoyun joined "+guild.name+", config data has been set to default");
 	}		
 });
 
 // User joined the guild
 clientDiscord.on("guildMemberAdd", async (member) => {
-	var configData = await getFileData("./config.json");
 	var guildConfig = await getFileData("./data/guilds.json");
 	var guildConfigIdx = await getGuildConfig(member.guild.id);
 
-	// Add 'cricket' role so new member so they cant access anything until they do !join for organizing reason
-	member.addRole(member.guild.roles.find(x => x.name == "cricket"));
-	
 	// Welcoming message and guide to join
 	// and checking if it's disabled or not
-	if(guildConfig[guildConfigIdx].DEFAULT_MEMBER_GATE != "disable"){
-		member.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].DEFAULT_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
+	if(guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE != "disable"){
+		// Add 'cricket' role so new member so they cant access anything until they do !join for organizing reason
+		member.addRole(member.guild.roles.find(x => x.name == "cricket"));
+	
+		member.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE).send('Hi <@'+member.user.id+'>, welcome to ***'+member.guild.name+'***!\n\nTheres one thing you need to do before you can talk with others, can you tell me your in-game nickname and your class? to do that please write ***!reg "username here" "your class here"***, here is an example how to do so: ***!reg "Jinsoyun" "Blade Master"***, thank you! ^^ \n\nIf you need some assistance you can **@mention** or **DM** available officers');
 
 		// Console logging
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" has joined");
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+member.user.username+" has joined");
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+member.user.username+" role is changed to 'cricket' until "+member.user.username+" do !reg");
 	}	
 });
 
@@ -618,9 +625,9 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 	var guildConfig = await getFileData("./data/guilds.json");
 	var guildConfigIdx = await getGuildConfig(member.guild.id);
 
-	if(guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG != "disable"){
+	if(guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY != "disable"){
 		try{
-			member.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG).send({
+			member.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY).send({
 				"embed":{
 					"color": 15605837,
 					"author":{
@@ -628,12 +635,12 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 					},
 					"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
 					"footer": {
-						"text": "Left - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+						"text": "Left - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 					}
 				}
 			});
 		}catch(error){
-			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
+			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
 			clientDiscord.emit("message", "!err |"+error.stack+"|");
 		}
 	}
@@ -643,9 +650,9 @@ clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
 	var guildConfig = await getFileData("./data/guilds.json");
 	var guildConfigIdx = await getGuildConfig(oldMember.guild.id);
 
-	if(guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG != "disable"){
+	if(guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY != "disable"){
 		try{
-			oldMember.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG).send({
+			oldMember.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY).send({
 				"embed":{
 					"color": 16574595,
 					"author":{
@@ -653,12 +660,12 @@ clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
 					},
 					"description": "User info changed (check audit log for details)",
 					"footer": {
-						"text": "Edit - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+						"text": "Edit - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 					}
 				}
 			});
 		}catch(error){
-			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
+			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
 			clientDiscord.emit("message", "!err |"+error.stack+"|");
 		}
 	}	
@@ -696,13 +703,13 @@ clientDiscord.on("message", async (message) => {
 
 				switch(soyunQuerry[0]){
 					case 'help':
-						if(message.channel.name == guildConfig[guildConfigIdx].DEFAULT_ADMIN_CHANNEL){
-							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- Announcement: `'+guildPrefix+'say "title" "content"`';
+						if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
+							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- Announcement: `'+guildPrefix+'say "title" "content"`\n- Bot Settings: `'+guildPrefix+'set`';
 						};
 
 						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items data list updated @ Wednesday 12AM UTC \n\t  Market data updated every 1 hour```");
 						// Console logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" triggered");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message+" triggered");
 					break;
 
 					case 'activity':	
@@ -721,7 +728,7 @@ clientDiscord.on("message", async (message) => {
 								}
 							}
 						}catch(error){
-							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to change bot activity, "+error);	
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to change bot activity, "+error);	
 							clientDiscord.emit("message", "!err |"+error.stack+"|");
 						}
 					break;
@@ -761,7 +768,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								"color": 16753920,
 								"footer": {
-									"text": "Created and maintained by ln2r - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Created and maintained by ln2r - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 								},
 								"fields":[
 									{
@@ -770,7 +777,7 @@ clientDiscord.on("message", async (message) => {
 									},
 									{
 										"name": "Market Data",
-										"value": "**Last Update**: "+dateformat(marketData[0].updateTime, "UTC:ddd dd-mm-yy @ hh:mm:ss")+" UTC\n**Data Updated**: "+marketData[0].dataUpdated+"\n**Data Count**: "+marketData[0].dataCount
+										"value": "**Last Update**: "+dateformat(marketData[0].updateTime, "UTC:ddd dd-mm-yy @ HH:MM:ss")+" UTC\n**Data Updated**: "+marketData[0].dataUpdated+"\n**Data Count**: "+marketData[0].dataCount
 									},
 									{
 										"name": "Discord",
@@ -785,15 +792,19 @@ clientDiscord.on("message", async (message) => {
 										"value": apiStatusList
 									},
 									{
-										"name": "About",
-										"value": "- Bot maintaned and developed by **[ln2r](https://ln2r.web.id/)** using **[discord.js](https://discord.js.org/)** node.js module. \n- Market and player data fetched using **[Silveress BnS API](https://bns.silveress.ie/)**. \n- Special thanks to **Grumpy Butts** discord server for letting me using their server for field testing."
+										"name": "About and Special Mentions",
+										"value": "- Bot maintaned and developed by **[ln2r](https://ln2r.web.id/)**\n- **Grumpy Butts** discord server for field testing and database maintenance."
+									},
+									{
+										"name": "Built With Help of ❤",
+										"value": "- [discord.js](https://discord.js.org/)\n- [Silveress BnS API](https://bns.silveress.ie/)\n- [twitter](https://developer.twitter.com/en/docs.html)\n- [ontime](https://www.npmjs.com/package/ontime)\n- [node-fetch](https://www.npmjs.com/package/node-fetch)\n- [dateformat](https://www.npmjs.com/package/dateformat)\n- [delay](https://www.npmjs.com/package/delay)\n- [fuzzball](https://www.npmjs.com/package/fuzzball)"
 									}
 								]
 							}
 						});
 
 						// Console logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message+" received");
 					break;
 
 					default:
@@ -803,7 +814,7 @@ clientDiscord.on("message", async (message) => {
 						message.channel.send(soyunSay.text[soyunDialogueRNG]);
 
 						// Console logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message+" received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message+" received");
 					break;	
 				};
             break;
@@ -816,6 +827,8 @@ clientDiscord.on("message", async (message) => {
 				var configData = await getFileData("./config.json");
 				var silveressNA = configData.API_ADDRESS[0].address;
 
+				var classList = await getFileData("./data/class/list-class.json");
+
 				var queryStatus = false;
 				
 				try{
@@ -824,9 +837,9 @@ clientDiscord.on("message", async (message) => {
 					joinClass = joinClass.toLowerCase(); // Converting class value to lower case so input wont be missmatched
 					
 					// Checking the class input
-					for(var i = 0; i < classArr.length; i++){
+					for(var i = 0; i < classList.length; i++){
 						// Class input verification (inefficient af)
-						if(joinClass == classArr[i]){
+						if(joinClass == classList[i]){
 							queryStatus = true;
 							break;
 						};
@@ -836,7 +849,7 @@ clientDiscord.on("message", async (message) => {
 					if(queryStatus == true){
 						// Convert to capitalize to make it easy and 'prettier'
 						joinUsername = joinUsername.replace(/(^|\s)\S/g, l => l.toUpperCase());
-						//#Collection.find(x => x.name === "name")
+						// #Collection.find(x => x.name === "name")
 						// Setting user role to match the user class
 						message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == joinClass));
 						// Adding "member" role so user can talk
@@ -848,7 +861,7 @@ clientDiscord.on("message", async (message) => {
 						message.guild.members.get(message.author.id).setNickname(joinUsername);
 
 						// Welcoming message on general channel
-						message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].DEFAULT_TEXT_CHANNEL).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
+						message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 						payloadStatus = "received";
 						queryStatus = false;
 
@@ -856,9 +869,9 @@ clientDiscord.on("message", async (message) => {
 						var charaData = await getSiteData(silveressQuerry);
 
 						// checking if the member log disabled or not, if it isn't write a log in the channel
-						if(guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG != "disable"){
+						if(guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY != "disable"){
 							try{
-								message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG).send({
+								message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY).send({
 									"embed":{
 										"color": 1879160,
 										"author":{
@@ -866,12 +879,12 @@ clientDiscord.on("message", async (message) => {
 										},
 										"description": charaData.activeElement+" "+charaData.playerClass+" `Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+"`",
 										"footer": {
-											"text": "Joined - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+											"text": "Joined - Captured at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 										}
 									}
 								});
 							}catch(error){
-								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's issue when recording server's member activity, "+error);
 								clientDiscord.emit("message", "!err |"+error.stack+"|");
 							}
 						}
@@ -885,7 +898,7 @@ clientDiscord.on("message", async (message) => {
 				};
 
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 			
 			// Username change
@@ -897,7 +910,7 @@ clientDiscord.on("message", async (message) => {
 				message.channel.send("Your username changed to "+usernameQuerry);
 
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: username change command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: username change command received");
 			break;
 			
 			// Class change
@@ -905,16 +918,18 @@ clientDiscord.on("message", async (message) => {
 				var classQuerry = getUserInput(message);
 					classQuerry = classQuerry.toLowerCase(); // Converting class value to lower case so input wont be missmatched
 
+				var classList = await getFileData("./data/class/list-class.json");	
+
 				var queryStatus;				
 
 				// Removing user current class
 				// I know this is stupid way to do it, but it have to do for now
-				for(var i = 0; i < classArr.length;){
+				for(var i = 0; i < classList.length;){
 					// Class input verification (inefficient af)
-					if(classQuerry == classArr[i]){
+					if(classQuerry == classList[i]){
 						queryStatus = true;
 					};
-					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == classArr[i]));					
+					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == classList[i]));					
 					i++
 				};
 
@@ -933,7 +948,7 @@ clientDiscord.on("message", async (message) => {
 					queryStatus = false;
 				}
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: class change command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: class change command received");
 			break;
 
 			case 'twcon':
@@ -947,8 +962,8 @@ clientDiscord.on("message", async (message) => {
 					// getting the channel name for the notification
 					for(var i = 0;i < guildConfig.length; i++){
 						if(guild.id == guildConfig[i].GUILD_ID){								
-							if(guildConfig[i].DEFAULT_NEWS_CHANNEL != "disable"){
-								var channelNewsName = guildConfig[i].DEFAULT_NEWS_CHANNEL;
+							if(guildConfig[i].CHANNEL_NEWS_ANNOUNCE != "disable"){
+								var channelNewsName = guildConfig[i].CHANNEL_NEWS_ANNOUNCE;
 							}							
 						}
 					}
@@ -977,14 +992,14 @@ clientDiscord.on("message", async (message) => {
 					});
 				});
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+twtScreenName+"'s tweet sent to "+sent+" server(s)");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+twtScreenName+"'s tweet sent to "+sent+" server(s)");
 			break;
 			
 			// Writing message via bot for announcement or notice, Admin only
 			case 'say':
 				var configData = await getFileData("./config.json");
 
-				if(message.channel.name == guildConfig[guildConfigIdx].DEFAULT_ADMIN_CHANNEL){
+				if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
 					var sayQuerry = message.toString().substring(1).split('"');
 
 					var sayTitle = (sayQuerry[1]);
@@ -996,7 +1011,7 @@ clientDiscord.on("message", async (message) => {
 						}
 
 					// Writing the content
-					message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].DEFAULT_NEWS_CHANNEL).send({
+					message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_NEWS_ANNOUNCE).send({
 						"embed":{
 							"color": 16753920,
 							"timestamp" : new Date(),
@@ -1014,22 +1029,23 @@ clientDiscord.on("message", async (message) => {
 					message.channel.send("You don't have permission to use that command here.");
 				};
 				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 
 			// First time setup (making roles and necesarry channels), Admin only
 			case 'setup':
 				var configData = await getFileData("./config.json");
+				var classList = await getFileData("./data/class/list-class.json");	
 
 				if(guildConfig[guildConfigIdx].SETUP_STATUS == false){
 					// Making the roles with class array as reference
-					for(i = 0; i < classArr.length;){
+					for(i = 0; i < classList.length;){
 						message.guild.createRole({
-							name: classArr[i]
+							name: classList[i]
 						}).catch(console.error);
 						i++;
 						// Console logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+classArr[i]+" role created");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+classList[i]+" role created");
 					};
 
 					// Making "news" channel
@@ -1037,19 +1053,24 @@ clientDiscord.on("message", async (message) => {
 					message.guild.createChannel(configData.DEFAULT_PARTY_CHANNEL, "text");
 
 					// Console logging
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+configData.DEFAULT_NEWS_CHANNEL+" channel created at "+message.guild.name);
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+configData.DEFAULT_PARTY_CHANNEL+" channel created at "+message.guild.name);					
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+configData.DEFAULT_NEWS_CHANNEL+" channel created at "+message.guild.name);
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+configData.DEFAULT_PARTY_CHANNEL+" channel created at "+message.guild.name);					
 				
 					// Console logging
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > "+message.author.username+" did first time setup, "+message.guild.name+" setup status changed to true");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message.author.username+" did first time setup, "+message.guild.name+" setup status changed to true");
 
 					guildConfig[guildConfigIdx].SETUP_STATUS = true;
-					guildConfig[guildConfigIdx].DEFAULT_TEXT_CHANNEL = defaultConfig.DEFAULT_TEXT_CHANNEL;
-					guildConfig[guildConfigIdx].DEFAULT_MEMBER_GATE = defaultConfig.DEFAULT_MEMBER_GATE;
-					guildConfig[guildConfigIdx].DEFAULT_NEWS_CHANNEL = defaultConfig.DEFAULT_NEWS_CHANNEL;
-					guildConfig[guildConfigIdx].DEFAULT_ADMIN_CHANNEL = defaultConfig.DEFAULT_ADMIN_CHANNEL;
-					guildConfig[guildConfigIdx].DEFAULT_PARTY_CHANNEL = defaultConfig.DEFAULT_PARTY_CHANNEL;
-					guildConfig[guildConfigIdx].DEFAULT_MEMBER_LOG = defaultConfig.DEFAULT_MEMBER_LOG;
+					guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN = defaultConfig.DEFAULT_TEXT_CHANNEL;
+					guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE = defaultConfig.DEFAULT_MEMBER_GATE;
+					guildConfig[guildConfigIdx].CHANNEL_NEWS_ANNOUNCE = defaultConfig.DEFAULT_NEWS_CHANNEL;
+					guildConfig[guildConfigIdx].CHANNEL_ADMIN = defaultConfig.DEFAULT_ADMIN_CHANNEL;
+					guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY = defaultConfig.DEFAULT_MEMBER_LOG;
+					guildConfig[guildConfigIdx].CHANNEL_DAILY_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+					guildConfig[guildConfigIdx].CHANNEL_WEEKLY_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+					guildConfig[guildConfigIdx].CHANNEL_EVENT_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+					guildConfig[guildConfigIdx].CHANNEL_KOLDRAK_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+					
+					
 
 					setFileData('./data/guilds.json', guildConfig);
 
@@ -1076,7 +1097,7 @@ clientDiscord.on("message", async (message) => {
 
 				message.channel.send("Hmmm, I'll go with **"+pickResultValue+"**");
 				
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 
 			// die roll
@@ -1097,7 +1118,7 @@ clientDiscord.on("message", async (message) => {
 
 				message.channel.send("You rolled **"+rollResult+"**");
 
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 
 			// Today daily challenge
@@ -1117,7 +1138,7 @@ clientDiscord.on("message", async (message) => {
 				var dailyQuests = "";
 				var dailyRewards = [];
 
-				var send = 0;
+				var sent = 0;
 				
 				switch(dailyQuerry[0]){
 					case 'tomorrow':
@@ -1199,7 +1220,7 @@ clientDiscord.on("message", async (message) => {
 							"color": 15025535,
 							"footer": {
 								"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-								"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 							},
 							"fields":[
 								{
@@ -1210,15 +1231,15 @@ clientDiscord.on("message", async (message) => {
 						}
 					});
 
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 				}else{
 					clientDiscord.guilds.map((guild) => {
 						let found = 0;
 						// getting the channel name for announcement
 						for(var i = 0;i < guildConfig.length; i++){
 							if(guild.id == guildConfig[i].GUILD_ID){								
-								if(guildConfig[i].DEFAULT_PARTY_CHANNEL != "disable"){
-									var channelPartyName = guildConfig[i].DEFAULT_PARTY_CHANNEL;
+								if(guildConfig[i].CHANNEL_DAILY_ANNOUNCE != "disable"){
+									var channelPartyName = guildConfig[i].CHANNEL_DAILY_ANNOUNCE;
 								}							
 							}
 						}
@@ -1236,7 +1257,7 @@ clientDiscord.on("message", async (message) => {
 											"color": 15025535,
 											"footer": {
 												"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-												"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+												"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 											},
 											"fields":[
 												{
@@ -1252,7 +1273,7 @@ clientDiscord.on("message", async (message) => {
 							}
 						});
 					});
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 						
 				};
 			break;
@@ -1280,12 +1301,12 @@ clientDiscord.on("message", async (message) => {
 								},
 								"footer":{
 									"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-									"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 								}
 							}
 						})
 
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 					break;
 
 					// Doing "Alert" at specific time(s)
@@ -1296,8 +1317,8 @@ clientDiscord.on("message", async (message) => {
 							// getting the channel name for announcement
 							for(var i = 0;i < guildConfig.length; i++){
 								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].DEFAULT_PARTY_CHANNEL != "disable"){
-										var channelPartyName = guildConfig[i].DEFAULT_PARTY_CHANNEL;
+									if(guildConfig[i].CHANNEL_KOLDRAK_ANNOUNCE != "disable"){
+										var channelPartyName = guildConfig[i].CHANNEL_KOLDRAK_ANNOUNCE;
 									}							
 								}
 							}
@@ -1314,17 +1335,18 @@ clientDiscord.on("message", async (message) => {
 												},
 												"footer":{
 													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-													"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+													"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 												}
 											}
 										});
 										found = 1;
+										sent++;
 									}
 								}
 							});
 						});
 
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 					break;
 					
 					// Showing when is the closest Koldrak's lair time
@@ -1353,7 +1375,7 @@ clientDiscord.on("message", async (message) => {
 						message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
 
 						// Console Logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 				};
 			break;
 			
@@ -1435,7 +1457,7 @@ clientDiscord.on("message", async (message) => {
 							"color": Math.floor(Math.random() * 16777215) - 0,
 							"footer": {
 								"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-								"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+								"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 							},
 							"thumbnail": {
 								"url": charaData.characterImg
@@ -1446,10 +1468,10 @@ clientDiscord.on("message", async (message) => {
 					message.channel.stopTyping();
 					message.channel.send("I can't find the character you are looking for, can you try again?");
 
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: issue occured on "+cmd+", "+error);
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: issue occured on "+cmd+", "+error);
 					clientDiscord.emit("message", "!err |"+error.stack+"|");
 				}				
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 			
 			// for searching item in market, can be triggered via !market "item name"
@@ -1462,17 +1484,17 @@ clientDiscord.on("message", async (message) => {
 				var marketDataItemsCount = "";
 
 				// item exception
-				if(marketQuery == "Soulstone"){
-					var marketItemIndex = [1, 2, 1926];
+				if(marketQuery == "Golden Harvest Festival"){
+					var marketItemIndex = [1240, 616, 506, 1266, 123, 1909];
 				}else{
 					var marketItemIndex = await getDataIndex(marketQuery, marketDataPath);
 				};
 
 				var imgSource = "https://cdn.discordapp.com/attachments/426043840714244097/493252746087235585/0ig1OR0.png"; // default image for when data not found
 
-				if(marketItemIndex.length >= 5){
-					var marketDataItems = 5;
-					marketDataItemsCount = "\n**Showing "+marketDataItems+" from "+marketItemIndex.length+" total results*\n";
+				if(marketItemIndex.length > 6){
+					var marketDataItems = 6;
+					marketDataItemsCount = "**Showing "+marketDataItems+" from "+marketItemIndex.length+" total results**\n";
 				}else{
 					var marketDataItems = marketItemIndex.length;
 				}
@@ -1484,7 +1506,7 @@ clientDiscord.on("message", async (message) => {
 					if(marketData.length != 0){
 						var priceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
 
-						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+priceStatus[0]+" "+priceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
+						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"-"+marketItemIndex[i]+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+priceStatus[0]+" "+priceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
 
 						imgSource = marketData[marketItemIndex[0]].img;
 					}
@@ -1500,11 +1522,11 @@ clientDiscord.on("message", async (message) => {
 							"name": "Marketplace - Search result of "+marketQuery,
 							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
 						},
-						"description": marketDataValue,
+						"description": marketDataItemsCount+"\n"+marketDataValue,
 						"color": 16766720,
 						"footer": {
 							"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ hh:MM")+" UTC"
+							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ HH:MM")+" UTC"
 						},
 						"thumbnail": {
 							"url": imgSource
@@ -1512,7 +1534,7 @@ clientDiscord.on("message", async (message) => {
 					}	
 				});
 
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 
 			// for getting the current event information
@@ -1568,8 +1590,8 @@ clientDiscord.on("message", async (message) => {
 							// getting the channel name for announcement
 							for(var i = 0;i < guildConfig.length; i++){
 								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].DEFAULT_PARTY_CHANNEL != "disable"){
-										var channelPartyName = guildConfig[i].DEFAULT_PARTY_CHANNEL;
+									if(guildConfig[i].CHANNEL_EVENT_ANNOUNCE != "disable"){
+										var channelPartyName = guildConfig[i].CHANNEL_EVENT_ANNOUNCE;
 									}							
 								}
 							}
@@ -1588,7 +1610,7 @@ clientDiscord.on("message", async (message) => {
 												"color": 1879160,
 												"footer": {
 													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-													"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+													"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 												},
 												"fields":[
 													{
@@ -1605,7 +1627,7 @@ clientDiscord.on("message", async (message) => {
 							});
 						});
 
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 
 					break;
 					default:
@@ -1621,7 +1643,7 @@ clientDiscord.on("message", async (message) => {
 								"color": 1879160,
 								"footer": {
 									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-									"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 								},
 								"fields":[
 									{
@@ -1631,7 +1653,7 @@ clientDiscord.on("message", async (message) => {
 								]
 							}	
 						})
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 					break;
 				};	
 			break;
@@ -1662,8 +1684,8 @@ clientDiscord.on("message", async (message) => {
 							// getting the channel name for announcement
 							for(var i = 0;i < guildConfig.length; i++){
 								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].DEFAULT_PARTY_CHANNEL != "disable"){
-										var channelPartyName = guildConfig[i].DEFAULT_PARTY_CHANNEL;
+									if(guildConfig[i].CHANNEL_WEEKLY_ANNOUNCE != "disable"){
+										var channelPartyName = guildConfig[i].CHANNEL_WEEKLY_ANNOUNCE;
 									}							
 								}
 							}
@@ -1681,7 +1703,7 @@ clientDiscord.on("message", async (message) => {
 												"color": 6193367,
 												"footer": {
 													"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-													"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+													"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 												},
 												"fields":[
 													{
@@ -1698,7 +1720,7 @@ clientDiscord.on("message", async (message) => {
 							});
 						});
 
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 					break;
 					default:
 						message.channel.send({
@@ -1712,7 +1734,7 @@ clientDiscord.on("message", async (message) => {
 								"color": 6193367,
 								"footer": {
 									"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-									"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+									"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 								},
 								"fields":[
 									{
@@ -1722,15 +1744,63 @@ clientDiscord.on("message", async (message) => {
 								]
 							}
 						});
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 					break;
 				}
+			break;
+
+			case 'craft':
+				var craftingQuery = getUserInput(message);
+
+				var craftingData = await getFileData("./data/list-crafting.json");
+				var craftingItemIdx = await getDataIndex(craftingQuery, "./data/list-crafting.json");
+				var craftingDataValue = "";
+				var craftingMaterialsData = "";
+
+				if(craftingItemIdx.length > 3){
+					var craftDataItems = 3;
+					marketDataItemsCount = "**Showing "+craftDataItems+" from "+craftingItemIdx.length+" total results**\n";
+				}else{
+					var craftDataItems = craftingItemIdx.length;
+				}
+
+				for(var i=0; i < craftDataItems; i++){
+					for(var j=0; j < craftingData[craftingItemIdx[i]].materials.length; j++){
+						craftingMaterialsData = craftingMaterialsData + (craftingData[craftingItemIdx[i]].materials[j].name+" x"+craftingData[craftingItemIdx[i]].materials[j].qty+"\n");
+					}
+
+					craftingDataValue = craftingDataValue + ("**"+craftingData[craftingItemIdx[i]].name+"** `"+craftingData[craftingItemIdx[i]].id+"-"+craftingItemIdx[i]+"`\n- Source: "+craftingData[craftingItemIdx[i]].source+"\n- Cost: "+setCurrencyFormat(craftingData[craftingItemIdx[i]].cost)+"\n- Duration: "+craftingData[craftingItemIdx[i]].duration+"\n- Materials: \n"+craftingMaterialsData+"\n");
+
+					craftingMaterialsData = "";
+				}
+
+				var dataAge = craftingData[0].updated;
+
+				message.channel.send({
+					"embed": {
+						"author":{
+							"name": "Crafting/Upgrade - Search result of "+craftingQuery,
+							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
+						},
+						"description": craftingDataValue,
+						"color": 16766720,
+						"footer": {
+							"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
+							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ HH:MM")+" UTC"
+						},
+						"thumbnail": {
+							"url": imgSource
+						},
+					}	
+				});
+
 			break;
 			
 			// data gathering start from here
 			case 'getupdate':				
 				var classData = await getFileData("./data/list-classdata-source.json");
 				var configData = await getFileData("./config.json");
+				var fileData = await getFileData("./data/data-files.json");
 
 				var silveressItem = configData.API_ADDRESS[2].address;
 
@@ -1738,7 +1808,7 @@ clientDiscord.on("message", async (message) => {
 				var errLocation = [];
 				var errMsg = "";
 
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Starting data update..");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Starting data update..");
 				
 				// item data
 				fs.writeFile('./data/list-item.json', JSON.stringify(await getSiteData(silveressItem), null, '\t'), function (err) {
@@ -1793,15 +1863,21 @@ clientDiscord.on("message", async (message) => {
 						})
 					}				
 				}
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: Item and class data updated with "+errCount+" problem(s)");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Item and class data updated with "+errCount+" problem(s)");
 
 				if(errCount != 0){
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Problem occured on: "+errLocation+", please check the log");
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Problem occured on: "+errLocation+", please check the log");
 					message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+errLocation+"`\n```"+errMsg+"```");
 				}
 				
+				// writing when the data got updated
+				fileData.ITEM_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
+				fileData.CLASS_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
+
+				setFileData("./data/data-files.json", fileData);
+
 				try{
-					if(message.channel.name == guildConfig[guildConfigIdx].DEFAULT_ADMIN_CHANNEL){
+					if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
 						message.channel.send("Item and class data updated manually with "+errCount+" issue(s)");
 					}
 				}catch(error){
@@ -1817,6 +1893,7 @@ clientDiscord.on("message", async (message) => {
 				var itemData = await getFileData("./data/list-item.json"); //item data
 				var marketDataStored = await getFileData("./data/list-market-data.json"); //stored market data
 				var configData = await getFileData("./config.json");
+				var fileData = await getFileData("./data/data-files.json");
 
 				var marketDataCurrent = await getSiteData(configData.API_ADDRESS[1].address); //fecthing the current data (one listing, lowest)
 
@@ -1880,10 +1957,10 @@ clientDiscord.on("message", async (message) => {
 				// checking if archive directory exist or not
 				if(configData.ARCHIVING == true){
 					if(!fs.existsSync('./archive')){
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: archive directory not found, creating the directory now...");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: archive directory not found, creating the directory now...");
 						fs.mkdirSync('./archive', function (err) {
 							if(err){
-								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to make archive directory, please manually make one to avoid errors, "+err);
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to make archive directory, please manually make one to avoid errors, "+err);
 								clientDiscord.emit("message", "!err |"+err.stack+"|");
 							}
 						});
@@ -1893,7 +1970,7 @@ clientDiscord.on("message", async (message) => {
 				// writing the data into a file
 				fs.writeFile('./data/list-market-data.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
 					if(err){
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's an issue when updating 'list-market-data.json', "+err);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's an issue when updating 'list-market-data.json', "+err);
 						clientDiscord.emit("message", "!err |"+err.stack+"|");
 					}
 				})
@@ -1901,20 +1978,24 @@ clientDiscord.on("message", async (message) => {
 				// making a copy for archive
 				fs.writeFile('./archive/market-data-archive '+Date.now()+'.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
 					if(err){
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: There's an issue when archiving 'list-market-data.json', "+err);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's an issue when archiving 'list-market-data.json', "+err);
 						clientDiscord.emit("message", "!err |"+err.stack+"|");
 					}
 				});
 
+				// writing when the data got updated
+				fileData.MARKET_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
+				setFileData("./data/data-files.json", fileData);
+
 				try{
-					if(message.channel.name == guildConfig[guildConfigIdx].DEFAULT_ADMIN_CHANNEL){
+					if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
 						message.channel.send(foundCount+" market data updated manually");
 					}
 				}catch(error){
 					
 				}
 				
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+foundCount+" market data updated, "+(marketListCurrent.length - 1)+" data archived");
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+foundCount+" market data updated, "+(marketListCurrent.length - 1)+" data archived");
 				foundCount = 0;
 				
 			break;
@@ -1961,7 +2042,7 @@ clientDiscord.on("message", async (message) => {
 						"color": 1879160,
 						"footer": {
 							"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-							"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
+							"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
 						},
 						"fields":[
 							{
@@ -1971,11 +2052,245 @@ clientDiscord.on("message", async (message) => {
 						]
 					}	
 				});
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+cmd+" command received");			
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");			
 			break;
+
+			case 'set':
+				var adminAccess = message.channel.permissionsFor(message.author).has("ADMINISTRATOR", false);
+				var configQuery = message.toString().split(' ');
+					configQuery = configQuery.splice(1);
+
+				if(adminAccess == true){
+					var guildConfig = await getFileData('./data/guilds.json');
+					var guildConfigDataLocation = await getGuildConfig(message.guild.id);						
+
+					switch(configQuery[0]){
+						case 'add':	
+							var defaultConfig = await getFileData('config.json');
+							var found = false;
+						
+							for(var i = 0; i < guildConfig.length; i ++){
+									if(message.guild.id == guildConfig[i].GUILD_ID){
+									found = true;
+								}
+							}
+
+							if(found == false){
+								var configData = {
+									"GUILD_NAME": message.guild.name,
+									"GUILD_ID": message.guild.id,
+									"GUILD_ICON": message.guild.iconURL,
+									"SETUP_STATUS": false,
+									"PREFIX": defaultConfig.DEFAULT_PREFIX,
+									"CHANNEL_DAILY_ANNOUNCE": defaultConfig.DEFAULT_PARTY_CHANNEL,
+									"CHANNEL_WEEKLY_ANNOUNCE": defaultConfig.DEFAULT_PARTY_CHANNEL,
+									"CHANNEL_EVENT_ANNOUNCE": defaultConfig.DEFAULT_PARTY_CHANNEL,
+									"CHANNEL_NEWS_ANNOUNCE": defaultConfig.DEFAULT_NEWS_CHANNEL,
+									"CHANNEL_KOLDRAK_ANNOUNCE": defaultConfig.DEFAULT_PARTY_CHANNEL,
+									"CHANNEL_TEXT_MAIN": defaultConfig.DEFAULT_TEXT_CHANNEL,
+									"CHANNEL_MEMBER_GATE": defaultConfig.DEFAULT_MEMBER_GATE,
+									"CHANNEL_ADMIN": defaultConfig.DEFAULT_ADMIN_CHANNEL,
+									"CHANNEL_MEMBERACTIVITY": defaultConfig.DEFAULT_MEMBER_LOG
+								}
+								
+								guildConfig.push(configData);
+
+								setFileData('./data/guilds.json', guildConfig);
+
+								message.channel.send("Server configuration data has been added, to see what can be configure use `"+guildPrefix+"debug config`");
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Configuration data for "+message.guild.name+" has been added");
+							}else{
+								message.channel.send("There's already a configuration data for this server, to see what can be configure use `"+guildPrefix+"debug config` or `"+guildPrefix+"debug config current` to see the current setting");
+							}
+
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: 'setting add' command received");
+						break;
+
+						case 'update':
+							var guildNameNew = getUserInput(message);
+
+							guildConfig[guildConfigDataLocation].GUILD_NAME = guildNameNew;
+							guildConfig[guildConfigDataLocation].GUILD_ICON = message.guild.iconURL;
+
+							setFileData('./data/guilds.json', guildConfig);
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Guild data with id '"+message.guild.id+"' has been updated");
+						break;
+
+						case 'prefix':
+							var guildPrefix = configQuery[1];
+
+							guildConfig[guildConfigDataLocation].PREFIX = guildPrefix;
+
+							setFileData('./data/guilds.json', guildConfig);
+
+							message.channel.send("Prefix for this server changed to `"+guildPrefix+"`");
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+message.guild.name+" prefix data updated");
+						break;
+
+						case 'channel':
+							var typeQuery = configQuery[1];
+								typeQuery = typeQuery.toLocaleUpperCase();
+
+							var channelNameQuery = "";
+							if(configQuery.length > 3){
+								for(var i = 3; i <configQuery.length; i++){
+									channelNameQuery = channelNameQuery +"-"+ configQuery[i];
+								}
+								channelNameQuery = channelNameQuery.substr(1);
+							}else{
+								channelNameQuery = configQuery[2];
+							}
+							var success = true;
+
+							switch(typeQuery){
+								case 'CHANNEL_TEXT_MAIN':
+									guildConfig[guildConfigDataLocation].CHANNEL_TEXT_MAIN = channelNameQuery;
+								break;
+								case 'CHANNEL_MEMBER_GATE':
+									guildConfig[guildConfigDataLocation].CHANNEL_MEMBER_GATE = channelNameQuery;
+								break;
+								case 'CHANNEL_NEWS_ANNOUNCE':
+									guildConfig[guildConfigDataLocation].CHANNEL_NEWS_ANNOUNCE = channelNameQuery;
+								break;
+								case 'CHANNEL_ADMIN':
+									guildConfig[guildConfigDataLocation].CHANNEL_ADMIN = channelNameQuery;
+								break;
+								case 'CHANNEL_MEMBERACTIVITY':
+									guildConfig[guildConfigDataLocation].CHANNEL_MEMBERACTIVITY = channelNameQuery;
+								break;
+								case 'CHANNEL_DAILY_ANNOUNCE':
+								guildConfig[guildConfigDataLocation].CHANNEL_DAILY_ANNOUNCE = channelNameQuery;
+								break;
+								case 'CHANNEL_WEEKLY_ANNOUNCE':
+								guildConfig[guildConfigDataLocation].CHANNEL_WEEKLY_ANNOUNCE = channelNameQuery;
+								break;
+								case 'CHANNEL_EVENT_ANNOUNCE':
+								guildConfig[guildConfigDataLocation].CHANNEL_EVENT_ANNOUNCE = channelNameQuery;
+								break;
+								case 'CHANNEL_KOLDRAK_ANNOUNCE':
+								guildConfig[guildConfigDataLocation].CHANNEL_KOLDRAK_ANNOUNCE = channelNameQuery;
+								break;
+								
+								default:
+									message.channel.send("I'm sorry I can't find that type of channel\n\nAvailable type: `\"CHANNEL_TEXT_MAIN\"`, `\"CHANNEL_MEMBER_GATE\"`, `\"CHANNEL_NEWS_ANNOUNCE\"`, `\"CHANNEL_ADMIN\"`, `\"CHANNEL_MEMBERACTIVITY\"`, `\"CHANNEL_DAILY_ANNOUNCE\"`, `\"CHANNEL_WEEKLY_ANNOUNCE\"`, `\"CHANNEL_EVENT_ANNOUNCE\"`, `\"CHANNEL_KOLDRAK_ANNOUNCE\"`");
+
+									success = false
+								break;
+							}
+							
+							if(success == true){
+								setFileData('./data/guilds.json', guildConfig);
+
+								message.channel.send("`"+typeQuery+"` for this server changed to `"+channelNameQuery+"`");
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+message.guild.name+" default channel data updated");
+							}
+							
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: 'set channel' command received");
+						break;
+
+						case 'current':
+							var guildConfigDataLocation = await getGuildConfig(message.guild.id);
+							var guildConfigData = guildConfig[guildConfigDataLocation];
+
+							message.channel.send({
+								"embed":{
+									"title": message.guild.name+"'s Configuration Data",
+									"color": 16744192,
+									"thumbnail": {
+										"url": guildConfigData.GUILD_ICON
+									},
+									"fields": [
+										{
+											"name": "Commands Prefix - `PREFIX`",
+											"value": "`"+guildConfigData.PREFIX+"`"
+										},
+										{
+											"name": "Main Text - `CHANNEL_TEXT_MAIN`",
+											"value": "`"+guildConfigData.CHANNEL_TEXT_MAIN+"`"
+										},
+										{
+											"name": "New Member - `CHANNEL_MEMBER_GATE`",
+											"value": "`"+guildConfigData.CHANNEL_MEMBER_GATE+"`"
+										},
+										{
+											"name": "Admin - `CHANNEL_ADMIN`",
+											"value": "`"+guildConfigData.CHANNEL_ADMIN+"`"
+										},
+										{
+											"name": "Member's Activity Log - `CHANNEL_MEMBERACTIVITY`",
+											"value": "`"+guildConfigData.CHANNEL_MEMBERACTIVITY+"`"
+										},
+										{
+											"name": "Blade & Soul Twitter News - `CHANNEL_NEWS_ANNOUNCE`",
+											"value": "`"+guildConfigData.CHANNEL_NEWS_ANNOUNCE+"`"
+										},
+										{
+											"name": "Daily Announcement - `CHANNEL_DAILY_ANNOUNCE`",
+											"value": "`"+guildConfigData.CHANNEL_DAILY_ANNOUNCE+"`"
+										},
+										{
+											"name": "Weekly Announcement - `CHANNEL_WEEKLY_ANNOUNCE`",
+											"value": "`"+guildConfigData.CHANNEL_WEEKLY_ANNOUNCE+"`"
+										},
+										{
+											"name": "Event Announcement - `CHANNEL_EVENT_ANNOUNCE`",
+											"value": "`"+guildConfigData.CHANNEL_EVENT_ANNOUNCE+"`"
+										},
+										{
+											"name": "Koldrak's Lair Announcement - `CHANNEL_KOLDRAK_ANNOUNCE`",
+											"value": "`"+guildConfigData.CHANNEL_KOLDRAK_ANNOUNCE+"`"
+										},
+									],
+									"footer": {
+										"text": "Jinsoyun Bot Configuration - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+									},
+								}
+							})
+
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: 'set current' command received");
+						break;
+
+						default:
+							var guildConfigDataLocation = await getGuildConfig(message.guild.id);
+							var guildConfigData = guildConfig[guildConfigDataLocation];
+
+							message.channel.send({
+								"embed":{
+									"title": "Configuration Commands",
+									"color": 16744192,
+									"fields": [
+										{
+											"name": "Current ("+guildConfigData.PREFIX+"set current)",
+											"value": "Show the current bot configuration for this server"
+										},
+										{
+											"name": "Prefix ("+guildConfigData.PREFIX+"set prefix <character>)",
+											"value": "Changing the bot prefix for your server"
+										},
+										{
+											"name": "Udate Server Data ("+guildConfigData.PREFIX+"set update <server name>)",
+											"value": "Update server name and picture data"
+										},
+										{
+											"name": "Default Channel ("+guildConfigData.PREFIX+"set channel <type> <channel>)",
+											"value": "Changing the default channel for your server\n\n**Type** \n`CHANNEL_TEXT_MAIN` main text channel\n`CHANNEL_MEMBER_GATE` default new member channel\n`CHANNEL_NEWS_ANNOUNCE` default news channel for twitter hook\n`CHANNEL_ADMIN` default admin only channel for administrator commands\n`CHANNEL_DAILY_ANNOUNCE` default channel for daily challenges annoucement\n`CHANNEL_WEEKLY_ANNOUNCE` default channel for weekly challenges annoucement\n`CHANNEL_EVENT_ANNOUNCE` default channel for current event summary\n`CHANNEL_KOLDRAK_ANNOUNCE` default channel for koldrak's lair access annoucement\n`CHANNEL_MEMBERACTIVITY` default channel for server member activity (joined, left)\n\n**Channel**\n`channel-name` channel name to replace the current one (there can't be space between words)\n`disable` to disable this function"
+										}
+									],
+									"footer": {
+										"text": "Jinsoyun Bot Configuration - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+									},
+								}
+							});
+						break;
+					}
+				}else{
+					message.channel.send("I'm sorry but you don't have permission to use this command");
+				}
+			break;			
 
 			case 'debug':
 				var configData = await getFileData("./config.json");
+				var fileData = await getFileData("./data/data-files.json");
 
 				// debug commands is currently only can be used by bot author only, if you want to change this edit the 'config.json' DEFAULT_BOT_ADMIN variable
 				if(message.author.id == configData.DEFAULT_BOT_ADMIN){
@@ -1994,7 +2309,7 @@ clientDiscord.on("message", async (message) => {
 									.catch(console.error);
 								message.channel.send("Maintenance mode is enabled, only essential service is active");
 
-								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Maintenance mode is enabled");	
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Maintenance mode is enabled");	
 							break;
 							case 'disable':
 								configData.MAINTENANCE_MODE = false;
@@ -2004,9 +2319,20 @@ clientDiscord.on("message", async (message) => {
 								clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
 									.catch(console.error);
 								message.channel.send("Maintenance mode is disabled, all service is returning to normal");	
-								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Maintenance mode is disabled");		
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Maintenance mode is disabled");		
 							break;
 							}
+						break;
+
+						case 'data':
+							var fileData = await getFileData("./data/data-files.json");
+							message.channel.send({
+								"embed":{
+									"title": "Jinsoyun Database Last Update",
+									"description": "- Market Data: "+fileData.MARKET_DATA+"\n- Item Data: "+fileData.ITEM_DATA+"\n- Class Data: "+fileData.CLASS_DATA+"\n- Event Data: "+fileData.EVENT_DATA,
+									"color": 16744192
+								}
+							})
 						break;
 
 						// this command is for updating the current event data with the updated one
@@ -2027,10 +2353,15 @@ clientDiscord.on("message", async (message) => {
 								setFileData('./data/data-event.json', currentEvent);
 
 								message.channel.send(+nextEvent.name+" event data is now live");
-								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+nextEvent.name+" event data is now live");
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+nextEvent.name+" event data is now live");
 							}else{
 								message.channel.send("Maintenance mode is disabled, enable maintenance mode to use this command");
 							}
+
+							// writing when the data got updated
+							fileData.EVENT_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
+
+							setFileData("./data/data-files.json", fileData);
 						break;
 
 						case 'guilds':
@@ -2045,7 +2376,7 @@ clientDiscord.on("message", async (message) => {
 								}
 							});
 
-							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: 'debug guilds' command received");
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: 'debug guilds' command received");
 						break;
 
 						case 'file':
@@ -2053,196 +2384,18 @@ clientDiscord.on("message", async (message) => {
 							var fileData = await getFileData(filePath);
 								fileData = JSON.stringify(fileData,  null, "\t");
 
-							message.channel.send("Content of ***"+filePath+"***\n```"+fileData+"```");
-							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: 'debug file' command received");
-						break;
-
-						case 'config':
-							var guildConfig = await getFileData('./data/guilds.json');
-							var guildConfigDataLocation = await getGuildConfig(message.guild.id);						
-
-							switch(debugQuery[1]){
-								case 'add':	
-									var defaultConfig = await getFileData('config.json');
-									var found = false;
-									
-									for(var i = 0; i < guildConfig.length; i ++){
-										if(message.guild.id == guildConfig[i].GUILD_ID){
-											//found = true;
-										}
-									}
-
-									if(found == false){
-										var configData = {
-											"GUILD_NAME": message.guild.name,
-											"GUILD_ID": message.guild.id,
-											"GUILD_ICON": message.guild.iconURL,
-											"SETUP_STATUS": false,
-											"PREFIX": defaultConfig.DEFAULT_PREFIX,
-											"DEFAULT_TEXT_CHANNEL": defaultConfig.DEFAULT_TEXT_CHANNEL,
-											"DEFAULT_MEMBER_GATE": defaultConfig.DEFAULT_MEMBER_GATE,
-											"DEFAULT_NEWS_CHANNEL": defaultConfig.DEFAULT_NEWS_CHANNEL,
-											"DEFAULT_ADMIN_CHANNEL": defaultConfig.DEFAULT_ADMIN_CHANNEL,
-											"DEFAULT_PARTY_CHANNEL": defaultConfig.DEFAULT_PARTY_CHANNEL,
-											"DEFAULT_MEMBER_LOG": defaultConfig.DEFAULT_MEMBER_LOG
-										}
-										
-										guildConfig.push(configData);
-
-										setFileData('./data/guilds.json', guildConfig);
-
-										message.channel.send("Server configuration data has been added, to see what can be configure use `"+guildPrefix+"debug config`");
-										console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: Configuration data for "+message.guild.name+" has been added");
-									}else{
-										message.channel.send("There's already a configuration data for this server, to see what can be configure use `"+guildPrefix+"debug config` or `"+guildPrefix+"debug config current` to see the current setting");
-									}
-
-									console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: 'config add' command received");
-								break;
-
-								case 'prefix':
-									var guildPrefix = debugQuery[2];
-
-									guildConfig[guildConfigDataLocation].PREFIX = guildPrefix;
-
-									setFileData('./data/guilds.json', guildConfig);
-
-									message.channel.send("Prefix for this server changed to `"+guildPrefix+"`");
-									console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+message.guild.name+" prefix data updated");
-								break;
-
-								case 'channel':
-									var typeQuery = debugQuery[2];
-										typeQuery = typeQuery.toLocaleUpperCase();
-
-									var channelNameQuery = "";
-									if(debugQuery.length > 3){
-										for(var i = 3; i <debugQuery.length; i++){
-											channelNameQuery = channelNameQuery +"-"+ debugQuery[i];
-										}
-										channelNameQuery = channelNameQuery.substr(1);
-									}else{
-										channelNameQuery = debugQuery[3];
-									}
-									var success = true;
-
-									switch(typeQuery){
-										case 'DEFAULT_TEXT_CHANNEL':
-											guildConfig[guildConfigDataLocation].DEFAULT_TEXT_CHANNEL = channelNameQuery;
-										break;
-										case 'DEFAULT_MEMBER_GATE':
-											guildConfig[guildConfigDataLocation].DEFAULT_MEMBER_GATE = channelNameQuery;
-										break;
-										case 'DEFAULT_NEWS_CHANNEL':
-											guildConfig[guildConfigDataLocation].DEFAULT_NEWS_CHANNEL = channelNameQuery;
-										break;
-										case 'DEFAULT_ADMIN_CHANNEL':
-											guildConfig[guildConfigDataLocation].DEFAULT_ADMIN_CHANNEL = channelNameQuery;
-										break;
-										case 'DEFAULT_PARTY_CHANNEL':
-											guildConfig[guildConfigDataLocation].DEFAULT_PARTY_CHANNEL = channelNameQuery;
-										break;
-										case 'DEFAULT_MEMBER_LOG':
-											guildConfig[guildConfigDataLocation].DEFAULT_MEMBER_LOG = channelNameQuery;
-										break;
-										
-										default:
-											message.channel.send("I'm sorry I can't find that type of channel\n\nAvailable type: `\"DEFAULT_TEXT_CHANNEL\", \"DEFAULT_MEMBER_GATE\", \"DEFAULT_NEWS_CHANNEL\", \"DEFAULT_ADMIN_CHANNEL\", \"DEFAULT_PARTY_CHANNEL\", \"DEFAULT_MEMBER_LOG\"`");
-
-											success = false
-										break;
-									}
-
-									setFileData('./data/guilds.json', guildConfig);
-									if(success == true){
-										message.channel.send("`"+typeQuery+"` for this server changed to `"+channelNameQuery+"`");
-										console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: "+message.guild.name+" default channel data updated");
-									}
-									
-									console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: 'config channel' command received");
-								break;
-
-								case 'current':
-									var guildConfigDataLocation = await getGuildConfig(message.guild.id);
-									var guildConfigData = guildConfig[guildConfigDataLocation];
-
-									message.channel.send({
-										"embed":{
-											"title": message.guild.name+"'s Configuration Data",
-											"color": 16744192,
-											"thumbnail": {
-												"url": guildConfigData.GUILD_ICON
-											},
-											"fields": [
-												{
-													"name": "PREFIX",
-													"value": "`"+guildConfigData.PREFIX+"`"
-												},
-												{
-													"name": "DEFAULT_TEXT_CHANNEL",
-													"value": "`"+guildConfigData.DEFAULT_TEXT_CHANNEL+"`"
-												},
-												{
-													"name": "DEFAULT_MEMBER_GATE",
-													"value": "`"+guildConfigData.DEFAULT_MEMBER_GATE+"`"
-												},
-												{
-													"name": "DEFAULT_NEWS_CHANNEL",
-													"value": "`"+guildConfigData.DEFAULT_NEWS_CHANNEL+"`"
-												},
-												{
-													"name": "DEFAULT_ADMIN_CHANNEL",
-													"value": "`"+guildConfigData.DEFAULT_ADMIN_CHANNEL+"`"
-												},
-												{
-													"name": "DEFAULT_PARTY_CHANNEL",
-													"value": "`"+guildConfigData.DEFAULT_PARTY_CHANNEL+"`"
-												},
-												{
-													"name": "DEFAULT_MEMBER_LOG",
-													"value": "`"+guildConfigData.DEFAULT_MEMBER_LOG+"`"
-												},
-											],
-											"footer": {
-												"text": "Jinsoyun Bot Configuration - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
-											},
-										}
-									})
-
-									console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: 'config current' command received");
-								break;
-
-								default:
-									message.channel.send({
-										"embed":{
-											"title": "Configuration Commands",
-											"color": 16744192,
-											"fields": [
-												{
-													"name": "Current (!debug config current)",
-													"value": "Show the current bot configuration for this server"
-												},
-												{
-													"name": "Prefix (!debug config prefix <character>)",
-													"value": "Changing the bot prefix for your server"
-												},
-												{
-													"name": "Default Channel (!debug config channel <type> <channel>)",
-													"value": "Changing the default channel for your server\n\n**Type** \n`DEFAULT_TEXT_CHANNEL` main text channel\n`DEFAULT_MEMBER_GATE` default new member channel\n`DEFAULT_NEWS_CHANNEL` default news channel for twitter hook\n`DEFAULT_ADMIN_CHANNEL` default admin only channel for administrator commands\n`DEFAULT_PARTY_CHANNEL` default channel for party forming (weekly, daily and event notice goes here)\n`DEFAULT_MEMBER_LOG` default channel for server member activity (joined, left)\n\n**Channel**:\n`channel-name` channel name to replace the current one (there can't be space between words)\n`disable` to disable this function"
-												}
-											],
-											"footer": {
-												"text": "Jinsoyun Bot Configuration - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ hh:MM")+" UTC"
-											},
-										}
-									});
-								break;
+							if(filePath != null || fileData != null){
+								message.channel.send("Content of `"+filePath+"`\n```"+fileData+"```");
+							}else{
+								message.channel.send("`"+filePath+"` doesn't exist or inaccesible");
 							}
+
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: 'debug file' command received");
 						break;
 					}
 				}else{
 					message.channel.send("I'm sorry but you don't have permission to use this command");
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unauthorized access to debug commands by "+message.author.username);
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unauthorized access to debug commands by "+message.author.username);
 				}
 			break;
 
@@ -2263,7 +2416,7 @@ clientDiscord.on("message", async (message) => {
 							});
 						});
 					}catch(error){
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Warning: Unable to notify the errors, please check the log");	
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to notify the errors, please check the log");	
 					}	
 			break;
 		 };
@@ -2311,12 +2464,12 @@ clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  fun
 			}
 		}
 		// Console logging
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Info: Tweet received, status: "+payloadStatus);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Tweet received, status: "+payloadStatus);
 		payloadStatus = "rejected";
 	});
   
 	stream.on('error', function(error) {
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy hh:MM:ss")+" ] > Unable to get Twitter data, "+error);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Unable to get Twitter data, "+error);
 		clientDiscord.emit("message", "!err |"+error.stack+"|");
 	});
 })
@@ -2381,7 +2534,7 @@ ontime({
 
 // market data update
 ontime({
-	cycle: [ '00:00' ],
+	cycle: [ '00:02' ],
 	utc: true
 }, function (marketUpdate) {
     clientDiscord.emit("message", "!getmarketdata");
