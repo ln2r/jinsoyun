@@ -1,12 +1,21 @@
 {
   "name": "jinsoyun",
-  "version": "1.14.4",
+  "version": "1.14.5",
   "description": "Grumpy Butts very own discord bot",
   "main": "soyun.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ln2r/jinsoyun.git"
+  },
+  "keywords": [
+    "heroku",
+    "discord.js",
+    "grumpy butts",
+    "blade and soul"
+  ],
   "author": "ln2r",
   "license": "MIT",
   "dependencies": {

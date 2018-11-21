@@ -2400,6 +2400,29 @@ clientDiscord.on("message", async (message) => {
 
 							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: 'debug file' command received");
 						break;
+
+						case 'archive':
+							switch(debugQuery[1]){
+								case 'enable':
+								configData.ARCHIVING = true;
+
+								setFileData('config.json', configData);
+
+								message.channel.send("Archive system is enabled, market data will be saved");	
+
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Archive system is enabled");	
+							break;
+							case 'disable':
+								configData.ARCHIVING = false;
+
+								setFileData('config.json', configData);
+
+								message.channel.send("Archive system is disabled, no market data will be saved");
+
+								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Archive system is disabled");		
+							break;
+							}
+						break;
 					}
 				}else{
 					message.channel.send("I'm sorry but you don't have permission to use this command");
