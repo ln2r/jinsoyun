@@ -7,6 +7,9 @@ secret.json
 # Market data archive directory
 archive/
 
+#node_modules directory
+node_modules/
+
 #misc file
 .dropbox
 desktop.ini

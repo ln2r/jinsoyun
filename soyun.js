@@ -19,12 +19,6 @@ const clientTwitter = new Twitter({
 	access_token_secret: secret.TWITTER_ACCESS_TOKEN_SECRET
 })
 
-// Querry payload status
-var payloadStatus = "rejected";
-
-// Global variable
-var koldrakAlertSystem = true;
-
 // Twitter hook variables
 var twtUsername;
 var twtScreenName
@@ -33,50 +27,47 @@ var twtAvatar;
 var twtCreatedAt;
 var twtTimestamp;
 var twtColor;
-var twtFilter;
 
 // Soyun activity
-var statusRandom = 0;
+let statusRandom = 0;
 
-// function list
-
+// function list start here
 // converting number (702501) only format to more readable format (70g 25s 01c)
 function setCurrencyFormat(number){
-	var str = Math.round(number);
-	var str = str.toString()
-	var len = str.length
-	var gold = ""
-	var silver = ""
-	var copper = ""
+	let str = Math.round(number);
+		str = str.toString()
+	let len = str.length
+	let gold = ""
+	let silver = ""
+	let copper = ""
 
 	if(len > 4){
-		var gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547>";
+		gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547>";
 	}
 	if(len > 2){
-		var silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586>";
+		silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586>";
 	}
 	if(len > 0){
-		var copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928>";
+		copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928>";
 	} 
 
-	var total = gold + silver + copper; 
+	let total = gold + silver + copper; 
 	return total;
 }
 
 // getting quest day and returning array of matched quest index
-async function getQuests(day){
-	var day = day.toString().replace(/(^|\s)\S/g, l => l.toUpperCase());
+async function getQuests(dayQuery){
+	let day = dayQuery.toString().replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-	var quests = await getFileData("./data/list-quests.json");
+	let quests = await getFileData("./data/list-quests.json");
 	
-	var questsID = [];
-	var idx = 0;
+	let questsID = [];
+	let idx = 0;
 
 	for (i = 0; i < quests.length; i++){
 		for(j = 0; j < 7; j++){
 			if(quests[i].daily_challenge[j] == day){
-				var questMatchedLocation = i;
-				questsID[idx] = questMatchedLocation;
+				questsID[idx] = i;
 				idx++;
 			}
 		}
@@ -86,24 +77,24 @@ async function getQuests(day){
 
 // time difference return array of time [hour, minutes]
 function getTimeDifference(timeQuery){
-	var timeNow = new Date();
+	let time = new Date();
 
 	// Getting the hour of UTC+1
-	var timeNowHour = timeNow.getUTCHours() + 1;
-	var timeMinutesNow = timeNow.getUTCMinutes();
+	let timeNowHour = time.getUTCHours() + 1;
+	let timeMinutesNow = time.getUTCMinutes();
 
 	// Making new date data with details from above variable
-	var timeNow = new Date(0, 0, 0, timeNowHour, timeMinutesNow, 0);		
+	let timeNow = new Date(0, 0, 0, timeNowHour, timeMinutesNow, 0);		
 
-	var timeDifferenceValue = [];
-	var timeDifference = timeQuery - timeNow;
+	let timeDifferenceValue = [];
+	let timeDifference = timeQuery - timeNow;
 
 	// Formatting
-	var timeDifferenceHours = Math.floor(timeDifference / 1000 / 60 / 60);
+	let timeDifferenceHours = Math.floor(timeDifference / 1000 / 60 / 60);
 
 	timeDifference -= timeDifferenceHours * 1000 * 60 * 60;
 
-	var timeDifferenceMinutes = Math.floor(timeDifference / 1000 / 60);
+	let timeDifferenceMinutes = Math.floor(timeDifference / 1000 / 60);
 
 	// Making it 24 hours format
 	if(timeDifferenceHours < 0){
@@ -121,28 +112,28 @@ function getTimeDifference(timeQuery){
 
 // time status receive array of time [hour, minutes] return status
 function getTimeStatus(time){
-	var timeQuery = new Date(0, 0, 0, time[0], 0, 0);
-	var timeCheck = getTimeDifference(timeQuery.getTime());
-	var timeHours = timeCheck[0];
-	var timeMinutes = timeCheck[1];
-	var timeStatus;
+	let timeQuery = new Date(0, 0, 0, time[0], 0, 0);
+	let timeCheck = getTimeDifference(timeQuery.getTime());
+	let timeHours = timeCheck[0];
+	let timeMinutes = timeCheck[1];
+	let timeStatus;
 
 	//formating
 	if(timeHours < 10){
-		var timeHours = "0"+timeHours;
+		timeHours = "0"+timeHours;
 	}
 	if(timeMinutes < 10){
-		var timeMinutes = "0"+timeMinutes;
+		timeMinutes = "0"+timeMinutes;
 	}
 
-	var timeStatus = timeHours+" hour(s) and "+timeMinutes+" minute(s) left"
+	let timeStatus = timeHours+" hour(s) and "+timeMinutes+" minute(s) left"
 
 	return timeStatus;
 }
 
 // Data handling, return data or "Custom no data message"
-function setDataValue(data){
-	var data = data;
+function setDataValue(dataInput){
+	let data = dataInput;
 
 	try{
 		if(data == "" || data == null){
@@ -158,17 +149,17 @@ function setDataValue(data){
 }
 
 // Getting PVP win rate, return percentage rate
-function getWinRate(game, win){
-	var game = game;
+function getWinRate(gameInput, winInput){
+	let game = gameInput;
 		game = parseInt(game);
 
-	var win = win;
+	let win = winInput;
 		win = parseInt(win);
 	
-	if(game == 0 && win == 0){
-		var winRate = 0;
-	}else{
-		var winRate = ((win/game)*100).toFixed(2);
+	let winRate = 0;
+	
+	if(game != 0 && win != 0){
+		winRate = ((win/game)*100).toFixed(2);
 	}
 
 	return (winRate + "%");	
@@ -176,20 +167,19 @@ function getWinRate(game, win){
 
 // Get data from 3rd party source (website)
 async function getSiteData(query) {
-	try{
-		const response = await fetch(query);
-
-		return response.json();
-	}catch(error){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getSiteData, "+error);
-		clientDiscord.emit("message", "!err |"+error.stack+"|");
-	}	
+	return await fetch(query)
+		.then((response) => {return response.json()})
+		.catch((error) => {
+			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getSiteData, "+error);
+			clientDiscord.emit("message", "!err |"+error.stack+"|");
+		})  
 }
 
+
 // Get quest type, return "Dynamic" or "Event"
-function getQuestType(type){
-	var type = type;
-	var typeValue;
+function getQuestType(typeQuery){
+	let type = typeQuery;
+	let typeValue;
 
 	switch(type){
 		case 1:
@@ -211,8 +201,8 @@ function getQuestType(type){
 }
 
 // formating array data so it have space after coma (,)
-function setDataFormatting(data){
-	var data = data
+function setDataFormatting(dataQuery){
+	let data = dataQuery
 	for(var i = 1; i < data.length; i++){
 		data[i] = " "+data[i];
 	}
@@ -220,8 +210,8 @@ function setDataFormatting(data){
 };
 
 // Getting day value, get day (0-6), return monday (dddd)
-function getDay(day){
-	var day = day
+function getDay(dayQuery){
+	let day = dayQuery
 	switch(day){
 		case 0:
 			day = "Sunday";
@@ -251,10 +241,10 @@ function getDay(day){
 
 // getting weekly data
 async function getWeeklyQuests(){
-	var quests = await getFileData("./data/list-quests.json");
+	let quests = await getFileData("./data/list-quests.json");
 
-	var weekly = [];
-	var j = 0;
+	let weekly = [];
+	let j = 0;
 	for(var i = 0; i < quests.length; i++){
 		if(quests[i].weekly_challenge == true){
 			weekly[j] = i;
@@ -266,12 +256,9 @@ async function getWeeklyQuests(){
 
 // Getting character skillset, get: class;element, return: file loc
 function getTrainableSkills(charaClass, charaElement){
-	var charaSkillsetData = require('./data/class/'+charaClass+'/'+charaElement+'.json');	
-
-	var charaClass = charaClass.toLowerCase();
-	var charaElement = charaElement.toLowerCase();
-	var charaSkillset = [];
-	var idx = 0;
+	let charaSkillsetData = require('./data/class/'+charaClass+'/'+charaElement+'.json');	
+	let charaSkillset = [];
+	let idx = 0;
 
 	for(var i = 0; i < charaSkillsetData.records.length; i++){
 		if(charaSkillsetData.records[i].variations.length > 1){
@@ -284,28 +271,28 @@ function getTrainableSkills(charaClass, charaElement){
 }
 
 // Getting skill type, get: chara class, element, name - return: skills, type
-async function getSkillset(charaClass, charaElement, charaName){
-	var charaSkillsetData = await getFileData("./data/class/"+charaClass+"/"+charaElement+".json"); 
+async function getSkillset(charaClassInput, charaElementInput, charaNameInput){
+	let charaSkillsetData = await getFileData("./data/class/"+charaClassInput+"/"+charaElementInput+".json"); 
 		charaSkillsetData = charaSkillsetData.records;
 
-	var charaName = charaName.replace(" ", "%20");
-	var charaElement = charaElement.toLowerCase();
-	var charaClass = charaClass.replace(" ", "");
+	let charaName = charaNameInput.replace(" ", "%20");
+	let charaElement = charaElementInput.toLowerCase();
+	let charaClass = charaClassInput.replace(" ", "");
 
 	// reference url: http://na-bns.ncsoft.com/ingame/api/skill/characters/Wquin%20Hollow/skills/pages/1.json
-	var userSkillset = await getSiteData("http://na-bns.ncsoft.com/ingame/api/skill/characters/"+charaName+"/skills/pages/1.json");	
+	let userSkillset = await getSiteData("http://na-bns.ncsoft.com/ingame/api/skill/characters/"+charaName+"/skills/pages/1.json");	
 		userSkillset = userSkillset.records;
 
-	var charaTrainableList = getTrainableSkills(charaClass, charaElement);
-	var charaTrainableSkills = "";
+	let charaTrainableList = getTrainableSkills(charaClass, charaElement);
+	let charaTrainableSkills = "";
 
 	// searching for match
 	for(var i = 0; i < userSkillset.length; i++){
-		for(var j = 0; j < charaTrainableList.length; j++){
+		for(let j = 0; j < charaTrainableList.length; j++){
 			// checking if the skill_id is the same
 			if(userSkillset[i].skill_id == charaTrainableList[j].id){
 				// getting the correct variation
-				for(var k = 0; k < charaSkillsetData[charaTrainableList[j].idx].variations.length; k++){
+				for(let k = 0; k < charaSkillsetData[charaTrainableList[j].idx].variations.length; k++){
 					if(userSkillset[i].variation_index == charaSkillsetData[charaTrainableList[j].idx].variations[k].variation_index){
 						charaTrainableSkills = charaTrainableSkills + (charaSkillsetData[charaTrainableList[j].idx].variations[k].name+": "+charaSkillsetData[charaTrainableList[j].idx].variations[k].training_icon_desc.replace(/<[^>]+>/g, "")+" (Move ")+charaSkillsetData[charaTrainableList[j].idx].variations[k].variation_no+(")\n")
 					}
@@ -322,19 +309,19 @@ async function getSkillset(charaClass, charaElement, charaName){
 	}		
 }
 
-// formating the text
-function setTextFormat(text){
-	text = text.toLowerCase();
-	text = text.replace(/(^|\s)\S/g, l => l.toUpperCase());
+// formating the text, make text uppercase
+function setTextFormat(textInput){
+	let text = textInput.toLowerCase();
+		text = text.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
 	return text;
 }
 						
 async function getAPIStatus(){
-	var configData = await getFileData("./config.json");
+	let configData = await getFileData("./config.json");
 
-	var apiStatus = [];
-	var apiAdress = configData.API_ADDRESS;
+	let apiStatus = [];
+	let apiAdress = configData.API_ADDRESS;
 
 	await https.get(apiAdress[0].address, function (res) {
 		apiStatus[0] = "Operational";
@@ -355,26 +342,26 @@ async function getAPIStatus(){
 // getting data from a file
 async function getFileData(path){
 	//const fs = require('fs').promises;
-	var content = "";
+	let content = "No data";
 
 	try{
-		var content = fs.readFileSync(path, 'utf8');
-			content = JSON.parse(content);
+		content = fs.readFileSync(path, 'utf8')
+		content = JSON.parse(content);
 	}catch(error){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getFileData, "+error);
-		clientDiscord.emit("message", "!err |"+error.stack+"|")
-	};
+		clientDiscord.emit("message", "!err |"+error.stack+"|");
+	}	
 
 	return content;
 }
 
 // Getting the location of searched query data in array
 async function getDataIndex(query, dataPath){
-	var data = await getFileData(dataPath);	
-	var dataIndex = [];
-	var itemFuzzRatioSimple = 0;
-	var itemFuzzRatioSimpleMatch = 0;
-	var i = 0;
+	let data = await getFileData(dataPath);	
+	let dataIndex = [];
+	let itemFuzzRatioSimple = 0;
+	let itemFuzzRatioSimpleMatch = 0;
+	let i = 0;
 
 	while(i < data.length){
 		// data searching using fuzzball package
@@ -398,20 +385,21 @@ async function getDataIndex(query, dataPath){
 }		
 
 function getPriceStatus(priceOld, priceNew){
-	if(priceNew == priceOld){
-		var priceStatus = [("" + "0.00%"), "➖"];
-	}else{
-		var percentage = ((priceNew-priceOld)/ 100).toFixed(2);
+	let priceStatus = [("" + "0.00%"), "➖"]
+	if(priceNew != priceOld){
+		let percentage = ((priceNew-priceOld)/ 100).toFixed(2);
+		let symbol;
+		let emoji;
 		
 		if(percentage < 0){
-			var symbol = "";
-			var emoji = "🔽";
+			symbol = "";
+			emoji = "🔽";
 		}else{
-			var symbol = "+";
-			var emoji = "🔼";
+			symbol = "+";
+			emoji = "🔼";
 		}
 
-		var priceStatus = [(symbol + percentage+"%"), emoji];
+		priceStatus = [(symbol + percentage+"%"), emoji];
 	}					
 
 	return priceStatus;
@@ -419,41 +407,44 @@ function getPriceStatus(priceOld, priceNew){
 
 // character PvP placement handling
 function setCharacterPlacement(rank){
+	let pvpPlacement
+
 	if(rank == "" || rank == null){
-		var pvpPlacement = "Unranked";
+		pvpPlacement = "Unranked";
 	}else{
-		var pvpPlacement = rank;
+		pvpPlacement = rank;
 	}
 
 	return pvpPlacement;
 }
 
 // getting the active element damage
-async function getElementalDamage(activeElement, characterData){
-	var charaData = characterData;
-	var activeElement = activeElement.toLowerCase();
+async function getElementalDamage(activeElementInput, characterData){
+	let charaData = characterData;
+	let activeElement = activeElementInput.toLowerCase();
+	let elementalDamage;
 
 	switch(activeElement){
 		case 'flame':
-			var elementalDamage = charaData.flame + (" ("+(charaData.flameRate*100).toFixed(2)+"%)");
+			elementalDamage = charaData.flame + (" ("+(charaData.flameRate*100).toFixed(2)+"%)");
 		break;
 		case 'frost':
-			var elementalDamage = charaData.frost + (" ("+(charaData.frostRate*100).toFixed(2)+"%)");
+			elementalDamage = charaData.frost + (" ("+(charaData.frostRate*100).toFixed(2)+"%)");
 		break;
 		case 'wind':
-			var elementalDamage = charaData.wind + (" ("+(charaData.windRate*100).toFixed(2)+"%)");
+			elementalDamage = charaData.wind + (" ("+(charaData.windRate*100).toFixed(2)+"%)");
 		break;
 		case 'earth':
-			var elementalDamage = charaData.earth + (" ("+(charaData.earthRate*100).toFixed(2)+"%)");
+			elementalDamage = charaData.earth + (" ("+(charaData.earthRate*100).toFixed(2)+"%)");
 		break;
 		case 'lightning':
-			var elementalDamage = charaData.lightning + (" ("+(charaData.lightningRate*100).toFixed(2)+"%)");
+			elementalDamage = charaData.lightning + (" ("+(charaData.lightningRate*100).toFixed(2)+"%)");
 		break;
 		case 'shadow':
-			var elementalDamage = charaData.shadow + (" ("+(charaData.shadowRate*100).toFixed(2)+"%)");
+			elementalDamage = charaData.shadow + (" ("+(charaData.shadowRate*100).toFixed(2)+"%)");
 		break;
 		default:
-			var elementalDamage = "No data available";
+			elementalDamage = "0.00%";
 		break;
 	}
 
@@ -461,11 +452,11 @@ async function getElementalDamage(activeElement, characterData){
 }
 
 // getting user input
-function getUserInput(text){
-    var text = text.toString().split(" ");
+function getUserInput(textQuery){
+    let text = textQuery.toString().split(" ");
 		text = text.splice(1);
 
-    var userInput = "";
+    let userInput = "";
 
     if(text.length > 1){
         for(var i = 0; i < text.length; i++){
@@ -486,8 +477,8 @@ function getUserInput(text){
 
 // getting the guild configuration index in configuration database, param: id (guild snowflake id)
 async function getGuildConfig(id){
-	var guildConfig = await getFileData('./data/guilds.json');
-	var idx;
+	let guildConfig = await getFileData('./data/guilds.json');
+	let idx;
 
 	for(var i=0; i < guildConfig.length; i++){
 		if(guildConfig[i].GUILD_ID == id){
@@ -509,8 +500,12 @@ function setFileData(path, data){
 
 // getting the connected guilds name and member count
 function getGuildName(item, index) {
-	var guildName = " "+item.name+" ("+item.memberCount+")";
-	return guildName;
+	return " "+item.name+" ("+item.memberCount+")";
+}
+
+// getting user role list
+function getMemberRoles(item, index){
+	return item.name;
 }
 
 // Discord stuff start here
@@ -522,18 +517,19 @@ clientDiscord.login(secret.DISCORD_APP_TOKEN).catch(error => {
 
 // Starting up the bot
 clientDiscord.on("ready", async () => {
-	var configData = await getFileData("./config.json");
-	var fileData = await getFileData("./data/data-files.json");
+	let configData = await getFileData("./config.json");
+	let fileData = await getFileData("./data/data-files.json");
 	
-	var apiStatus = await getAPIStatus();
-	var apiAdress = configData.API_ADDRESS;
-	var packageFile = await getFileData("package.json");
+	let apiStatus = await getAPIStatus();
+	let apiAdress = configData.API_ADDRESS;
+	let packageFile = await getFileData("package.json");
 
 	// statuspage stuff
-	var discordStatus = await getSiteData(configData.API_ADDRESS[3].address); 
-	var twitterStatus = await getSiteData(configData.API_ADDRESS[4].address);
+	let discordStatus = await getSiteData(configData.API_ADDRESS[3].address); 
+	let twitterStatus = await getSiteData(configData.API_ADDRESS[4].address);
 
-	clientDiscord.user.setUsername("Jinsoyun");
+	// setting the bot name
+	clientDiscord.user.setUsername(setTextFormat(packageFile.name));
 
 	if(configData.MAINTENANCE_MODE == false){
 		clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
@@ -565,9 +561,11 @@ clientDiscord.on("ready", async () => {
 
 // bot joined the guild
 clientDiscord.on("guildCreate", async (guild) => {
-	var defaultConfig = await getFileData('config.json');
-	var guildConfig = await getFileData('./data/guilds.json');
-	var found = false;
+	let defaultConfig = await getFileData('config.json');
+	let guildConfig = await getFileData('./data/guilds.json');
+	let found = false;
+	let inviteWarning = "";
+	var botInviteAccess = message.channel.permissionsFor(clientDiscord.user).has("CREATE_INSTANT_INVITE", false);
 	
 	for(var i = 0; i < guildConfig.length; i ++){
 		if(guild.id == guildConfig[i].GUILD_ID){
@@ -576,7 +574,7 @@ clientDiscord.on("guildCreate", async (guild) => {
 	}
 
 	if(found == false){
-		var configData = {
+		let configData = {
 			"GUILD_NAME": guild.name,
 			"GUILD_ID": guild.id,
 			"GUILD_ICON": guild.iconURL,
@@ -597,7 +595,11 @@ clientDiscord.on("guildCreate", async (guild) => {
 
 		setFileData('./data/guilds.json', guildConfig);
 
-		guild.members.find(x => x.id == guild.ownerID).send("Thank you for adding me to the server, default server configuration data has been added. To setup necessary channel do `"+defaultConfig.DEFAULT_PREFIX+"setup`, to see what can be configure use `"+defaultConfig.DEFAULT_PREFIX+"debug config`");
+		if(botInviteAccess == true){
+			inviteWarning = "**Warning! this bot have role to create instant invite, it would be wise to disable it**";
+		}
+
+		guild.members.find(x => x.id == guild.ownerID).send("Thank you for adding me to the server, default server configuration data has been added. To setup necessary channel do `"+defaultConfig.DEFAULT_PREFIX+"setup`, to see what can be configure use `"+defaultConfig.DEFAULT_PREFIX+"debug config` "+inviteWarning);
 ;
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Jinsoyun joined "+guild.name+", config data has been set to default");
 	}		
@@ -605,8 +607,8 @@ clientDiscord.on("guildCreate", async (guild) => {
 
 // User joined the guild
 clientDiscord.on("guildMemberAdd", async (member) => {
-	var guildConfig = await getFileData("./data/guilds.json");
-	var guildConfigIdx = await getGuildConfig(member.guild.id);
+	let guildConfig = await getFileData("./data/guilds.json");
+	let guildConfigIdx = await getGuildConfig(member.guild.id);
 
 	// Welcoming message and guide to join
 	// and checking if it's disabled or not
@@ -624,14 +626,14 @@ clientDiscord.on("guildMemberAdd", async (member) => {
 
 // User left the guild (kicked or just left)
 clientDiscord.on("guildMemberRemove", async (member) => {
-	var configData = await getFileData("./config.json");
-	var silveressNA = configData.API_ADDRESS[0].address;
+	let configData = await getFileData("./config.json");
+	let silveressNA = configData.API_ADDRESS[0].address;
 
-	var silveressQuerry = silveressNA+member.displayName; // for the querry
-	var charaData = await getSiteData(silveressQuerry);
+	let silveressQuerry = silveressNA+member.displayName; // for the querry
+	let charaData = await getSiteData(silveressQuerry);
 
-	var guildConfig = await getFileData("./data/guilds.json");
-	var guildConfigIdx = await getGuildConfig(member.guild.id);
+	let guildConfig = await getFileData("./data/guilds.json");
+	let guildConfigIdx = await getGuildConfig(member.guild.id);
 
 	if(guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY != "disable"){
 		try{
@@ -655,8 +657,8 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 });
 
 clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
-	var guildConfig = await getFileData("./data/guilds.json");
-	var guildConfigIdx = await getGuildConfig(oldMember.guild.id);
+	let guildConfig = await getFileData("./data/guilds.json");
+	let guildConfigIdx = await getGuildConfig(oldMember.guild.id);
 
 	if(guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY != "disable"){
 		try{
@@ -681,31 +683,39 @@ clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
 
 // User commands
 clientDiscord.on("message", async (message) => {
-	var guildConfig = await getFileData('./data/guilds.json');
-	//var guildConfigIdx = await getGuildConfig(message.guild.id);
+	let queryStatus; // for querystatus on reg and class
+	let sent; // for announcer counter server sent
 
-	if(message.author == null){
-		var guildConfigIdx = await getGuildConfig("426036695931158539");
-	}else{
-		var guildConfigIdx = await getGuildConfig(message.guild.id);
+	let configData = await getFileData("./config.json");
+	let classList = await getFileData("./data/class/list-class.json");
+	let rewards = await getFileData("./data/list-challenges-rewards.json");
+	let event = await getFileData("./data/data-event.json");
+	let quests = await getFileData("./data/list-quests.json");
+	let fileData = await getFileData("./data/data-files.json");
+
+	let silveressNA = configData.API_ADDRESS[0].address;
+	let guildConfig = await getFileData('./data/guilds.json');
+	let guildConfigIdx = await getGuildConfig("426036695931158539");
+
+	if(message.author != null){
+		guildConfigIdx = await getGuildConfig(message.guild.id);
 	}
-	var guildPrefix = guildConfig[guildConfigIdx].PREFIX;
+
+	let guildPrefix = guildConfig[guildConfigIdx].PREFIX;
 	
   	if (message.toString().substring(0, 1) == guildPrefix) {
 		//var args = message.toString().substring(1).split(' ');
-		var	args = message.toString();
+		let	args = message.toString();
 			args = args.substring(1).split(' ');
-		var cmd = args[0];
+			let cmd = args[0];
 			cmd = cmd.toLowerCase();
 
         args = args.splice(1);
         switch(cmd) {
 			// Connection test
 			case 'soyun':
-				var configData = await getFileData("./config.json");
-
-				var soyunQuerry = message.toString().substring(1).split(' ');
-				var soyunHelpTxt = '**Account**\n- Nickname: `'+guildPrefix+'username desired nickname`\n- Class: `'+guildPrefix+'class desired class`\n\n**Blade & Soul**\n- Character Search: `'+guildPrefix+'who` or `'+guildPrefix+'who character name`\n- Daily challenges `'+guildPrefix+'daily` or `'+guildPrefix+'daily tomorrow`\n- Weekly challenges `'+guildPrefix+'weekly`\n- *Koldrak\'s Lair*  time: `'+guildPrefix+'koldrak`\n- Marketplace `'+guildPrefix+'market item name`\n- Current Event `'+guildPrefix+'event` or `'+guildPrefix+'event tomorrow`\n\n**Miscellaneous**\n- Pick: `'+guildPrefix+'pick "item a" or "item b"`\n- Roll dice: `'+guildPrefix+'roll` or `'+guildPrefix+'roll (start number)-(end number)` example: `'+guildPrefix+'roll 4-7`\n- Commands list: `'+guildPrefix+'soyun help`\n- Bot and API status `'+guildPrefix+'soyun status`\n- Try Me! `'+guildPrefix+'soyun`';
+				let soyunQuerry = message.toString().substring(1).split(' ');
+				let soyunHelpTxt = '**Account**\n- Nickname: `'+guildPrefix+'username new nickname`\n- Class: `'+guildPrefix+'class new class`\n\n**Blade & Soul**\n- Character Search: `'+guildPrefix+'who` or `'+guildPrefix+'who character name`\n- Daily challenges `'+guildPrefix+'daily` or `'+guildPrefix+'daily tomorrow`\n- Weekly challenges `'+guildPrefix+'weekly`\n- *Koldrak\'s Lair*  time: `'+guildPrefix+'koldrak`\n- Marketplace `'+guildPrefix+'market item name`\n- Current Event `'+guildPrefix+'event` or `'+guildPrefix+'event tomorrow`\n\n**Miscellaneous**\n- Pick: `'+guildPrefix+'pick "item a" or "item b"`\n- Roll dice: `'+guildPrefix+'roll` or `'+guildPrefix+'roll (start number)-(end number)` (`'+guildPrefix+'roll 4-7`)\n- Commands list: `'+guildPrefix+'soyun help`\n- Bot and API status `'+guildPrefix+'soyun status`\n- Try Me! `'+guildPrefix+'soyun`';
 
 				soyunQuerry = soyunQuerry.splice(1);
 
@@ -743,30 +753,21 @@ clientDiscord.on("message", async (message) => {
 
 					case 'status':
 						const m = await message.channel.send("Checking...");
-						/*
-						var dateNow = Date.now();
-							dateNow = dateNow.toISOString();
-						*/
 
 						// statuspage stuff
-						var discordStatus = await getSiteData(configData.API_ADDRESS[3].address);
-						var twitterStatus = await getSiteData(configData.API_ADDRESS[4].address);
-						var marketData = await getFileData("./data/list-market-data.json");	
-						var soyunPackageData = await getFileData("./package.json");
-						     
-						  
-						var apiStatus = [];
-						var apiStatusList = [];
-						var apiAdress = configData.API_ADDRESS;
-						//var idx = 0;
+						let discordStatus = await getSiteData(configData.API_ADDRESS[3].address);
+						let twitterStatus = await getSiteData(configData.API_ADDRESS[4].address);
+						let soyunPackageData = await getFileData("./package.json");
+						
+						let apiAdress = configData.API_ADDRESS;
 
-						var apiStatus = await getAPIStatus();
+						let apiStatus = await getAPIStatus();
 
-						apiStatusList = "**"+apiAdress[0].name+"**: "+apiStatus[0]+"\n **"+apiAdress[1].name+"**: "+apiStatus[1]+"\n";
+						apiStatusList = "**"+apiAdress[0].name+"**: "+apiStatus[0]+"\n**"+apiAdress[1].name+"**: "+apiStatus[1]+"\n";
 
 						//`Ping received, Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(clientDiscord.ping)}ms`
-						var msgLatency = (m.createdTimestamp - message.createdTimestamp) + "ms";
-						var apiLatency = Math.round(clientDiscord.ping) + "ms";
+						let msgLatency = (m.createdTimestamp - message.createdTimestamp) + "ms";
+						let apiLatency = Math.round(clientDiscord.ping) + "ms";
 
 						m.edit("Current Status",{
 							"embed": {
@@ -784,27 +785,23 @@ clientDiscord.on("message", async (message) => {
 										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency+"\n**Version**: "+soyunPackageData.version
 									},
 									{
-										"name": "Market Data",
-										"value": "**Last Update**: "+dateformat(marketData[0].updateTime, "UTC:ddd dd-mm-yy @ HH:MM:ss")+" UTC\n**Data Updated**: "+marketData[0].dataUpdated+"\n**Data Count**: "+marketData[0].dataCount
+										"name": "Database Last Update",
+										"value": "**Market Data**: "+fileData.MARKET_DATA+"\n**Item Data**: "+fileData.ITEM_DATA+"\n**Class Data**: "+fileData.CLASS_DATA+"\n**Event Data**: "+fileData.EVENT_DATA
 									},
 									{
 										"name": "Discord",
 										"value": "**Status**: "+discordStatus.status.description
 									},
 									{
-										"name": "Twitter",
-										"value": "**Status**: "+twitterStatus.status.description
-									},
-									{
 										"name": "API",
-										"value": apiStatusList
+										"value": apiStatusList+"\n**Twitter**: "+twitterStatus.status.description
 									},
 									{
 										"name": "About and Special Mentions",
 										"value": "- Bot maintaned and developed by **[ln2r](https://ln2r.web.id/)**\n- **Grumpy Butts** discord server for field testing and database maintenance."
 									},
 									{
-										"name": "Built With Help of ❤",
+										"name": "Built With ❤",
 										"value": "- [discord.js](https://discord.js.org/)\n- [Silveress BnS API](https://bns.silveress.ie/)\n- [twitter](https://developer.twitter.com/en/docs.html)\n- [ontime](https://www.npmjs.com/package/ontime)\n- [node-fetch](https://www.npmjs.com/package/node-fetch)\n- [dateformat](https://www.npmjs.com/package/dateformat)\n- [delay](https://www.npmjs.com/package/delay)\n- [fuzzball](https://www.npmjs.com/package/fuzzball)"
 									}
 								]
@@ -816,8 +813,8 @@ clientDiscord.on("message", async (message) => {
 					break;
 
 					default:
-						var soyunSay = await getFileData("./data/list-soyundialogue.json");
-						var soyunDialogueRNG = Math.floor(Math.random() * soyunSay.text.length) - 0;
+						let soyunSay = await getFileData("./data/list-soyundialogue.json");
+						let soyunDialogueRNG = Math.floor(Math.random() * soyunSay.text.length) - 0;
 
 						message.channel.send(soyunSay.text[soyunDialogueRNG]);
 
@@ -829,15 +826,10 @@ clientDiscord.on("message", async (message) => {
 			
 			// Server join = username change and role add
 			case 'reg':
-				var joinQuerry = message.toString().substring(1).split('"');
-				var joinUsername = (joinQuerry[1]);
+				let joinQuerry = message.toString().substring(1).split('"');
+				let joinUsername = (joinQuerry[1]);
 
-				var configData = await getFileData("./config.json");
-				var silveressNA = configData.API_ADDRESS[0].address;
-
-				var classList = await getFileData("./data/class/list-class.json");
-
-				var queryStatus = false;
+				queryStatus = false;
 				
 				try{
 					var joinClass = (joinQuerry[3]);
@@ -870,7 +862,6 @@ clientDiscord.on("message", async (message) => {
 
 						// Welcoming message on general channel
 						message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
-						payloadStatus = "received";
 						queryStatus = false;
 
 						var silveressQuerry = silveressNA+joinUsername; // for the querry
@@ -911,7 +902,7 @@ clientDiscord.on("message", async (message) => {
 			
 			// Username change
 			case 'username':
-				var usernameQuerry = getUserInput(message);
+				let usernameQuerry = getUserInput(message);
 
 				// Changing message author username
 				message.guild.members.get(message.author.id).setNickname(usernameQuerry);
@@ -923,46 +914,47 @@ clientDiscord.on("message", async (message) => {
 			
 			// Class change
 			case 'class':
-				var classQuerry = getUserInput(message);
-					classQuerry = classQuerry.toLowerCase(); // Converting class value to lower case so input wont be missmatched
+				let classQuerry = getUserInput(message);
+					classQuerry = classQuerry.toLowerCase(); // Converting to lower case so input wont get missmatched
+				let memberRolesList = message.guild.members.get(message.author.id).roles.map(getMemberRoles);
+				let memberRemovedIdx;
 
-				var classList = await getFileData("./data/class/list-class.json");	
+				classList = await getFileData("./data/class/list-class.json");	
+				queryStatus = false;				
 
-				var queryStatus;				
-
-				// Removing user current class
-				// I know this is stupid way to do it, but it have to do for now
-				for(var i = 0; i < classList.length;){
-					// Class input verification (inefficient af)
+				// getting and checking user roles
+				for(let i = 0; i < classList.length; i++){
+					// getting the index of the user previous class/role
+					for(var j = 0; j < memberRolesList.length; j++){
+						if(classList[i] == memberRolesList[j] && classQuerry != memberRolesList[j]){
+							memberRemovedIdx = j;
+						}	
+					}
+					// checking if the user input valid or not
 					if(classQuerry == classList[i]){
 						queryStatus = true;
 					};
-					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == classList[i]));					
-					i++
 				};
 
 				// Checking the verification
 				if(queryStatus == true){
+					// removing the old role
+					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == memberRolesList[memberRemovedIdx]))
 					// Adding new role to user according their command
 					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classQuerry));
 
 					// Telling the user class has been changed
 					message.channel.send("Your class changed to **"+classQuerry+"**");
-					payloadStatus = "received";
-					queryStatus = false;
 				}else{
 					// Telling them whats wrong
 					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
-					queryStatus = false;
 				}
 				// Console logging
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: class change command received");
 			break;
 
 			case 'twcon':
-				var configData = await getFileData("./config.json");
-				var sent = 0;
-
+				sent = 0;
 				// Twitter's tweet output
 				clientDiscord.guilds.map((guild) => {
 					let found = 0;
@@ -1003,99 +995,73 @@ clientDiscord.on("message", async (message) => {
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+twtScreenName+"'s tweet sent to "+sent+" server(s)");
 			break;
 			
-			// Writing message via bot for announcement or notice, Admin only
-			case 'say':
-				var configData = await getFileData("./config.json");
-
-				if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
-					var sayQuerry = message.toString().substring(1).split('"');
-
-					var sayTitle = (sayQuerry[1]);
-						sayTitle = sayTitle.replace(/(^|\s)\S/g, l => l.toUpperCase());
-
-						// Default title
-						if(sayTitle == ""){
-							sayTitle = "Announcement";
-						}
-
-					// Writing the content
-					message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_NEWS_ANNOUNCE).send({
-						"embed":{
-							"color": 16753920,
-							"timestamp" : new Date(),
-							"description": sayQuerry[3],
-							"author":{
-								"name": sayTitle,
-							},
-							"footer":{
-								"text": message.author.username,
-								"icon_url": message.author.avatarURL
-							}
-						}
-					});
-				}else{
-					message.channel.send("You don't have permission to use that command here.");
-				};
-				// Console logging
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
-			break;
-
 			// First time setup (making roles and necesarry channels), Admin only
 			case 'setup':
-				var configData = await getFileData("./config.json");
-				var classList = await getFileData("./data/class/list-class.json");	
-
-				if(guildConfig[guildConfigIdx].SETUP_STATUS == false){
-					// Making the roles with class array as reference
-					for(i = 0; i < classList.length;){
-						message.guild.createRole({
-							name: classList[i]
-						}).catch(console.error);
-						i++;
-						// Console logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+classList[i]+" role created");
-					};
-
-					// Making "news" channel
-					message.guild.createChannel(configData.DEFAULT_NEWS_CHANNEL, "text");
-					message.guild.createChannel(configData.DEFAULT_PARTY_CHANNEL, "text");
-
-					// Console logging
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+configData.DEFAULT_NEWS_CHANNEL+" channel created at "+message.guild.name);
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+configData.DEFAULT_PARTY_CHANNEL+" channel created at "+message.guild.name);					
+				configData = await getFileData("./config.json");
+				classList = await getFileData("./data/class/list-class.json");
 				
-					// Console logging
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message.author.username+" did first time setup, "+message.guild.name+" setup status changed to true");
+				var adminAccess = message.channel.permissionsFor(message.author).has("ADMINISTRATOR", false);
+				var botInviteAccess = message.channel.permissionsFor(clientDiscord.user).has("CREATE_INSTANT_INVITE", false);
 
-					guildConfig[guildConfigIdx].SETUP_STATUS = true;
-					guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN = defaultConfig.DEFAULT_TEXT_CHANNEL;
-					guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE = defaultConfig.DEFAULT_MEMBER_GATE;
-					guildConfig[guildConfigIdx].CHANNEL_NEWS_ANNOUNCE = defaultConfig.DEFAULT_NEWS_CHANNEL;
-					guildConfig[guildConfigIdx].CHANNEL_ADMIN = defaultConfig.DEFAULT_ADMIN_CHANNEL;
-					guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY = defaultConfig.DEFAULT_MEMBER_LOG;
-					guildConfig[guildConfigIdx].CHANNEL_DAILY_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
-					guildConfig[guildConfigIdx].CHANNEL_WEEKLY_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
-					guildConfig[guildConfigIdx].CHANNEL_EVENT_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
-					guildConfig[guildConfigIdx].CHANNEL_KOLDRAK_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+				if(adminAccess == true){
+					if(guildConfig[guildConfigIdx].SETUP_STATUS == false){
+						// Making the roles with class array as reference
+						for(i = 0; i < classList.length;){
+							message.guild.createRole({
+								name: classList[i]
+							}).catch(console.error);
+							i++;
+							// Console logging
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+classList[i]+" role created");
+						};
+
+						// Making "news" channel
+						message.guild.createChannel(configData.DEFAULT_NEWS_CHANNEL, "text");
+						message.guild.createChannel(configData.DEFAULT_PARTY_CHANNEL, "text");
+
+						// Console logging
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+configData.DEFAULT_NEWS_CHANNEL+" channel created at "+message.guild.name);
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+configData.DEFAULT_PARTY_CHANNEL+" channel created at "+message.guild.name);					
 					
-					
+						// Console logging
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message.author.username+" did first time setup, "+message.guild.name+" setup status changed to true");
 
-					setFileData('./data/guilds.json', guildConfig);
+						guildConfig[guildConfigIdx].SETUP_STATUS = true;
+						guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN = defaultConfig.DEFAULT_TEXT_CHANNEL;
+						guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE = defaultConfig.DEFAULT_MEMBER_GATE;
+						guildConfig[guildConfigIdx].CHANNEL_NEWS_ANNOUNCE = defaultConfig.DEFAULT_NEWS_CHANNEL;
+						guildConfig[guildConfigIdx].CHANNEL_ADMIN = defaultConfig.DEFAULT_ADMIN_CHANNEL;
+						guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY = defaultConfig.DEFAULT_MEMBER_LOG;
+						guildConfig[guildConfigIdx].CHANNEL_DAILY_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+						guildConfig[guildConfigIdx].CHANNEL_WEEKLY_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+						guildConfig[guildConfigIdx].CHANNEL_EVENT_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+						guildConfig[guildConfigIdx].CHANNEL_KOLDRAK_ANNOUNCE = defaultConfig.DEFAULT_PARTY_CHANNEL;
+						
+						
 
-					message.channel.send("All necessary channel created, all channel setting set to default");
+						setFileData('./data/guilds.json', guildConfig);
+
+						message.channel.send("All necessary channel created, all channel setting set to default");
+
+						if(botInviteAccess == true){
+							message.channel.send("Warning! this bot have role to create instant invite, it would be wise to disable it");
+						}
+					}else{
+						message.channel.send("I'm sorry you can't do that, this server already done first time setup");
+					}
 				}else{
-					message.channel.send("I'm sorry you can't do that, this server already done first time setup");
+					message.channel.send("I'm sorry but you don't have permission to use this command")
 				}
 			break;
 			
 			// pick between two things
 			case 'pick':
-				var pickQuerry = message.toString().substring(1).split('"');	
-				var pickFirstOption = pickQuerry[1];
-				var pickSecondOption = pickQuerry[3];
+				let pickQuerry = message.toString().substring(1).split('"');	
+				let pickFirstOption = pickQuerry[1];
+				let pickSecondOption = pickQuerry[3];
 
-				var pickResult = Math.floor(Math.random() * 2);
-				var pickResultValue;
+				let pickResult = Math.floor(Math.random() * 2);
+				let pickResultValue;
 
 				if(pickResult == 0){
 					pickResultValue = pickFirstOption;
@@ -1110,9 +1076,9 @@ clientDiscord.on("message", async (message) => {
 
 			// die roll
 			case 'roll':
-				var rollQuerry = message.toString().substring(1).split(' ');	
-				var rollStartNumber
-				var rollEndNumber;
+				let rollQuerry = message.toString().substring(1).split(' ');	
+				let rollStartNumber
+				let rollEndNumber;
 
 				if(rollQuerry[1] == null){
 					rollStartNumber = 1;
@@ -1122,7 +1088,7 @@ clientDiscord.on("message", async (message) => {
 					rollEndNumber = rollQuerry[1].charAt(2);
 				};
 
-				var rollResult = Math.floor(Math.random() * rollEndNumber) - rollStartNumber;
+				let rollResult = Math.floor(Math.random() * rollEndNumber) - rollStartNumber;
 
 				message.channel.send("You rolled **"+rollResult+"**");
 
@@ -1131,22 +1097,20 @@ clientDiscord.on("message", async (message) => {
 
 			// Today daily challenge
 			case 'daily':
-				var rewards = await getFileData("./data/list-challenges-rewards.json");
-				var event = await getFileData("./data/data-event.json");
-				var quests = await getFileData("./data/list-quests.json");
-				var configData = await getFileData("./config.json");
-
-				var dcDate = new Date();
+				let dcDate = new Date();
 				// Getting the current date
-				var dcDay = dcDate.getUTCDay();
+				let dcDay = dcDate.getUTCDay();
 
-				var dailyQuerry = message.toString().substring(1).split(' ');
+				let dailyQuerry = message.toString().substring(1).split(' ');
 					dailyQuerry = dailyQuerry.splice(1);
 				var dailyPartyAnnouncement = false;
-				var dailyQuests = "";
-				var dailyRewards = [];
+				let dailyQuests = "";
+				let dailyRewards = [];
+				let questsDailyList;
+				let questsDailyListRewards;
+				let eventReward;
 
-				var sent = 0;
+				sent = 0;
 				
 				switch(dailyQuerry[0]){
 					case 'tomorrow':
@@ -1170,32 +1134,32 @@ clientDiscord.on("message", async (message) => {
 
 				switch(dcDay){
 					case 0:
-						var questsDailyList = await getQuests("sunday");
-						var questsDailyListRewards = rewards[0].rewards;
+						questsDailyList = await getQuests("sunday");
+						questsDailyListRewards = rewards[0].rewards;
 					break;
 					case 1:
-						var questsDailyList = await getQuests("monday");
-						var questsDailyListRewards = rewards[1].rewards;
+						questsDailyList = await getQuests("monday");
+						questsDailyListRewards = rewards[1].rewards;
 					break;
 					case 2:
-						var questsDailyList = await getQuests("tuesday");
-						var questsDailyListRewards = rewards[2].rewards;
+						questsDailyList = await getQuests("tuesday");
+						questsDailyListRewards = rewards[2].rewards;
 					break;
 					case 3:
-						var questsDailyList = await getQuests("wednesday");
-						var questsDailyListRewards = rewards[3].rewards;
+						questsDailyList = await getQuests("wednesday");
+						questsDailyListRewards = rewards[3].rewards;
 					break;
 					case 4:
-						var questsDailyList = await getQuests("thursday");
-						var questsDailyListRewards = rewards[4].rewards;
+						questsDailyList = await getQuests("thursday");
+						questsDailyListRewards = rewards[4].rewards;
 					break;
 					case 5:
-						var questsDailyList = await getQuests("friday");
-						var questsDailyListRewards = rewards[5].rewards;
+						questsDailyList = await getQuests("friday");
+						questsDailyListRewards = rewards[5].rewards;
 					break;
 					case 6:
-						var questsDailyList = await getQuests("saturday");
-						var questsDailyListRewards = rewards[6].rewards;
+						questsDailyList = await getQuests("saturday");
+						questsDailyListRewards = rewards[6].rewards;
 					break;
 				}
 
@@ -1207,9 +1171,9 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				if(event.rewards.daily != ""){
-					var eventReward = event.rewards.daily + " (Event)";
+					eventReward = event.rewards.daily + " (Event)";
 				}else{
-					var eventReward = "";
+					eventReward = "";
 				}
 
 				dailyRewards = dailyRewards + eventReward;
@@ -1288,14 +1252,14 @@ clientDiscord.on("message", async (message) => {
 
 			// Koldrak's lair notification and closest time
 			case 'koldrak':
-				var koldrakQuerry = message.toString().substring(1).split(' ');
+				let koldrakQuerry = message.toString().substring(1).split(' ');
 					koldrakQuerry = koldrakQuerry.splice(1);
-				var koldrakTime = await getFileData("./data/koldrak-time.json");
-				var configData = await getFileData("./config.json");
-				var sent = 0;	
+				let koldrakTime = await getFileData("./data/koldrak-time.json");
+				configData = await getFileData("./config.json");
+				sent = 0;	
 				
 				// Cheating the search so it will still put hour even if the smallest time is 24
-				var koldrakTimeLeft = 25;
+				let koldrakTimeLeft = 25;
 
 				switch(koldrakQuerry[0]){
 					case 'list':
@@ -1359,16 +1323,21 @@ clientDiscord.on("message", async (message) => {
 					
 					// Showing when is the closest Koldrak's lair time
 					default:
+						let koldrakTimeHours;
+						let koldrakTimeMinutes;
+						let koldrakTimeNext;
+						let koldrakTimeDiff;
+
 						// Searching when is the closest one
 						for(var i = 0; i < 5;){
 							// Making new date data with details from koldrak's schedule (koldrak.json)
-							var koldrakTimeNext = new Date(0, 0, 0, koldrakTime.time[i], 0, 0);
+							koldrakTimeNext = new Date(0, 0, 0, koldrakTime.time[i], 0, 0);
 							// Getting the time difference
-							var koldrakTimeDiff = getTimeDifference(koldrakTimeNext.getTime());
+							koldrakTimeDiff = getTimeDifference(koldrakTimeNext.getTime());
 
 							// Formatting
-							var koldrakTimeHours = koldrakTimeDiff[0];							
-							var koldrakTimeMinutes = koldrakTimeDiff[1];
+							koldrakTimeHours = koldrakTimeDiff[0];							
+							koldrakTimeMinutes = koldrakTimeDiff[1];
 
 							// Storing the closest for later
 							if(koldrakTimeHours <= koldrakTimeLeft){
@@ -1389,25 +1358,24 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching and showing character information, can be triggered via !who for character that have the same name with the nickname or use !who "chara name" for specific one
 			case 'who':
-				var configData = await getFileData("./config.json");
-				var silveressNA = configData.API_ADDRESS[0].address;
+				configData = await getFileData("./config.json");
 
 				try{
 					message.channel.startTyping();
 
-					var whoQuerry = getUserInput(message);
+					let whoQuerry = getUserInput(message);
 
 					if(whoQuerry == null || whoQuerry == ""){
 						whoQuerry = [message.member.nickname];
 					}				
 
-					var silveressQuerry = silveressNA+whoQuerry; // for the querry
-					var charaData = await getSiteData(silveressQuerry);
-					var characlassQuerry = charaData.playerClass.toLowerCase().replace(/\s/g, '');				
-					var skillsetData = await getSkillset(characlassQuerry, charaData.activeElement, charaData.characterName)
-					var elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
+					let silveressQuerry = silveressNA+whoQuerry; // for the querry
+					let charaData = await getSiteData(silveressQuerry);
+					let characlassQuerry = charaData.playerClass.toLowerCase().replace(/\s/g, '');				
+					let skillsetData = await getSkillset(characlassQuerry, charaData.activeElement, charaData.characterName)
+					let elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
 
-					var bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry; // for author url so user can look at more detailed version
+					let bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry; // for author url so user can look at more detailed version
 						bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 					
 					message.channel.stopTyping();
@@ -1484,35 +1452,39 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
-				var marketQuery = getUserInput(message); // getting the user input
+				let marketQuery = getUserInput(message); // getting the user input
 
-				var marketDataPath = "./data/list-market-data.json";
-				var marketData = await getFileData(marketDataPath);	
-				var marketDataValue = "";
-				var marketDataItemsCount = "";
+				let marketDataPath = "./data/list-market-data.json";
+				let marketData = await getFileData(marketDataPath);	
+				let marketDataValue = "";
+				let marketDataItemsCount = "";
+				let marketItemIndex;
+				let marketDataItems;
+
+				let priceStatus;
 
 				// item exception
 				if(marketQuery == "Golden Harvest Festival"){
-					var marketItemIndex = [1240, 616, 506, 1266, 123, 1909];
+					marketItemIndex = [1240, 616, 506, 1266, 123, 1909];
 				}else{
-					var marketItemIndex = await getDataIndex(marketQuery, marketDataPath);
+					marketItemIndex = await getDataIndex(marketQuery, marketDataPath);
 				};
 
-				var imgSource = "https://cdn.discordapp.com/attachments/426043840714244097/493252746087235585/0ig1OR0.png"; // default image for when data not found
+				let imgSource = "https://cdn.discordapp.com/attachments/426043840714244097/493252746087235585/0ig1OR0.png"; // default image for when data not found
 
 				if(marketItemIndex.length > 6){
-					var marketDataItems = 6;
+					marketDataItems = 6;
 					marketDataItemsCount = "**Showing "+marketDataItems+" from "+marketItemIndex.length+" total results**\n";
 				}else{
-					var marketDataItems = marketItemIndex.length;
+					marketDataItems = marketItemIndex.length;
 				}
 
-				var dataAge = marketData[0].updateTime;
+				let dataAge = marketData[0].updateTime;
 
 				// getting set item of data
 				for(var i = 0; i < marketDataItems; i++){
 					if(marketData.length != 0){
-						var priceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
+						priceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
 
 						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"-"+marketItemIndex[i]+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+priceStatus[0]+" "+priceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
 
@@ -1547,20 +1519,17 @@ clientDiscord.on("message", async (message) => {
 
 			// for getting the current event information
 			case 'event':
-				var event = await getFileData("./data/data-event.json");
-				var configData = await getFileData("./config.json");
-
-				var eventToDo = event.rewards.sources;
-				var eventQuery = message.toString().substring(1).split(' ');
+				let eventToDo = event.rewards.sources;
+				let eventQuery = message.toString().substring(1).split(' ');
 					eventQuery = eventQuery.splice(1);
-				var eventQuests = "";
+				let eventQuests = "";
 				
-				var today = new Date();
-				var currentDate = today;
+				let today = new Date();
+				let currentDate = today;
 					today = today.getUTCDay();
-				var todayEvent = [];
+				let todayEvent = [];
 				var k = 0;
-				var sent = 0;
+				sent = 0;
 
 				// for checking tomorrow event quests
 				if(eventQuery[0] == "tomorrow"){
@@ -1575,10 +1544,9 @@ clientDiscord.on("message", async (message) => {
 
 				// getting index of event that have the same day with today
 				for(var i = 0; i < event.quests.length; i++){
-					for(var j = 0; j < 7; j++){
-						if(event.quests[i].day[j] == getDay(today)){
-							var idx = i;							
-							todayEvent[k] = idx;
+					for(let j = 0; j < 7; j++){
+						if(event.quests[i].day[j] == getDay(today)){							
+							todayEvent[k] = i;
 							k++;
 						}
 					}
@@ -1667,16 +1635,12 @@ clientDiscord.on("message", async (message) => {
 			break;
 
 			case 'weekly':
-				var rewards = await getFileData("./data/list-challenges-rewards.json");
-				var quests = await getFileData("./data/list-quests.json");
-				var configData = await getFileData("./config.json");
-
-				var weeklyQuery = message.toString().substring(1).split(' ');
+				let weeklyQuery = message.toString().substring(1).split(' ');
 					weeklyQuery = weeklyQuery.splice(1);
-				var weeklyIdxList = await getWeeklyQuests();
-				var weeklyQuests = "";
-				var weeklyRewards = [];
-				var sent = 0;
+				let weeklyIdxList = await getWeeklyQuests();
+				let weeklyQuests = "";
+				let weeklyRewards = [];
+				sent = 0;
 				
 				for(var i = 0; i < weeklyIdxList.length; i++){
 					weeklyQuests = weeklyQuests + ("**"+quests[weeklyIdxList[i]].location+"** - "+quests[weeklyIdxList[i]].quest+"\n");				
@@ -1756,65 +1720,21 @@ clientDiscord.on("message", async (message) => {
 					break;
 				}
 			break;
-
-			case 'craft':
-				var craftingQuery = getUserInput(message);
-
-				var craftingData = await getFileData("./data/list-crafting.json");
-				var craftingItemIdx = await getDataIndex(craftingQuery, "./data/list-crafting.json");
-				var craftingDataValue = "";
-				var craftingMaterialsData = "";
-
-				if(craftingItemIdx.length > 3){
-					var craftDataItems = 3;
-					marketDataItemsCount = "**Showing "+craftDataItems+" from "+craftingItemIdx.length+" total results**\n";
-				}else{
-					var craftDataItems = craftingItemIdx.length;
-				}
-
-				for(var i=0; i < craftDataItems; i++){
-					for(var j=0; j < craftingData[craftingItemIdx[i]].materials.length; j++){
-						craftingMaterialsData = craftingMaterialsData + (craftingData[craftingItemIdx[i]].materials[j].name+" x"+craftingData[craftingItemIdx[i]].materials[j].qty+"\n");
-					}
-
-					craftingDataValue = craftingDataValue + ("**"+craftingData[craftingItemIdx[i]].name+"** `"+craftingData[craftingItemIdx[i]].id+"-"+craftingItemIdx[i]+"`\n- Source: "+craftingData[craftingItemIdx[i]].source+"\n- Cost: "+setCurrencyFormat(craftingData[craftingItemIdx[i]].cost)+"\n- Duration: "+craftingData[craftingItemIdx[i]].duration+"\n- Materials: \n"+craftingMaterialsData+"\n");
-
-					craftingMaterialsData = "";
-				}
-
-				var dataAge = craftingData[0].updated;
-
-				message.channel.send({
-					"embed": {
-						"author":{
-							"name": "Crafting/Upgrade - Search result of "+craftingQuery,
-							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
-						},
-						"description": craftingDataValue,
-						"color": 16766720,
-						"footer": {
-							"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ HH:MM")+" UTC"
-						},
-						"thumbnail": {
-							"url": imgSource
-						},
-					}	
-				});
-
-			break;
 			
 			// data gathering start from here
-			case 'getupdate':				
-				var classData = await getFileData("./data/list-classdata-source.json");
-				var configData = await getFileData("./config.json");
-				var fileData = await getFileData("./data/data-files.json");
+			case 'getupdate':	
+				var m;
+				if(message.author != null){
+					m = await message.channel.send("Starting data update...");
+				}		
+				
+				let classData = await getFileData("./data/list-classdata-source.json");
 
-				var silveressItem = configData.API_ADDRESS[2].address;
+				let silveressItem = configData.API_ADDRESS[2].address;
 
-				var errCount = 0;
-				var errLocation = [];
-				var errMsg = "";
+				let errCount = 0;
+				let errLocation = [];
+				let errMsg = "";
 
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Starting data update..");
 				
@@ -1884,38 +1804,32 @@ clientDiscord.on("message", async (message) => {
 
 				setFileData("./data/data-files.json", fileData);
 
-				try{
-					if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
-						message.channel.send("Item and class data updated manually with "+errCount+" issue(s)");
-					}
-				}catch(error){
-
+				if(message.author != null){
+					m.edit("Item and class data updated manually with "+errCount+" issue(s)");
 				}
+
 			break;
 
 			// Fetching the market data
 			case 'getmarketdata':
-				var marketQuery = message.toString().substring(1).split(" ");
-					marketQuery = marketQuery.splice(1);
+				let itemData = await getFileData("./data/list-item.json"); //item data
+				let marketDataStored = await getFileData("./data/list-market-data.json"); //stored market data
 
-				var itemData = await getFileData("./data/list-item.json"); //item data
-				var marketDataStored = await getFileData("./data/list-market-data.json"); //stored market data
-				var configData = await getFileData("./config.json");
-				var fileData = await getFileData("./data/data-files.json");
+				let marketDataCurrent = await getSiteData(configData.API_ADDRESS[1].address); //fecthing the current data (one listing, lowest)
 
-				var marketDataCurrent = await getSiteData(configData.API_ADDRESS[1].address); //fecthing the current data (one listing, lowest)
+				let marketListCurrent = [];
+				let storedPriceEach = 0;	
 
-				var marketListCurrent = [];
-				var storedPriceEach = 0;	
-
-				var idx = 1;
-				var found = false;
-				var foundCount = 0;
+				let idx = 1;
+				let found = false;
+				let foundCount = 0;
 				var k = 1;
+
+				let archivedData = 0;
 				
 				// merging the data (item data and market data)
 				for(var i = 0; i < itemData.length; i++){
-					for(var j = 1; j < marketDataCurrent.length; j++){
+					for(let j = 1; j < marketDataCurrent.length; j++){
 						if(itemData[i].id == marketDataCurrent[j].id){
 							// getting and storing the old price for comparison
 							while(k < marketDataStored.length && found == false){
@@ -1949,7 +1863,7 @@ clientDiscord.on("message", async (message) => {
 					}
 				}
 
-				var updateDate = new Date();
+				let updateDate = new Date();
 					updateDate = updateDate.toISOString();
 
 				// meta-data for comparing update time later
@@ -1962,7 +1876,7 @@ clientDiscord.on("message", async (message) => {
 					"dataCount": marketListCurrent.length - 1
 				}
 
-// checking if archive directory exist or not
+				// checking if archive directory exist or not
 				if(configData.ARCHIVING == true){
 					if(!fs.existsSync('./archive')){
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: archive directory not found, creating the directory now...");
@@ -1982,10 +1896,8 @@ clientDiscord.on("message", async (message) => {
 						}
 					});
 
-					var archivedData = marketListCurrent.length - 1;	
-				}else{
-					var archivedData = 0;
-				}				
+					archivedData = marketListCurrent.length - 1;	
+				}			
 
 				// writing the data into a file
 				fs.writeFile('./data/list-market-data.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
@@ -1999,86 +1911,29 @@ clientDiscord.on("message", async (message) => {
 				fileData.MARKET_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
 				setFileData("./data/data-files.json", fileData);
 
-				try{
-					if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
-						message.channel.send(foundCount+" market data updated manually");
-					}
-				}catch(error){
-					
+				if(message.author != null){
+					message.channel.send(foundCount+" market data updated manually");
 				}
+
 				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+foundCount+" market data updated, "+archivedData+" data archived");
 				foundCount = 0;	
 			break;
 
-			// For testing the next event data
-			case 'eventnext':
-				var eventNext = await getFileData("./data/data-event-next.json");
-
-				var eventToDo = eventNext.rewards.sources;
-				var eventQuery = message.toString().substring(1).split(' ');
-					eventQuery = eventQuery.splice(1);
-				var eventQuests = "";
-				var today = new Date();
-					today = today.getUTCDay();
-				var todayEvent = [];
-				var k = 0;
-
-				// getting index of event that have the same day with today
-				for(var i = 0; i < eventNext.quests.length; i++){
-					for(var j = 0; j < 7; j++){
-						if(eventNext.quests[i].day[j] == getDay(today)){
-							var idx = i;							
-							todayEvent[k] = idx;
-							k++;
-						}
-					}
-				}
-
-				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
-				for(var i = 0; i < todayEvent.length; i++){
-					eventQuests = eventQuests + ("**"+eventNext.quests[todayEvent[i]].location+"** - "+eventNext.quests[todayEvent[i]].quest+" "+getQuestType(eventNext.quests[todayEvent[i]].type)+"\n")
-				}
-				
-				// output
-				message.channel.send({
-					"embed": {
-						"author":{
-							"name": "Current Event",
-							"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-						},
-						"title": eventNext.name,
-						"url": eventNext.url,
-						"description": "**Duration**: "+eventNext.duration+"\n**Redemption Period**: "+eventNext.redeem+"\n**Event Item**: "+setDataFormatting(eventNext.rewards.name)+"\n**Event Currency**: "+setDataFormatting(eventNext.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
-						"color": 1879160,
-						"footer": {
-							"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-							"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-						},
-						"fields":[
-							{
-								"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
-								"value": eventQuests 								
-							}
-						]
-					}	
-				});
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");			
-			break;
-
 			case 'set':
 				var adminAccess = message.channel.permissionsFor(message.author).has("ADMINISTRATOR", false);
-				var configQuery = message.toString().split(' ');
+				let configQuery = message.toString().split(' ');
 					configQuery = configQuery.splice(1);
 
+				let guildConfigData = guildConfig[guildConfigIdx];	
+
 				if(adminAccess == true){
-					var guildConfig = await getFileData('./data/guilds.json');
-					var guildConfigDataLocation = await getGuildConfig(message.guild.id);						
+					let guildConfig = await getFileData('./data/guilds.json');
 
 					switch(configQuery[0]){
 						case 'add':	
-							var defaultConfig = await getFileData('config.json');
-							var found = false;
+							let defaultConfig = await getFileData('config.json');
+							let found = false;
 						
 							for(var i = 0; i < guildConfig.length; i ++){
 									if(message.guild.id == guildConfig[i].GUILD_ID){
@@ -2087,7 +1942,7 @@ clientDiscord.on("message", async (message) => {
 							}
 
 							if(found == false){
-								var configData = {
+								configData = {
 									"GUILD_NAME": message.guild.name,
 									"GUILD_ID": message.guild.id,
 									"GUILD_ICON": message.guild.iconURL,
@@ -2118,19 +1973,31 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						case 'update':
-							var guildNameNew = getUserInput(message);
+							let guildNameNew = "";
 
-							guildConfig[guildConfigDataLocation].GUILD_NAME = guildNameNew;
-							guildConfig[guildConfigDataLocation].GUILD_ICON = message.guild.iconURL;
+							if(configQuery.length >= 3){
+								for(var i = 1; i <configQuery.length; i++){
+									guildNameNew = guildNameNew +" "+ configQuery[i];
+								}
+								guildNameNew = guildNameNew.substr(1);
+							}else{
+								guildNameNew = configQuery[1];
+							}
+
+							guildConfig[guildConfigIdx].GUILD_NAME = guildNameNew;
+							guildConfig[guildConfigIdx].GUILD_ICON = message.guild.iconURL;
 
 							setFileData('./data/guilds.json', guildConfig);
+
+							message.channel.send("Your server data is updated");
+
 							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Guild data with id '"+message.guild.id+"' has been updated");
 						break;
 
 						case 'prefix':
-							var guildPrefix = configQuery[1];
+							let guildPrefix = configQuery[1];
 
-							guildConfig[guildConfigDataLocation].PREFIX = guildPrefix;
+							guildConfig[guildConfigIdx].PREFIX = guildPrefix;
 
 							setFileData('./data/guilds.json', guildConfig);
 
@@ -2139,51 +2006,51 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						case 'channel':
-							var typeQuery = configQuery[1];
-								typeQuery = typeQuery.toLocaleUpperCase();
+							let typeQuery = configQuery[1];
 
-							var channelNameQuery = "";
+							let channelNameQuery = "";
 							if(configQuery.length > 3){
-								for(var i = 3; i <configQuery.length; i++){
+								for(var i = 2; i <configQuery.length; i++){
 									channelNameQuery = channelNameQuery +"-"+ configQuery[i];
 								}
 								channelNameQuery = channelNameQuery.substr(1);
 							}else{
 								channelNameQuery = configQuery[2];
 							}
-							var success = true;
+
+							let success = true;
 
 							switch(typeQuery){
-								case 'CHANNEL_TEXT_MAIN':
-									guildConfig[guildConfigDataLocation].CHANNEL_TEXT_MAIN = channelNameQuery;
+								case 'text':
+									guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN = channelNameQuery;
 								break;
-								case 'CHANNEL_MEMBER_GATE':
-									guildConfig[guildConfigDataLocation].CHANNEL_MEMBER_GATE = channelNameQuery;
+								case 'intro':
+									guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE = channelNameQuery;
 								break;
-								case 'CHANNEL_NEWS_ANNOUNCE':
-									guildConfig[guildConfigDataLocation].CHANNEL_NEWS_ANNOUNCE = channelNameQuery;
+								case 'news':
+									guildConfig[guildConfigIdx].CHANNEL_NEWS_ANNOUNCE = channelNameQuery;
 								break;
-								case 'CHANNEL_ADMIN':
-									guildConfig[guildConfigDataLocation].CHANNEL_ADMIN = channelNameQuery;
+								case 'admin':
+									guildConfig[guildConfigIdx].CHANNEL_ADMIN = channelNameQuery;
 								break;
-								case 'CHANNEL_MEMBERACTIVITY':
-									guildConfig[guildConfigDataLocation].CHANNEL_MEMBERACTIVITY = channelNameQuery;
+								case 'activity':
+									guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY = channelNameQuery;
 								break;
-								case 'CHANNEL_DAILY_ANNOUNCE':
-								guildConfig[guildConfigDataLocation].CHANNEL_DAILY_ANNOUNCE = channelNameQuery;
+								case 'daily':
+								guildConfig[guildConfigIdx].CHANNEL_DAILY_ANNOUNCE = channelNameQuery;
 								break;
-								case 'CHANNEL_WEEKLY_ANNOUNCE':
-								guildConfig[guildConfigDataLocation].CHANNEL_WEEKLY_ANNOUNCE = channelNameQuery;
+								case 'weekly':
+								guildConfig[guildConfigIdx].CHANNEL_WEEKLY_ANNOUNCE = channelNameQuery;
 								break;
-								case 'CHANNEL_EVENT_ANNOUNCE':
-								guildConfig[guildConfigDataLocation].CHANNEL_EVENT_ANNOUNCE = channelNameQuery;
+								case 'event':
+								guildConfig[guildConfigIdx].CHANNEL_EVENT_ANNOUNCE = channelNameQuery;
 								break;
-								case 'CHANNEL_KOLDRAK_ANNOUNCE':
-								guildConfig[guildConfigDataLocation].CHANNEL_KOLDRAK_ANNOUNCE = channelNameQuery;
+								case 'koldrak':
+								guildConfig[guildConfigIdx].CHANNEL_KOLDRAK_ANNOUNCE = channelNameQuery;
 								break;
 								
 								default:
-									message.channel.send("I'm sorry I can't find that type of channel\n\nAvailable type: `\"CHANNEL_TEXT_MAIN\"`, `\"CHANNEL_MEMBER_GATE\"`, `\"CHANNEL_NEWS_ANNOUNCE\"`, `\"CHANNEL_ADMIN\"`, `\"CHANNEL_MEMBERACTIVITY\"`, `\"CHANNEL_DAILY_ANNOUNCE\"`, `\"CHANNEL_WEEKLY_ANNOUNCE\"`, `\"CHANNEL_EVENT_ANNOUNCE\"`, `\"CHANNEL_KOLDRAK_ANNOUNCE\"`");
+									message.channel.send("I'm sorry I can't find that type of channel\n\nAvailable type: `text`, `intro`, `news`, `admin`, `activity`, `daily`, `weekly`, `event`, `koldrak`");
 
 									success = false
 								break;
@@ -2200,9 +2067,6 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						case 'current':
-							var guildConfigDataLocation = await getGuildConfig(message.guild.id);
-							var guildConfigData = guildConfig[guildConfigDataLocation];
-
 							message.channel.send({
 								"embed":{
 									"title": message.guild.name+"'s Configuration Data",
@@ -2216,39 +2080,39 @@ clientDiscord.on("message", async (message) => {
 											"value": "`"+guildConfigData.PREFIX+"`"
 										},
 										{
-											"name": "Main Text - `CHANNEL_TEXT_MAIN`",
+											"name": "Main Text - `text`",
 											"value": "`"+guildConfigData.CHANNEL_TEXT_MAIN+"`"
 										},
 										{
-											"name": "New Member - `CHANNEL_MEMBER_GATE`",
+											"name": "New Member - `intro`",
 											"value": "`"+guildConfigData.CHANNEL_MEMBER_GATE+"`"
 										},
 										{
-											"name": "Admin - `CHANNEL_ADMIN`",
+											"name": "Admin - `admin`",
 											"value": "`"+guildConfigData.CHANNEL_ADMIN+"`"
 										},
 										{
-											"name": "Member's Activity Log - `CHANNEL_MEMBERACTIVITY`",
+											"name": "Member's Activity Log - `activity`",
 											"value": "`"+guildConfigData.CHANNEL_MEMBERACTIVITY+"`"
 										},
 										{
-											"name": "Blade & Soul Twitter News - `CHANNEL_NEWS_ANNOUNCE`",
+											"name": "Blade & Soul Twitter News - `news`",
 											"value": "`"+guildConfigData.CHANNEL_NEWS_ANNOUNCE+"`"
 										},
 										{
-											"name": "Daily Announcement - `CHANNEL_DAILY_ANNOUNCE`",
+											"name": "Daily Announcement - `daily`",
 											"value": "`"+guildConfigData.CHANNEL_DAILY_ANNOUNCE+"`"
 										},
 										{
-											"name": "Weekly Announcement - `CHANNEL_WEEKLY_ANNOUNCE`",
+											"name": "Weekly Announcement - `weekly`",
 											"value": "`"+guildConfigData.CHANNEL_WEEKLY_ANNOUNCE+"`"
 										},
 										{
-											"name": "Event Announcement - `CHANNEL_EVENT_ANNOUNCE`",
+											"name": "Event Announcement - `event`",
 											"value": "`"+guildConfigData.CHANNEL_EVENT_ANNOUNCE+"`"
 										},
 										{
-											"name": "Koldrak's Lair Announcement - `CHANNEL_KOLDRAK_ANNOUNCE`",
+											"name": "Koldrak's Lair Announcement - `koldrak`",
 											"value": "`"+guildConfigData.CHANNEL_KOLDRAK_ANNOUNCE+"`"
 										},
 									],
@@ -2262,9 +2126,6 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						default:
-							var guildConfigDataLocation = await getGuildConfig(message.guild.id);
-							var guildConfigData = guildConfig[guildConfigDataLocation];
-
 							message.channel.send({
 								"embed":{
 									"title": "Configuration Commands",
@@ -2284,7 +2145,7 @@ clientDiscord.on("message", async (message) => {
 										},
 										{
 											"name": "Default Channel ("+guildConfigData.PREFIX+"set channel <type> <channel>)",
-											"value": "Changing the default channel for your server\n\n**Type** \n`CHANNEL_TEXT_MAIN` main text channel\n`CHANNEL_MEMBER_GATE` default new member channel\n`CHANNEL_NEWS_ANNOUNCE` default news channel for twitter hook\n`CHANNEL_ADMIN` default admin only channel for administrator commands\n`CHANNEL_DAILY_ANNOUNCE` default channel for daily challenges annoucement\n`CHANNEL_WEEKLY_ANNOUNCE` default channel for weekly challenges annoucement\n`CHANNEL_EVENT_ANNOUNCE` default channel for current event summary\n`CHANNEL_KOLDRAK_ANNOUNCE` default channel for koldrak's lair access annoucement\n`CHANNEL_MEMBERACTIVITY` default channel for server member activity (joined, left)\n\n**Channel**\n`channel-name` channel name to replace the current one (there can't be space between words)\n`disable` to disable this function"
+											"value": "Changing the default channel for your server\n\n**Type** \n`text` main text channel\n`intro` default new member channel\n`news` default news channel for twitter hook\n`admin` default admin only channel for administrator commands\n`daily` default channel for daily challenges annoucement\n`weekly` default channel for weekly challenges annoucement\n`event` default channel for current event summary\n`koldrak` default channel for koldrak's lair access annoucement\n`activity` default channel for server member activity (joined, left)\n\n**Channel**\n`channel-name` channel name to replace the current one (there can't be space between words)\n`disable` to disable this function"
 										}
 									],
 									"footer": {
@@ -2299,13 +2160,11 @@ clientDiscord.on("message", async (message) => {
 				}
 			break;			
 
+			// bot system related commands, currently only available for bot admin
 			case 'debug':
-				var configData = await getFileData("./config.json");
-				var fileData = await getFileData("./data/data-files.json");
-
 				// debug commands is currently only can be used by bot author only, if you want to change this edit the 'config.json' DEFAULT_BOT_ADMIN variable
 				if(message.author.id == configData.DEFAULT_BOT_ADMIN){
-					var debugQuery = message.toString().split(' ');
+					let debugQuery = message.toString().split(' ');
 						debugQuery = debugQuery.splice(1);
 
 					switch(debugQuery[0]){
@@ -2336,7 +2195,6 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						case 'data':
-							var fileData = await getFileData("./data/data-files.json");
 							message.channel.send({
 								"embed":{
 									"title": "Jinsoyun Database Last Update",
@@ -2349,9 +2207,9 @@ clientDiscord.on("message", async (message) => {
 						// this command is for updating the current event data with the updated one
 						case 'event':
 							if(configData.MAINTENANCE_MODE == true){
-								var nextEvent = await getFileData("./data/data-event-next.json");
+								let nextEvent = await getFileData("./data/data-event-next.json");
 
-								var currentEvent = {
+								let currentEvent = {
 									"name": nextEvent.name,
 									"duration": nextEvent.duration,
 									"redeem": nextEvent.redeem,
@@ -2376,8 +2234,8 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						case 'guilds':
-							var guildsList = clientDiscord.guilds.map(getGuildName);
-							var guildsCount = guildsList.length;
+							let guildsList = clientDiscord.guilds.map(getGuildName);
+							let guildsCount = guildsList.length;
 								guildsList = guildsList.toString();
 							message.channel.send({
 								"embed":{
@@ -2391,8 +2249,7 @@ clientDiscord.on("message", async (message) => {
 						break;
 
 						case 'file':
-							var filePath = debugQuery[1];
-							var fileData = await getFileData(filePath);
+							let filePath = debugQuery[1];
 								fileData = JSON.stringify(fileData,  null, "\t");
 
 							if(filePath != null || fileData != null){
@@ -2435,7 +2292,7 @@ clientDiscord.on("message", async (message) => {
 
 			// For error notification so I know when something went wrong
 			case 'err':
-				var errQuery = message.toString().substring(1).split('|');
+				let errQuery = message.toString().substring(1).split('|');
 					errQuery = errQuery.splice(1);
 					try{
 						clientDiscord.guilds.map((guild) => {
@@ -2462,16 +2319,16 @@ clientDiscord.on("message", async (message) => {
 
 clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  function(stream) {
 	stream.on('data', function(tweet) {
+		let payloadStatus = "rejected";
 		// Filtering data so it only getting data from specified user
 		if((tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[0] || tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[1]) || (tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[2])){
 			// Variable for filtering
-			twtFilter = tweet.text.toString().substring(0).split(" ");
+			var twtFilter = tweet.text.toString().substring(0).split(" ");
 
 			// Filtering the "RT" and "mention" stuff
 			if(twtFilter[0] == "RT" || twtFilter[0].charAt(0) == "@"){
 				payloadStatus = "rejected";
-			}else{		
-				// Payload loading
+			}else{	
 				if(tweet.extended_tweet == null){
 					twtText = tweet.text.toString().replace("&amp;","&");
 				}else{
@@ -2484,7 +2341,7 @@ clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  fun
 				twtCreatedAt = tweet.created_at.toString();
 				twtTimestamp = tweet.timestamp_ms.toString();
 
-				payloadStatus = "received"
+				payloadStatus = "received";
 
 				// Making the color different for different user
 				if(tweet.user.screen_name == config.TWITTER_STREAM_SCREENNAME[0]){
@@ -2499,7 +2356,6 @@ clientTwitter.stream('statuses/filter', {follow: config.TWITTER_STREAM_ID},  fun
 		}
 		// Console logging
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Tweet received, status: "+payloadStatus);
-		payloadStatus = "rejected";
 	});
   
 	stream.on('error', function(error) {
@@ -2515,12 +2371,8 @@ ontime({
 	cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'], 
 	utc: true
 }, function (koldrak){
-	// Triggering "!koldrak alert" so the bot will write the alert (see "!koldrak" for details)
-	if(koldrakAlertSystem == false){
-		clientDiscord.emit("message", "!koldrak debug");
-	}else{
-		clientDiscord.emit("message", "!koldrak alert");
-	};
+	// emitting message event
+	clientDiscord.emit("message", "!koldrak alert");
 	koldrak.done();
 	return;
   	}

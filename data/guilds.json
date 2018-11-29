@@ -10,7 +10,7 @@
 		"CHANNEL_EVENT_ANNOUNCE": "disable",
 		"CHANNEL_NEWS_ANNOUNCE": "disable",
 		"CHANNEL_KOLDRAK_ANNOUNCE": "disable",
-		"CHANNEL_TEXT_MAIN": "random-chats",
+		"CHANNEL_TEXT_MAIN": "random-chat",
 		"CHANNEL_MEMBER_GATE": "introduce-yourself",
 		"CHANNEL_ADMIN": "high-council",
 		"CHANNEL_MEMBERACTIVITY": "activity"
@@ -18,7 +18,7 @@
 	{
 		"GUILD_NAME": "Grumpy Butts",
 		"GUILD_ID": "434004985227771905",
-		"GUILD_ICON": "n/a",
+		"GUILD_ICON": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.jpg",
 		"SETUP_STATUS": true,
 		"PREFIX": "!",
 		"CHANNEL_DAILY_ANNOUNCE": "party-forming",

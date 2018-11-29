@@ -24,6 +24,7 @@
 		"currency": "N/A",
 		"daily": "Golden Harvest Crate"
 	},
+	"tradeableItemId": "",
 	"typeMean": [
 		"0 Daily Quest",
 		"1 Dynamic Quest",
