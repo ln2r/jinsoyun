@@ -1488,9 +1488,9 @@ clientDiscord.on("message", async (message) => {
 				let marketDataItemsCount = "";
 				let marketItemIndex;
 				let marketDataItems;
-
-				let priceStatus;
+				let marketPriceStatus;
 				let marketEventItem;
+				let marketLastUpdate;
 
 				// for checking marketable/tradeable event items
 				if(marketQuery == "Event"){
@@ -1519,9 +1519,9 @@ clientDiscord.on("message", async (message) => {
 				// getting set item of data
 				for(var i = 0; i < marketDataItems; i++){
 					if(marketData.length != 0){
-						priceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
+						marketPriceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
 
-						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"-"+marketItemIndex[i]+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+priceStatus[0]+" "+priceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
+						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"-"+marketItemIndex[i]+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+marketPriceStatus[0]+" "+marketPriceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
 
 						imgSource = marketData[marketItemIndex[0]].img;
 					}
@@ -1544,7 +1544,7 @@ clientDiscord.on("message", async (message) => {
 						"color": 16766720,
 						"footer": {
 							"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataAge, "UTC:dd-mm-yy @ HH:MM")+" UTC"
+							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(marketLastUpdate, "UTC:dd-mm-yy @ HH:MM")+" UTC"
 						},
 						"thumbnail": {
 							"url": imgSource
