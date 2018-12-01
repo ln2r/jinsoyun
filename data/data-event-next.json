@@ -4,12 +4,11 @@
     "redeem": "December 5 – January 16",
     "url": "https://www.bladeandsoul.com/en/news/the-golden-harvest-festival-returns-november-7/",
     "rewards": {
-        "sources": ["Daily Challenges", "Solo Dungeon", "Transmutation", "Crafting", "Stomach of Iron Achievement"],
-        "name": ["Golden Harvest Crate", "Harvest Wine", "Thanksgiving Invitation", "Hongmoon Jade", "Harvest Feast – Kids’ Table", "Harvest Feast – Grown-Ups’ Table", "Harvest Feast – Elders’ Table", "Thanksgiving Prize Wheel Pouch"],
-        "currency" : "N/A",
+        "items": ["Golden Harvest Crate", "Harvest Wine", "Thanksgiving Invitation", "Hongmoon Jade", "Harvest Feast – Kids’ Table", "Harvest Feast – Grown-Ups’ Table", "Harvest Feast – Elders’ Table", "Thanksgiving Prize Wheel Pouch"],
         "daily": "Golden Harvest Crate"
     },
     "typeMean": ["0 Daily Quest", "1 Dynamic Quest", "2 Event Quest"],
+    "todo": ["Daily Challenges", "Solo Dungeon", "Transmutation", "Crafting", "Stomach of Iron Achievement"],
     "quests": [
         {
             "location": "Mushin’s Tower",

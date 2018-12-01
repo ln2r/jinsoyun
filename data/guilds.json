@@ -10,7 +10,7 @@
 		"CHANNEL_EVENT_ANNOUNCE": "disable",
 		"CHANNEL_NEWS_ANNOUNCE": "disable",
 		"CHANNEL_KOLDRAK_ANNOUNCE": "disable",
-		"CHANNEL_TEXT_MAIN": "random-chat",
+		"CHANNEL_TEXT_MAIN": "random-chats",
 		"CHANNEL_MEMBER_GATE": "introduce-yourself",
 		"CHANNEL_ADMIN": "high-council",
 		"CHANNEL_MEMBERACTIVITY": "activity"

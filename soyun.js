@@ -28,8 +28,20 @@ var twtCreatedAt;
 var twtTimestamp;
 var twtColor;
 
-// Soyun activity
-let statusRandom = 0;
+// for soyun activity randomizer
+let statusRandom = 0; 
+
+// for next event data
+let nextEventDungeon = []; 
+let nextEventName;
+let nextEventDuration;
+let nextEventRedeem;
+let nextEventUrl;
+let nextEventTodo;
+let nextEventItems;
+let nextEventDaily;
+let nextEventMarket;
+let nextEventDungeonData;
 
 // function list start here
 // converting number (702501) only format to more readable format (70g 25s 01c)
@@ -544,8 +556,14 @@ clientDiscord.on("ready", async () => {
 	if(configData.ARCHIVING == false){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Archiving system is disabled");
 	}
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
-	console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
+
+	try{
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Discord service: "+discordStatus.status.description);
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Twitter service: "+twitterStatus.status.description);
+	}catch(error){
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's issue when getting data from statuspage.io, "+error);
+		clientDiscord.emit("message", "!err |"+error.stack+"|");
+	}
 
 	for(var i = 0; i < 2; i++){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+apiAdress[i].name+" service: "+apiStatus[i]);
@@ -629,8 +647,8 @@ clientDiscord.on("guildMemberRemove", async (member) => {
 	let configData = await getFileData("./config.json");
 	let silveressNA = configData.API_ADDRESS[0].address;
 
-	let silveressQuerry = silveressNA+member.displayName; // for the querry
-	let charaData = await getSiteData(silveressQuerry);
+	let silveressCharaQuery = silveressNA+member.displayName; // for the Query
+	let charaData = await getSiteData(silveressCharaQuery);
 
 	let guildConfig = await getFileData("./data/guilds.json");
 	let guildConfigIdx = await getGuildConfig(member.guild.id);
@@ -714,15 +732,17 @@ clientDiscord.on("message", async (message) => {
         switch(cmd) {
 			// Connection test
 			case 'soyun':
-				let soyunQuerry = message.toString().substring(1).split(' ');
-				let soyunHelpTxt = '**Account**\n- Nickname: `'+guildPrefix+'username new nickname`\n- Class: `'+guildPrefix+'class new class`\n\n**Blade & Soul**\n- Character Search: `'+guildPrefix+'who` or `'+guildPrefix+'who character name`\n- Daily challenges `'+guildPrefix+'daily` or `'+guildPrefix+'daily tomorrow`\n- Weekly challenges `'+guildPrefix+'weekly`\n- *Koldrak\'s Lair*  time: `'+guildPrefix+'koldrak`\n- Marketplace `'+guildPrefix+'market item name`\n- Current Event `'+guildPrefix+'event` or `'+guildPrefix+'event tomorrow`\n\n**Miscellaneous**\n- Pick: `'+guildPrefix+'pick "item a" or "item b"`\n- Roll dice: `'+guildPrefix+'roll` or `'+guildPrefix+'roll (start number)-(end number)` (`'+guildPrefix+'roll 4-7`)\n- Commands list: `'+guildPrefix+'soyun help`\n- Bot and API status `'+guildPrefix+'soyun status`\n- Try Me! `'+guildPrefix+'soyun`';
+				let soyunQuery = message.toString().substring(1).split(' ');
+				let soyunHelpTxt = '**Account**\n- Nickname: `'+guildPrefix+'username new nickname`\n- Class: `'+guildPrefix+'class new class`\n\n**Blade & Soul**\n- Character Search: `'+guildPrefix+'who` or `'+guildPrefix+'who character name`\n- Daily challenges `'+guildPrefix+'daily` or `'+guildPrefix+'daily tomorrow`\n- Weekly challenges `'+guildPrefix+'weekly`\n- *Koldrak\'s Lair*  time: `'+guildPrefix+'koldrak`\n- Marketplace `'+guildPrefix+'market item name` or `!market event`\n- Current Event `'+guildPrefix+'event` or `'+guildPrefix+'event tomorrow`\n\n**Miscellaneous**\n- Pick: `'+guildPrefix+'pick "item a" or "item b"`\n- Roll dice: `'+guildPrefix+'roll` or `'+guildPrefix+'roll (start number)-(end number)` (`'+guildPrefix+'roll 4-7`)\n- Commands list: `'+guildPrefix+'soyun help`\n- Bot and API status `'+guildPrefix+'soyun status`\n- Try Me! `'+guildPrefix+'soyun`';
 
-				soyunQuerry = soyunQuerry.splice(1);
+				soyunQuery = soyunQuery.splice(1);
 
-				switch(soyunQuerry[0]){
+				switch(soyunQuery[0]){
 					case 'help':
-						if(message.channel.name == guildConfig[guildConfigIdx].CHANNEL_ADMIN){
-							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- Announcement: `'+guildPrefix+'say "title" "content"`\n- Bot Settings: `'+guildPrefix+'set`';
+						var adminAccess = message.channel.permissionsFor(message.author).has("ADMINISTRATOR", false);
+						
+						if(adminAccess == true){
+							soyunHelpTxt = soyunHelpTxt + '\n\n**Admin**\n- First Time Setup: `'+guildPrefix+'setup`\n- Bot Settings: `'+guildPrefix+'set`\n-Event Update: `'+guildPrefix+'eventnext help`';
 						};
 
 						message.channel.send("Here is some stuff you can ask me to do:\n\n"+soyunHelpTxt+"\n\nIf you need some assistance you can **@mention** or **DM** available **officers**.\n\n```Note: Items data list updated @ Wednesday 12AM UTC \n\t  Market data updated every 1 hour```");
@@ -826,13 +846,13 @@ clientDiscord.on("message", async (message) => {
 			
 			// Server join = username change and role add
 			case 'reg':
-				let joinQuerry = message.toString().substring(1).split('"');
-				let joinUsername = (joinQuerry[1]);
+				let joinQuery = message.toString().substring(1).split('"');
+				let joinUsername = (joinQuery[1]);
 
 				queryStatus = false;
 				
 				try{
-					var joinClass = (joinQuerry[3]);
+					var joinClass = (joinQuery[3]);
 							
 					joinClass = joinClass.toLowerCase(); // Converting class value to lower case so input wont be missmatched
 					
@@ -864,8 +884,8 @@ clientDiscord.on("message", async (message) => {
 						message.guild.channels.find(x => x.name == guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN).send("Please welcome our new "+joinClass+" ***"+joinUsername+"***!");
 						queryStatus = false;
 
-						var silveressQuerry = silveressNA+joinUsername; // for the querry
-						var charaData = await getSiteData(silveressQuerry);
+						var silveressCharaQuery = silveressNA+joinUsername; // for the Query
+						var charaData = await getSiteData(silveressCharaQuery);
 
 						// checking if the member log disabled or not, if it isn't write a log in the channel
 						if(guildConfig[guildConfigIdx].CHANNEL_MEMBERACTIVITY != "disable"){
@@ -902,11 +922,11 @@ clientDiscord.on("message", async (message) => {
 			
 			// Username change
 			case 'username':
-				let usernameQuerry = getUserInput(message);
+				let usernameQuery = getUserInput(message);
 
 				// Changing message author username
-				message.guild.members.get(message.author.id).setNickname(usernameQuerry);
-				message.channel.send("Your username changed to "+usernameQuerry);
+				message.guild.members.get(message.author.id).setNickname(usernameQuery);
+				message.channel.send("Your username changed to "+usernameQuery);
 
 				// Console logging
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: username change command received");
@@ -914,8 +934,8 @@ clientDiscord.on("message", async (message) => {
 			
 			// Class change
 			case 'class':
-				let classQuerry = getUserInput(message);
-					classQuerry = classQuerry.toLowerCase(); // Converting to lower case so input wont get missmatched
+				let classQuery = getUserInput(message);
+					classQuery = classQuery.toLowerCase(); // Converting to lower case so input wont get missmatched
 				let memberRolesList = message.guild.members.get(message.author.id).roles.map(getMemberRoles);
 				let memberRemovedIdx;
 
@@ -926,12 +946,12 @@ clientDiscord.on("message", async (message) => {
 				for(let i = 0; i < classList.length; i++){
 					// getting the index of the user previous class/role
 					for(var j = 0; j < memberRolesList.length; j++){
-						if(classList[i] == memberRolesList[j] && classQuerry != memberRolesList[j]){
+						if(classList[i] == memberRolesList[j] && classQuery != memberRolesList[j]){
 							memberRemovedIdx = j;
 						}	
 					}
 					// checking if the user input valid or not
-					if(classQuerry == classList[i]){
+					if(classQuery == classList[i]){
 						queryStatus = true;
 					};
 				};
@@ -941,10 +961,10 @@ clientDiscord.on("message", async (message) => {
 					// removing the old role
 					message.guild.members.get(message.author.id).removeRole(message.guild.roles.find(x => x.name == memberRolesList[memberRemovedIdx]))
 					// Adding new role to user according their command
-					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classQuerry));
+					message.guild.members.get(message.author.id).addRole(message.guild.roles.find(x => x.name == classQuery));
 
 					// Telling the user class has been changed
-					message.channel.send("Your class changed to **"+classQuerry+"**");
+					message.channel.send("Your class changed to **"+classQuery+"**");
 				}else{
 					// Telling them whats wrong
 					message.channel.send("Im sorry, i cant seems to find the class you wrote. If this seems to be a mistake please **@mention** or **DM** available officers for some assistance");
@@ -1056,9 +1076,9 @@ clientDiscord.on("message", async (message) => {
 			
 			// pick between two things
 			case 'pick':
-				let pickQuerry = message.toString().substring(1).split('"');	
-				let pickFirstOption = pickQuerry[1];
-				let pickSecondOption = pickQuerry[3];
+				let pickQuery = message.toString().substring(1).split('"');	
+				let pickFirstOption = pickQuery[1];
+				let pickSecondOption = pickQuery[3];
 
 				let pickResult = Math.floor(Math.random() * 2);
 				let pickResultValue;
@@ -1076,16 +1096,16 @@ clientDiscord.on("message", async (message) => {
 
 			// die roll
 			case 'roll':
-				let rollQuerry = message.toString().substring(1).split(' ');	
+				let rollQuery = message.toString().substring(1).split(' ');	
 				let rollStartNumber
 				let rollEndNumber;
 
-				if(rollQuerry[1] == null){
+				if(rollQuery[1] == null){
 					rollStartNumber = 1;
 					rollEndNumber = 7;
 				}else{
-					rollStartNumber = rollQuerry[1].charAt(0);
-					rollEndNumber = rollQuerry[1].charAt(2);
+					rollStartNumber = rollQuery[1].charAt(0);
+					rollEndNumber = rollQuery[1].charAt(2);
 				};
 
 				let rollResult = Math.floor(Math.random() * rollEndNumber) - rollStartNumber;
@@ -1101,8 +1121,8 @@ clientDiscord.on("message", async (message) => {
 				// Getting the current date
 				let dcDay = dcDate.getUTCDay();
 
-				let dailyQuerry = message.toString().substring(1).split(' ');
-					dailyQuerry = dailyQuerry.splice(1);
+				let dailyQuery = message.toString().substring(1).split(' ');
+					dailyQuery = dailyQuery.splice(1);
 				var dailyPartyAnnouncement = false;
 				let dailyQuests = "";
 				let dailyRewards = [];
@@ -1112,7 +1132,7 @@ clientDiscord.on("message", async (message) => {
 
 				sent = 0;
 				
-				switch(dailyQuerry[0]){
+				switch(dailyQuery[0]){
 					case 'tomorrow':
 						// For checking tomorrow daily
 						dcDay = dcDay + 1;						
@@ -1252,8 +1272,8 @@ clientDiscord.on("message", async (message) => {
 
 			// Koldrak's lair notification and closest time
 			case 'koldrak':
-				let koldrakQuerry = message.toString().substring(1).split(' ');
-					koldrakQuerry = koldrakQuerry.splice(1);
+				let koldrakQuery = message.toString().substring(1).split(' ');
+					koldrakQuery = koldrakQuery.splice(1);
 				let koldrakTime = await getFileData("./data/koldrak-time.json");
 				configData = await getFileData("./config.json");
 				sent = 0;	
@@ -1261,7 +1281,7 @@ clientDiscord.on("message", async (message) => {
 				// Cheating the search so it will still put hour even if the smallest time is 24
 				let koldrakTimeLeft = 25;
 
-				switch(koldrakQuerry[0]){
+				switch(koldrakQuery[0]){
 					case 'list':
 						message.channel.send({
 							"embed":{
@@ -1363,20 +1383,26 @@ clientDiscord.on("message", async (message) => {
 				try{
 					message.channel.startTyping();
 
-					let whoQuerry = getUserInput(message);
+					let whoQuery = getUserInput(message);
 
-					if(whoQuerry == null || whoQuerry == ""){
-						whoQuerry = [message.member.nickname];
+					if(whoQuery == null || whoQuery == undefined){
+						whoQuery = [message.member.nickname];
+					}else{
+						// encoding uri component so character with 'circumflex' still searchable
+						whoQuery = encodeURIComponent(whoQuery);
 					}				
 
-					let silveressQuerry = silveressNA+whoQuerry; // for the querry
-					let charaData = await getSiteData(silveressQuerry);
-					let characlassQuerry = charaData.playerClass.toLowerCase().replace(/\s/g, '');				
-					let skillsetData = await getSkillset(characlassQuerry, charaData.activeElement, charaData.characterName)
-					let elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
+					let silveressCharaQuery = silveressNA+whoQuery; // for the query
+					let charaData = await getSiteData(silveressCharaQuery);
+					let characlassQuery = charaData.playerClass.toLowerCase().replace(/\s/g, '');
+					let skillsetData = await getSkillset(characlassQuery, charaData.activeElement, encodeURIComponent(charaData.characterName))
 
-					let bnstreeProfile = "https://bnstree.com/character/na/"+whoQuerry; // for author url so user can look at more detailed version
-						bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
+					let elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
+					
+					// for author url so user can look at more detailed version
+					let bnstreeProfile = "https://bnstree.com/character/na/"+whoQuery; 
+					// replacing the space so discord.js embed wont screaming error
+						bnstreeProfile = bnstreeProfile.replace(" ","%20"); 
 					
 					message.channel.stopTyping();
 
@@ -1456,21 +1482,32 @@ clientDiscord.on("message", async (message) => {
 
 				let marketDataPath = "./data/list-market-data.json";
 				let marketData = await getFileData(marketDataPath);	
+				let eventData = await getFileData("./data/data-event.json");
+
 				let marketDataValue = "";
 				let marketDataItemsCount = "";
 				let marketItemIndex;
 				let marketDataItems;
 
 				let priceStatus;
+				let marketEventItem;
 
-				// item exception
-				if(marketQuery == "Golden Harvest Festival"){
-					marketItemIndex = [1240, 616, 506, 1266, 123, 1909];
+				// for checking marketable/tradeable event items
+				if(marketQuery == "Event"){
+					if(eventData.tradeableItemId.length != 0 || eventData.tradeableItemId != undefined){
+						marketItemIndex = eventData.tradeableItemId;
+						marketEventItem = true;
+					}else{
+						marketEventItem = false;
+					}
+					marketLastUpdate = fileData.EVENT_DATA;
 				}else{
 					marketItemIndex = await getDataIndex(marketQuery, marketDataPath);
+					marketLastUpdate = marketData[0].updateTime;
 				};
 
-				let imgSource = "https://cdn.discordapp.com/attachments/426043840714244097/493252746087235585/0ig1OR0.png"; // default image for when data not found
+				// default image for when data not found
+				let imgSource = configData.DEFAULT_MARKET_THUMBNAIL; 
 
 				if(marketItemIndex.length > 6){
 					marketDataItems = 6;
@@ -1478,8 +1515,6 @@ clientDiscord.on("message", async (message) => {
 				}else{
 					marketDataItems = marketItemIndex.length;
 				}
-
-				let dataAge = marketData[0].updateTime;
 
 				// getting set item of data
 				for(var i = 0; i < marketDataItems; i++){
@@ -1493,7 +1528,10 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				if(marketDataValue == "" || marketDataValue == null){
-					marketDataValue = "*No result on **"+marketQuery+"**\nThe item is either untradable, not in marketplace or maybe it doesn't exist*"
+					marketDataValue = "*No result on **"+marketQuery+"**\nThe item is either untradable, not in marketplace or maybe it doesn't exist*";
+				}else if(marketEventItem == false){
+					imgSource = configData.DEFAULT_MARKET_THUMBNAIL;
+					marketDataValue = "**No data for "+eventData.name+"'s event items**\n\n*Event item data might not be updated or there's no tradeable/marketable items*";
 				}
 
 				message.channel.send({
@@ -1517,123 +1555,7 @@ clientDiscord.on("message", async (message) => {
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 
-			// for getting the current event information
-			case 'event':
-				let eventToDo = event.rewards.sources;
-				let eventQuery = message.toString().substring(1).split(' ');
-					eventQuery = eventQuery.splice(1);
-				let eventQuests = "";
-				
-				let today = new Date();
-				let currentDate = today;
-					today = today.getUTCDay();
-				let todayEvent = [];
-				var k = 0;
-				sent = 0;
-
-				// for checking tomorrow event quests
-				if(eventQuery[0] == "tomorrow"){
-					if(today == 6){
-						today = 0;
-						currentDate = currentDate.setDate(currentDate.getDate() - 6);	
-					}else{
-						today = today + 1;
-						currentDate = currentDate.setDate(currentDate.getDate() + 1);
-					}
-				}
-
-				// getting index of event that have the same day with today
-				for(var i = 0; i < event.quests.length; i++){
-					for(let j = 0; j < 7; j++){
-						if(event.quests[i].day[j] == getDay(today)){							
-							todayEvent[k] = i;
-							k++;
-						}
-					}
-				}
-
-				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
-				for(var i = 0; i < todayEvent.length; i++){
-						eventQuests = eventQuests + ("**"+event.quests[todayEvent[i]].location+"** - "+event.quests[todayEvent[i]].quest+" "+getQuestType(event.quests[todayEvent[i]].type)+"\n")
-				}
-				
-				// for either picking announcing the event details as daily notification or just normal query
-				switch(eventQuery[0]){
-					case 'announce':
-						clientDiscord.guilds.map((guild) => {
-							let found = 0;
-
-							// getting the channel name for announcement
-							for(var i = 0;i < guildConfig.length; i++){
-								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].CHANNEL_EVENT_ANNOUNCE != "disable"){
-										var channelPartyName = guildConfig[i].CHANNEL_EVENT_ANNOUNCE;
-									}							
-								}
-							}
-							guild.channels.map((ch) =>{
-								if(found == 0){
-									if(ch.name == channelPartyName){
-										ch.send(event.name+" event is on-going, here\'s the summary",{
-											"embed": {
-												"author":{
-													"name": "Current Event",
-													"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-												},
-												"title": event.name,
-												"url": event.url,
-												"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
-												"color": 1879160,
-												"footer": {
-													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-													"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-												},
-												"fields":[
-													{
-														"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
-														"value": eventQuests 								
-													}
-												]
-											}
-										}).catch(console.error);
-										found = 1;
-										sent++;
-									}
-								}
-							});
-						});
-
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
-
-					break;
-					default:
-						message.channel.send({
-							"embed": {
-								"author":{
-									"name": "Current Event",
-									"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-								},
-								"title": event.name,
-								"url": event.url,
-								"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.name)+"\n**Event Currency**: "+setDataFormatting(event.rewards.currency)+"\n**What to do**: "+setDataFormatting(eventToDo),
-								"color": 1879160,
-								"footer": {
-									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-									"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-								},
-								"fields":[
-									{
-										"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
-										"value": eventQuests 								
-									}
-								]
-							}	
-						})
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
-					break;
-				};	
-			break;
-
+			// for getting and annoncing weekly challenges
 			case 'weekly':
 				let weeklyQuery = message.toString().substring(1).split(' ');
 					weeklyQuery = weeklyQuery.splice(1);
@@ -1720,7 +1642,458 @@ clientDiscord.on("message", async (message) => {
 					break;
 				}
 			break;
+
+			// for getting the current event information
+			case 'event':
+				let eventToDo = event.todo;
+				let eventQuery = message.toString().substring(1).split(' ');
+					eventQuery = eventQuery.splice(1);
+				let eventQuests = "";
+				
+				let today = new Date();
+				let currentDate = today;
+					today = today.getUTCDay();
+				let todayEvent = [];
+				var k = 0;
+				sent = 0;
+
+				// for checking tomorrow event quests
+				if(eventQuery[0] == "tomorrow"){
+					if(today == 6){
+						today = 0;
+						currentDate = currentDate.setDate(currentDate.getDate() - 6);	
+					}else{
+						today = today + 1;
+						currentDate = currentDate.setDate(currentDate.getDate() + 1);
+					}
+				}
+
+				// getting index of event that have the same day with today
+				for(var i = 0; i < event.quests.length; i++){
+					for(let j = 0; j < 7; j++){
+						if(event.quests[i].day[j] == getDay(today)){							
+							todayEvent[k] = i;
+							k++;
+						}
+					}
+				}
+
+				// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
+				for(var i = 0; i < todayEvent.length; i++){
+						eventQuests = eventQuests + ("**"+event.quests[todayEvent[i]].location+"** - "+event.quests[todayEvent[i]].quest+" "+getQuestType(event.quests[todayEvent[i]].type)+"\n")
+				}
+				
+				// for either picking announcing the event details as daily notification or just normal query
+				switch(eventQuery[0]){
+					case 'announce':
+						clientDiscord.guilds.map((guild) => {
+							let found = 0;
+
+							// getting the channel name for announcement
+							for(var i = 0;i < guildConfig.length; i++){
+								if(guild.id == guildConfig[i].GUILD_ID){								
+									if(guildConfig[i].CHANNEL_EVENT_ANNOUNCE != "disable"){
+										var channelPartyName = guildConfig[i].CHANNEL_EVENT_ANNOUNCE;
+									}							
+								}
+							}
+							guild.channels.map((ch) =>{
+								if(found == 0){
+									if(ch.name == channelPartyName){
+										ch.send(event.name+" event is on-going, here\'s the summary",{
+											"embed": {
+												"author":{
+													"name": "Current Event",
+													"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+												},
+												"title": event.name,
+												"url": event.url,
+												"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.items)+"\n**What to do**: "+setDataFormatting(eventToDo),
+												"color": 1879160,
+												"footer": {
+													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+													"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+												},
+												"fields":[
+													{
+														"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
+														"value": eventQuests 								
+													}
+												]
+											}
+										}).catch(console.error);
+										found = 1;
+										sent++;
+									}
+								}
+							});
+						});
+
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
+
+					break;
+					default:
+						message.channel.send({
+							"embed": {
+								"author":{
+									"name": "Current Event",
+									"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+								},
+								"title": event.name,
+								"url": event.url,
+								"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.items)+"\n**What to do**: "+setDataFormatting(eventToDo),
+								"color": 1879160,
+								"footer": {
+									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+									"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+								},
+								"fields":[
+									{
+										"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
+										"value": eventQuests 								
+									}
+								]
+							}	
+						})
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
+					break;
+				};	
+			break;
 			
+			// for updating and checking next event
+			case 'eventnext':
+				var adminAccess = message.channel.permissionsFor(message.author).has("ADMINISTRATOR", false);
+				let eventNextQuery = message.toString().split(' ');
+					eventNextQuery = eventNextQuery.splice(1);
+
+				function getTextFromArray(textQuery, start, lengthMin){
+					let fullTextQuery = "";
+					if(textQuery.length > lengthMin){
+						for(var i = start; i <textQuery.length; i++){
+							fullTextQuery = fullTextQuery +" "+ textQuery[i];
+						}
+						fullTextQuery = fullTextQuery.substr(1);
+					}else{
+						fullTextQuery = textQuery[1];
+					}
+
+					return fullTextQuery;
+				}	
+
+				if(adminAccess == true){
+					let nextEventData = await getFileData('./data/data-event-next.json');
+
+					switch(eventNextQuery[0]){
+						case 'name':
+							nextEventName = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+
+							message.channel.send("Next event data name set to `"+nextEventName+"`");
+						break;
+
+						case 'duration':
+							nextEventDuration = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+							
+							message.channel.send("Next event `duration` data set to `"+nextEventDuration+"`");
+						break;
+
+						case 'redeem':
+							nextEventRedeem = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+							
+							message.channel.send("Next event `redeem` data set to `"+nextEventRedeem+"`");
+						break;
+
+						case 'url':
+							nextEventUrl = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+							
+							message.channel.send("Next event `url` data set to `"+nextEventUrl+"`");
+						break;
+
+						
+						case 'daily':
+							nextEventDaily = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+								
+							message.channel.send("Next event `daily reward` data set to `"+nextEventDaily+"`");
+						break;
+
+						case 'todo':
+							nextEventTodo = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+							nextEventTodo = nextEventTodo.toString().split(',');
+
+							message.channel.send("Next event `todo list` data set to `"+nextEventTodo+"`");
+						break;
+
+						case 'items':
+							nextEventItems = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+							nextEventItems = nextEventItems.toString().split(',');
+
+							message.channel.send("Next event `items` data set to `"+nextEventItems+"`");
+						break;
+
+						case 'market':
+							nextEventMarket = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+							nextEventMarket = nextEventMarket.toString().split(',');
+
+							message.channel.send("Next event `tradeable/marketable` data set to `"+nextEventMarket+"`");
+						break;
+
+						case 'dungeon':
+							switch(eventNextQuery[1]){
+								case 'edit':
+									nextEventDungeonData = setTextFormat(getTextFromArray(eventNextQuery, 2, 3));
+									nextEventDungeonData = nextEventDungeonData.toString().split(',');
+
+									let idx;
+
+									// checking if there's a quest with that name or not
+									for(var i = 0; i < nextEventDungeon.length; i++){
+										if(nextEventDungeonData[1].trim() == nextEventDungeon[i].quest){
+											idx = i;
+										}
+									}
+
+									// handling when quest found or not
+									if(idx != undefined || idx != null){
+										// check day input, if 'all' convert to 'show all day' if not check for '+' as a divider, or just write the day
+										if(nextEventDungeonData[2].trim() == "all" || nextEventDungeonData[2].trim() == "All"){
+											nextEventDungeonData[2] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+										}else if(nextEventDungeonData[2].includes("+")){
+											nextEventDungeonData[2] = nextEventDungeonData[2].split("+")
+										}else{
+											nextEventDungeonData[2] = nextEventDungeonData[2].trim();
+										}
+				
+										// modifiying the data
+										nextEventDungeon[idx] = {
+											"location": nextEventDungeonData[0].trim(),
+											"quest": nextEventDungeonData[1].trim(),
+											"day": nextEventDungeonData[2],
+											"type": parseInt(nextEventDungeonData[3]),
+										}
+										
+										message.channel.send("Data for `"+nextEventDungeonData[1].trim()+"` modified with: ",{
+											"embed": {
+												"description": "**Location**: "+nextEventDungeonData.location+"\n**Quest**: "+nextEventDungeonData.quest+"\n**Day**: "+nextEventDungeonData.day+"\n**Type**: "+nextEventDungeonData.type,
+												"color": 16753920,
+												},
+										})
+									}else{
+										message.channel.send("I'm sorry I can't find dungeon data with that quest name `"+nextEventDungeonData[1].trim()+"`");
+									}
+								break;
+
+								default:
+									nextEventDungeonData = setTextFormat(getTextFromArray(eventNextQuery, 1, 3));
+									nextEventDungeonData = nextEventDungeonData.toString().split(',');
+									
+									// check day input, if 'all' convert to 'show all day' if not check for '+' as a divider, or just write the day
+									if(nextEventDungeonData[2].trim() == "all" || nextEventDungeonData[2].trim() == "All"){
+										nextEventDungeonData[2] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+									}else if(nextEventDungeonData[2].includes("+")){
+										nextEventDungeonData[2] = nextEventDungeonData[2].trim();
+										nextEventDungeonData[2] = nextEventDungeonData[2].split("+");
+
+										for(let i = 0; i < nextEventDungeonData[2].length; i++){
+											nextEventDungeonData[2][i] = setTextFormat(nextEventDungeonData[2][i])
+										};										
+									}else{
+										nextEventDungeonData[2] = nextEventDungeonData[2].trim();
+									}
+
+									nextEventDungeonData = {
+										"location": nextEventDungeonData[0].trim(),
+										"quest": nextEventDungeonData[1].trim(),
+										"day": nextEventDungeonData[2],
+										"type": parseInt(nextEventDungeonData[3]),
+									}
+
+									message.channel.send("`"+nextEventDungeonData.quest+"` quest data added",{
+										"embed": {
+											"description": "**Location**: "+nextEventDungeonData.location+"\n**Quest**: "+nextEventDungeonData.quest+"\n**Day**: "+setDataFormatting(nextEventDungeonData.day)+"\n**Type**: "+nextEventDungeonData.type,
+											"color": 16753920,
+											},
+									})
+
+									nextEventDungeon.push(nextEventDungeonData);
+								break;
+							}						
+						break;
+
+						// preview of event data
+						case 'temp':
+							let todayEventTemp;
+							let todayEventTempIdx = 0;
+							let eventQuestListTemp;
+
+							let currentDateTemp = new Date();
+								currentDateTemp = currentDateTemp.getUTCDay();
+
+							// getting index of event that have the same day with today
+							for(var i = 0; i < nextEventDungeon.length; i++){
+								for(var j = 0; j < 7; j++){
+									if(nextEventDungeon[i].day[j] == getDay(currentDateTemp)){						
+										todayEventTemp[todayEventTempIdx] = i;
+										todayEventTempIdx++;
+									}
+								}
+							}
+
+							// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
+							if(eventQuestListTemp != undefined || eventQuestListTemp != null){
+								for(let i = 0; i < todayEventTemp.length; i++){
+									eventQuestListTemp = eventQuestListTemp + ("**"+event.quests[todayEventTemp[i]].location+"** - "+event.quests[todayEventTemp[i]].quest+" "+getQuestType(event.quests[todayEventTemp[i]].type)+"\n")
+								}
+							}else{
+								eventQuestListTemp = "Dummy Quest List Here";
+							}
+									
+							if(nextEventName != null || nextEventName != undefined){
+								try{
+									message.channel.send("Data below is not saved, please do `"+guildPrefix+"eventnext push` to save the data", {
+										"embed": {
+											"author":{
+												"name": "Current Event",
+												"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+											},
+											"title": nextEventName,
+											"url": nextEventUrl,
+											"description": "**Duration**: "+nextEventDuration+"\n**Redemption Period**: "+nextEventRedeem+"\n**Event Item**: "+setDataFormatting(nextEventItems)+"\n**What to do**: "+setDataFormatting(nextEventTodo),
+											"color": 1879160,
+											"footer": {
+												"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+												"text": "Next Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+											},
+											"fields":[
+												{
+													"name": dateformat(Date.now(), "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
+													"value": eventQuestListTemp 								
+												}
+											]
+										}
+									})
+								}catch(error){
+									message.channel.send("There's trouble showing temporary event data, some data may be incomplete, `nextEventItems is "+nextEventItems+"`, `nextEventTodo is "+nextEventTodo+"`");
+								}
+							}else{
+								message.channel.send("No event data found in temporary or no event name is set");
+							}
+						break;
+
+						// save the event data
+						case 'push':
+							let newEventData = {
+								"name": nextEventName,
+								"duration": nextEventDuration,
+								"redeem": nextEventRedeem,
+								"url": nextEventUrl,
+								"rewards": {
+									"items": nextEventItems,
+									"daily": nextEventDaily
+								},
+								"todo": nextEventTodo,
+								"quests": nextEventDungeon
+							}
+
+							nextEventData.push(newEventData);
+							message.channel.send("Next event data `"+nextEventName+"` is saved");
+						break;
+
+						// show command list and quick example
+						case 'help':
+							message.channel.send({
+								"embed":{
+									"title": "Next Event Update Commands List",
+									"color": 16744192,
+									"fields": [
+										{
+											"name": "Name ("+guildPrefix+"eventnext name <event name>)",
+											"value": "Set the event name"
+										},
+										{
+											"name": "Duration ("+guildPrefix+"eventnext duration <time>)",
+											"value": "Set the event duration"
+										},
+										{
+											"name": "Redeem Duration ("+guildPrefix+"eventnext redeem <time>)",
+											"value": "Set the event redeem duration"
+										},
+										{
+											"name": "Items ("+guildPrefix+"eventnext item <item 1, item 2>)",
+											"value": "Set the event items, currency goes here too"
+										},
+										{
+											"name": "Todo ("+guildPrefix+"eventnext todo <things to do 1, things to do 2>)",
+											"value": "Set the quest to do list (Daily, Weekly, etc etc)"
+										},
+										{
+											"name": "Dungeon/Quests list ("+guildPrefix+"eventnext dungeon <location, quest name/what to do, day, type>)",
+											"value": "Set the event dungeon or quests list\n- `location`: Dungeon Location\n- `quest name`: Quest Name\n- `day`: Quest day (day started on sunday, ended at saturday), write `all` if it's all week\n- `type`: Quest type (0 Daily Quest, 1 Dynamic Quest, 2 Event Quest)"
+										},
+									],
+									"footer": {
+										"text": "Jinsoyun Bot Configuration - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+									},
+								}
+							});
+						break;
+
+						// show saved next event data
+						default:
+							let eventNext = await getFileData("./data/data-event-next.json");
+
+							let eventToDoNext = eventNext.rewards.sources;
+							let eventQuestsNext = "";
+							let eventDateNext = new Date();
+								eventDateNext = eventDateNext.getUTCDay();
+							let todayEventNext = [];
+							var k = 0;
+			
+							// getting index of event that have the same day with today
+							for(var i = 0; i < eventNext.quests.length; i++){
+								for(var j = 0; j < 7; j++){
+									if(eventNext.quests[i].day[j] == getDay(eventDateNext)){					
+										todayEventNext[k] = i;
+										k++;
+									}
+								}
+							}
+			
+							// for searching event that have the same index with day searching and then inserting the correct one into variable for output later
+							for(var i = 0; i < todayEventNext.length; i++){
+								eventQuestsNext = eventQuestsNext + ("**"+eventNext.quests[todayEventNext[i]].location+"** - "+eventNext.quests[todayEventNext[i]].quest+" "+getQuestType(eventNext.quests[todayEventNext[i]].type)+"\n")
+							}
+							
+							// output
+							message.channel.send("Saved next event data, to edit do `"+guildPrefix+"eventnext help`",{
+								"embed": {
+									"author":{
+										"name": "Current Event",
+										"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+									},
+									"title": eventNext.name,
+									"url": eventNext.url,
+									"description": "**Duration**: "+eventNext.duration+"\n**Redemption Period**: "+eventNext.redeem+"\n**Event Item**: "+setDataFormatting(eventNext.rewards.name)+"\n**What to do**: "+setDataFormatting(eventToDoNext),
+									"color": 1879160,
+									"footer": {
+										"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+										"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+									},
+									"fields":[
+										{
+											"name": dateformat(Date.now(), "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
+											"value": eventQuestsNext 								
+										}
+									]
+								}	
+							});	
+						break;
+					}
+				}else{
+					message.channel.send("I'm sorry but you don't have permission to use this command");
+				}	
+				
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");	
+			break;
+
 			// data gathering start from here
 			case 'getupdate':	
 				var m;
