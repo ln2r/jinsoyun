@@ -1,38 +1,35 @@
 {
-	"name": "Golden Harvest Festival",
-	"duration": "November 7 – December 5",
-	"redeem": "December 5 – January 16",
-	"url": "https://www.bladeandsoul.com/en/news/the-golden-harvest-festival-returns-november-7/",
+	"name": "Hongsil's Secret Warehouse, Tower Of Memory, Royal Raid",
+	"duration": "December 5 - January 16",
+	"redeem": "January 16 - February 6",
+	"url": "Https://www.bladeandsoul.com/en/news/theater-of-mystery-dungeons-events/",
+	"lastEvent": "Golden Harvest Festival",
+	"lastEventRedeem": "December 5 – January 16",
 	"rewards": {
 		"items": [
-			"Golden Harvest Crate",
-			"Harvest Wine",
-			"Thanksgiving Invitation",
-			"Hongmoon Jade",
-			"Harvest Feast – Kids’ Table",
-			"Harvest Feast – Grown-Ups’ Table",
-			"Harvest Feast – Elders’ Table",
-			"Thanksgiving Prize Wheel Pouch"
+			"Snow Crystal",
+			"Memory Lane Gift Box",
+			"Snow Day Support Chest",
+			"Skybreak Gift Chest",
+			"Queen And Conqueror Gift Chest",
+			"Nightfall Gift Chest"
 		],
-		"daily": "Golden Harvest Crate"
+		"daily": "Snow Crystals x4"
 	},
-	"tradeableItemId": [1240, 616, 506, 1266, 123, 1909],
-	"typeMean": [
-		"0 Daily Quest",
-		"1 Dynamic Quest",
-		"2 Event Quest"
-	],
+	"tradeableItemId": [],
 	"todo": [
-		"Daily Challenges",
-		"Solo Dungeon",
-		"Transmutation",
-		"Crafting",
-		"Stomach of Iron Achievement"
+		"Hongsil’s Secret Storehouse",
+		"Tower Of Memory",
+		"Weekly Challenge",
+		"Skybreak Spire",
+		"Temple Of Eluvium",
+		"Scion’s Keep",
+		"Nightfall Sanctuary"
 	],
 	"quests": [
 		{
-			"location": "Mushin’s Tower",
-			"quest": "16th Floor - 20th Floor",
+			"location": "Hongsil’s Secret Storehouse",
+			"quest": "Secrets Of The Storehouse",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -42,11 +39,11 @@
 				"Friday",
 				"Saturday"
 			],
-			"type": 0
+			"type": 1
 		},
 		{
-			"location": "Outlaw Island",
-			"quest": "Boss 1 - 5",
+			"location": "Tower Of Memory",
+			"quest": "Not-so-fond Memories",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -56,11 +53,11 @@
 				"Friday",
 				"Saturday"
 			],
-			"type": 0
+			"type": 2
 		},
 		{
-			"location": "Circle of Sundering",
-			"quest": "Boss 1 - 4",
+			"location": "Skybreak Spire",
+			"quest": "Raven King",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -70,7 +67,49 @@
 				"Friday",
 				"Saturday"
 			],
-			"type": 0
+			"type": 1
+		},
+		{
+			"location": "Temple Of Eluvium",
+			"quest": "Hive Queen",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 1
+		},
+		{
+			"location": "Scion’s Keep",
+			"quest": "Iron Conqueror",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 1
+		},
+		{
+			"location": "Nightfall Sanctuary",
+			"quest": "Grand Celestial Emperor",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 1
 		}
 	]
 }
