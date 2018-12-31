@@ -1,5 +1,5 @@
 {
-	"name": "Hongsil's Secret Warehouse, Tower Of Memory, Royal Raid",
+	"name": "Wreck the Halls, Royal Raid",
 	"duration": "December 5 - January 16",
 	"redeem": "January 16 - February 6",
 	"url": "Https://www.bladeandsoul.com/en/news/theater-of-mystery-dungeons-events/",
@@ -14,7 +14,8 @@
 			"Queen And Conqueror Gift Chest",
 			"Nightfall Gift Chest"
 		],
-		"daily": "Snow Crystals x4"
+		"daily": "Snow Crystals x4", 
+		"weekly": "Snow Day Support Chest"
 	},
 	"tradeableItemId": [],
 	"todo": [

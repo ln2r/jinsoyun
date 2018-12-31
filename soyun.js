@@ -40,6 +40,7 @@ let nextEventUrl;
 let nextEventTodo;
 let nextEventItems;
 let nextEventDaily;
+let nextEventWeekly;
 let nextEventMarket;
 let nextEventDungeonData;
 
@@ -184,6 +185,7 @@ async function getSiteData(query) {
 		.catch((error) => {
 			console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getSiteData, "+error);
 			clientDiscord.emit("message", "!err |"+error.stack+"|");
+			return {"status": error}
 		})  
 }
 
@@ -329,9 +331,10 @@ function setTextFormat(textInput){
 	return text;
 }
 						
+// getting API status
 async function getAPIStatus(){
 	let configData = await getFileData("./config.json");
-
+	
 	let apiStatus = [];
 	let apiAdress = configData.API_ADDRESS;
 
@@ -353,18 +356,17 @@ async function getAPIStatus(){
 
 // getting data from a file
 async function getFileData(path){
-	//const fs = require('fs').promises;
-	let content = "No data";
+	let fileContent;
 
 	try{
-		content = fs.readFileSync(path, 'utf8')
-		content = JSON.parse(content);
+		fileContent = fs.readFileSync(path, 'utf8')
+		fileContent = JSON.parse(fileContent);
 	}catch(error){
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getFileData, "+error);
 		clientDiscord.emit("message", "!err |"+error.stack+"|");
 	}	
 
-	return content;
+	return fileContent;
 }
 
 // Getting the location of searched query data in array
@@ -544,7 +546,7 @@ clientDiscord.on("ready", async () => {
 	clientDiscord.user.setUsername(setTextFormat(packageFile.name));
 
 	if(configData.MAINTENANCE_MODE == false){
-		clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
+		clientDiscord.user.setPresence({ game: { name: 'at Hongmoon School' }, status: 'online' })
 		.catch(console.error);
 	}else{
 		clientDiscord.user.setPresence({ game: { name: 'MAINTENANCE MODE [!]' }, status: 'dnd' })
@@ -760,7 +762,7 @@ clientDiscord.on("message", async (message) => {
 									break;
 									
 									case 1:
-										clientDiscord.user.setActivity('with Hongmoon School', {type: 'PLAYING'});
+										clientDiscord.user.setActivity('at Hongmoon School', {type: 'PLAYING'});
 										statusRandom = 0;
 									break;
 								}
@@ -1201,28 +1203,31 @@ clientDiscord.on("message", async (message) => {
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
-					message.channel.send({
-						"embed": {
-							"author":{
-								"name": "Daily Challenges - "+dateformat(dcDate, "UTC:dddd"),
-								"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
-							},
-							"title": "Completion Rewards",
-							"description": dailyRewards,
-							"color": 15025535,
-							"footer": {
-								"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-								"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-							},
-							"fields":[
-								{
-									"name": "Quests/Dungeons List (Location - Quest)",
-									"value": dailyQuests 								
-								}
-							]
-						}
-					});
-
+					if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
+						message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+					}else{
+						message.channel.send({
+							"embed": {
+								"author":{
+									"name": "Daily Challenges - "+dateformat(dcDate, "UTC:dddd"),
+									"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
+								},
+								"title": "Completion Rewards",
+								"description": dailyRewards,
+								"color": 15025535,
+								"footer": {
+									"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+									"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+								},
+								"fields":[
+									{
+										"name": "Quests/Dungeons List (Location - Quest)",
+										"value": dailyQuests 								
+									}
+								]
+							}
+						});
+					}
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 				}else{
 					clientDiscord.guilds.map((guild) => {
@@ -1275,6 +1280,7 @@ clientDiscord.on("message", async (message) => {
 				let koldrakQuery = message.toString().substring(1).split(' ');
 					koldrakQuery = koldrakQuery.splice(1);
 				let koldrakTime = await getFileData("./data/koldrak-time.json");
+				
 				configData = await getFileData("./config.json");
 				sent = 0;	
 				
@@ -1282,25 +1288,6 @@ clientDiscord.on("message", async (message) => {
 				let koldrakTimeLeft = 25;
 
 				switch(koldrakQuery[0]){
-					case 'list':
-						message.channel.send({
-							"embed":{
-								"color": 8388736,
-								"description": "- `01:00:00 UTC ("+getTimeStatus([1,0])+")`\n- `04:00:00 UTC ("+getTimeStatus([4,0])+")`\n- `07:00:00 UTC ("+getTimeStatus([7,0])+")`\n- `19:00:00 UTC ("+getTimeStatus([19,0])+")`\n- `22:00:00 UTC ("+getTimeStatus([22,0])+")`",
-								"author":{
-									"name": "Koldrak's Lair Timetable",
-									
-								},
-								"footer":{
-									"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-									"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-								}
-							}
-						})
-
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
-					break;
-
 					// Doing "Alert" at specific time(s)
 					case 'alert':
 						// Sending "Alert" to every "party-forming" channel
@@ -1343,215 +1330,227 @@ clientDiscord.on("message", async (message) => {
 					
 					// Showing when is the closest Koldrak's lair time
 					default:
-						let koldrakTimeHours;
-						let koldrakTimeMinutes;
-						let koldrakTimeNext;
-						let koldrakTimeDiff;
+						if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
+							message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+						}else{
+							let koldrakTimeHours;
+							let koldrakTimeMinutes;
+							let koldrakTimeNext;
+							let koldrakTimeDiff;
 
-						// Searching when is the closest one
-						for(var i = 0; i < 5;){
-							// Making new date data with details from koldrak's schedule (koldrak.json)
-							koldrakTimeNext = new Date(0, 0, 0, koldrakTime.time[i], 0, 0);
-							// Getting the time difference
-							koldrakTimeDiff = getTimeDifference(koldrakTimeNext.getTime());
+							// Searching when is the closest one
+							for(var i = 0; i < 5;){
+								// Making new date data with details from koldrak's schedule (koldrak.json)
+								koldrakTimeNext = new Date(0, 0, 0, koldrakTime.time[i], 0, 0);
+								// Getting the time difference
+								koldrakTimeDiff = getTimeDifference(koldrakTimeNext.getTime());
 
-							// Formatting
-							koldrakTimeHours = koldrakTimeDiff[0];							
-							koldrakTimeMinutes = koldrakTimeDiff[1];
+								// Formatting
+								koldrakTimeHours = koldrakTimeDiff[0];							
+								koldrakTimeMinutes = koldrakTimeDiff[1];
 
-							// Storing the closest for later
-							if(koldrakTimeHours <= koldrakTimeLeft){
-								if(koldrakTimeHours >= 0){
-									koldrakTimeLeft = koldrakTimeHours;
+								// Storing the closest for later
+								if(koldrakTimeHours <= koldrakTimeLeft){
+									if(koldrakTimeHours >= 0){
+										koldrakTimeLeft = koldrakTimeHours;
+									}
 								}
+								i++;
 							}
-							i++;
+
+							// Output
+							message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
+
+							// Console Logging
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 						}
-
-						// Output
-						message.channel.send("Closest **Koldrak's Lair** is accessible in **"+koldrakTimeLeft+" hour(s)** and **"+koldrakTimeMinutes+" minute(s)**");
-
-						// Console Logging
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
+					break;	
 				};
 			break;
 			
 			// for searching and showing character information, can be triggered via !who for character that have the same name with the nickname or use !who "chara name" for specific one
 			case 'who':
-				configData = await getFileData("./config.json");
+				if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
+					message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+				}else{
+					configData = await getFileData("./config.json");
 
-				try{
-					message.channel.startTyping();
+					try{
+						message.channel.startTyping();
 
-					let whoQuery = getUserInput(message);
+						let whoQuery = getUserInput(message);
 
-					if(whoQuery == null || whoQuery == undefined){
-						whoQuery = [message.member.nickname];
-					}else{
-						// encoding uri component so character with 'circumflex' still searchable
-						whoQuery = encodeURIComponent(whoQuery);
-					}				
+						if(whoQuery == null || whoQuery == undefined){
+							whoQuery = [message.member.nickname];
+						}else{
+							// encoding uri component so character with 'circumflex' still searchable
+							whoQuery = encodeURIComponent(whoQuery);
+						}				
 
-					let silveressCharaQuery = silveressNA+whoQuery; // for the query
-					let charaData = await getSiteData(silveressCharaQuery);
-					let characlassQuery = charaData.playerClass.toLowerCase().replace(/\s/g, '');
-					let skillsetData = await getSkillset(characlassQuery, charaData.activeElement, encodeURIComponent(charaData.characterName))
+						let silveressCharaQuery = silveressNA+whoQuery; // for the query
+						let charaData = await getSiteData(silveressCharaQuery);
+						let characlassQuery = charaData.playerClass.toLowerCase().replace(/\s/g, '');
+						let skillsetData = await getSkillset(characlassQuery, charaData.activeElement, encodeURIComponent(charaData.characterName))
 
-					let elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
-					
-					// for author url so user can look at more detailed version
-					let bnstreeProfile = "https://bnstree.com/character/na/"+whoQuery; 
-					// replacing the space so discord.js embed wont screaming error
-						bnstreeProfile = bnstreeProfile.replace(" ","%20"); 
-					
-					message.channel.stopTyping();
+						let elementalDamage = await getElementalDamage(charaData.activeElement, charaData);
+						
+						// for author url so user can look at more detailed version
+						let bnstreeProfile = "https://bnstree.com/character/na/"+whoQuery; 
+						// replacing the space so discord.js embed wont screaming error
+							bnstreeProfile = bnstreeProfile.replace(" ","%20"); 
+						
+						message.channel.stopTyping();
 
-					message.channel.send({
-						"embed": {
-							"author": {
-							"name": charaData.activeElement+" "+charaData.playerClass+" "+charaData.characterName	
-							},
-							"title": charaData.characterName+" is a Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+" "+charaData.activeElement+" "+charaData.playerClass+" from "+setDataValue(charaData.guild)+"\n ",
-							"url": bnstreeProfile,
-							"fields": [
-							{
-								"name": "Basic Stats",
-								"value": "HP: "+charaData.hp+"\nAttack Power: "+charaData.ap+"\nHongmoon Points Allocation (Atk - Def): "+charaData.HMAttackPoint+" - "+charaData.HMDefencePoint
-							},
-							{
-								"name": "\nOffensive Stats",
-								"value": "Elemental Damage: "+elementalDamage+"\nBoss Attack Power: "+charaData.ap_boss+"\nCritical Hit: "+charaData.crit+" ("+(charaData.critRate*100).toFixed(2)+"%)\nCritical Damage: "+charaData.critDamage+" ("+(charaData.critDamageRate*100).toFixed(2)+"%)",
-							},
-							{
-								"name": "\nDefensive Stats",
-								"value": "Defense: "+charaData.defence+"\nBoss Defense: "+charaData.defence_boss+"\nEvasion: "+charaData.evasion+" ("+(charaData.evasionRate*100).toFixed(2)+"%)\nBlock: "+charaData.block+" ("+(charaData.blockRate*100).toFixed(2)+"%)",
-							},
-							{
-								"name": "Weapon",
-								"value": setDataValue(charaData.weaponName)+"\n\n ",
-							},
-							{
-								"name": "Gems",
-								"value": setDataValue(charaData.gem1)+"\n"+setDataValue(charaData.gem2)+"\n"+setDataValue(charaData.gem3)+"\n"+setDataValue(charaData.gem4)+"\n"+setDataValue(charaData.gem5)+"\n"+setDataValue(charaData.gem6)+"\n",
-							},
-							{
-								"name": "Equipments",
-								"value": "Ring: "+setDataValue(charaData.ringName)+"\nEarring: "+setDataValue(charaData.earringName)+"\nNecklace: "+setDataValue(charaData.necklaceName)+"\nBraclet: "+setDataValue(charaData.braceletName)+"\nBelt: "+setDataValue(charaData.beltName)+"\nGloves: "+setDataValue(charaData.gloves)+"\nSoul: "+setDataValue(charaData.soulName)+"\nHeart: "+setDataValue(charaData.soulName2)+"\nAura Pet: "+setDataValue(charaData.petAuraName)+"\nSoul Badge: "+setDataValue(charaData.soulBadgeName)+"\nMystic Badge: "+setDataValue(charaData.mysticBadgeName), 
-							},
-							{
-								"name": "Soulshield",
-								"value": setDataValue(charaData.soulshield1)+"\n"+setDataValue(charaData.soulshield2)+"\n"+setDataValue(charaData.soulshield3)+"\n"+setDataValue(charaData.soulshield4)+"\n"+setDataValue(charaData.soulshield5)+"\n"+setDataValue(charaData.soulshield6)+"\n"+setDataValue(charaData.soulshield7)+"\n"+setDataValue(charaData.soulshield8), 
-							},
-							{
-								"name": "Trainable Skills (Skill Name: Type)",
-								"value": skillsetData
+						message.channel.send({
+							"embed": {
+								"author": {
+								"name": charaData.activeElement+" "+charaData.playerClass+" "+charaData.characterName	
+								},
+								"title": charaData.characterName+" is a Level "+charaData.playerLevel+" HM "+charaData.playerLevelHM+" "+charaData.activeElement+" "+charaData.playerClass+" from "+setDataValue(charaData.guild)+"\n ",
+								"url": bnstreeProfile,
+								"fields": [
+								{
+									"name": "Basic Stats",
+									"value": "HP: "+charaData.hp+"\nAttack Power: "+charaData.ap+"\nHongmoon Points Allocation (Atk - Def): "+charaData.HMAttackPoint+" - "+charaData.HMDefencePoint
+								},
+								{
+									"name": "\nOffensive Stats",
+									"value": "Elemental Damage: "+elementalDamage+"\nBoss Attack Power: "+charaData.ap_boss+"\nCritical Hit: "+charaData.crit+" ("+(charaData.critRate*100).toFixed(2)+"%)\nCritical Damage: "+charaData.critDamage+" ("+(charaData.critDamageRate*100).toFixed(2)+"%)",
+								},
+								{
+									"name": "\nDefensive Stats",
+									"value": "Defense: "+charaData.defence+"\nBoss Defense: "+charaData.defence_boss+"\nEvasion: "+charaData.evasion+" ("+(charaData.evasionRate*100).toFixed(2)+"%)\nBlock: "+charaData.block+" ("+(charaData.blockRate*100).toFixed(2)+"%)",
+								},
+								{
+									"name": "Weapon",
+									"value": setDataValue(charaData.weaponName)+"\n\n ",
+								},
+								{
+									"name": "Gems",
+									"value": setDataValue(charaData.gem1)+"\n"+setDataValue(charaData.gem2)+"\n"+setDataValue(charaData.gem3)+"\n"+setDataValue(charaData.gem4)+"\n"+setDataValue(charaData.gem5)+"\n"+setDataValue(charaData.gem6)+"\n",
+								},
+								{
+									"name": "Equipments",
+									"value": "Ring: "+setDataValue(charaData.ringName)+"\nEarring: "+setDataValue(charaData.earringName)+"\nNecklace: "+setDataValue(charaData.necklaceName)+"\nBraclet: "+setDataValue(charaData.braceletName)+"\nBelt: "+setDataValue(charaData.beltName)+"\nGloves: "+setDataValue(charaData.gloves)+"\nSoul: "+setDataValue(charaData.soulName)+"\nHeart: "+setDataValue(charaData.soulName2)+"\nAura Pet: "+setDataValue(charaData.petAuraName)+"\nSoul Badge: "+setDataValue(charaData.soulBadgeName)+"\nMystic Badge: "+setDataValue(charaData.mysticBadgeName), 
+								},
+								{
+									"name": "Soulshield",
+									"value": setDataValue(charaData.soulshield1)+"\n"+setDataValue(charaData.soulshield2)+"\n"+setDataValue(charaData.soulshield3)+"\n"+setDataValue(charaData.soulshield4)+"\n"+setDataValue(charaData.soulshield5)+"\n"+setDataValue(charaData.soulshield6)+"\n"+setDataValue(charaData.soulshield7)+"\n"+setDataValue(charaData.soulshield8), 
+								},
+								{
+									"name": "Trainable Skills (Skill Name: Type)",
+									"value": skillsetData
 
-							},
-							{
-								"name": "Arena Stats",
-								"value": "Games (Play - Win - Lose): "+charaData.tournamentTotalGames+" - "+charaData.tournamentTotalWins+" - "+(charaData.tournamentTotalGames-charaData.tournamentTotalWins)+" ("+getWinRate(charaData.tournamentTotalGames, charaData.tournamentTotalWins)+" win rate)\nSolo Wins: "+charaData.tournamentSoloWins+" ("+setCharacterPlacement(charaData.tournamentSoloTier)+")\nTag Team Wins: "+charaData.tournamentTagWins+" ("+setCharacterPlacement(charaData.tournamentTagTier)+")"
-							},
-							{
-								"name": "Miscellaneous",
-								"value": "Server: "+setDataValue(charaData.server)+"\nFaction: "+setDataValue(charaData.faction)+" ("+setDataValue(charaData.factionRank)+")\nBnS Tools Whale Score (PvE - PvP): "+setDataValue(charaData.bnsToolsPvEScore)+" - "+setDataValue(charaData.bnsToolsPvPScore),
-							}],
-							"description": "",
-							"color": Math.floor(Math.random() * 16777215) - 0,
-							"footer": {
-								"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-								"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-							},
-							"thumbnail": {
-								"url": charaData.characterImg
+								},
+								{
+									"name": "Arena Stats",
+									"value": "Games (Play - Win - Lose): "+charaData.tournamentTotalGames+" - "+charaData.tournamentTotalWins+" - "+(charaData.tournamentTotalGames-charaData.tournamentTotalWins)+" ("+getWinRate(charaData.tournamentTotalGames, charaData.tournamentTotalWins)+" win rate)\nSolo Wins: "+charaData.tournamentSoloWins+" ("+setCharacterPlacement(charaData.tournamentSoloTier)+")\nTag Team Wins: "+charaData.tournamentTagWins+" ("+setCharacterPlacement(charaData.tournamentTagTier)+")"
+								},
+								{
+									"name": "Miscellaneous",
+									"value": "Server: "+setDataValue(charaData.server)+"\nFaction: "+setDataValue(charaData.faction)+" ("+setDataValue(charaData.factionRank)+")\nBnS Tools Whale Score (PvE - PvP): "+setDataValue(charaData.bnsToolsPvEScore)+" - "+setDataValue(charaData.bnsToolsPvPScore),
+								}],
+								"description": "",
+								"color": Math.floor(Math.random() * 16777215) - 0,
+								"footer": {
+									"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
+									"text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+								},
+								"thumbnail": {
+									"url": charaData.characterImg
+								}
 							}
-						}
-					});	
-				}catch(error){
-					message.channel.stopTyping();
-					message.channel.send("I can't find the character you are looking for, can you try again?");
+						});	
+					}catch(error){
+						message.channel.stopTyping();
+						message.channel.send("I can't find the character you are looking for, can you try again?");
 
-					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: issue occured on "+cmd+", "+error);
-					clientDiscord.emit("message", "!err |"+error.stack+"|");
+						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: issue occured on "+cmd+", "+error);
+						clientDiscord.emit("message", "!err |"+error.stack+"|");
+					}
 				}				
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 			
 			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
-				let marketQuery = getUserInput(message); // getting the user input
+				if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
+					message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+				}else{
+					let marketQuery = getUserInput(message); // getting the user input
 
-				let marketDataPath = "./data/list-market-data.json";
-				let marketData = await getFileData(marketDataPath);	
-				let eventData = await getFileData("./data/data-event.json");
+					let marketDataPath = "./data/list-market-data.json";
+					let marketData = await getFileData(marketDataPath);	
+					let eventData = await getFileData("./data/data-event.json");
 
-				let marketDataValue = "";
-				let marketDataItemsCount = "";
-				let marketItemIndex;
-				let marketDataItems;
-				let marketPriceStatus;
-				let marketEventItem;
-				let marketLastUpdate;
+					let marketDataValue = "";
+					let marketDataItemsCount = "";
+					let marketItemIndex;
+					let marketDataItems;
+					let marketPriceStatus;
+					let marketEventItem;
+					let marketLastUpdate;
 
-				// for checking marketable/tradeable event items
-				if(marketQuery == "Event"){
-					if(eventData.tradeableItemId.length != 0 || eventData.tradeableItemId != undefined){
-						marketItemIndex = eventData.tradeableItemId;
-						marketEventItem = true;
+					// for checking marketable/tradeable event items
+					if(marketQuery == "Event"){
+						if(eventData.tradeableItemId.length != 0 || eventData.tradeableItemId != undefined){
+							marketItemIndex = eventData.tradeableItemId;
+							marketEventItem = true;
+						}else{
+							marketEventItem = false;
+						}
+						marketLastUpdate = fileData.EVENT_DATA;
 					}else{
-						marketEventItem = false;
+						marketItemIndex = await getDataIndex(marketQuery, marketDataPath);
+						marketLastUpdate = marketData[0].updateTime;
+					};
+
+					// default image for when data not found
+					let imgSource = configData.DEFAULT_MARKET_THUMBNAIL; 
+
+					if(marketItemIndex.length > 6){
+						marketDataItems = 6;
+						marketDataItemsCount = "**Showing "+marketDataItems+" from "+marketItemIndex.length+" total results**\n";
+					}else{
+						marketDataItems = marketItemIndex.length;
 					}
-					marketLastUpdate = fileData.EVENT_DATA;
-				}else{
-					marketItemIndex = await getDataIndex(marketQuery, marketDataPath);
-					marketLastUpdate = marketData[0].updateTime;
-				};
 
-				// default image for when data not found
-				let imgSource = configData.DEFAULT_MARKET_THUMBNAIL; 
+					// getting set item of data
+					for(var i = 0; i < marketDataItems; i++){
+						if(marketData.length != 0){
+							marketPriceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
 
-				if(marketItemIndex.length > 6){
-					marketDataItems = 6;
-					marketDataItemsCount = "**Showing "+marketDataItems+" from "+marketItemIndex.length+" total results**\n";
-				}else{
-					marketDataItems = marketItemIndex.length;
-				}
+							marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"-"+marketItemIndex[i]+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+marketPriceStatus[0]+" "+marketPriceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
 
-				// getting set item of data
-				for(var i = 0; i < marketDataItems; i++){
-					if(marketData.length != 0){
-						marketPriceStatus = getPriceStatus(marketData[marketItemIndex[i]].priceEachOld, marketData[marketItemIndex[i]].priceEach);
-
-						marketDataValue = marketDataValue + ("**"+marketData[marketItemIndex[i]].name+"** `"+marketData[marketItemIndex[i]].id+"-"+marketItemIndex[i]+"`\n- Each: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceEach)+" `"+marketPriceStatus[0]+" "+marketPriceStatus[1]+"`\n- Lowest: "+setCurrencyFormat(marketData[marketItemIndex[i]].priceTotal)+" for "+marketData[marketItemIndex[i]].quantity+"\n");
-
-						imgSource = marketData[marketItemIndex[0]].img;
+							imgSource = marketData[marketItemIndex[0]].img;
+						}
 					}
+
+					if(marketDataValue == "" || marketDataValue == null){
+						marketDataValue = "*No result on **"+marketQuery+"**\nThe item is either untradable, not in marketplace or maybe it doesn't exist*";
+					}else if(marketEventItem == false){
+						imgSource = configData.DEFAULT_MARKET_THUMBNAIL;
+						marketDataValue = "**No data for "+eventData.name+"'s event items**\n\n*Event item data might not be updated or there's no tradeable/marketable items*";
+					}
+
+					message.channel.send({
+						"embed": {
+							"author":{
+								"name": "Marketplace - Search result of "+marketQuery,
+								"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
+							},
+							"description": marketDataItemsCount+"\n"+marketDataValue,
+							"color": 16766720,
+							"footer": {
+								"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
+								"text": "Powered by Silveress's BnS API - Last update: "+dateformat(marketLastUpdate, "UTC:dd-mm-yy @ HH:MM")+" UTC"
+							},
+							"thumbnail": {
+								"url": imgSource
+							},
+						}	
+					});
 				}
-
-				if(marketDataValue == "" || marketDataValue == null){
-					marketDataValue = "*No result on **"+marketQuery+"**\nThe item is either untradable, not in marketplace or maybe it doesn't exist*";
-				}else if(marketEventItem == false){
-					imgSource = configData.DEFAULT_MARKET_THUMBNAIL;
-					marketDataValue = "**No data for "+eventData.name+"'s event items**\n\n*Event item data might not be updated or there's no tradeable/marketable items*";
-				}
-
-				message.channel.send({
-					"embed": {
-						"author":{
-							"name": "Marketplace - Search result of "+marketQuery,
-							"icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
-						},
-						"description": marketDataItemsCount+"\n"+marketDataValue,
-						"color": 16766720,
-						"footer": {
-							"icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-							"text": "Powered by Silveress's BnS API - Last update: "+dateformat(marketLastUpdate, "UTC:dd-mm-yy @ HH:MM")+" UTC"
-						},
-						"thumbnail": {
-							"url": imgSource
-						},
-					}	
-				});
-
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 			break;
 
@@ -1567,8 +1566,13 @@ clientDiscord.on("message", async (message) => {
 				for(var i = 0; i < weeklyIdxList.length; i++){
 					weeklyQuests = weeklyQuests + ("**"+quests[weeklyIdxList[i]].location+"** - "+quests[weeklyIdxList[i]].quest+"\n");				
 				}
+
 				for(var i = 0; i < rewards[7].rewards.length; i++){
 					weeklyRewards = weeklyRewards + (rewards[7].rewards[i]+"\n");
+				}
+
+				if(event.rewards.weekly != ""){
+					weeklyRewards = weeklyRewards + event.rewards.weekly + " (Event)";
 				}
 				
 				switch(weeklyQuery[0]){
@@ -1617,27 +1621,31 @@ clientDiscord.on("message", async (message) => {
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 					break;
 					default:
-						message.channel.send({
-							"embed": {
-								"author":{
-									"name": "Weekly Challenges",
-									"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
-								},
-								"title": "Completion Rewards",
-								"description": weeklyRewards,
-								"color": 6193367,
-								"footer": {
-									"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-									"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-								},
-								"fields":[
-									{
-										"name": "Quests/Dungeons List (Location - Quest)",
-										"value": weeklyQuests 								
-									}
-								]
-							}
-						});
+						if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
+							message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+						}else{
+							message.channel.send({
+								"embed": {
+									"author":{
+										"name": "Weekly Challenges",
+										"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
+									},
+									"title": "Completion Rewards",
+									"description": weeklyRewards,
+									"color": 6193367,
+									"footer": {
+										"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+										"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+									},
+									"fields":[
+										{
+											"name": "Quests/Dungeons List (Location - Quest)",
+											"value": weeklyQuests 								
+										}
+									]
+								}
+							});
+						}	
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 					break;
 				}
@@ -1733,28 +1741,32 @@ clientDiscord.on("message", async (message) => {
 
 					break;
 					default:
-						message.channel.send({
-							"embed": {
-								"author":{
-									"name": "Current Event",
-									"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-								},
-								"title": event.name,
-								"url": event.url,
-								"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.items)+"\n**What to do**: "+setDataFormatting(eventToDo)+"\n**Redeemable Event**: "+event.lastEvent+" ("+event.lastEventRedeem+")",
-								"color": 1879160,
-								"footer": {
-									"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-									"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-								},
-								"fields":[
-									{
-										"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
-										"value": eventQuests 								
-									}
-								]
-							}	
-						})
+						if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
+							message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+						}else{
+							message.channel.send({
+								"embed": {
+									"author":{
+										"name": "Current Event",
+										"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+									},
+									"title": event.name,
+									"url": event.url,
+									"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.items)+"\n**What to do**: "+setDataFormatting(eventToDo)+"\n**Redeemable Event**: "+event.lastEvent+" ("+event.lastEventRedeem+")",
+									"color": 1879160,
+									"footer": {
+										"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+										"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+									},
+									"fields":[
+										{
+											"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
+											"value": eventQuests 								
+										}
+									]
+								}	
+							});
+						}	
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 					break;
 				};	
@@ -1811,6 +1823,12 @@ clientDiscord.on("message", async (message) => {
 							nextEventDaily = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
 								
 							message.channel.send("Next event `daily reward` data set to `"+nextEventDaily+"`");
+						break;
+
+						case 'weekly':
+							nextEventWeekly = setTextFormat(getTextFromArray(eventNextQuery, 1, 2));
+								
+							message.channel.send("Next event `weekly reward` data set to `"+nextEventWeekly+"`");
 						break;
 
 						case 'todo':
@@ -2036,6 +2054,18 @@ clientDiscord.on("message", async (message) => {
 						case 'push':
 							let nextEventTradeableItems = []; // manual for now
 							let currentEventData = await getFileData('./data/data-event.json');
+
+							// no data handler
+							if(nextEventDaily == undefined || nextEventName == ""){
+								nextEventDaily = ""
+							}
+							if(nextEventWeekly == undefined || nextEventDuration == ""){
+								nextEventWeekly = ""
+							}
+							if(nextEventTradeableItems == undefined || nextEventRedeem == ""){
+								nextEventTradeableItems = []
+							}
+
 							let newEventData = {
 								"name": nextEventName,
 								"duration": nextEventDuration,
@@ -2045,7 +2075,8 @@ clientDiscord.on("message", async (message) => {
 								"lastEventRedeem": currentEventData.redeem,
 								"rewards": {
 									"items": nextEventItems,
-									"daily": nextEventDaily
+									"daily": nextEventDaily,
+									"weekly": nextEventWeekly
 								},
 								"tradeableItemId": nextEventTradeableItems,
 								"todo": nextEventTodo,
@@ -2073,8 +2104,20 @@ clientDiscord.on("message", async (message) => {
 											"value": "Set the event duration"
 										},
 										{
+											"name": "Event Notice Page ("+guildPrefix+"eventnext url <address>)",
+											"value": "Set the event notice page"
+										},
+										{
 											"name": "Redeem Duration ("+guildPrefix+"eventnext redeem <time>)",
 											"value": "Set the event redeem duration"
+										},
+										{
+											"name": "Daily Rewards ("+guildPrefix+"eventnext daily <item>)",
+											"value": "Set the daily challenges rewards item"
+										},
+										{
+											"name": "Weekly Rewards ("+guildPrefix+"eventnext weekly <item>)",
+											"value": "Set the weekly challenges rewards item"
 										},
 										{
 											"name": "Items ("+guildPrefix+"eventnext item <item 1, item 2>)",
@@ -2156,22 +2199,32 @@ clientDiscord.on("message", async (message) => {
 
 			// data gathering start from here
 			case 'getupdate':	
-				var m;
+				let msg;
 				if(message.author != null){
-					m = await message.channel.send("Starting data update...");
-				}		
+					msg = await message.channel.send("Starting data update...");
+					
+				}	
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Starting data update..");	
 				
-				let classData = await getFileData("./data/list-classdata-source.json");
+				// list of class data source (skillset, elements)
+				let classData = await getFileData("./data/class/list-class-dataset-source.json");
 
+				// item data
 				let silveressItem = configData.API_ADDRESS[2].address;
 
-				let errCount = 0;
+				var errCount = 0;
 				let errLocation = [];
 				let errMsg = "";
 
-				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Starting data update..");
-				
-				// item data
+				// console logging and message if it's updated manually
+				if(message.author != null){
+					msg.edit("Updating items data...");
+				}
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Updating items data...");	
+
+				/* description: getting and updating item data
+				 * variable   : 'silveressItem' silveress item API address
+				 */
 				fs.writeFile('./data/list-item.json', JSON.stringify(await getSiteData(silveressItem), null, '\t'), function (err) {
 					if(err){
 						console.log(err);
@@ -2181,7 +2234,14 @@ clientDiscord.on("message", async (message) => {
 					}
 				})	
 
-				// class data
+				// console logging and message if it's updated manually
+				if(message.author != null){
+					msg.edit("Updating class data...");
+				}
+				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Updating class data...");	
+
+				/* description: updating class data
+				 */
 				for(var i = 0; i < classData.length; i++){
 					// checking if directory is exist or not, if not make one
 					if(!fs.existsSync('./data/class/'+classData[i].name)){
@@ -2195,7 +2255,15 @@ clientDiscord.on("message", async (message) => {
 						});
 					}
 
-					// getting and writing attributes data into a .json file
+					// console log and status message
+					if(message.author != null){
+						msg.edit("Updating "+classData[i].name+" data...");
+					}
+					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Fetching "+classData[i].name+" attributes data...");
+
+					/* description: getting and writing attributes data into a .json file
+					 * variable:    'classData[i].name' class name
+					 */
 					fs.writeFile('./data/class/'+classData[i].name+'/attributes.json', JSON.stringify(await getSiteData(classData[i].attributes), null, '\t'), function (err) {
 						if(err){
 							console.log(err);
@@ -2205,27 +2273,46 @@ clientDiscord.on("message", async (message) => {
 						}
 					})
 
-					await delay(500);
+					// delay so the server wont get spammed, seems useless but nice touch
+					await delay(1000);
 
+					// getting the elements data for said class
+					// variable: 'classData[i].name' class name
 					var classAttributeData = await getFileData('./data/class/'+classData[i].name+'/attributes.json');
-					// getting class attribute value
-					for(var j = 0; j < classAttributeData.records.length; j++){
-						var classAttributeValue = classAttributeData.records[j].attribute;
-						//console.log("current attribute @ "+classData[i].name+": "+classAttributeValue);
 
-						// getting and writing class skillset depending on its attribute
-						fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeValue+'.json', JSON.stringify(await getSiteData(classData[i].skillsets[j]), null, '\t'), function (err) {
-							if(err){
-								console.log(err);
-								errCount++;
-								errLocation[errCount] = classData[i].name + classAttributeValue + " skillset data"
-								errMsg = errMsg + (err + "\n");
-							}
-						})
+					/* description: getting and writing class skillset depending on its attribute
+					 * variable   : 'classData[i].name' for class name
+					 *              'classAttributeData.records[j].attribute' for the element
+					 *              'classData[i].skillsets[j]' getting the skillset address location (see list-class-dataset-source.json for details)
+					 */
+					try{
+						for(var j = 0; j < classAttributeData.records.length; j++){
+							// console log and status message
+							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Fetching "+classAttributeData.records[j].attribute+" element data...");
+
+							// writing the data
+							fs.writeFile('./data/class/'+classData[i].name+'/'+classAttributeData.records[j].attribute+'.json', JSON.stringify(await getSiteData(classData[i].skillsets[j]), null, '\t'), function (err) {
+								if(err){
+									console.log(err);
+									errCount++;
+									errLocation[errCount] = classData[i].name + classAttributeData.records[j].attribute + " skillset data"
+									errMsg = errMsg + (err + "\n");
+								}
+							})
+						}
+					}catch(error){
+						errCount++;
+						errLocation[errCount] = classData[i].name+" element data"
+						errMsg = errMsg + (err + "\n");
 					}				
 				}
+				// console logging
 				console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Item and class data updated with "+errCount+" problem(s)");
 
+				/* description: checking, counting and telling the errors if there's any (seems not working if the error is in getSiteData function)
+				 * variable   : 'errLocation' error location
+				 *              'errMsg' error message
+				 */				
 				if(errCount != 0){
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Problem occured on: "+errLocation+", please check the log");
 					message.guild.channels.find(x => x.name == "errors").send("Caught an issue on `"+errLocation+"`\n```"+errMsg+"```");
@@ -2238,7 +2325,7 @@ clientDiscord.on("message", async (message) => {
 				setFileData("./data/data-files.json", fileData);
 
 				if(message.author != null){
-					m.edit("Item and class data updated manually with "+errCount+" issue(s)");
+					msg.edit("Item and class data updated manually with "+errCount+" issue(s)");
 				}
 
 			break;
@@ -2322,23 +2409,13 @@ clientDiscord.on("message", async (message) => {
 					}
 
 					// making a copy for archive
-					fs.writeFile('./archive/market-data-archive '+Date.now()+'.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
-						if(err){
-							console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's an issue when archiving 'list-market-data.json', "+err);
-							clientDiscord.emit("message", "!err |"+err.stack+"|");
-						}
-					});
+					setFileData("./archive/market-data-archive "+Date.now()+".json", JSON.stringify(marketListCurrent, null, '\t'))
 
 					archivedData = marketListCurrent.length - 1;	
 				}			
 
 				// writing the data into a file
-				fs.writeFile('./data/list-market-data.json', JSON.stringify(marketListCurrent, null, '\t'), function (err) {
-					if(err){
-						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: There's an issue when updating 'list-market-data.json', "+err);
-						clientDiscord.emit("message", "!err |"+err.stack+"|");
-					}
-				});
+				setFileData("./data/list-market-data.json", marketListCurrent);
 
 				// writing when the data got updated
 				fileData.MARKET_DATA = dateformat(Date.now(), "UTC:dd mmmm yyyy HH:MM:ss");
@@ -2619,7 +2696,7 @@ clientDiscord.on("message", async (message) => {
 
 								setFileData('config.json', configData);
 
-								clientDiscord.user.setPresence({ game: { name: 'with Hongmoon School' }, status: 'online' })
+								clientDiscord.user.setPresence({ game: { name: 'at Hongmoon School' }, status: 'online' })
 									.catch(console.error);
 								message.channel.send("Maintenance mode is disabled, all service is returning to normal");	
 								console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Maintenance mode is disabled");		
