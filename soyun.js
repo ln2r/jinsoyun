@@ -1427,7 +1427,7 @@ clientDiscord.on("message", async (message) => {
 								},
 								{
 									"name": "Gems",
-									"value": setDataValue(charaData.gem1)+"\n"+setDataValue(charaData.gem2)+"\n"+setDataValue(charaData.gem3)+"\n"+setDataValue(charaData.gem4)+"\n"+setDataValue(charaData.gem5)+"\n"+setDataValue(charaData.gem6)+"\n",
+									"value": setDataValue(charaData.gem1)+"\n"+setDataValue(charaData.gem2)+"\n"+setDataValue(charaData.gem3)+"\n"+setDataValue(charaData.gem4)+"\n"+setDataValue(charaData.gem5)+"\n"+setDataValue(charaData.gem6)+"\n"+setDataValue(charaData.gem7)+"\n"+setDataValue(charaData.gem8)+"\n",
 								},
 								{
 									"name": "Equipments",
