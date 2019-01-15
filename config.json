@@ -16,6 +16,20 @@
 		"BladeAndSoulOps",
 		"bladeandsoul"
 	],
+	"COMMANDS":
+		{
+			"username":true,
+			"class":true,
+			"who":true,
+			"daily":true,
+			"weekly":true,
+			"koldrak":true,
+			"market":true,
+			"event":true,
+			"pick":true,
+			"roll":true
+	}
+	,
 	"API_ADDRESS": [
 		{
 			"name": "Silveress character API (NA)",

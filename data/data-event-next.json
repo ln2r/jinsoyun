@@ -1,49 +1,32 @@
 {
-	"name": "Hongsil's Secret Warehouse, Tower Of Memory, Royal Raid",
-	"duration": "December 5 - January 16",
-	"redeem": "January 16 - February 6",
-	"url": "Https://www.bladeandsoul.com/en/news/theater-of-mystery-dungeons-events/",
-	"lastEvent": "Golden Harvest Festival",
-	"lastEventRedeem": "December 5 – January 16",
+	"name": "3rd Anniversary Event, Midnight Skypetal Plains Event",
+	"duration": "January 16 – February 6",
+	"redeem": "January 16 – March 13",
+	"url": "https://www.bladeandsoul.com/en/news/3rd-anniversary-festival-events/",
+	"lastEvent": "Wreck the Halls, Royal Raid",
+	"lastEventRedeem": "January 16 - February 6",
 	"rewards": {
 		"items": [
-			"Snow Crystal",
-			"Memory Lane Gift Box",
-			"Snow Day Support Chest",
-			"Skybreak Gift Chest",
-			"Queen And Conqueror Gift Chest",
-			"Nightfall Gift Chest"
+			"3rd Anniversary Token",
+			"Anniversary Gift Box",
+			"Golden Seed"
         ],
-        "daily": "Snow Crystals x4"
+        "daily": [
+			"3rd Anniversary Tokens x2", 
+			"Golden Seed x2"
+		],
+		"weekly": ""
     },
     "tradeableItemId": [],
 	"todo": [
-		"Hongsil’s Secret Storehouse",
-		"Tower Of Memory",
-		"Weekly Challenge",
-		"Skybreak Spire",
-		"Temple Of Eluvium",
-		"Scion’s Keep",
-		"Nightfall Sanctuary"
+		"Zulia’s Challenge",
+		"Daily Challenge",
+		"Midnight Sky Petal"
 	],
 	"quests": [
 		{
-			"location": "Hongsil’s Secret Storehouse",
-			"quest": "Secrets Of The Storehouse",
-			"day": [
-				"Sunday",
-				"Monday",
-				"Tuesday",
-				"Wednesday",
-				"Thursday",
-				"Friday",
-				"Saturday"
-			],
-			"type": 1
-		},
-		{
-			"location": "Tower Of Memory",
-			"quest": "Not-so-fond Memories",
+			"location": "Jadestone Villange",
+			"quest": "Zulia’s Challenge",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -56,8 +39,8 @@
 			"type": 2
 		},
 		{
-			"location": "Skybreak Spire",
-			"quest": "Raven King",
+			"location": "Midnight Sky Petal",
+			"quest": "Rage Against the Longgui",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -67,49 +50,42 @@
 				"Friday",
 				"Saturday"
 			],
-			"type": 1
+			"type": 0
 		},
 		{
-			"location": "Temple Of Eluvium",
-			"quest": "Hive Queen",
+			"location": "Irontech Forge",
+			"quest": "Meeting the Mechanizer",
 			"day": [
-				"Sunday",
-				"Monday",
-				"Tuesday",
-				"Wednesday",
-				"Thursday",
-				"Friday",
-				"Saturday"
+				"Monday"
 			],
-			"type": 1
+			"type": 0
 		},
 		{
-			"location": "Scion’s Keep",
-			"quest": "Iron Conqueror",
+			"location": "Naryu Sanctum",
+			"quest": "Gatecrasher at the Naryu Sanctum",
 			"day": [
 				"Sunday",
-				"Monday",
-				"Tuesday",
-				"Wednesday",
-				"Thursday",
-				"Friday",
-				"Saturday"
+				"Tuesday"
 			],
-			"type": 1
+			"type": 0
 		},
 		{
-			"location": "Nightfall Sanctuary",
-			"quest": "Grand Celestial Emperor",
+			"location": "Ebondrake Lair",
+			"quest": "Father Wounds",
 			"day": [
-				"Sunday",
-				"Monday",
-				"Tuesday",
 				"Wednesday",
+				"Friday"
+			],
+			"type": 0
+		},
+		{
+			"location": "Hollow's Heart",
+			"quest": "Horrors of the Hollow",
+			"day": [
 				"Thursday",
-				"Friday",
 				"Saturday"
 			],
-			"type": 1
+			"type": 0
 		}
 	]
 }

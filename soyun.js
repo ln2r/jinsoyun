@@ -584,9 +584,7 @@ clientDiscord.on("guildCreate", async (guild) => {
 	let defaultConfig = await getFileData('config.json');
 	let guildConfig = await getFileData('./data/guilds.json');
 	let found = false;
-	let inviteWarning = "";
-	var botInviteAccess = message.channel.permissionsFor(clientDiscord.user).has("CREATE_INSTANT_INVITE", false);
-	
+
 	for(var i = 0; i < guildConfig.length; i ++){
 		if(guild.id == guildConfig[i].GUILD_ID){
 			found = true;
@@ -615,11 +613,7 @@ clientDiscord.on("guildCreate", async (guild) => {
 
 		setFileData('./data/guilds.json', guildConfig);
 
-		if(botInviteAccess == true){
-			inviteWarning = "**Warning! this bot have role to create instant invite, it would be wise to disable it**";
-		}
-
-		guild.members.find(x => x.id == guild.ownerID).send("Thank you for adding me to the server, default server configuration data has been added. To setup necessary channel do `"+defaultConfig.DEFAULT_PREFIX+"setup`, to see what can be configure use `"+defaultConfig.DEFAULT_PREFIX+"debug config` "+inviteWarning);
+		guild.members.find(x => x.id == guild.ownerID).send("**Thank you for adding me to the server!**\n\nYour server is configured using default settings. \nIf you want to make the necessary channels do `"+defaultConfig.DEFAULT_PREFIX+"setup`\nIf you want to see or change the settings do `"+defaultConfig.DEFAULT_PREFIX+"set` or `"+defaultConfig.DEFAULT_PREFIX+"set current` \n\nNote: For security concern please disable bot permission to create instant invite, thanks");
 ;
 		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: Jinsoyun joined "+guild.name+", config data has been set to default");
 	}		
@@ -702,28 +696,30 @@ clientDiscord.on("guildMemberUpdate", async (oldMember, newMember) => {
 });
 
 // User commands
-clientDiscord.on("message", async (message) => {
-	let queryStatus; // for querystatus on reg and class
-	let sent; // for announcer counter server sent
-
-	let configData = await getFileData("./config.json");
-	let classList = await getFileData("./data/class/list-class.json");
-	let rewards = await getFileData("./data/list-challenges-rewards.json");
-	let event = await getFileData("./data/data-event.json");
-	let quests = await getFileData("./data/list-quests.json");
-	let fileData = await getFileData("./data/data-files.json");
-
-	let silveressNA = configData.API_ADDRESS[0].address;
+clientDiscord.on("message", async (message) => {	
 	let guildConfig = await getFileData('./data/guilds.json');
-	let guildConfigIdx = await getGuildConfig("426036695931158539");
 
 	if(message.author != null){
-		guildConfigIdx = await getGuildConfig(message.guild.id);
+		var guildConfigIdx = await getGuildConfig(message.guild.id);
+	}else{
+		var guildConfigIdx = await getGuildConfig("426036695931158539");
 	}
 
 	let guildPrefix = guildConfig[guildConfigIdx].PREFIX;
+
 	
   	if (message.toString().substring(0, 1) == guildPrefix) {
+		var queryStatus; // for querystatus on reg and class
+		var sent; // for announcer counter server sent
+
+		var configData = await getFileData("./config.json");
+		var classList = await getFileData("./data/class/list-class.json");
+		var rewards = await getFileData("./data/list-challenges-rewards.json");
+		var event = await getFileData("./data/data-event.json");
+		var quests = await getFileData("./data/list-quests.json");
+		var fileData = await getFileData("./data/data-files.json");
+
+		let silveressNA = configData.API_ADDRESS[0].address;
 		//var args = message.toString().substring(1).split(' ');
 		let	args = message.toString();
 			args = args.substring(1).split(' ');
@@ -941,7 +937,6 @@ clientDiscord.on("message", async (message) => {
 				let memberRolesList = message.guild.members.get(message.author.id).roles.map(getMemberRoles);
 				let memberRemovedIdx;
 
-				classList = await getFileData("./data/class/list-class.json");	
 				queryStatus = false;				
 
 				// getting and checking user roles
@@ -1018,10 +1013,7 @@ clientDiscord.on("message", async (message) => {
 			break;
 			
 			// First time setup (making roles and necesarry channels), Admin only
-			case 'setup':
-				configData = await getFileData("./config.json");
-				classList = await getFileData("./data/class/list-class.json");
-				
+			case 'setup':			
 				var adminAccess = message.channel.permissionsFor(message.author).has("ADMINISTRATOR", false);
 				var botInviteAccess = message.channel.permissionsFor(clientDiscord.user).has("CREATE_INSTANT_INVITE", false);
 
@@ -1193,7 +1185,7 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				if(event.rewards.daily != ""){
-					eventReward = event.rewards.daily + " (Event)";
+					eventReward = setDataFormatting(event.rewards.daily) + " (Event)";
 				}else{
 					eventReward = "";
 				}
@@ -1203,8 +1195,8 @@ clientDiscord.on("message", async (message) => {
 				// Sending out the payload
 				if(dailyPartyAnnouncement == false){
 					// default, normal payload
-					if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
-						message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+					if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.daily == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+						message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 					}else{
 						message.channel.send({
 							"embed": {
@@ -1281,7 +1273,6 @@ clientDiscord.on("message", async (message) => {
 					koldrakQuery = koldrakQuery.splice(1);
 				let koldrakTime = await getFileData("./data/koldrak-time.json");
 				
-				configData = await getFileData("./config.json");
 				sent = 0;	
 				
 				// Cheating the search so it will still put hour even if the smallest time is 24
@@ -1330,8 +1321,8 @@ clientDiscord.on("message", async (message) => {
 					
 					// Showing when is the closest Koldrak's lair time
 					default:
-						if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
-							message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.koldrak == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+							message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 						}else{
 							let koldrakTimeHours;
 							let koldrakTimeMinutes;
@@ -1370,11 +1361,9 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching and showing character information, can be triggered via !who for character that have the same name with the nickname or use !who "chara name" for specific one
 			case 'who':
-				if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
-					message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+				if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.who == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+					message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 				}else{
-					configData = await getFileData("./config.json");
-
 					try{
 						message.channel.startTyping();
 
@@ -1474,8 +1463,8 @@ clientDiscord.on("message", async (message) => {
 			
 			// for searching item in market, can be triggered via !market "item name"
 			case 'market':
-				if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
-					message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+				if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.market == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+					message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 				}else{
 					let marketQuery = getUserInput(message); // getting the user input
 
@@ -1572,7 +1561,7 @@ clientDiscord.on("message", async (message) => {
 				}
 
 				if(event.rewards.weekly != ""){
-					weeklyRewards = weeklyRewards + event.rewards.weekly + " (Event)";
+					weeklyRewards = weeklyRewards + setDataFormatting(event.rewards.weekly) + " (Event)";
 				}
 				
 				switch(weeklyQuery[0]){
@@ -1621,8 +1610,8 @@ clientDiscord.on("message", async (message) => {
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 					break;
 					default:
-						if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
-							message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.weekly == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+							message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 						}else{
 							message.channel.send({
 								"embed": {
@@ -1741,8 +1730,8 @@ clientDiscord.on("message", async (message) => {
 
 					break;
 					default:
-						if(configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID){
-							message.channel.send("**Maintenance Mode** is enabled, user commands is disabled");
+						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.event == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+							message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 						}else{
 							message.channel.send({
 								"embed": {

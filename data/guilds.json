@@ -13,7 +13,7 @@
 		"CHANNEL_TEXT_MAIN": "random-chats",
 		"CHANNEL_MEMBER_GATE": "introduce-yourself",
 		"CHANNEL_ADMIN": "high-council",
-		"CHANNEL_MEMBERACTIVITY": "activity"
+		"CHANNEL_MEMBERACTIVITY": "disable"
 	},
 	{
 		"GUILD_NAME": "Grumpy Butts",
@@ -58,6 +58,22 @@
 		"CHANNEL_EVENT_ANNOUNCE": "party-forming",
 		"CHANNEL_NEWS_ANNOUNCE": "news",
 		"CHANNEL_KOLDRAK_ANNOUNCE": "party-forming",
+		"CHANNEL_TEXT_MAIN": "disable",
+		"CHANNEL_MEMBER_GATE": "disable",
+		"CHANNEL_ADMIN": "disable",
+		"CHANNEL_MEMBERACTIVITY": "disable"
+	},
+	{
+		"GUILD_NAME": "Grumpy Bunny",
+		"GUILD_ID": "",
+		"GUILD_ICON": "",
+		"SETUP_STATUS": false,
+		"PREFIX": "!",
+		"CHANNEL_DAILY_ANNOUNCE": "disable",
+		"CHANNEL_WEEKLY_ANNOUNCE": "disable",
+		"CHANNEL_EVENT_ANNOUNCE": "disable",
+		"CHANNEL_NEWS_ANNOUNCE": "disable",
+		"CHANNEL_KOLDRAK_ANNOUNCE": "disable",
 		"CHANNEL_TEXT_MAIN": "disable",
 		"CHANNEL_MEMBER_GATE": "disable",
 		"CHANNEL_ADMIN": "disable",

@@ -1,6 +1,6 @@
 {
   "name": "jinsoyun",
-  "version": "1.15.4",
+  "version": "1.15.5",
   "description": "Grumpy Butts very own discord bot",
   "main": "soyun.js",
   "scripts": {
