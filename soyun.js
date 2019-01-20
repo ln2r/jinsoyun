@@ -1222,46 +1222,48 @@ clientDiscord.on("message", async (message) => {
 					}
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" command received");
 				}else{
-					clientDiscord.guilds.map((guild) => {
-						let found = 0;
-						// getting the channel name for announcement
-						for(var i = 0;i < guildConfig.length; i++){
-							if(guild.id == guildConfig[i].GUILD_ID){								
-								if(guildConfig[i].CHANNEL_DAILY_ANNOUNCE != "disable"){
-									var channelPartyName = guildConfig[i].CHANNEL_DAILY_ANNOUNCE;
-								}							
-							}
-						}
-						guild.channels.map((ch) =>{
-							if(found == 0){
-								if(ch.name == channelPartyName){
-									ch.send("Daily challenges has been reset, today's challenges are",{
-										"embed": {
-											"author":{
-												"name": "Daily Challenges - "+dateformat(dcDate, "UTC:dddd"),
-												"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
-											},
-											"title": "Completion Rewards",
-											"description": dailyRewards,
-											"color": 15025535,
-											"footer": {
-												"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-												"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-											},
-											"fields":[
-												{
-													"name": "Quests/Dungeons List (Location - Quest)",
-													"value": dailyQuests 								
-												}
-											]
-										}
-									}).catch(console.error);
-									found = 1;
-									sent++;
+					if(configData.GLOBAL.daily == true){
+						clientDiscord.guilds.map((guild) => {
+							let found = 0;
+							// getting the channel name for announcement
+							for(var i = 0;i < guildConfig.length; i++){
+								if(guild.id == guildConfig[i].GUILD_ID){								
+									if(guildConfig[i].CHANNEL_DAILY_ANNOUNCE != "disable"){
+										var channelPartyName = guildConfig[i].CHANNEL_DAILY_ANNOUNCE;
+									}							
 								}
 							}
+							guild.channels.map((ch) =>{
+								if(found == 0){
+									if(ch.name == channelPartyName){
+										ch.send("Daily challenges has been reset, today's challenges are",{
+											"embed": {
+												"author":{
+													"name": "Daily Challenges - "+dateformat(dcDate, "UTC:dddd"),
+													"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
+												},
+												"title": "Completion Rewards",
+												"description": dailyRewards,
+												"color": 15025535,
+												"footer": {
+													"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+													"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+												},
+												"fields":[
+													{
+														"name": "Quests/Dungeons List (Location - Quest)",
+														"value": dailyQuests 								
+													}
+												]
+											}
+										}).catch(console.error);
+										found = 1;
+										sent++;
+									}
+								}
+							});
 						});
-					});
+					}
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 						
 				};
@@ -1280,42 +1282,43 @@ clientDiscord.on("message", async (message) => {
 
 				switch(koldrakQuery[0]){
 					// Doing "Alert" at specific time(s)
-					case 'alert':
-						// Sending "Alert" to every "party-forming" channel
-						clientDiscord.guilds.map((guild) => {
-							let found = 0;
-							// getting the channel name for announcement
-							for(var i = 0;i < guildConfig.length; i++){
-								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].CHANNEL_KOLDRAK_ANNOUNCE != "disable"){
-										var channelPartyName = guildConfig[i].CHANNEL_KOLDRAK_ANNOUNCE;
-									}							
-								}
-							}
-							guild.channels.map((ch) =>{
-								if(found == 0){
-									if(ch.name == channelPartyName){
-										ch.send({
-											"embed":{
-												"color": 8388736,
-												"description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
-												"author":{
-													"name": "Epic Challenge Alert",
-													
-												},
-												"footer":{
-													"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-													"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-												}
-											}
-										});
-										found = 1;
-										sent++;
+					case 'announce':
+						if(configData.GLOBAL.koldrak == true){
+							// Sending "Alert" to every "party-forming" channel
+							clientDiscord.guilds.map((guild) => {
+								let found = 0;
+								// getting the channel name for announcement
+								for(var i = 0;i < guildConfig.length; i++){
+									if(guild.id == guildConfig[i].GUILD_ID){								
+										if(guildConfig[i].CHANNEL_KOLDRAK_ANNOUNCE != "disable"){
+											var channelPartyName = guildConfig[i].CHANNEL_KOLDRAK_ANNOUNCE;
+										}							
 									}
 								}
+								guild.channels.map((ch) =>{
+									if(found == 0){
+										if(ch.name == channelPartyName){
+											ch.send({
+												"embed":{
+													"color": 8388736,
+													"description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
+													"author":{
+														"name": "Epic Challenge Alert",
+														
+													},
+													"footer":{
+														"icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
+														"text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+													}
+												}
+											});
+											found = 1;
+											sent++;
+										}
+									}
+								});
 							});
-						});
-
+						}
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 					break;
 					
@@ -1566,47 +1569,48 @@ clientDiscord.on("message", async (message) => {
 				
 				switch(weeklyQuery[0]){
 					case 'announce':
-						clientDiscord.guilds.map((guild) => {
-							let found = 0;
-							// getting the channel name for announcement
-							for(var i = 0;i < guildConfig.length; i++){
-								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].CHANNEL_WEEKLY_ANNOUNCE != "disable"){
-										var channelPartyName = guildConfig[i].CHANNEL_WEEKLY_ANNOUNCE;
-									}							
-								}
-							}
-							guild.channels.map((ch) =>{
-								if(found == 0){
-									if(ch.name == channelPartyName){
-										ch.send("Weekly challenges has been reset, this week challenges are",{
-											"embed": {
-												"author":{
-													"name": "Weekly Challenges",
-													"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
-												},
-												"title": "Completion Rewards",
-												"description": weeklyRewards,
-												"color": 6193367,
-												"footer": {
-													"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
-													"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-												},
-												"fields":[
-													{
-														"name": "Quests/Dungeons List (Location - Quest)",
-														"value": weeklyQuests 								
-													}
-												]
-											}
-										}).catch(console.error);
-										found = 1;
-										sent++;
+						if(configData.GLOBAL.weekly == true){
+							clientDiscord.guilds.map((guild) => {
+								let found = 0;
+								// getting the channel name for announcement
+								for(var i = 0;i < guildConfig.length; i++){
+									if(guild.id == guildConfig[i].GUILD_ID){								
+										if(guildConfig[i].CHANNEL_WEEKLY_ANNOUNCE != "disable"){
+											var channelPartyName = guildConfig[i].CHANNEL_WEEKLY_ANNOUNCE;
+										}							
 									}
 								}
+								guild.channels.map((ch) =>{
+									if(found == 0){
+										if(ch.name == channelPartyName){
+											ch.send("Weekly challenges has been reset, this week challenges are",{
+												"embed": {
+													"author":{
+														"name": "Weekly Challenges",
+														"icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
+													},
+													"title": "Completion Rewards",
+													"description": weeklyRewards,
+													"color": 6193367,
+													"footer": {
+														"icon_url": "https://cdn.discordapp.com/icons/434004985227771905/ff307183ff8d5a623ae9d0d0976f2a06.png",
+														"text": "Data maintained by Grumpy Butts - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+													},
+													"fields":[
+														{
+															"name": "Quests/Dungeons List (Location - Quest)",
+															"value": weeklyQuests 								
+														}
+													]
+												}
+											}).catch(console.error);
+											found = 1;
+											sent++;
+										}
+									}
+								});
 							});
-						});
-
+						}
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 					break;
 					default:
@@ -1683,49 +1687,50 @@ clientDiscord.on("message", async (message) => {
 				// for either picking announcing the event details as daily notification or just normal query
 				switch(eventQuery[0]){
 					case 'announce':
-						clientDiscord.guilds.map((guild) => {
-							let found = 0;
+						if(configData.GLOBAL.event == true){
+							clientDiscord.guilds.map((guild) => {
+								let found = 0;
 
-							// getting the channel name for announcement
-							for(var i = 0;i < guildConfig.length; i++){
-								if(guild.id == guildConfig[i].GUILD_ID){								
-									if(guildConfig[i].CHANNEL_EVENT_ANNOUNCE != "disable"){
-										var channelPartyName = guildConfig[i].CHANNEL_EVENT_ANNOUNCE;
-									}							
-								}
-							}
-							guild.channels.map((ch) =>{
-								if(found == 0){
-									if(ch.name == channelPartyName){
-										ch.send(event.name+" event is on-going, here\'s the summary",{
-											"embed": {
-												"author":{
-													"name": "Current Event",
-													"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-												},
-												"title": event.name,
-												"url": event.url,
-												"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.items)+"\n**What to do**: "+setDataFormatting(eventToDo)+"\n**Redeemable Event**: "+event.lastEvent+" ("+event.lastEventRedeem+")",
-												"color": 1879160,
-												"footer": {
-													"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-													"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-												},
-												"fields":[
-													{
-														"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
-														"value": eventQuests 								
-													}
-												]
-											}
-										}).catch(console.error);
-										found = 1;
-										sent++;
+								// getting the channel name for announcement
+								for(var i = 0;i < guildConfig.length; i++){
+									if(guild.id == guildConfig[i].GUILD_ID){								
+										if(guildConfig[i].CHANNEL_EVENT_ANNOUNCE != "disable"){
+											var channelPartyName = guildConfig[i].CHANNEL_EVENT_ANNOUNCE;
+										}							
 									}
 								}
+								guild.channels.map((ch) =>{
+									if(found == 0){
+										if(ch.name == channelPartyName){
+											ch.send(event.name+" event is on-going, here\'s the summary",{
+												"embed": {
+													"author":{
+														"name": "Current Event",
+														"icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+													},
+													"title": event.name,
+													"url": event.url,
+													"description": "**Duration**: "+event.duration+"\n**Redemption Period**: "+event.redeem+"\n**Event Item**: "+setDataFormatting(event.rewards.items)+"\n**What to do**: "+setDataFormatting(eventToDo)+"\n**Redeemable Event**: "+event.lastEvent+" ("+event.lastEventRedeem+")",
+													"color": 1879160,
+													"footer": {
+														"icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+														"text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+													},
+													"fields":[
+														{
+															"name": dateformat(currentDate, "UTC:dddd")+"'s To-do List (Location - Quest `Type`)",
+															"value": eventQuests 								
+														}
+													]
+												}
+											}).catch(console.error);
+											found = 1;
+											sent++;
+										}
+									}
+								});
 							});
-						});
-
+						}
 					console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Info: "+cmd+" notification sent to "+sent+" server(s)");
 
 					break;
@@ -2868,7 +2873,7 @@ ontime({
 	utc: true
 }, function (koldrak){
 	// emitting message event
-	clientDiscord.emit("message", "!koldrak alert");
+	clientDiscord.emit("message", "!koldrak announce");
 	koldrak.done();
 	return;
   	}
@@ -2897,7 +2902,7 @@ ontime({
 
 // Soyun activity changer
 ontime({
-    cycle: ['00']
+    cycle: ['05']
 }, function (soyunActivity) {
     	clientDiscord.emit("message", "!soyun activity");
 		soyunActivity.done();

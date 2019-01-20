@@ -28,6 +28,13 @@
 			"event":true,
 			"pick":true,
 			"roll":true
+	},
+	"GLOBAL":
+	{
+		"daily": false,
+		"weekly": true,
+		"event": true,
+		"koldrak": true		
 	}
 	,
 	"API_ADDRESS": [

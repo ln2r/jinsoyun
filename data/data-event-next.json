@@ -15,12 +15,13 @@
 			"3rd Anniversary Tokens x2", 
 			"Golden Seed x2"
 		],
-		"weekly": ""
+		"weekly": [
+		]
     },
     "tradeableItemId": [],
 	"todo": [
 		"Zulia’s Challenge",
-		"Daily Challenge",
+		"Daily Dungeon Quest",
 		"Midnight Sky Petal"
 	],
 	"quests": [
