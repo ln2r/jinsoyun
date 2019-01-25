@@ -21,7 +21,7 @@
 			"username":true,
 			"class":true,
 			"who":true,
-			"daily":true,
+			"daily":false,
 			"weekly":true,
 			"koldrak":true,
 			"market":true,

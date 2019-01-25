@@ -1198,6 +1198,9 @@ clientDiscord.on("message", async (message) => {
 					if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.daily == false && message.guild.id != configData.DEFAULT_GUILD_ID){
 						message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 					}else{
+						if(message.guild.id == configData.DEFAULT_GUILD_ID && configData.COMMANDS.daily == false){
+							message.channel.send("*This command is currently disabled*");
+						}
 						message.channel.send({
 							"embed": {
 								"author":{
@@ -1327,6 +1330,10 @@ clientDiscord.on("message", async (message) => {
 						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.koldrak == false && message.guild.id != configData.DEFAULT_GUILD_ID){
 							message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 						}else{
+							if(message.guild.id == configData.DEFAULT_GUILD_ID && configData.COMMANDS.koldrak == false){
+								message.channel.send("*This command is currently disabled*");
+							}
+
 							let koldrakTimeHours;
 							let koldrakTimeMinutes;
 							let koldrakTimeNext;
@@ -1367,6 +1374,9 @@ clientDiscord.on("message", async (message) => {
 				if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.who == false && message.guild.id != configData.DEFAULT_GUILD_ID){
 					message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 				}else{
+					if(message.guild.id == configData.DEFAULT_GUILD_ID && configData.COMMANDS.who == false){
+						message.channel.send("*This command is currently disabled*");
+					}
 					try{
 						message.channel.startTyping();
 
@@ -1469,6 +1479,10 @@ clientDiscord.on("message", async (message) => {
 				if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.market == false && message.guild.id != configData.DEFAULT_GUILD_ID){
 					message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 				}else{
+					if(message.guild.id == configData.DEFAULT_GUILD_ID && configData.COMMANDS.market == false){
+						message.channel.send("*This command is currently disabled*");
+					}
+
 					let marketQuery = getUserInput(message); // getting the user input
 
 					let marketDataPath = "./data/list-market-data.json";
@@ -1617,6 +1631,9 @@ clientDiscord.on("message", async (message) => {
 						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.weekly == false && message.guild.id != configData.DEFAULT_GUILD_ID){
 							message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 						}else{
+							if(message.guild.id == configData.DEFAULT_GUILD_ID && configData.COMMANDS.weekly == false){
+								message.channel.send("*This command is currently disabled*");
+							}
 							message.channel.send({
 								"embed": {
 									"author":{
@@ -1735,9 +1752,12 @@ clientDiscord.on("message", async (message) => {
 
 					break;
 					default:
-						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.event == false && message.guild.id != configData.DEFAULT_GUILD_ID){
+						if((configData.MAINTENANCE_MODE == true && message.guild.id != configData.DEFAULT_GUILD_ID) || configData.COMMANDS.event == false && message.guild.id != configData.DEFAULT_GUILD_ID){	
 							message.channel.send("This command is currently disabled if it seems like a mistake please contact the admin");
 						}else{
+							if(message.guild.id == configData.DEFAULT_GUILD_ID && configData.COMMANDS.event == false){
+								message.channel.send("*This command is currently disabled*");
+							}
 							message.channel.send({
 								"embed": {
 									"author":{
