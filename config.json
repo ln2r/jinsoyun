@@ -21,7 +21,7 @@
 			"username":true,
 			"class":true,
 			"who":true,
-			"daily":false,
+			"daily":true,
 			"weekly":true,
 			"koldrak":true,
 			"market":true,
@@ -31,7 +31,7 @@
 	},
 	"GLOBAL":
 	{
-		"daily": false,
+		"daily": true,
 		"weekly": true,
 		"event": true,
 		"koldrak": true		

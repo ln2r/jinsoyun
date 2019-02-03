@@ -1,22 +1,22 @@
 [
   {
     "id": 1,
-    "quest": "One on One",
+    "quest": "Tag Match Win",
     "location": "Arena Match",
     "daily_challenge": [
       "Monday",
-      "Thursday",
-      "Saturday"
+      "Wednesday",
+      "Friday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 2,
-    "quest": "One Win in the Beluga Lagoon",
-    "location": "Beluga Lagoon",
+    "quest": "Shot at Stardom",
+    "location": "Nova Core",
     "daily_challenge": [
-      "Monday",
-      "Thursday"
+      "Wednesday",
+      "Saturday"
     ],
     "weekly_challenge": false
   },
@@ -33,8 +33,31 @@
   },
   {
     "id": 4,
-    "quest": "In the Dead of Winter",
+    "quest": "In the Dead of the Winter",
     "location": "Cold Storage",
+    "daily_challenge": [
+      "Monday",
+      "Wednesday",
+      "Friday",
+      "Sunday"
+    ],
+    "weekly_challenge": false
+  },
+  {
+    "id": 5,
+    "quest": "Father Wounds",
+    "location": "Ebondrake Lair",
+    "daily_challenge": [
+      "Wednesday",
+      "Friday",
+      "Sunday"
+    ],
+    "weekly_challenge": false
+  },
+  {
+    "id": 6,
+    "quest": "Meeting the Mechanizer",
+    "location": "Irontech Forge",
     "daily_challenge": [
       "Monday",
       "Wednesday",
@@ -43,43 +66,25 @@
     "weekly_challenge": false
   },
   {
-    "id": 5,
-    "quest": "Phantom Waves",
-    "location": "The Shattered Masts",
-    "daily_challenge": [
-      "Monday",
-      "Thursday"
-    ],
-    "weekly_challenge": false
-  },
-  {
-    "id": 6,
-    "quest": "The Bonds that Bind Us",
-    "location": "Desolate Tomb",
-    "daily_challenge": [
-      "Monday",
-      "Thursday"
-    ],
-    "weekly_challenge": false
-  },
-  {
     "id": 7,
-    "quest": "Meeting the Mechanizer",
-    "location": "Irontech Forge",
+    "quest": "The Leader of the Pack",
+    "location": "Starstone Mines",
     "daily_challenge": [
       "Monday",
-      "Thursday",
-      "Saturday"
+      "Wednesday",
+      "Friday",
+      "Sunday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 8,
-    "quest": "Live By the Sword",
-    "location": "Ransacked Treasury",
+    "quest": "Bad Karma",
+    "location": "Sandstorm Temple",
     "daily_challenge": [
-      "Monday",
-      "Friday"
+      "Wednesday",
+      "Friday",
+      "Sunday"
     ],
     "weekly_challenge": false
   },
@@ -100,27 +105,42 @@
   },
   {
     "id": 10,
-    "quest": "Tag Match Win",
-    "location": "Arena Match",
+    "quest": "Rage Against the Longgui",
+    "location": "Midnight Skypetal Plains",
     "daily_challenge": [
+      "Monday",
       "Tuesday",
       "Wednesday",
-      "Friday"
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 11,
-    "quest": "One Whirlwind Victory",
-    "location": "Whirlwind Valley",
+    "quest": "One on One",
+    "location": "Arena Match",
     "daily_challenge": [
       "Tuesday",
-      "Friday"
+      "Thursday",
+      "Saturday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 12,
+    "quest": "One Win in the Beluga Lagoon",
+    "location": "Beluga Lagoon",
+    "daily_challenge": [
+      "Monday",
+      "Thursday"
+    ],
+    "weekly_challenge": false
+  },
+  {
+    "id": 13,
     "quest": "Three Wins in the Tower",
     "location": "Tower of Infinity",
     "daily_challenge": [
@@ -131,23 +151,13 @@
     "weekly_challenge": false
   },
   {
-    "id": 13,
+    "id": 14,
     "quest": "Rose from the Past",
     "location": "Heaven's Mandate",
     "daily_challenge": [
       "Tuesday",
-      "Thursday"
-    ],
-    "weekly_challenge": false
-  },
-  {
-    "id": 14,
-    "quest": "Zakhan's Blade",
-    "location": "Ebondrake Citadel",
-    "daily_challenge": [
-      "Tuesday",
-      "Friday",
-      "Sunday"
+      "Thursday",
+      "Saturday"
     ],
     "weekly_challenge": false
   },
@@ -164,164 +174,137 @@
   },
   {
     "id": 16,
-    "quest": "Horrors of the Hollow",
-    "location": "Hollow's Heart",
+    "quest": "Rolling in the Deeps",
+    "location": "Drowning Deeps",
     "daily_challenge": [
-      "Tuesday",
+      "Monday",
+      "Thursday",
       "Saturday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 17,
-    "quest": "Rolling in the Deeps",
-    "location": "Drowning Deeps",
+    "quest": "Horrors of the Hollow",
+    "location": "Hollow's Heart",
     "daily_challenge": [
       "Tuesday",
-      "Sunday"
+      "Thursday",
+      "Saturday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 18,
-    "quest": "Shot at Stardom",
-    "location": "Nova Core",
+    "quest": "Live By the Sword",
+    "location": "Ransacked Treasury",
     "daily_challenge": [
-      "Wednesday",
+      "Monday",
+      "Thursday",
       "Saturday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 19,
-    "quest": "Ice in their Veins",
-    "location": "Lair of Frozen Fang",
+    "quest": "One Whirlwind Victory",
+    "location": "Whirlwind Valley",
     "daily_challenge": [
-      "Wednesday",
+      "Tuesday",
+      "Friday",
       "Sunday"
     ],
     "weekly_challenge": false
   },
   {
     "id": 20,
-    "quest": "Roar of the Furnace",
-    "location": "Naryu Foundry",
-    "daily_challenge": [
-      "Wednesday",
-      "Saturday"
-    ],
-    "weekly_challenge": false
-  },
-  {
-    "id": 21,
-    "quest": "Father Wounds",
-    "location": "Ebondrake Lair",
-    "daily_challenge": [
-      "Wednesday",
-      "Friday",
-      "Sunday"
-    ],
-    "weekly_challenge": false
-  },
-  {
-    "id": 22,
-    "quest": "Bad Karma",
-    "location": "Sandstorm Temple",
-    "daily_challenge": [
-      "Wednesday",
-      "Sunday"
-    ],
-    "weekly_challenge": false
-  },
-  {
-    "id": 23,
-    "quest": "Frozen Phantasm",
-    "location": "Avalanche Den",
+    "quest": "Setting the Stage for Revenge",
+    "location": "Dreamsong Theater",
     "daily_challenge": [
       "Friday"
     ],
     "weekly_challenge": false
   },
   {
-    "id": 24,
-    "quest": "The Leader of the Pack",
-    "location": "Starstone Mines",
+    "id": 21,
+    "quest": "Mastering the Marauders",
+    "location": "Outlaw Island",
     "daily_challenge": [
-      "Friday",
+      "Tuesday",
+      "Saturday"
+    ],
+    "weekly_challenge": false
+  },
+  {
+    "id": 22,
+    "quest": "Sundered Reflections",
+    "location": "Circle of Sundering",
+    "daily_challenge": [
       "Sunday"
     ],
     "weekly_challenge": false
   },
   {
-    "id": 25,
-    "quest": "Meeting the Marauders",
-    "location": "Outlaw Island",
+    "id": 23,
+    "quest": "Shadowmoor Rising",
+    "location": "The Shadowmoor",
     "daily_challenge": [
-      "Saturday"
+      "Tuesday"
     ],
     "weekly_challenge": false
   },
   {
-    "id": 26,
-    "quest": "The Umbral Mark",
-    "location": "Gloomdross Incursion",
-    "daily_challenge": [
-      "Saturday"
-    ],
-    "weekly_challenge": false
-  },
-  {
-    "id": 27,
+    "id": 24,
     "quest": "Meeting Meganura's Match",
     "location": "Dawn of Khanda Vihar",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 28,
+    "id": 25,
     "quest": "Echoes of the Past",
     "location": "Fallen Aransu School",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 29,
+    "id": 26,
     "quest": "Undying Fire",
     "location": "Snowjade Fortress",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 30,
+    "id": 27,
     "quest": "Breaking the Barrier Keeper",
     "location": "Hall of the Keeper",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 31,
+    "id": 28,
     "quest": "Templar of Doom",
     "location": "Hall of the Templar",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 32,
+    "id": 29,
     "quest": "Whirlwind Valley Triple Crown",
     "location": "Whirlwind Valley",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 33,
+    "id": 30,
     "quest": "Beluga Lagoon Triple Crown",
     "location": "Beluga Lagoon",
     "daily_challenge": [],
     "weekly_challenge": true
   },
   {
-    "id": 34,
-    "quest": "Go Supernova",
+    "id": 31,
+    "quest": "Go Supernova ",
     "location": "Nova Core",
     "daily_challenge": [],
     "weekly_challenge": true

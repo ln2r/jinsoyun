@@ -74,11 +74,12 @@ async function getQuests(dayQuery){
 
 	let quests = await getFileData("./data/list-quests.json");
 	
+	
 	let questsID = [];
 	let idx = 0;
 
-	for (i = 0; i < quests.length; i++){
-		for(j = 0; j < 7; j++){
+	for (var i = 0; i < quests.length; i++){
+		for(var j = 0; j < quests[i].daily_challenge.length; j++){
 			if(quests[i].daily_challenge[j] == day){
 				questsID[idx] = i;
 				idx++;
@@ -800,7 +801,7 @@ clientDiscord.on("message", async (message) => {
 								"fields":[
 									{
 										"name": "Jinsoyun `Bot`",
-										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency+"\n**Version**: "+soyunPackageData.version
+										"value": "**Server Latency**: "+msgLatency+"\n**API Latency**: "+apiLatency+"\n**Version**: "+soyunPackageData.version+"-working"
 									},
 									{
 										"name": "Database Last Update",
