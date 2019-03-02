@@ -38,7 +38,13 @@ clientDiscord
 	.on('reconnecting', () => { console.warn('Reconnecting...'); })
     .on('ready', () => {
         console.log('[soyun] [system] Logged in and ready');
-        clientDiscord.user.setPresence({ game: { name: 'with ln2r\'s test code' }, status: 'dnd' })
+        clientDiscord.user.setPresence({
+                 game: { 
+                     name: process.env.bot_default_prefix+'help' ,
+                     type: 'LISTENING'
+                    }
+                }
+            )
             .catch(console.error);
     })
     .on('guildMemberAdd', async (member) => {
