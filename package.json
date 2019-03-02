@@ -1,6 +1,6 @@
 {
   "name": "jinsoyun",
-  "version": "1.15.9",
+  "version": "2.0.0",
   "description": "Grumpy Butts very own discord bot",
   "main": "soyun.js",
   "scripts": {
@@ -19,13 +19,16 @@
   "author": "ln2r",
   "license": "MIT",
   "dependencies": {
+    "commando-provider-mongo": "^1.2.1",
     "dateformat": "^3.0.3",
     "delay": "^3.1.0",
     "discord.js": "^11.4.2",
-    "express": "^4.16.3",
-    "fuzzball": "^1.1.6",
-    "node-fetch": "^2.2.0",
-    "npm": "^6.4.1",
+    "discord.js-commando": "^0.10.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13",
+    "node-fetch": "^2.3.0",
+    "npm": "^6.8.0",
     "ontime": "0.0.4",
     "twitter": "^1.7.1"
   }

@@ -1,0 +1,6 @@
+{
+    "mongoUrl": "mongodb://localhost:27017/",
+    "mongoDbName": "bladeandsoul",
+    "defaultPrefix": ">", 
+    "botOwnerID": "132712988875423745"
+}

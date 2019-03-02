@@ -1,14 +1,15 @@
 # Visual Code Workspace file
 *.code-workspace
 
-# Token file
-secret.json
-
-# Market data archive directory
-archive/
-
 #node_modules directory
 node_modules/
+
+# .env file
+bot/.env
+
+#wip
+api/
+web/
 
 #misc file
 .dropbox
