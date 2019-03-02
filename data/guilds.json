@@ -32,22 +32,6 @@
 		"CHANNEL_MEMBERACTIVITY": "activity"
 	},
 	{
-		"GUILD_NAME": "Black Citadel's Server",
-		"GUILD_ID": "398385609565011970",
-		"GUILD_ICON": "n/a",
-		"SETUP_STATUS": true,
-		"PREFIX": "!",
-		"CHANNEL_DAILY_ANNOUNCE": "party-forming",
-		"CHANNEL_WEEKLY_ANNOUNCE": "party-forming",
-		"CHANNEL_EVENT_ANNOUNCE": "party-forming",
-		"CHANNEL_NEWS_ANNOUNCE": "news",
-		"CHANNEL_KOLDRAK_ANNOUNCE": "party-forming",
-		"CHANNEL_TEXT_MAIN": "disable",
-		"CHANNEL_MEMBER_GATE": "disable",
-		"CHANNEL_ADMIN": "disable",
-		"CHANNEL_MEMBERACTIVITY": "disable"
-	},
-	{
 		"GUILD_NAME": "Rune Removers",
 		"GUILD_ID": "395302963616284683",
 		"GUILD_ICON": "https://cdn.discordapp.com/icons/395302963616284683/041b0c1ae00fadc989378c2f5f10dc47.jpg",
@@ -65,9 +49,9 @@
 	},
 	{
 		"GUILD_NAME": "Grumpy Bunny",
-		"GUILD_ID": "",
+		"GUILD_ID": "533245010607472640",
 		"GUILD_ICON": "",
-		"SETUP_STATUS": false,
+		"SETUP_STATUS": true,
 		"PREFIX": "!",
 		"CHANNEL_DAILY_ANNOUNCE": "disable",
 		"CHANNEL_WEEKLY_ANNOUNCE": "disable",

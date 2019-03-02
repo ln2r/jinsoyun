@@ -1,33 +1,33 @@
 {
-	"name": "3rd Anniversary Event, Midnight Skypetal Plains Event",
-	"duration": "January 16 – February 6",
-	"redeem": "January 16 – March 13",
-	"url": "https://www.bladeandsoul.com/en/news/3rd-anniversary-festival-events/",
-	"lastEvent": "Wreck the Halls, Royal Raid",
-	"lastEventRedeem": "January 16 - February 6",
+	"name": "Blade & Soulmate, Hongsil’s Dungeon",
+	"duration": "February 6 – March 13",
+	"redeem": "February 6 – April 10",
+	"url": "https://www.bladeandsoul.com/en/news/blade-soulmate-2019-events-overview/",
+	"lastEvent": "3rd Anniversary Event",
+	"lastEventRedeem": "January 16 – March 13",
 	"rewards": {
 		"items": [
-			"3rd Anniversary Token",
-			"Anniversary Gift Box",
-			"Golden Seed"
+			"Realmrift Raven Chest",
+			"Realmrift Queen Chest",
+			"Realmrift Celestial Chest",
+			"Lovestruck Coin",
+			"Princess Bloodlust’s Valentine Box"
         ],
         "daily": [
-			"3rd Anniversary Tokens x2", 
-			"Golden Seed x2"
 		],
 		"weekly": [
 		]
     },
     "tradeableItemId": [],
 	"todo": [
-		"Zulia’s Challenge",
-		"Daily Dungeon Quest",
-		"Midnight Sky Petal"
+		"Helping Hongsil",
+		"Realmrift Supply Chain",
+		"Weekly Challenges"
 	],
 	"quests": [
 		{
-			"location": "Jadestone Villange",
-			"quest": "Zulia’s Challenge",
+			"location": "Hongsil’s Workshop",
+			"quest": "Helping Hongsil",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -40,8 +40,8 @@
 			"type": 2
 		},
 		{
-			"location": "Midnight Sky Petal",
-			"quest": "Rage Against the Longgui",
+			"location": "Blackram Supply Chain",
+			"quest": "A Rift in the Supply Chain",
 			"day": [
 				"Sunday",
 				"Monday",
@@ -51,42 +51,77 @@
 				"Friday",
 				"Saturday"
 			],
-			"type": 0
+			"type": 2
 		},
 		{
-			"location": "Irontech Forge",
-			"quest": "Meeting the Mechanizer",
-			"day": [
-				"Monday"
-			],
-			"type": 0
-		},
-		{
-			"location": "Naryu Sanctum",
-			"quest": "Gatecrasher at the Naryu Sanctum",
+			"location": "Dawn of Khanda Vihar",
+			"quest": "The Memory of Meganura",
 			"day": [
 				"Sunday",
-				"Tuesday"
-			],
-			"type": 0
-		},
-		{
-			"location": "Ebondrake Lair",
-			"quest": "Father Wounds",
-			"day": [
+				"Monday",
+				"Tuesday",
 				"Wednesday",
-				"Friday"
-			],
-			"type": 0
-		},
-		{
-			"location": "Hollow's Heart",
-			"quest": "Horrors of the Hollow",
-			"day": [
 				"Thursday",
+				"Friday",
 				"Saturday"
 			],
-			"type": 0
+			"type": 3
+		},
+		{
+			"location": "Fallen Aransu School",
+			"quest": "Aransu Has Fallen",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 3
+		},
+		{
+			"location": "Snowjade Fortress",
+			"quest": "The Eternal Champion",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 3
+		},
+		{
+			"location": "Hall of the Keeper",
+			"quest": "Fall of the Machines",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 3
+		},
+		{
+			"location": "Hall of the Templar",
+			"quest": "Templar Tussle",
+			"day": [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday"
+			],
+			"type": 3
 		}
 	]
 }

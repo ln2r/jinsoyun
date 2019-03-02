@@ -34,7 +34,7 @@
 		"daily": true,
 		"weekly": true,
 		"event": true,
-		"koldrak": true		
+		"koldrak": false		
 	}
 	,
 	"API_ADDRESS": [

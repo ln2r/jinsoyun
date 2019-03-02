@@ -197,11 +197,17 @@ function getQuestType(typeQuery){
 	let typeValue;
 
 	switch(type){
+		case 0:
+			typeValue = "Daily";
+		break;
 		case 1:
 			typeValue = "Dynamic";
 		break;
 		case 2:
 			typeValue = "Event";
+		break;
+		case 3:
+			typeValue = "Weekly";
 		break;
 		default:
 			typeValue = "";
@@ -358,15 +364,16 @@ async function getAPIStatus(){
 // getting data from a file
 async function getFileData(path){
 	let fileContent;
+	
+	fileContent = fs.readFileSync(path, 'utf8');
 
-	try{
-		fileContent = fs.readFileSync(path, 'utf8')
+	if(fileContent == "" || fileContent == null){
+		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: '"+path+"' data is empty, please check the file");
+	}else{
 		fileContent = JSON.parse(fileContent);
-	}catch(error){
-		console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > Warning: Unable to fetch data using getFileData, "+error);
-		clientDiscord.emit("message", "!err |"+error.stack+"|");
-	}	
-
+		
+	}
+	
 	return fileContent;
 }
 
@@ -1041,6 +1048,7 @@ clientDiscord.on("message", async (message) => {
 						// Console logging
 						console.log(" [ "+dateformat(Date.now(), "UTC:dd-mm-yy HH:MM:ss")+" ] > "+message.author.username+" did first time setup, "+message.guild.name+" setup status changed to true");
 
+						guildConfig[guildConfigIdx].GUILD_ICON = guild.iconURL;
 						guildConfig[guildConfigIdx].SETUP_STATUS = true;
 						guildConfig[guildConfigIdx].CHANNEL_TEXT_MAIN = defaultConfig.DEFAULT_TEXT_CHANNEL;
 						guildConfig[guildConfigIdx].CHANNEL_MEMBER_GATE = defaultConfig.DEFAULT_MEMBER_GATE;
