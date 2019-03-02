@@ -6,6 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const MongoDBProvider = require('commando-provider-mongo');
 const path = require('path');
 const ontime = require('ontime');
+const dateformat = require('dateformat');
 
 const core = require('./core.js');
 
