@@ -8,7 +8,7 @@ module.exports = class SayCommand extends Command {
             aliases: ['set', 'config'],
             group: 'guild',
             memberName: 'setting',
-            description: 'Change the bot setting. Available Settings: `reset channel-name|disable` (To configure quest reset notification), `twitter channel-name|disable` (To configure blade and soul twitter tweet notification), `twitch channel-name|disable` (To configure blade and soul twitch broadcast notification), `gate channel-name|disable` (To configure new member message channel), `text channel-name|disable` (To configure main text channel)',
+            description: 'Change the bot setting. \n\tAvailable Settings: \n\t- `reset channel-name|disable` (To configure quest reset notification)\n\t- `twitter channel-name|disable` (To configure blade and soul twitter tweet notification)\n\t- `twitch channel-name|disable` (To configure blade and soul twitch broadcast notification)\n\t- `gate channel-name|disable` (To configure new member message channel)\n\t- `text channel-name|disable` (To configure main text channel)',
             examples: ['setting <option>', 'setting reset channel-name', 'setting reset disable'],
             guildOnly: true,
             userPermission: ['ADMINISTRATOR', 'MANAGE_CHANNELS', 'MANAGE_GUILD', 'MANAGE_MESSAGES', 'MANAGE_NICKNAMES', 'MANAGE_ROLES'],
