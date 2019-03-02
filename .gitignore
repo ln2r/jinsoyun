@@ -1,8 +1,9 @@
 # Visual Code Workspace file
 *.code-workspace
 
-#node_modules directory
+# Packages
 node_modules/
+package-lock.json
 
 # .env file
 bot/.env
