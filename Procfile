@@ -1,1 +1,1 @@
-worker: node soyun.js
+worker: node index.js
