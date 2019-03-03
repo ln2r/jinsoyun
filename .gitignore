@@ -8,10 +8,6 @@ package-lock.json
 # .env file
 bot/.env
 
-#wip
-api/
-web/
-
 #misc file
 .dropbox
 desktop.ini
