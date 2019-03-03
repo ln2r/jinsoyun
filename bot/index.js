@@ -23,9 +23,9 @@ clientDiscord.registry
     .registerDefaultTypes()
     .registerGroups([
         ['admin', 'Bot Admin'],
-        ['bns', 'Blade and Soul Stuff'],
-        ['guild', 'Guild Stuff'],
-        ['automation', 'Automation Stuff']
+        ['automation', 'Automation'],
+        ['guild', 'Guild'],
+        ['bns', 'Blade and Soul'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()
