@@ -60,8 +60,27 @@ module.exports = class SayCommand extends Command {
             console.debug('[soyun] [drop] result: '+dungeonData[i].length);
             if(dungeonData[i].length != 0){
                 for(let j = 0; j < dungeonData[i].length; j++){
-                    console.debug('[soyun] [drop] dungeon name: '+dungeonData[i][j].name);
-                    dropData = dropData + ('\n- '+dungeonData[i][j].name);
+                    let itemName;
+
+                    console.debug('[soyun] [drop] item name @ common: '+dungeonData[i][j].rewards.common.find(value => regx.test(value)));
+                    console.debug('[soyun] [drop] item name @ normal: '+dungeonData[i][j].rewards.normal.find(value => regx.test(value)));
+                    console.debug('[soyun] [drop] item name @ hard: '+dungeonData[i][j].rewards.hard.find(value => regx.test(value)));
+
+                    switch(i){
+                        case 0:
+                            itemName = dungeonData[i][j].rewards.common.find(value => regx.test(value))
+                        break;
+                        case 1:
+                            itemName = dungeonData[i][j].rewards.normal.find(value => regx.test(value))
+                        break;
+                        case 2:
+                            itemName = dungeonData[i][j].rewards.hard.find(value => regx.test(value))
+                        break;
+                    }
+                    
+                   
+                    console.debug('[soyun] [drop] dungeon name: '+dungeonData[i][j].name+' ('+itemName+')');
+                    dropData = dropData + ('\n- '+dungeonData[i][j].name+' ('+itemName+')');
                 }
             }    
         }
