@@ -1,0 +1,7 @@
+{"_id":{"$numberInt":"0"},"name":"Silveress Character","address":"https://api.silveress.ie/bns/v3/character/full/na/"}
+{"_id":{"$numberInt":"1"},"name":"Silverss Market","address":"https://api.silveress.ie/bns/v3/market/na/current/lowest"}
+{"_id":{"$numberInt":"2"},"name":"Silveress Item","address":"https://api.silveress.ie/bns/v3/items"}
+{"_id":{"$numberInt":"3"},"name":"Discord","address":"https://srhpyqt94yxb.statuspage.io/api/v2/status.json"}
+{"_id":{"$numberInt":"4"},"name":"Twitter","address":"https://zjttvm6ql9lp.statuspage.io/api/v2/summary.json","stream_id":"3521186773, 819625154","stream_screenname":["BladeAndSoulOps","bladeandsoul"]}
+{"_id":{"$numberInt":"5"},"name":"NCSOFT Player Skills Endpoint","address":"http://na-bns.ncsoft.com/ingame/api/skill/characters/CHARACTER_NAME/skills/pages/1.json"}
+{"_id":{"$numberInt":"6"},"name":"BNS Tree Character Profile","address":"https://next.bnstree.com/character/na/"}
