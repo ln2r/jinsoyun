@@ -143,9 +143,9 @@ module.exports = {
     
                     // inserting the data to the collection
                     dbo.collection(classCollectionName).insertMany(classData, function(err, res) {
-                        if (err) throw err;  
+                        if (err) throw err; 
+                        db.close(); 
                     });
-                    db.close();
                     status = 'updated';                    
                 });
             });
@@ -247,9 +247,9 @@ module.exports = {
 
                 // inserting the data to the collection
                 dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {  
-                    if (err) throw err;                    
-                }); 
-                db.close();
+                    if (err) throw err;    
+                    db.close();                
+                });                 
                 status = 'updated';                               
             }); 
 
