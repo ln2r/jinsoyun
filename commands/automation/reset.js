@@ -52,7 +52,7 @@ module.exports = class SayCommand extends Command {
             )
         }
 
-        let msgData = 'Hello *'+msg.guild.name+'*! \nIt\'s time for reset, below is today\'s/this week\'s week list. Have a good day!'
+        let msgData = 'Hello *'+msg.guild.name+'*! \nIt\'s time for reset, below is today\'s/this week\'s list. Have a good day!'
 
         let embedData = {
             'embed':{
@@ -92,6 +92,6 @@ module.exports = class SayCommand extends Command {
                 }
             }) 
         })
-        console.debug('[soyun] [reset] reset notification sent to '+sent+' channels');
+        console.log('[soyun] [reset] reset notification sent to '+sent+' channels');
     }
 };
