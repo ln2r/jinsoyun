@@ -29,7 +29,7 @@ module.exports = {
             .then((response) => {return response.json()})
             .catch((error) => {
                 console.error('[core] [site-data] Error: '+error);
-                return {"status": error}
+                return {"status": "error", error}
             })  
     },
 
@@ -143,10 +143,10 @@ module.exports = {
     
                     // inserting the data to the collection
                     dbo.collection(classCollectionName).insertMany(classData, function(err, res) {
-                        if (err) throw err;
-                        status = res.insertedCount;
-                        db.close();
-                    });                    
+                        if (err) throw err;  
+                    });
+                    db.close();
+                    status = 'updated';                    
                 });
             });
    
@@ -154,7 +154,7 @@ module.exports = {
    
         let updateTime = (end-start)/1000+"s";
            
-        console.debug('[core] [mongo-classes-update] Ended class data update, updated: '+status+', time: '+updateTime);
+        console.debug('[core] [mongo-classes-update] Did class data update, updated: '+status+', time: '+updateTime);
     },
     
    /** 
@@ -165,94 +165,99 @@ module.exports = {
      */
     mongoItemDataUpdate: async function itemsUpdate(){     
         let start = Date.now();
+        let status;
 
         var dataItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
         let marketItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/market/na/current/lowest");
 
-        let dbData = await this.mongoGetData('items', {});
-        let fetchTime = new Date();
-            fetchTime = fetchTime.toISOString();
-        var latestData = [];
+        if(dataItems.status == 'error' || dataItems.status == 'error'){
+            console.error('[soyun] [item] api data fetch error, please check the log');
+            status = 'failed';
+        }else{
+            let dbData = await this.mongoGetData('items', {});
+            let fetchTime = new Date();
+                fetchTime = fetchTime.toISOString();
+            var latestData = [];
 
-        let status;
-        let itemsCollectionName = "items";
-            
-        // formatting and merging the data between item data and the market data
-        for(let i = 0; i < marketItems.length; i++){
-            
-            // updating the and formating data
-            for(let j = 0; j < dataItems.length; j++){
-                // getting the data with same id
-                if(marketItems[i].id == dataItems[j].id){
-                    let marketData = [{
-                            updated: marketItems[i].ISO,
-                            totalListings: marketItems[i].totalListings,
-                            priceEach: marketItems[i].priceEach,
-                            priceTotal: marketItems[i].priceTotal,
-                            quantity: marketItems[i].quantity,   
-                        }];
+            let itemsCollectionName = "items";
+                
+            // formatting and merging the data between item data and the market data
+            for(let i = 0; i < marketItems.length; i++){
+                
+                // updating the and formating data
+                for(let j = 0; j < dataItems.length; j++){
+                    // getting the data with same id
+                    if(marketItems[i].id == dataItems[j].id){
+                        let marketData = [{
+                                updated: marketItems[i].ISO,
+                                totalListings: marketItems[i].totalListings,
+                                priceEach: marketItems[i].priceEach,
+                                priceTotal: marketItems[i].priceTotal,
+                                quantity: marketItems[i].quantity,   
+                            }];
 
-                    // merging the old market data with the new one
-                    if(dbData != null){
-                        for(let k = 0; k < dbData.length; k++){
-                            if(marketItems[i].id == dbData[k]._id && dbData[k].market.length > 0){
-                                for(let l = 0; l < dbData[k].market.length; l++){
-                                    marketData.push(dbData[k].market[l]);
+                        // merging the old market data with the new one
+                        if(dbData != null){
+                            for(let k = 0; k < dbData.length; k++){
+                                if(marketItems[i].id == dbData[k]._id && dbData[k].market.length > 0){
+                                    for(let l = 0; l < dbData[k].market.length; l++){
+                                        marketData.push(dbData[k].market[l]);
+                                    }
                                 }
                             }
+                        }    
+
+                        let data = {
+                            _id: dataItems[j].id, 
+                            updated: fetchTime,
+                            firstAdded: dataItems[j].firstAdded,  
+                            name: dataItems[j].name, 
+                            itemTaxRate: dataItems[j].itemTaxRate, 
+                            img: dataItems[j].img, 
+                            rank: dataItems[j].rank, 
+                            merchantValue: dataItems[j].merchantValue, 
+                            characterLevel: dataItems[j].characterLevel, 
+                            class: dataItems[j].class,
+                            market: marketData,
                         }
-                    }    
 
-                    let data = {
-                        _id: dataItems[j].id, 
-                        updated: fetchTime,
-                        firstAdded: dataItems[j].firstAdded,  
-                        name: dataItems[j].name, 
-                        itemTaxRate: dataItems[j].itemTaxRate, 
-                        img: dataItems[j].img, 
-                        rank: dataItems[j].rank, 
-                        merchantValue: dataItems[j].merchantValue, 
-                        characterLevel: dataItems[j].characterLevel, 
-                        class: dataItems[j].class,
-                        market: marketData,
+                        latestData.push(data);
                     }
-
-                    latestData.push(data);
-                }
-            }            
-        }
-            
-        MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db(dbName);
-
-            dbo.listCollections({name: itemsCollectionName})
-                .next(function(err, collinfo) {
-                    if(err) throw err;
-
-                    // checking if the collection is exist or not
-                    // true: drop
-                    // false: do nothing                    
-                    if (collinfo) {
-                        dbo.collection(itemsCollectionName).drop(function(err) {
-                            if (err) throw err;
-                        });
-                            
-                    }     
-                });
-
-            // inserting the data to the collection
-            dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {
+                }            
+            }
+                
+            MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
                 if (err) throw err;
-                status = res.insertedCount;
-                            
-            });                                
-        }); 
+                var dbo = db.db(dbName);
 
+                dbo.listCollections({name: itemsCollectionName})
+                    .next(function(err, collinfo) {
+                        if(err) throw err;
+
+                        // checking if the collection is exist or not
+                        // true: drop
+                        // false: do nothing                    
+                        if (collinfo) {
+                            dbo.collection(itemsCollectionName).drop(function(err) {
+                                if (err) throw err;
+                            });
+                                
+                        }     
+                    });
+
+                // inserting the data to the collection
+                dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {  
+                    if (err) throw err;                    
+                }); 
+                db.close();
+                status = 'updated';                               
+            }); 
+
+        };
         let end = Date.now();
         let updateTime = (end-start)/1000+"s";
 
-        console.debug('[core] [mongo-items-update] Ended items data update, updated: '+status+', time: '+updateTime);
+        console.debug('[core] [mongo-items-update] Did items data update, updated: '+status+', time: '+updateTime);
     },
 
     /** 
