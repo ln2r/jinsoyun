@@ -9,7 +9,7 @@ module.exports = class SayCommand extends Command {
             name: 'reset',
             group: 'automation',
             memberName: 'reset',
-            description: 'Send challenges reset notification update.',
+            description: 'Send challenges reset notification.',
             guildOnly: true,
             hidden: true,
         });
