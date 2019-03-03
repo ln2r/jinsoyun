@@ -6,7 +6,7 @@ node_modules/
 package-lock.json
 
 # .env file
-bot/.env
+.env
 
 #misc file
 .dropbox
