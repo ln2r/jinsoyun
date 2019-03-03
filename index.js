@@ -34,7 +34,8 @@ clientDiscord.registry
 clientDiscord
     .on('error', console.error)
     .on('warn', console.warn)
-    .on('debug', console.log)
+    // remove "//" below to enable debug log
+    //.on('debug', console.log)
     .on('disconnect', () => { console.warn('Disconnected!'); })
 	.on('reconnecting', () => { console.warn('Reconnecting...'); })
     .on('ready', () => {
@@ -161,7 +162,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
                         }
                     }) 
                 })
-                console.debug('[soyun] [twitter] '+tweet.user.name+'\'s tweet sent to '+sent+' channels');
+                console.log('[soyun] [twitter] '+tweet.user.name+'\'s tweet sent to '+sent+' channels');
 			}
         }
         console.debug('[soyun] [twitter] Twitter stream activity detected, status: '+payloadStatus);
@@ -215,7 +216,7 @@ ontime({
             )
         }
 
-        let msgData = 'Good morning! \nIt\'s time for reset, below is today\'s/this week\'s week list. Have a good day!'
+        let msgData = 'Hello! It\'s time for reset, below is today\'s/this week\'s list. Have a good day!'
 
         let embedData = {
             'embed':{
@@ -258,7 +259,7 @@ ontime({
                 }
             }) 
         })
-        console.debug('[soyun] [reset] reset notification sent to '+sent+' channels');
+        console.log('[soyun] [reset] reset notification sent to '+sent+' channels');
 
         reset.done();
 		return;
