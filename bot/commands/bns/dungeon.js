@@ -53,15 +53,6 @@ module.exports = class SayCommand extends Command {
             let rewardsNormal = '';
             let rewardsHard = '';
 
-            // handling empty data
-            function emptyDataHandler(data){
-                if(data == '' || data == undefined){
-                    return '-';
-                }else{
-                    return data
-                }
-            }
-
             // handling the guide data
             function getGuideData(data){
                 if(data == '' || data == null || data == undefined){
@@ -70,45 +61,28 @@ module.exports = class SayCommand extends Command {
 
                 let guideData = [];
                 for(let i = 0; i < data.length; i++){
-                    guideData.push('['+data[i].owner+']('+data[i].url+')');
+                    guideData.push('['+data[i].author+']('+data[i].url+')');
                 };
 
                 return guideData.join(', ');
             }
             console.debug('[soyun] [dungeon] query: '+dungeon);
-            console.debug('[soyun] [dungeon] common data: '+!!dungeonData.rewards.common);
-            console.debug('[soyun] [dungeon] normal data: '+!!dungeonData.rewards.normal);
-            console.debug('[soyun] [dungeon] hard data: '+!!dungeonData.rewards.hard);
+            console.debug('[soyun] [dungeon] common first data: '+dungeonData.rewards.common[0]);
+            console.debug('[soyun] [dungeon] normal first data: '+dungeonData.rewards.normal[0]);
+            console.debug('[soyun] [dungeon] hard first data: '+dungeonData.rewards.hard[0]);
 
-            if(dungeonData.rewards.common != null){
-                rewardsCommon = '\n**Common**'+
-                                '\nWeapon: '+emptyDataHandler(dungeonData.rewards.common.weapon)+
-                                '\nSoulshield:'+core.setArrayDataFormat(dungeonData.rewards.common.soulshield, '- ', true)+
-                                '\nAccessory: '+core.setArrayDataFormat(dungeonData.rewards.common.accessory, '- ', true)+
-                                '\nOther: '+core.setArrayDataFormat(dungeonData.rewards.common.other, '- ', true)+
-                                '\nOutfit: '+core.setArrayDataFormat(dungeonData.rewards.common.outfit, '- ', true)+'\n'     
+            if(dungeonData.rewards.common[0] != ''){
+                rewardsCommon = '\n**Common**'+core.setArrayDataFormat(dungeonData.rewards.common, '- ', true)+'\n\u200B';   
             }
 
-            if(dungeonData.rewards.normal != null){
-                rewardsNormal = '\n**Normal**'+
-                                '\nWeapon: '+emptyDataHandler(dungeonData.rewards.normal.weapon)+
-                                '\nSoulshield:'+core.setArrayDataFormat(dungeonData.rewards.normal.soulshield, '- ', true)+
-                                '\nAccessory: '+core.setArrayDataFormat(dungeonData.rewards.normal.accessory, '- ', true)+
-                                '\nOther: '+core.setArrayDataFormat(dungeonData.rewards.normal.other, '- ', true)+
-                                '\nOutfit: '+core.setArrayDataFormat(dungeonData.rewards.normal.outfit, '- ', true)+'\n'
+            if(dungeonData.rewards.normal[0] != ''){
+                rewardsNormal = '\n**Normal**'+core.setArrayDataFormat(dungeonData.rewards.normal, '- ', true)+'\n\u200B';   
                                 
             }
             
-            if(dungeonData.rewards.hard != null){
-                rewardsHard = '\n**Hard**'+
-                            '\nWeapon: '+emptyDataHandler(dungeonData.rewards.hard.weapon)+
-                            '\nSoulshield:'+core.setArrayDataFormat(dungeonData.rewards.hard.soulshield, '- ', true)+
-                            '\nAccessory: '+core.setArrayDataFormat(dungeonData.rewards.hard.accessory, '- ', true)+
-                            '\nOther: '+core.setArrayDataFormat(dungeonData.rewards.hard.other, '- ', true)+
-                            '\nOutfit: '+core.setArrayDataFormat(dungeonData.rewards.hard.outfit, '- ', true)+'\n'              
+            if(dungeonData.rewards.hard[0] != ''){
+                rewardsHard = '\n**Hard**'+core.setArrayDataFormat(dungeonData.rewards.hard, '- ', true)+'\n\u200B';         
             }
-
-
 
             let embedData = {
                 'embed': {
@@ -139,7 +113,6 @@ module.exports = class SayCommand extends Command {
                         },
                     ]
                 }
-
             }
             msg.channel.stopTyping();
         
