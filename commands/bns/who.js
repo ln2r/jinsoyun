@@ -33,7 +33,13 @@ module.exports = class ReplyCommand extends Command {
         // getting the character name, if the user doesn't give any, their discord nickname will be used instead
         let charaQuery;
         if(args.length == 0){
-            charaQuery = msg.member.nickname;
+            // check if the message author have nickname or not
+            // if not use their display name instead            
+            if(msg.member.nickname == null){
+                charaQuery = msg.member.displayName
+            }else{
+                charaQuery = msg.member.nickname;
+            }
         }else{
             // encoding uri component so character with 'circumflex' still searchable
             charaQuery = encodeURIComponent(args);
