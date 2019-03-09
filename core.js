@@ -53,12 +53,13 @@ module.exports = {
                     .then(function(db) {
                         let dbo = db.db(dbName);
                         let collection = dbo.collection(collname);                        
-                        return collection.find(filter).toArray();
+                        return collection.find(filter).toArray()
+                               .then(db.close());
                         
                     })
                     .then(function(items){                        
                         return items;                        
-                    });                    
+                    })                   
     },  
 
    /** 
@@ -530,6 +531,90 @@ module.exports = {
         eventData.quests = questList;
 
         return eventData;
+    },
+    /**
+     * sendResetNotification
+     * Used to send quest reset notification
+     * @param {Guild} clientGuildData discord bot client guild/server connected data
+     */
+    sendResetNotification: async function sendReset(clientGuildData){
+        let todayDay = this.getDayValue(Date.now(), 'now');
+
+        let dailiesData = await this.getDailyData(todayDay);
+        let eventData = await this.getEventData(todayDay);
+        let weekliesData = await this.getWeeklyData();
+
+        let fieldsData = [
+            {
+                'name': 'Event',
+                'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
+                         '**Duration**: '+eventData.duration+'\n'+
+                         '**Redemption Period**: '+eventData.redeem+'\n'+
+                         '**Quests**'+
+                         this.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B'
+            },
+            {
+                'name': 'Daily Challenges',
+                'value': '**Rewards**'+
+                        this.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
+                        '**Quests**'+
+                        this.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B'
+            }            
+        ];
+
+        if(todayDay == 'Wednesday'){
+            fieldsData.push(
+                {
+                    'name': 'Weekly Challenges',
+                    'value': '**Rewards**'+
+                            this.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
+                            '**Quests**'+
+                            this.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B'
+                }
+            )
+        }
+
+        let msgData = 'Hello! \nIt\'s time for reset, below is today\'s/this week\'s list. Have a good day!'
+
+        let embedData = {
+            'embed':{
+                'author':{
+                    'name': todayDay+'\'s List - '+dateformat(Date.now(), 'UTC:dd-mmmm-yyyy'),
+                    'icon_url': 'https://cdn.discordapp.com/emojis/464038094258307073.png?v=1'
+                },
+                'color': 1879160,
+                'footer': {
+                    'text': 'Reset Notification - Generated at '+dateformat(Date.now(), 'UTC:dd-mm-yy @ HH:MM')+' UTC'
+                },
+                'fields': fieldsData
+            }
+        }
+
+        clientGuildData.map(async function(guild){
+            //console.debug('[soyun] [reset] guild list: '+guild.id+'('+guild.name+')');
+
+            // getting guild setting data
+            if(guild.available){  
+                let guildSettingData = await module.exports.mongoGetData('guilds', {guild: guild.id});
+                    guildSettingData = guildSettingData[0];
+                //console.debug('[soyun] [reset] guild setting data: '+JSON.stringify(guildSettingData, null, '\t'));    
+                let resetChannel = '';
+                if(guildSettingData != undefined){
+                    resetChannel = guildSettingData.settings.quest_reset
+                }
+
+                let found = 0;
+                guild.channels.map((ch) => {
+                    if(found == 0){
+                        if(ch.name == resetChannel && resetChannel != undefined && resetChannel != 'disable'){
+                            found = 1; 
+                            ch.send(msgData, embedData);                        
+                        }
+                    }
+                }) 
+            }
+        })
+        console.log('[core] [reset] reset notification sent');
     }
 };
 
