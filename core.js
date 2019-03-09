@@ -73,7 +73,7 @@ module.exports = {
 
         console.debug('[core] [mongo-classes-update] Starting class data update');
 
-        let resources = await this.mongoGetData('classes', {});
+        let resources = await module.exports.mongoGetData('classes', {});
 
         let classData = []; // class data storage
         let classCollectionName = "classes"; // the collection name
@@ -166,99 +166,98 @@ module.exports = {
      */
     mongoItemDataUpdate: async function itemsUpdate(){     
         let start = Date.now();
-        let status;
 
         var dataItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
         let marketItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/market/na/current/lowest");
 
         if(dataItems.status == 'error' || dataItems.status == 'error'){
             console.error('[soyun] [item] api data fetch error, please check the log');
-            status = 'failed';
         }else{
-            let dbData = await this.mongoGetData('items', {});
-            let fetchTime = new Date();
-                fetchTime = fetchTime.toISOString();
-            var latestData = [];
-
             let itemsCollectionName = "items";
-                
-            // formatting and merging the data between item data and the market data
-            for(let i = 0; i < marketItems.length; i++){
-                
-                // updating the and formating data
-                for(let j = 0; j < dataItems.length; j++){
-                    // getting the data with same id
-                    if(marketItems[i].id == dataItems[j].id){
-                        let marketData = [{
-                                updated: marketItems[i].ISO,
-                                totalListings: marketItems[i].totalListings,
-                                priceEach: marketItems[i].priceEach,
-                                priceTotal: marketItems[i].priceTotal,
-                                quantity: marketItems[i].quantity,   
-                            }];
-
-                        // merging the old market data with the new one
-                        if(dbData != null){
-                            for(let k = 0; k < dbData.length; k++){
-                                if(marketItems[i].id == dbData[k]._id && dbData[k].market.length > 0){
-                                    for(let l = 0; l < dbData[k].market.length; l++){
-                                        marketData.push(dbData[k].market[l]);
-                                    }
-                                }
-                            }
-                        }    
-
-                        let data = {
-                            _id: dataItems[j].id, 
-                            updated: fetchTime,
-                            firstAdded: dataItems[j].firstAdded,  
-                            name: dataItems[j].name, 
-                            itemTaxRate: dataItems[j].itemTaxRate, 
-                            img: dataItems[j].img, 
-                            rank: dataItems[j].rank, 
-                            merchantValue: dataItems[j].merchantValue, 
-                            characterLevel: dataItems[j].characterLevel, 
-                            class: dataItems[j].class,
-                            market: marketData,
-                        }
-
-                        latestData.push(data);
-                    }
-                }            
-            }
-                
             MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
 
-                dbo.listCollections({name: itemsCollectionName})
-                    .next(function(err, collinfo) {
-                        if(err) throw err;
+                dbo.collection(itemsCollectionName).find({}).toArray(function(err, result) {
+                    if (err) throw err;
+                    let dbData = result;
+                               
+                    let fetchTime = new Date();
+                        fetchTime = fetchTime.toISOString();
+                    var latestData = [];
+                        
+                    // formatting and merging the data between item data and the market data
+                    for(let i = 0; i < marketItems.length; i++){
+                        
+                        // updating the and formating data
+                        for(let j = 0; j < dataItems.length; j++){
+                            // getting the data with same id
+                            if(marketItems[i].id == dataItems[j].id){
+                                let marketData = [{
+                                        updated: marketItems[i].ISO,
+                                        totalListings: marketItems[i].totalListings,
+                                        priceEach: marketItems[i].priceEach,
+                                        priceTotal: marketItems[i].priceTotal,
+                                        quantity: marketItems[i].quantity,   
+                                    }];
 
-                        // checking if the collection is exist or not
-                        // true: drop
-                        // false: do nothing                    
-                        if (collinfo) {
-                            dbo.collection(itemsCollectionName).drop(function(err) {
-                                if (err) throw err;
-                            });
-                                
-                        }     
-                    });
+                                // merging the old market data with the new one
+                                if(dbData != null){
+                                    for(let k = 0; k < dbData.length; k++){
+                                        if(marketItems[i].id == dbData[k]._id && dbData[k].market.length > 0){
+                                            for(let l = 0; l < dbData[k].market.length; l++){
+                                                marketData.push(dbData[k].market[l]);
+                                            }
+                                        }
+                                    }
+                                }    
 
-                // inserting the data to the collection
-                dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {  
-                    if (err) throw err;    
-                    db.close();                
-                });                 
-                status = 'updated';                               
+                                let data = {
+                                    _id: dataItems[j].id, 
+                                    updated: fetchTime,
+                                    firstAdded: dataItems[j].firstAdded,  
+                                    name: dataItems[j].name, 
+                                    itemTaxRate: dataItems[j].itemTaxRate, 
+                                    img: dataItems[j].img, 
+                                    rank: dataItems[j].rank, 
+                                    merchantValue: dataItems[j].merchantValue, 
+                                    characterLevel: dataItems[j].characterLevel, 
+                                    class: dataItems[j].class,
+                                    market: marketData,
+                                }
+
+                                latestData.push(data);
+                            }
+                        }            
+                    }                   
+                
+                    dbo.listCollections({name: itemsCollectionName})
+                        .next(function(err, collinfo) {
+                            if(err) throw err;
+
+                            // checking if the collection is exist or not
+                            // true: drop
+                            // false: do nothing                    
+                            if (collinfo) {
+                                dbo.collection(itemsCollectionName).drop(function(err) {
+                                    if (err) throw err;
+                                });                                    
+                            }     
+                        });
+
+                    // inserting the data to the collection
+                    dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {  
+                        if (err) throw err;    
+                        db.close();                
+                    });                
+                });
+                status = 'updated'; 
             }); 
-
         };
         let end = Date.now();
         let updateTime = (end-start)/1000+"s";
 
-        console.debug('[core] [mongo-items-update] Did items data update, updated: '+status+', time: '+updateTime);
+        console.debug('[core] [mongo-items-update] Did items data update, time: '+updateTime);
     },
 
     /** 
@@ -446,10 +445,10 @@ module.exports = {
      * @returns object, daily data (reward, quests list)
      */
     getDailyData: async function getDaily(day){
-        let dailyData = await this.mongoGetData('challenges', {});
+        let dailyData = await module.exports.mongoGetData('challenges', {});
             dailyData = dailyData[0];
 
-        let eventDailyRewards = await this.mongoGetData('events', {});
+        let eventDailyRewards = await module.exports.mongoGetData('events', {});
             eventDailyRewards = eventDailyRewards[0].rewards.daily;    
 
         let dailies;
@@ -493,10 +492,10 @@ module.exports = {
      * @returns object, weekly data (quests list, rewards)
      */
     getWeeklyData: async function getWeekly(){
-        let weeklies = await this.mongoGetData('challenges', {});
+        let weeklies = await module.exports.mongoGetData('challenges', {});
             weeklies = weeklies[0].weekly;
 
-        let eventWeeklyRewards = await this.mongoGetData('events', {});
+        let eventWeeklyRewards = await module.exports.mongoGetData('events', {});
             eventWeeklyRewards = eventWeeklyRewards[0].rewards.weekly;    
 
         // adding event daily challenges rewards to rewards list if it's not empty
@@ -514,7 +513,7 @@ module.exports = {
      * @returns object, event data (quests list, details)
      */
     getEventData: async function getEvent(day){
-        let eventData = await this.mongoGetData('events', {});
+        let eventData = await module.exports.mongoGetData('events', {});
             eventData = eventData[0];
         let questList = [];
 
@@ -538,11 +537,11 @@ module.exports = {
      * @param {Guild} clientGuildData discord bot client guild/server connected data
      */
     sendResetNotification: async function sendReset(clientGuildData){
-        let todayDay = this.getDayValue(Date.now(), 'now');
+        let todayDay = module.exports.getDayValue(Date.now(), 'now');
 
-        let dailiesData = await this.getDailyData(todayDay);
-        let eventData = await this.getEventData(todayDay);
-        let weekliesData = await this.getWeeklyData();
+        let dailiesData = await module.exports.getDailyData(todayDay);
+        let eventData = await module.exports.getEventData(todayDay);
+        let weekliesData = await module.exports.getWeeklyData();
 
         let fieldsData = [
             {
@@ -551,14 +550,14 @@ module.exports = {
                          '**Duration**: '+eventData.duration+'\n'+
                          '**Redemption Period**: '+eventData.redeem+'\n'+
                          '**Quests**'+
-                         this.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B'
+                         module.exports.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B'
             },
             {
                 'name': 'Daily Challenges',
                 'value': '**Rewards**'+
-                        this.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
+                        module.exports.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
                         '**Quests**'+
-                        this.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B'
+                        module.exports.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B'
             }            
         ];
 
@@ -567,9 +566,9 @@ module.exports = {
                 {
                     'name': 'Weekly Challenges',
                     'value': '**Rewards**'+
-                            this.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
+                            module.exports.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
                             '**Quests**'+
-                            this.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B'
+                            module.exports.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B'
                 }
             )
         }
