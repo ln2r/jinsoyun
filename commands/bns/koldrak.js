@@ -19,7 +19,7 @@ module.exports = class SayCommand extends Command {
         msg.channel.startTyping();
 
         let timeData = await core.mongoGetData('challenges', {});
-            timeData = timeData[0].koldrak;
+            timeData = timeData[0].koldrak.time;
 
         let koldrakNextHourMax = 24; // maximum hour distance
 
