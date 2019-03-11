@@ -13,7 +13,8 @@ const core = require('./core.js');
 const clientDiscord = new CommandoClient({
     commandPrefix: process.env.bot_default_prefix,
     owner: process.env.bot_owner_id,
-    disableEveryone: true
+    disableEveryone: true,
+    unknownCommandResponse: false
 });
 
 clientDiscord.login(process.env.discord_secret);
