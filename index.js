@@ -59,8 +59,10 @@ clientDiscord
 
         console.debug('[soyun] [gate] memberGate value: '+memberGate)
         if(memberGate != '' && memberGate != 'disable'){
-            // add cricket role so they can't see the rest of the guild until they do join command
-            member.addRole(member.guild.roles.find(x => x.name == 'cricket'));
+            // add cricket role if it's exist so they can't see the rest of the guild until they do join command
+            if((member.guild.roles.find(role => role.name == 'cricket')) != null){
+                member.addRole(member.guild.roles.find(x => x.name == 'cricket'));
+            }
             member.guild.channels.find(ch => ch.name == memberGate).send(
                 'Hi <@'+member.user.id+'>! Welcome to *'+member.guild.name+'*!\n\n'+
 
