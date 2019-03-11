@@ -3,7 +3,7 @@ const dateformat = require('dateformat');
 
 const core = require('../../core.js');
 
-module.exports = class ReplyCommand extends Command {
+module.exports = class WhoCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'who', // command name

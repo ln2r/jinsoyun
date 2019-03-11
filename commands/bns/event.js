@@ -3,7 +3,7 @@ const dateformat = require('dateformat');
 
 const core = require('../../core.js');
 
-module.exports = class SayCommand extends Command {
+module.exports = class BnsEventCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'event',

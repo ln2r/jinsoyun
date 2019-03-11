@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 const core = require('../../core.js');
 
-module.exports = class SayCommand extends Command {
+module.exports = class GuildSettingsCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'setting',
