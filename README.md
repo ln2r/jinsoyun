@@ -69,6 +69,30 @@ Template:
 ### MongoDB Collection Called configs
 * `DEFAULT_MARKET_THUMBNAIL` default image placeholder when market command can't find item(s)
 
+### Provider Settings (Discord.js Commando MongoDBProvider)
+If you are going to use MongoDB Provider like what being used here follow this steps below to configure it
+* Go to `node_modules > commando-provider-mongo` folder
+* Open `index.js` file
+* Add these listener on listener section
+```
+	.set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
+	.set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
+	.set('notificationTwitchChange', (guild, channel) => this.set(guild, 'twitch', channel))
+	.set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
+	.set('mainTextChannelChange', (guild, channel) => this.set(guild, 'default_text', channel))
+  .set('guildRolesSetup', (guild, value) => this.set(guild, 'roles_setup', value))
+```
+Explanation:
+* Listener Format:
+  `.set('listenerName', (guild, value) => this.set(guild, 'setting_name', value))`
+* Used Listener Explanation
+  * `notificationResetChange` when guild change reset notification channel, options: `channel-name` or `disable` for disable
+  * `notificationTwitterChange` when guild change twitter post notification channel, options: `channel-name` or `disable` for disable
+  * `notificationTwitchChange` when guild change twitch stream notification channel, options: `channel-name` or `disable` for disable (currently unavailable)
+  * `newMemberChannelChange` when guild change which channel new member joined the server got welcomed, options: `channel-name` or `disable` for disable
+  * `mainTextChannelChange` when guild change the main text channel is, options: `channel-name` or `disable` for disable
+  * `guildRolesSetup` when guild do classes roles setup, options: `true` or `false`
+
 ## Acknowledgments & Credits
 * **Rizky Sedyanto** - *Initial work* - [ln2r](https://ln2r.web.id/); Discord: ln2r#1691
 * **Built With**
