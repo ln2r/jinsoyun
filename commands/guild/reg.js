@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const core = require('../../core.js');
 
-module.exports = class SayCommand extends Command {
+module.exports = class RegCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'reg',
@@ -32,14 +32,26 @@ module.exports = class SayCommand extends Command {
 
                 classValid = true;
 
-                msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == classList[i]));
+                // adding character class role
+                if(msg.guild.roles.find(role => role.name == classList[i]) != null){
+                    msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == classList[i]));
+                }
+                
                 // Adding 'member' role so user can talk
-                msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == 'member'));
-                // Removing 'cricket' role
-                msg.guild.members.get(msg.author.id).removeRole(msg.guild.roles.find(role => role.name == 'cricket'));
-                // changing the nickname
-                msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+                if(msg.guild.roles.find(role => role.name == 'member') != null){
+                    msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == 'member'));
+                }
 
+                // Removing 'cricket' role
+                if(msg.guild.roles.find(role => role.name == 'cricket') != null){
+                    msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == 'cricket'));
+                }
+                
+                // changing the nickname
+                if(msg.author.id != msg.guild.ownerID){
+                    msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+                }
+               
                 let defaultTextChannel = '';
                 if(guildSettingData != undefined){
                     defaultTextChannel = guildSettingData.settings.default_text;
