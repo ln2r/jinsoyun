@@ -49,6 +49,11 @@ Bot configuration data is located in 2 places, the one in `.env` file and the ot
 * `bot_mongodb_db_name` bot MongoDB database name
 * `bot_default_prefix` bot command default prefix
 * `bot_owner_id` your discord profile id
+* `discord_secret` discord bot app token
+* `twitter_consumer_key` twitter app consumer key
+* `twitter_consumer_secret` twitter app consumer secret key
+* `twitter_access_token_key` twitter app access token key
+* `twitter_access_token_secret` twitter app access token secret key
 
 Template:
   ```
@@ -74,35 +79,33 @@ If you are going to use MongoDB Provider like what being used here follow this s
 * Go to `node_modules > commando-provider-mongo` folder
 * Open `index.js` file
 * Add these listener on listener section
-```
-	.set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
-	.set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
-	.set('notificationTwitchChange', (guild, channel) => this.set(guild, 'twitch', channel))
-	.set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
-	.set('mainTextChannelChange', (guild, channel) => this.set(guild, 'default_text', channel))
+  ```
+  .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
+  .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
+  .set('notificationTwitchChange', (guild, channel) => this.set(guild, 'twitch', channel))
+  .set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
+  .set('mainTextChannelChange', (guild, channel) => this.set(guild, 'default_text', channel))
   .set('guildRolesSetup', (guild, value) => this.set(guild, 'roles_setup', value))
-```
+  ```
 Explanation:
 * Listener Format:
   `.set('listenerName', (guild, value) => this.set(guild, 'setting_name', value))`
 * Used Listener Explanation
-  * `notificationResetChange` when guild change reset notification channel, options: `channel-name` or `disable` for disable
-  * `notificationTwitterChange` when guild change twitter post notification channel, options: `channel-name` or `disable` for disable
-  * `notificationTwitchChange` when guild change twitch stream notification channel, options: `channel-name` or `disable` for disable (currently unavailable)
-  * `newMemberChannelChange` when guild change which channel new member joined the server got welcomed, options: `channel-name` or `disable` for disable
-  * `mainTextChannelChange` when guild change the main text channel is, options: `channel-name` or `disable` for disable
-  * `guildRolesSetup` when guild do classes roles setup, options: `true` or `false`
+  * `notificationResetChange` when guild change reset notification channel, options: `channel-name`, `disable`
+  * `notificationTwitterChange` when guild change twitter post notification channel, options: `channel-name`, `disable`
+  * `notificationTwitchChange` when guild change twitch stream notification channel, options: `channel-name`, `disable`
+  * `newMemberChannelChange` when guild change which channel new member joined the server got welcomed, options: `channel-name`, `disable`
+  * `mainTextChannelChange` when guild change the main text channel is, options: `channel-name`, `disable`
+  * `guildRolesSetup` when guild do classes roles setup, options: `true`, `false`
 
 ## Acknowledgments & Credits
 * **Rizky Sedyanto** - *Initial work* - [ln2r](https://ln2r.web.id/); Discord: ln2r#1691
 * **Built With**
   * [Visual Studio Code](https://code.visualstudio.com/) - Editor
   * [discord.js](https://discord.js.org/) - Discord API node.js module
-  * [Silveress](https://bns.silveress.ie/) - BnS unofficial API
+  * [Silveress](https://bns.silveress.ie/) - Blade and Soul unofficial API
   * [discord.js commando](https://github.com/discordjs/Commando) - discord.js command framework
   * [Commando MongoDBProvider](https://github.com/paulhobbel/commando-provider-mongo) - MongoDB provider for Commando
-* **Database Contributor**
-  * Daily, Weekly and Challenges Rewards data - **Maeyuka**
 
 ## License
 *Code of this project is licensed under MIT license*
