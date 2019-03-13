@@ -21,7 +21,7 @@ module.exports = class GuildSettingsCommand extends Command {
                     validate: option => {
                         // if the option is valid or not
                         let optionArg = option.toString().toLowerCase().split(' ');
-                        console.debug('[soyun] [setting] optionArg: '+optionArg);
+                        //console.debug('[soyun] [setting] optionArg: '+optionArg);
 
                         let found = false;
                         let options = ['reset', 'twitter', 'twitch', 'gate', 'text', 'show'];
@@ -63,8 +63,9 @@ module.exports = class GuildSettingsCommand extends Command {
             channelName = option[1];
         }
 
-        console.debug('[soyun] [setting] setting option: '+option[0]);
-        console.debug('[soyun] [setting] channel name: '+channelName);
+        //console.debug('[soyun] [setting] ['+msg.guild.name+'] setting option: '+option[0]);
+        //console.debug('[soyun] [setting] ['+msg.guild.name+'] channel name: '+channelName);
+        //console.debug('[soyun] [setting] ['+msg.guild.name+'] manage roles permission: '+msg.guild.me.hasPermission('MANAGE_ROLES'))
 
         switch(option[0]){
             case 'reset':
@@ -90,7 +91,7 @@ module.exports = class GuildSettingsCommand extends Command {
                 
                 // create cricket role if the bot have the permission
                 if(option[0] != 'disable'){
-                    if(this.client.hasPermission('MANAGE_ROLES')){
+                    if(msg.guild.me.hasPermission('MANAGE_ROLES')){
                         if((msg.guild.roles.find(role => role.name == 'cricket')) == null){
                             msg.guild.createRole({
                                 'name': 'cricket'
