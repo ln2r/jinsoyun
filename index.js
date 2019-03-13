@@ -58,8 +58,8 @@ clientDiscord
             memberGate = guildSettingData.settings.member_gate
         }
 
-        console.debug('[soyun] [gate] memberGate value: '+memberGate)
-        if(memberGate != '' && memberGate != 'disable'){
+        //console.debug('[soyun] [gate] ['+member.guild.name+'] memberGate value: '+memberGate)
+        if(memberGate != '' && memberGate != 'disable' && memberGate != undefined){
             // add cricket role if it's exist so they can't see the rest of the guild until they do join command
             if((member.guild.roles.find(role => role.name == 'cricket')) != null){
                 member.addRole(member.guild.roles.find(x => x.name == 'cricket'));
@@ -71,7 +71,7 @@ clientDiscord
 
                 '```'+
                 '@Jinsoyun reg <character name> <class name>\nExample: @Jinsoyun reg jinsoyun blade dancer'+
-                '```\n\n'+
+                '```\n'+
                 
                 'If you need some assistance you can mention or DM available admin'
             );
@@ -165,7 +165,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
                 console.log('[soyun] [twitter] '+tweet.user.name+'\'s tweet sent');
 			}
         }
-        console.debug('[soyun] [twitter] Twitter stream activity detected, status: '+payloadStatus);
+        console.log('[soyun] [twitter] Twitter stream activity detected, status: '+payloadStatus);
 	});
   
 	stream.on('error', function(error) {
