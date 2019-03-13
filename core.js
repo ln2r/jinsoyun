@@ -47,7 +47,7 @@ module.exports = {
      *  core.mongoGetData("classes");
      */
     mongoGetData: function mongoGetData(collname, filter) { 
-        console.debug('[core] [mongo-fetch] collname: '+collname+', filter: '+JSON.stringify(filter));
+        //console.debug('[core] [mongo-fetch] collname: '+collname+', filter: '+JSON.stringify(filter));
 
         return MongoClient.connect(url, {useNewUrlParser: true})
                     .then(function(db) {
@@ -71,7 +71,7 @@ module.exports = {
         let start = Date.now();
         
 
-        console.debug('[core] [mongo-classes-update] Starting class data update');
+        //console.debug('[core] [mongo-classes-update] Starting class data update');
 
         let resources = await module.exports.mongoGetData('classes', {});
 
@@ -83,7 +83,7 @@ module.exports = {
         let status;    
    
        for(let i = 0; i < resources.length; i++){
-           console.debug('[core] [mongo-classes-update] Updating '+resources[i].name);                          
+           //console.debug('[core] [mongo-classes-update] Updating '+resources[i].name);                          
         
             // getting the attributes/element data
             let attributeSource = resources[i].sources[0].attributes;
@@ -155,7 +155,7 @@ module.exports = {
    
         let updateTime = (end-start)/1000+"s";
            
-        console.debug('[core] [mongo-classes-update] Did class data update, updated: '+status+', time: '+updateTime);
+        //console.debug('[core] [mongo-classes-update] Did class data update, updated: '+status+', time: '+updateTime);
     },
     
    /** 
@@ -257,7 +257,7 @@ module.exports = {
         let end = Date.now();
         let updateTime = (end-start)/1000+"s";
 
-        console.debug('[core] [mongo-items-update] Did items data update, time: '+updateTime);
+        //console.debug('[core] [mongo-items-update] Did items data update, time: '+updateTime);
     },
 
     /** 
@@ -453,8 +453,8 @@ module.exports = {
 
         let dailies;
 
-        console.debug('[core] [daily] queried day: '+day);
-        console.debug('[core] [daily] event rewards: '+eventDailyRewards);
+        //console.debug('[core] [daily] queried day: '+day);
+        //console.debug('[core] [daily] event rewards: '+eventDailyRewards);
 
         switch(day){
             case 'Monday':
@@ -613,7 +613,62 @@ module.exports = {
                 }) 
             }
         })
-        console.log('[core] [reset] reset notification sent');
+        //console.debug('[core] [reset] reset notification sent');
+    },
+
+    /**
+     * getTimeDifference
+     * Used to get time difference
+     * @param {Array} data time data, preferably array of time data
+     * @returns {Object} containing closest time index and time difference data
+     */
+    getTimeDifference: function timeDifference(data){
+        if(data.constructor != Array){
+            data = [data];
+        }
+
+        let now = new Date();
+        let timeNow = new Date(0, 0, 0, now.getUTCHours(), now.getMinutes());
+
+        let closestTime;
+        let timeDifferenceData;
+        let timeDifferenceHourMax = 24;
+
+        //console.debug('[core] [time difference] now: '+timeNow);
+
+        for(let i = 0; i < data.length; i++){
+            let timeData = new Date(0, 0, 0, data[i], 0);
+            //console.debug('[core] [time difference] time data '+timeData);
+
+            let timeRemaining = (timeData - timeNow);
+            //console.debug('[core] [time difference] current: '+timeData);
+            //console.debug('[core] [time difference] remain: '+timeRemaining);
+
+            // formatting the data
+            let timeDifferenceHour = Math.abs(Math.floor(timeRemaining / 1000 / 60 / 60));
+            // use extra variable so 'timerRemaining' variable remain unchanged
+            let timeDifferenceHourRaw = timeRemaining - (timeDifferenceHour * 1000 * 60 *60);
+                
+            let timeDifferenceMinute = Math.abs(Math.floor(timeDifferenceHourRaw / 1000 / 60));
+
+            //console.debug('[core] [time difference] left: '+timeDifferenceHour+'h '+timeDifferenceMinute+'m')
+    
+            // checking if current time is smaller than last one or not
+            if(timeDifferenceHour <= timeDifferenceHourMax && timeRemaining > 0){
+                timeDifferenceHourMax = timeDifferenceHour;
+                closestTime = i;
+                // storing the formatted data into an array
+                timeDifferenceData = [timeDifferenceHour, timeDifferenceMinute];
+            }
+        }    
+        //console.debug('[core] [time difference] selected: '+new Date(0, 0, 0, data[closestTime], 0));
+        //console.debug('[core] [time difference] time left: '+timeDifferenceData[0]+' hours, '+timeDifferenceData[1]+' minutes');
+
+        return {
+            'time_index': closestTime,
+            'time_difference_data': timeDifferenceData
+        }
+
     }
 };
 
