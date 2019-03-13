@@ -66,10 +66,10 @@ module.exports = class DungeonCommand extends Command {
 
                 return guideData.join(', ');
             }
-            console.debug('[soyun] [dungeon] query: '+dungeon);
-            console.debug('[soyun] [dungeon] common first data: '+dungeonData.rewards.common[0]);
-            console.debug('[soyun] [dungeon] normal first data: '+dungeonData.rewards.normal[0]);
-            console.debug('[soyun] [dungeon] hard first data: '+dungeonData.rewards.hard[0]);
+            //console.debug('[soyun] [dungeon] ['+msg.guild.name+'] query: '+dungeon);
+            //console.debug('[soyun] [dungeon] ['+msg.guild.name+'] common first data: '+dungeonData.rewards.common[0]);
+            //console.debug('[soyun] [dungeon] ['+msg.guild.name+'] normal first data: '+dungeonData.rewards.normal[0]);
+            //console.debug('[soyun] [dungeon] ['+msg.guild.name+'] hard first data: '+dungeonData.rewards.hard[0]);
 
             if(dungeonData.rewards.common[0] != ''){
                 rewardsCommon = '\n**Common**'+core.setArrayDataFormat(dungeonData.rewards.common, '- ', true)+'\n\u200B';   

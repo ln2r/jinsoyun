@@ -22,9 +22,9 @@ module.exports = class DailyCommand extends Command {
 
         let dayQuery = '';
 
-        console.debug('[soyun] [daily] current day: '+core.getDayValue(Date.now(), 'now'));
-        console.debug('[soyun] [daily] tomorrow is: '+core.getDayValue(Date.now(), 'tomorrow'));
-        console.debug('[soyun] [daily] user query is: '+args);
+        //console.debug('[soyun] [daily] ['+msg.guild.name+'] current day: '+core.getDayValue(Date.now(), 'now'));
+        //console.debug('[soyun] [daily] ['+msg.guild.name+'] tomorrow is: '+core.getDayValue(Date.now(), 'tomorrow'));
+        //console.debug('[soyun] [daily] ['+msg.guild.name+'] user query is: '+args);
 
         
         if(args == ''){
@@ -41,7 +41,7 @@ module.exports = class DailyCommand extends Command {
             if(args == 'sun' || args == 'sunday'){dayQuery = 'Sunday'};
         }
 
-        console.debug('[soyun] [daily] dayQuery value: '+dayQuery);
+        //console.debug('[soyun] [daily] dayQuery value: '+dayQuery);
 
         let dailyData = await core.getDailyData(dayQuery);
         let embedData = {

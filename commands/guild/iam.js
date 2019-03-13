@@ -43,7 +43,7 @@ module.exports = class ClassChangeCommand extends Command {
         let classList = ['gunslinger', 'blade dancer', 'destroyer', 'summoner', 'kung fu master', 'assassin', 'force master', 'warlock', 'blade master', 'soul fighter', 'warden'];
 
         let authorRoleList = msg.guild.members.get(msg.author.id).roles.map(getMemberRoles);
-        console.debug('[soyun] [class] '+msg.author.username+' role list: '+authorRoleList);
+        //console.debug('[soyun] [class] ['+msg.guild.name+'] '+msg.author.username+' role list: '+authorRoleList);
 
         let removedRoleIdx;
 
@@ -55,7 +55,7 @@ module.exports = class ClassChangeCommand extends Command {
             }
         }
         
-        console.debug('[soyun] [class] '+msg.author.username+' old class: '+authorRoleList[removedRoleIdx]);
+        //console.debug('[soyun] [class] ['+msg.guild.name+'] '+msg.author.username+' old class: '+authorRoleList[removedRoleIdx]);
         
         msg.guild.members.get(msg.author.id).removeRole(msg.guild.roles.find(
             role => role.name == authorRoleList[removedRoleIdx])
@@ -65,7 +65,7 @@ module.exports = class ClassChangeCommand extends Command {
             role => role.name == className)
         )
 
-        console.debug('[soyun] [class] '+msg.author.username+' class changed to '+className)
+        //console.debug('[soyun] [class] ['+msg.guild.name+'] '+msg.author.username+' class changed to '+className)
 
         return msg.say('Your class changed to ***'+className+'***');
     }

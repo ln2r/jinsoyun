@@ -30,7 +30,7 @@ module.exports = class CreateChCommand extends Command {
                         'name': classList[i],
                         'hoist': true
                     })
-                    console.debug('[soyun] [role-setup] '+classList[i]+' role created @ '+msg.guild.name);
+                    //console.debug('[soyun] [role-setup] ['+msg.guild.name+'] '+classList[i]+' role created @ '+msg.guild.name);
                 }                
             }
 

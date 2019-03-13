@@ -66,8 +66,8 @@ module.exports = class RegCommand extends Command {
             }
         }
 
-        console.debug('[soyun] [reg] args value: '+args);
-        console.debug('[soyun] [reg] class input is: '+classValid);
+        //console.debug('[soyun] [reg] ['+msg.guild.name+'] args value: '+args);
+        //console.debug('[soyun] [reg] ['+msg.guild.name+'] class input is: '+classValid);
 
         if(classValid == false){
             return msg.say('I can\'t find the class you wrote, please check and try again (class name need to be it\'s full name)');

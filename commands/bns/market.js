@@ -42,19 +42,19 @@ module.exports = class MarketCommand extends Command {
 
             regx = new RegExp('(?:^|\W)'+searchQuery+'+(?:$|\W)', 'ig'); // exact search           
 
-            console.debug('[soyun] [market] exact search is used');
+            //console.debug('[soyun] [market] ['+msg.guild.name+'] exact search is used');
         }else{
             regx = new RegExp('('+searchQuery+'+)', 'ig'); // rough search
-            console.debug('[soyun] [market] rough search is used');
+            //console.debug('[soyun] [market] ['+msg.guild.name+'] rough search is used');
         }      
         
-        console.debug('[soyun] [market] searchQuery value: '+searchQuery);
-        console.debug('[soyun] [market] regx value: '+regx);
+        //console.debug('[soyun] [market] ['+msg.guild.name+'] searchQuery value: '+searchQuery);
+        //console.debug('[soyun] [market] ['+msg.guild.name+'] regx value: '+regx);
 
         let dbSearchQuery = {'name': regx};
         let marketData = await core.mongoGetData('items', dbSearchQuery);
 
-        console.debug('[soyun] [market] total result: '+marketData.length);
+        //console.debug('[soyun] [market] ['+msg.guild.name+'] total result: '+marketData.length);
 
         if(marketData.length == 0){
             itemData = 'No Result found on **'+searchQuery+'**. Please check your search and try again.'

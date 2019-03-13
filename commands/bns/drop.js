@@ -29,7 +29,7 @@ module.exports = class LootCommand extends Command {
         // query example
         // {"rewards.common": { $all: [/(core)/ig] } }
 
-        console.debug('[soyun] [drop] query: '+item);
+        //console.debug('[soyun] [drop] ['+msg.guild.name+'] query: '+item);
 
         let regx = new RegExp('('+item+'+)', 'ig'); // regex for search
 
@@ -57,14 +57,14 @@ module.exports = class LootCommand extends Command {
         // getting the dungeon name and formatting it
         let dropData = '';
         for(let i = 0; i < dungeonData.length; i++){
-            console.debug('[soyun] [drop] result: '+dungeonData[i].length);
+            //console.debug('[soyun] [drop] ['+msg.guild.name+'] result: '+dungeonData[i].length);
             if(dungeonData[i].length != 0){
                 for(let j = 0; j < dungeonData[i].length; j++){
                     let itemName;
 
-                    console.debug('[soyun] [drop] item name @ common: '+dungeonData[i][j].rewards.common.find(value => regx.test(value)));
-                    console.debug('[soyun] [drop] item name @ normal: '+dungeonData[i][j].rewards.normal.find(value => regx.test(value)));
-                    console.debug('[soyun] [drop] item name @ hard: '+dungeonData[i][j].rewards.hard.find(value => regx.test(value)));
+                    //console.debug('[soyun] [drop] item name @ common: '+dungeonData[i][j].rewards.common.find(value => regx.test(value)));
+                    //console.debug('[soyun] [drop] item name @ normal: '+dungeonData[i][j].rewards.normal.find(value => regx.test(value)));
+                    //console.debug('[soyun] [drop] item name @ hard: '+dungeonData[i][j].rewards.hard.find(value => regx.test(value)));
 
                     switch(i){
                         case 0:
@@ -79,7 +79,7 @@ module.exports = class LootCommand extends Command {
                     }
                     
                    
-                    console.debug('[soyun] [drop] dungeon name: '+dungeonData[i][j].name+' ('+itemName+')');
+                    //console.debug('[soyun] [drop] ['+msg.guild.name+'] dungeon name: '+dungeonData[i][j].name+' ('+itemName+')');
                     dropData = dropData + ('\n- '+dungeonData[i][j].name+' ('+itemName+')');
                 }
             }    

@@ -53,12 +53,12 @@ module.exports = class WhoCommand extends Command {
 
         // checking if the data fetch return data or error
         if(charaData.status == 'error'){
-            console.error('[soyun] [who] api data fetch error, please check the log');
+            console.error('[soyun] [who] ['+msg.guild.name+'] api data fetch error, please check the log');
             var messageOutput = 'Unable to get charater data, please try again later';
         }else{
-            console.debug('[soyun] [who] msg.author.nickname: '+msg.member.nickname);
-            console.debug('[soyun] [who] charaQuery: '+charaQuery);
-            console.debug('[soyun] [who] charaData.characterName value: '+charaData.characterName);
+            //console.debug('[soyun] [who] ['+msg.guild.name+'] msg.author.nickname: '+msg.member.nickname);
+            //console.debug('[soyun] [who] ['+msg.guild.name+'] charaQuery: '+charaQuery);
+            //console.debug('[soyun] [who] ['+msg.guild.name+'] charaData.characterName value: '+charaData.characterName);
             
             if(charaData.characterName == undefined){
                 var messageOutput = 'No Result found on **'+charaQuery+'**. Please check your search and try again.'
@@ -107,7 +107,7 @@ module.exports = class WhoCommand extends Command {
 
                 // empty playerSKillData handling
                 if(playerSkillData == null){            
-                    console.warn('[soyun] [who] can\'t fetch player skill data');
+                    console.warn('[soyun] [who] ['+msg.guild.name+'] can\'t fetch player skill data');
                     playerSkillData = [];
                 };   
 
@@ -144,9 +144,9 @@ module.exports = class WhoCommand extends Command {
 
                 let soulshieldData = [charaData.soulshield1, charaData.soulshield2, charaData.soulshield3, charaData.soulshield4, charaData.soulshield5, charaData.soulshield6, charaData.soulshield7, charaData.soulshield8];
 
-                console.debug('[soyun] [who] charaAPIAddress: '+charaAPIAddress);
-                console.debug('[soyun] [who] charaData address: '+charaAPIAddress+charaQuery);
-                console.debug('[soyun] [who] playerSkillData address: '+ncsoftPlayerSkillAPIAddress.replace('CHARACTER_NAME',charaQuery));       
+                //console.debug('[soyun] [who] ['+msg.guild.name+'] charaAPIAddress: '+charaAPIAddress);
+                //console.debug('[soyun] [who] ['+msg.guild.name+'] charaData address: '+charaAPIAddress+charaQuery);
+                //console.debug('[soyun] [who] ['+msg.guild.name+'] playerSkillData address: '+ncsoftPlayerSkillAPIAddress.replace('CHARACTER_NAME',charaQuery));       
 
                 var messageOutput = {
                     'embed': {
