@@ -44,7 +44,7 @@ module.exports = class RegCommand extends Command {
 
                 // Removing 'cricket' role
                 if(msg.guild.roles.find(role => role.name == 'cricket') != null){
-                    msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == 'cricket'));
+                    msg.guild.members.get(msg.author.id).removeRole(msg.guild.roles.find(role => role.name == 'cricket'));
                 }
                 
                 // changing the nickname
@@ -57,7 +57,7 @@ module.exports = class RegCommand extends Command {
                     defaultTextChannel = guildSettingData.settings.default_text;
                 };
                 
-                if(defaultTextChannel != '' && defaultTextChannel != 'disable'){
+                if(defaultTextChannel != '' && defaultTextChannel != 'disable' && defaultTextChannel != undefined){
                     // add cricket role so they can't see the rest of the guild until they do join command
                     msg.guild.channels.find(ch => ch.name == defaultTextChannel).send(
                         'Welcome our new '+classList[i]+' <@'+msg.author.id+'>!'
