@@ -8,6 +8,10 @@ package-lock.json
 # .env file
 .env
 
-#misc file
+# misc file
 .dropbox
 desktop.ini
+mongoexport/guilds.json
+
+# obsolete data
+mongoexport/classes.json
