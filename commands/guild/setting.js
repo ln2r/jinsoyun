@@ -66,6 +66,7 @@ module.exports = class GuildSettingsCommand extends Command {
         //console.debug('[soyun] [setting] ['+msg.guild.name+'] setting option: '+option[0]);
         //console.debug('[soyun] [setting] ['+msg.guild.name+'] channel name: '+channelName);
         //console.debug('[soyun] [setting] ['+msg.guild.name+'] manage roles permission: '+msg.guild.me.hasPermission('MANAGE_ROLES'))
+        //console.debug('[soyun] [setting] ['+msg.guild.name+'] cricket role is: '+(msg.guild.roles.find(role => role.name == 'cricket')))
 
         switch(option[0]){
             case 'reset':
@@ -90,14 +91,14 @@ module.exports = class GuildSettingsCommand extends Command {
                 this.client.emit('newMemberChannelChange', msg.guild.id, channelName);
                 
                 // create cricket role if the bot have the permission
-                if(option[0] != 'disable'){
+                if(channelName != 'disable'){
                     if(msg.guild.me.hasPermission('MANAGE_ROLES')){
                         if((msg.guild.roles.find(role => role.name == 'cricket')) == null){
                             msg.guild.createRole({
                                 'name': 'cricket'
                             })
-                        }
-                        gateMsgData = '\n`cricket` role created';
+                            gateMsgData = ', `cricket` role created';
+                        }                        
                     }                    
                 }
 
