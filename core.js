@@ -155,7 +155,7 @@ module.exports = {
    
         let updateTime = (end-start)/1000+"s";
            
-        //console.debug('[core] [mongo-classes-update] Did class data update, updated: '+status+', time: '+updateTime);
+        console.log('[core] [mongo-classes-update] Did class data update, updated: '+status+', time: '+updateTime);
     },
     
    /** 
@@ -257,7 +257,7 @@ module.exports = {
         let end = Date.now();
         let updateTime = (end-start)/1000+"s";
 
-        //console.debug('[core] [mongo-items-update] Did items data update, time: '+updateTime);
+        console.log('[core] [mongo-items-update] Did items data update, time: '+updateTime);
     },
 
     /** 
@@ -613,7 +613,7 @@ module.exports = {
                 }) 
             }
         })
-        //console.debug('[core] [reset] reset notification sent');
+        console.log('[core] [reset] reset notification sent');
     },
 
     /**
