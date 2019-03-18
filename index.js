@@ -197,15 +197,3 @@ ontime({
     return
     }
 );
-
-// Class data update
-ontime({
-	cycle: ['thu 00:00:00'],
-	utc: true
-}, function (classUpdate) {
-        core.mongoClassDataUpdate();
-
-		classUpdate.done();
-		return;
-    }
-);
