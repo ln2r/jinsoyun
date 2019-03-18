@@ -61,102 +61,6 @@ module.exports = {
                         return items;                        
                     })                   
     },  
-
-   /** 
-     * classUpdate
-     * Used to update the class data
-     * @returns array of update status and time took to update
-     */
-    mongoClassDataUpdate: async function classUpdate () {
-        let start = Date.now();
-        
-
-        //console.debug('[core] [mongo-classes-update] Starting class data update');
-
-        let resources = await module.exports.mongoGetData('classes', {});
-
-        let classData = []; // class data storage
-        let classCollectionName = "classes"; // the collection name
-        let fetchTime = new Date();
-            fetchTime = fetchTime.toISOString();
-   
-        let status;    
-   
-       for(let i = 0; i < resources.length; i++){
-           //console.debug('[core] [mongo-classes-update] Updating '+resources[i].name);                          
-        
-            // getting the attributes/element data
-            let attributeSource = resources[i].sources[0].attributes;
-            let attributesData = await module.exports.getSiteData(attributeSource);
-   
-            let skillsetSource = resources[i].sources[1].skillsets;
-            let skillsetsData = [];
-   
-            // getting the skillset data for each attribute and store it in an array for later
-            for(let j = 0; j < skillsetSource.length; j++){
-                let data = await module.exports.getSiteData(skillsetSource[j]);
-                    data = data.records;
-
-                skillsetsData.push(data);
-            }
-   
-            // formating the data
-            let data = {
-                "_id": i,
-                "name": resources[i].name,
-                "updated": fetchTime,
-                "sources":[
-                    {
-                        "attributes": attributeSource,
-                    },
-                    {
-                        "skillsets": skillsetSource,
-                    },
-                ],
-                "attributes": attributesData,
-                "skillsetA": skillsetsData[0],
-                "skillsetB": skillsetsData[1],
-            }
-   
-            // storing the data to an array for push later
-            classData.push(data);
-               
-   
-            // delay so the server wont get spammed, seems useless but nice touch
-            await delay(500);
-        }
-   
-        // pushing the array data to database
-        MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
-            let dbo = db.db(dbName);
-            dbo.listCollections({name: classCollectionName})
-               .next(function(err, collinfo) {
-                    if(err) throw err;
-   
-                    // checking if the collection is exist or not
-                    // true: drop
-                    // false: do nothing
-                    if (collinfo) {
-                        dbo.collection(classCollectionName).drop(function(err) {
-                            if (err) console.error(err);
-                        });
-                    }
-    
-                    // inserting the data to the collection
-                    dbo.collection(classCollectionName).insertMany(classData, function(err, res) {
-                        if (err) throw err; 
-                        db.close(); 
-                    });
-                    status = 'updated';                    
-                });
-            });
-   
-        let end = Date.now();
-   
-        let updateTime = (end-start)/1000+"s";
-           
-        console.log('[core] [mongo-classes-update] Did class data update, updated: '+status+', time: '+updateTime);
-    },
     
    /** 
      * itemsUpdate
@@ -171,7 +75,10 @@ module.exports = {
         let marketItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/market/na/current/lowest");
 
         if(dataItems.status == 'error' || dataItems.status == 'error'){
-            console.error('[soyun] [item] api data fetch error, please check the log');
+            console.error('[soyun] [items-update] api data fetch error, please check the log');
+            let end = Date.now();
+            let updateTime = (end-start)/1000+"s";    
+            console.log('[core] [items-update] Update data failed, time: '+updateTime);
         }else{
             let itemsCollectionName = "items";
             MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
@@ -235,29 +142,28 @@ module.exports = {
                         .next(function(err, collinfo) {
                             if(err) throw err;
 
-                            // checking if the collection is exist or not
-                            // true: drop
-                            // false: do nothing                    
+                            // checking if the collection is exist or not                  
                             if (collinfo) {
                                 dbo.collection(itemsCollectionName).drop(function(err) {
                                     if (err) throw err;
                                 });                                    
-                            }     
-                        });
+                            }
+                            
+                            // inserting the data to the collection
+                            dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {  
+                                if (err) throw err;    
+                                db.close();                
+                            })
 
-                    // inserting the data to the collection
-                    dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {  
-                        if (err) throw err;    
-                        db.close();                
-                    });                
+                            let end = Date.now();
+                            let updateTime = (end-start)/1000+"s";
+                    
+                            console.log('[core] [items-update] Data updated, time: '+updateTime); 
+                        });                                    
                 });
-                status = 'updated'; 
-            }); 
+            });
         };
-        let end = Date.now();
-        let updateTime = (end-start)/1000+"s";
 
-        console.log('[core] [mongo-items-update] Did items data update, time: '+updateTime);
     },
 
     /** 
