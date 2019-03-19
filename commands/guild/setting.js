@@ -95,7 +95,8 @@ module.exports = class GuildSettingsCommand extends Command {
                     if(msg.guild.me.hasPermission('MANAGE_ROLES')){
                         if((msg.guild.roles.find(role => role.name == 'cricket')) == null){
                             msg.guild.createRole({
-                                'name': 'cricket'
+                                'name': 'cricket',
+                                'premission': ['SEND_MESSAGES', 'READ_MESSAGE_HISTORY']
                             })
                             gateMsgData = ', `cricket` role created';
                         }                        
