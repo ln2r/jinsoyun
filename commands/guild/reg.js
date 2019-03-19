@@ -11,7 +11,7 @@ module.exports = class RegCommand extends Command {
             description: 'Register yourself into the guild so you can access the rest of the guild',
             examples: ['reg <charcter name> <character class', 'reg jinsoyun blade dancer'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_ROLES', 'CHANGE_NICKNAME', 'MANAGE_NICKNAMES'],                    
+            clientPermissions: ['CHANGE_NICKNAME', 'MANAGE_NICKNAMES'],                    
         });
     }
 
