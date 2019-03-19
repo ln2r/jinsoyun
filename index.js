@@ -3,11 +3,11 @@ const dotenv = require('dotenv').config();
 const { CommandoClient } = require('discord.js-commando');
 const Twitter = require('twitter');
 const MongoClient = require('mongodb').MongoClient;
-const MongoDBProvider = require('commando-provider-mongo');
+const MongoDBProvider = require('./commando-provider-mongo');
 const path = require('path');
 const ontime = require('ontime');
 
-const core = require('./core.js');
+const core = require('./core');
 
 // Discord.js Commando scripts start here
 const clientDiscord = new CommandoClient({
