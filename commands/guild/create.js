@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const core = require('../../core.js');
+const { mongoGetData } = require('../../core');
 
 module.exports = class CreateChCommand extends Command {
     constructor(client) {
@@ -17,7 +17,7 @@ module.exports = class CreateChCommand extends Command {
 
     async run(msg) {
         let msgData = '';
-        let guildSettingsData = await core.mongoGetData('guilds', {guild: msg.guild.id});
+        let guildSettingsData = await mongoGetData('guilds', {guild: msg.guild.id});
         let classList = ['gunslinger', 'blade dancer', 'destroyer', 'summoner', 'kung fu master', 'assassin', 'force master', 'warlock', 'blade master', 'soul fighter', 'warden'];
 
         // checking if the guild already done the setup or not

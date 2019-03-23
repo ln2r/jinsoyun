@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { getDayValue, getDailyData, setArrayDataFormat } = require('../../core');
 
 module.exports = class DailyCommand extends Command {
     constructor(client) {
@@ -22,15 +22,15 @@ module.exports = class DailyCommand extends Command {
 
         let dayQuery = '';
 
-        //console.debug('[soyun] [daily] ['+msg.guild.name+'] current day: '+core.getDayValue(Date.now(), 'now'));
-        //console.debug('[soyun] [daily] ['+msg.guild.name+'] tomorrow is: '+core.getDayValue(Date.now(), 'tomorrow'));
+        //console.debug('[soyun] [daily] ['+msg.guild.name+'] current day: '+getDayValue(Date.now(), 'now'));
+        //console.debug('[soyun] [daily] ['+msg.guild.name+'] tomorrow is: '+getDayValue(Date.now(), 'tomorrow'));
         //console.debug('[soyun] [daily] ['+msg.guild.name+'] user query is: '+args);
 
         
         if(args == ''){
-            dayQuery = core.getDayValue(Date.now(), 'now');
+            dayQuery = getDayValue(Date.now(), 'now');
         }else if(args == 'tomorrow' || args == 'tmr'){
-            dayQuery = core.getDayValue(Date.now(), 'tomorrow');
+            dayQuery = getDayValue(Date.now(), 'tomorrow');
         }else{
             if(args == 'mon' || args == 'monday'){dayQuery = 'Monday'};
             if(args == 'tue' || args == 'tuesday'){dayQuery = 'Tuesday'};
@@ -43,7 +43,7 @@ module.exports = class DailyCommand extends Command {
 
         //console.debug('[soyun] [daily] dayQuery value: '+dayQuery);
 
-        let dailyData = await core.getDailyData(dayQuery);
+        let dailyData = await getDailyData(dayQuery);
         let embedData = {
             'embed': {
                 'author':{
@@ -57,11 +57,11 @@ module.exports = class DailyCommand extends Command {
                 'fields':[
                     {
                        'name': 'Completion Rewards',
-                       'value':  core.setArrayDataFormat(dailyData.rewards, '', true)
+                       'value':  setArrayDataFormat(dailyData.rewards, '', true)
                     },
                     {
                         'name': 'Quests/Dungeons List (Location - Quest)',
-                        'value': core.setQuestViewFormat(dailyData.quests, '', true)							
+                        'value': setQuestViewFormat(dailyData.quests, '', true)							
                     }
                 ]
             }

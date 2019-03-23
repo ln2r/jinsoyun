@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
-const core = require('../../core.js');
+const { mongoGetData } = require('../../core');
 
 module.exports = class GuildSettingsCommand extends Command {
     constructor(client) {
@@ -113,7 +113,7 @@ module.exports = class GuildSettingsCommand extends Command {
             break;
 
             case 'show':
-                let guildSettingData = await core.mongoGetData('guilds', {guild: msg.guild.id});
+                let guildSettingData = await mongoGetData('guilds', {guild: msg.guild.id});
 
                 msgData = {
                     'embed': {

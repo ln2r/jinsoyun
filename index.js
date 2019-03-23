@@ -7,7 +7,7 @@ const MongoDBProvider = require('./commando-provider-mongo');
 const path = require('path');
 const ontime = require('ontime');
 
-const core = require('./core');
+const { mongoGetData, sendResetNotification, mongoItemDataUpdate} = require('./core');
 
 // Discord.js Commando scripts start here
 const clientDiscord = new CommandoClient({
@@ -50,7 +50,7 @@ clientDiscord
             .catch(console.error);
     })
     .on('guildMemberAdd', async (member) => {
-        let guildSettingData = await core.mongoGetData('guilds', {guild: member.guild.id});
+        let guildSettingData = await mongoGetData('guilds', {guild: member.guild.id});
             guildSettingData = guildSettingData[0];
 
         let memberGate = '';
@@ -92,7 +92,7 @@ const clientTwitter = new Twitter({
 });
 
 clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async  function(stream) {
-    let twitterAPIData = await core.mongoGetData('apis', {name: 'Twitter'});
+    let twitterAPIData = await mongoGetData('apis', {name: 'Twitter'});
         twitterAPIData = twitterAPIData[0];
 
 	stream.on('data', function(tweet) {
@@ -143,7 +143,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
                     //console.debug('[soyun] [tweet] guild list: '+guild.id+'('+guild.name+')');
         
                     // getting guild setting data
-                    let guildSettingData = await core.mongoGetData('guilds', {guild: guild.id});
+                    let guildSettingData = await mongoGetData('guilds', {guild: guild.id});
                         guildSettingData = guildSettingData[0];
                     //console.debug('[soyun] [tweet] guild setting data: '+JSON.stringify(guildSettingData, null, '\t'));    
 
@@ -180,7 +180,7 @@ ontime({
 	cycle: ['12:00:00'],
 	utc: true
 	}, async function(reset){
-        core.sendResetNotification(clientDiscord.guilds);
+        sendResetNotification(clientDiscord.guilds);
         reset.done();
 		return;
     }
@@ -191,7 +191,7 @@ ontime({
 	cycle: [ '00:02' ],
 	utc: true
 }, function (itemUpdate) {
-    core.mongoItemDataUpdate();
+    mongoItemDataUpdate();
 
     itemUpdate.done();
     return

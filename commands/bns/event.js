@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { getDayValue, getEventData, setArrayDataFormat, setQuestViewFormat } = require('../../core');
 
 module.exports = class BnsEventCommand extends Command {
     constructor(client) {
@@ -21,15 +21,15 @@ module.exports = class BnsEventCommand extends Command {
 
         let dayQuery = '';
 
-        //console.debug('[soyun] [event] ['+msg.guild.name+'] current day: '+core.getDayValue(Date.now(), 'now'));
-        //console.debug('[soyun] [event] ['+msg.guild.name+'] tomorrow is: '+core.getDayValue(Date.now(), 'tomorrow'));
+        //console.debug('[soyun] [event] ['+msg.guild.name+'] current day: '+getDayValue(Date.now(), 'now'));
+        //console.debug('[soyun] [event] ['+msg.guild.name+'] tomorrow is: '+getDayValue(Date.now(), 'tomorrow'));
         //console.debug('[soyun] [event] ['+msg.guild.name+'] user query is: '+args);
 
         
         if(args == ''){
-            dayQuery = core.getDayValue(Date.now(), 'now');
+            dayQuery = getDayValue(Date.now(), 'now');
         }else if(args == 'tomorrow' || args == 'tmr'){
-            dayQuery = core.getDayValue(Date.now(), 'tomorrow');
+            dayQuery = getDayValue(Date.now(), 'tomorrow');
         }else{
             if(args == 'mon' || args == 'monday'){dayQuery = 'Monday'};
             if(args == 'tue' || args == 'tuesday'){dayQuery = 'Tuesday'};
@@ -42,7 +42,7 @@ module.exports = class BnsEventCommand extends Command {
 
         //console.debug('[soyun] [event] ['+msg.guild.name+'] dayQuery value: '+dayQuery);
 
-        let eventData = await core.getEventData(dayQuery);
+        let eventData = await getEventData(dayQuery);
 
         let embedData = {
             'embed': {
@@ -54,8 +54,8 @@ module.exports = class BnsEventCommand extends Command {
                 'url': eventData.url,
                 'description': '**Duration**: '+eventData.duration+'\n'+
                                 '**Redemption Period**: '+eventData.redeem+'\n'+
-                                '**Event Item**: '+core.setArrayDataFormat(eventData.rewards.items, '- ', true)+'\n'+
-                                '**What to do**: '+core.setArrayDataFormat(eventData.todo, '- ', true)+'\n'+
+                                '**Event Item**: '+setArrayDataFormat(eventData.rewards.items, '- ', true)+'\n'+
+                                '**What to do**: '+setArrayDataFormat(eventData.todo, '- ', true)+'\n'+
                                 '**Redeemable Event**: '+eventData.lastEvent+' ('+eventData.lastEventRedeem+')',
                 'color': 1879160,
                 'footer': {
@@ -65,7 +65,7 @@ module.exports = class BnsEventCommand extends Command {
                 'fields':[
                     {
                         'name': 'Quests List',
-                        'value':  core.setQuestViewFormat(eventData.quests, '', true) 								
+                        'value':  setQuestViewFormat(eventData.quests, '', true) 								
                     }
                 ]
             }

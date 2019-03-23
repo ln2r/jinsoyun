@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const core = require('../../core.js');
+const { mongoItemDataUpdate} = require('../../core');
 
 module.exports = class ItemsUpdateCommand extends Command {
     constructor(client) {
@@ -15,7 +15,7 @@ module.exports = class ItemsUpdateCommand extends Command {
 
     run(msg) {
         // what command do here
-        core.mongoItemDataUpdate();
+        mongoItemDataUpdate();
         return msg.say('Updating items data');
     }
 };

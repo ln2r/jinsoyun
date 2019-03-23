@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData, getTimeDifference } = require('../../core');
 
 module.exports = class KoldrakCommand extends Command {
     constructor(client) {
@@ -18,10 +18,10 @@ module.exports = class KoldrakCommand extends Command {
     async run(msg) {
         msg.channel.startTyping();
 
-        let timeData = await core.mongoGetData('challenges', {});
+        let timeData = await mongoGetData('challenges', {});
             timeData = timeData[0].koldrak.time;
 
-        let koldrakClosestTime = core.getTimeDifference(timeData);
+        let koldrakClosestTime = getTimeDifference(timeData);
         //console.debug('[soyun] [koldrak\'s lair] ['+msg.guild.name+'] time diffence data: '+JSON.stringify(koldrakClosestTime, null, '\t'));
     
         msg.channel.stopTyping();

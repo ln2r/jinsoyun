@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData, getPriceStatus, setCurrencyFormat } = require('../../core');
 
 module.exports = class MarketCommand extends Command {
     constructor(client) {
@@ -30,7 +30,7 @@ module.exports = class MarketCommand extends Command {
         let embedData = '';
         let msgData = '';
         let itemData = ''; 
-        let itemImage = await core.mongoGetData('configs', {'_id': 0});
+        let itemImage = await mongoGetData('configs', {'_id': 0});
             itemImage = itemImage[0].DEFAULT_MARKET_THUMBNAIL;  
             
         let dataLastUpdate = Date.now();
@@ -52,7 +52,7 @@ module.exports = class MarketCommand extends Command {
         //console.debug('[soyun] [market] ['+msg.guild.name+'] regx value: '+regx);
 
         let dbSearchQuery = {'name': regx};
-        let marketData = await core.mongoGetData('items', dbSearchQuery);
+        let marketData = await mongoGetData('items', dbSearchQuery);
 
         //console.debug('[soyun] [market] ['+msg.guild.name+'] total result: '+marketData.length);
 
@@ -77,12 +77,12 @@ module.exports = class MarketCommand extends Command {
                     oldPrice = marketData[i].market[1].priceEach
                 }
 
-                let priceStatus = core.getPriceStatus(oldPrice, marketData[i].market[0].priceEach);
+                let priceStatus = getPriceStatus(oldPrice, marketData[i].market[0].priceEach);
 
                 itemData = itemData + (
                     '**'+marketData[i].name+'** `'+marketData[i]._id+'`\n'+
-                    '- Each: '+core.setCurrencyFormat(marketData[i].market[0].priceEach)+' `'+priceStatus+'`\n'+
-                    '- Lowest: '+core.setCurrencyFormat(marketData[i].market[0].priceTotal)+' for '+marketData[i].market[0].quantity+'\n'
+                    '- Each: '+setCurrencyFormat(marketData[i].market[0].priceEach)+' `'+priceStatus+'`\n'+
+                    '- Lowest: '+setCurrencyFormat(marketData[i].market[0].priceTotal)+' for '+marketData[i].market[0].quantity+'\n'
                 )
             }            
         }

@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData } = require('../../core');
 
 module.exports = class LootCommand extends Command {
     constructor(client) {
@@ -51,7 +51,7 @@ module.exports = class LootCommand extends Command {
         // getting the data and pushing them into an array
         let dungeonData = [];
         for(let i  = 0; i < dbQuery.length; i++){
-            dungeonData.push(await core.mongoGetData('dungeons', dbQuery[i]));
+            dungeonData.push(await mongoGetData('dungeons', dbQuery[i]));
         }
 
         // getting the dungeon name and formatting it

@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData, getTimeDifference} = require('../../core');
 
 module.exports = class GrandHarvestCommand extends Command {
     constructor(client) {
@@ -18,10 +18,10 @@ module.exports = class GrandHarvestCommand extends Command {
     async run(msg) {
         msg.channel.startTyping();
 
-        let timeData = await core.mongoGetData('challenges', {});
+        let timeData = await mongoGetData('challenges', {});
             timeData = timeData[0].grand_harvest_raid.time;
 
-        let grandHarvestClosestTime = core.getTimeDifference(timeData);
+        let grandHarvestClosestTime = getTimeDifference(timeData);
 
         //console.debug('[soyun] [grand harvest raid] ['+msg.guild.name+'] time diffence data: '+JSON.stringify(grandHarvestClosestTime, null, '\t'));
 

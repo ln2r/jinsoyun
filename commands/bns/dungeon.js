@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData, setArrayDataFormat} = require('../../core');
 
 module.exports = class DungeonCommand extends Command {
     constructor(client) {
@@ -28,7 +28,7 @@ module.exports = class DungeonCommand extends Command {
 
         let regx = new RegExp('('+dungeon+'+)', 'ig'); // doing rough search
         let dbSearchQuery = {'name': regx};
-        let dungeonData = await core.mongoGetData('dungeons', dbSearchQuery);
+        let dungeonData = await mongoGetData('dungeons', dbSearchQuery);
             dungeonData = dungeonData[0];
 
         if(dungeonData == null){
@@ -72,16 +72,16 @@ module.exports = class DungeonCommand extends Command {
             //console.debug('[soyun] [dungeon] ['+msg.guild.name+'] hard first data: '+dungeonData.rewards.hard[0]);
 
             if(dungeonData.rewards.common[0] != ''){
-                rewardsCommon = '\n**Common**'+core.setArrayDataFormat(dungeonData.rewards.common, '- ', true)+'\n\u200B';   
+                rewardsCommon = '\n**Common**'+setArrayDataFormat(dungeonData.rewards.common, '- ', true)+'\n\u200B';   
             }
 
             if(dungeonData.rewards.normal[0] != ''){
-                rewardsNormal = '\n**Normal**'+core.setArrayDataFormat(dungeonData.rewards.normal, '- ', true)+'\n\u200B';   
+                rewardsNormal = '\n**Normal**'+setArrayDataFormat(dungeonData.rewards.normal, '- ', true)+'\n\u200B';   
                                 
             }
             
             if(dungeonData.rewards.hard[0] != ''){
-                rewardsHard = '\n**Hard**'+core.setArrayDataFormat(dungeonData.rewards.hard, '- ', true)+'\n\u200B';         
+                rewardsHard = '\n**Hard**'+setArrayDataFormat(dungeonData.rewards.hard, '- ', true)+'\n\u200B';         
             }
 
             let embedData = {
@@ -101,7 +101,7 @@ module.exports = class DungeonCommand extends Command {
                         },
                         {
                             'name': 'Entry Requirements',
-                            'value': core.setArrayDataFormat(dungeonData.requirements, '- ', true)
+                            'value': setArrayDataFormat(dungeonData.requirements, '- ', true)
                         },
                         {
                             'name': 'Guide',

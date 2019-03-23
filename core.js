@@ -1,10 +1,8 @@
 const dotenv = require('dotenv').config();
 
 const MongoClient = require('mongodb').MongoClient;
-const Discord = require("discord.js");
 const dateformat = require('dateformat');
 const fetch = require('node-fetch');
-const delay = require('delay');
 
 let url = process.env.bot_mongodb_url;
 let dbName = process.env.bot_mongodb_db_name;
@@ -66,7 +64,6 @@ module.exports = {
      * itemsUpdate
      * Used to update the item data with it's market data
      * @returns array of update status and time took to update
-     * 
      */
     mongoItemDataUpdate: async function itemsUpdate(){     
         let start = Date.now();

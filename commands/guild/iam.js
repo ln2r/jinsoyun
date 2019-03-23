@@ -1,5 +1,4 @@
 const { Command } = require('discord.js-commando');
-const core = require('../../core.js');
 
 module.exports = class ClassChangeCommand extends Command {
     constructor(client) {

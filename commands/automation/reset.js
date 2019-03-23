@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { sendResetNotification } = require('../../core');
 
 module.exports = class ResetNotificationCommand extends Command {
     constructor(client) {
@@ -16,6 +16,6 @@ module.exports = class ResetNotificationCommand extends Command {
     }
 
     async run(msg) {
-        core.sendResetNotification(this.client.guilds);
+        sendResetNotification(this.client.guilds);
     }
 };

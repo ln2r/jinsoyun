@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const core = require('../../core.js');
+const { mongoGetData } = require('../../core');
 
 module.exports = class RegCommand extends Command {
     constructor(client) {
@@ -23,7 +23,7 @@ module.exports = class RegCommand extends Command {
         let classValid = false;
         for(let i = 0; i < classList.length; i++){
             if(args.includes(classList[i])){
-                let guildSettingData = await core.mongoGetData('guilds', {guild: msg.guild.id});
+                let guildSettingData = await mongoGetData('guilds', {guild: msg.guild.id});
                     guildSettingData = guildSettingData[0];   
                 
                 // getting the chara name and make it prettier

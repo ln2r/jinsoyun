@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData, getSiteData, setDataFormatNumb, setDataFormatString, setArrayDataFormat } = require('../../core');
 
 module.exports = class WhoCommand extends Command {
     constructor(client) {
@@ -19,15 +19,15 @@ module.exports = class WhoCommand extends Command {
         msg.channel.startTyping();
 
         // getting character equipments api address from the database
-        let charaAPIAddress = await core.mongoGetData('apis', {'name': 'Silveress Character'});
+        let charaAPIAddress = await mongoGetData('apis', {'name': 'Silveress Character'});
             charaAPIAddress = charaAPIAddress[0].address;
 
         // getting character traits data api address         
-        let ncsoftPlayerTraitsAPIAdress = await core.mongoGetData('apis', {'name': 'NCSOFT Player Traits Endpoint'});
+        let ncsoftPlayerTraitsAPIAdress = await mongoGetData('apis', {'name': 'NCSOFT Player Traits Endpoint'});
             ncsoftPlayerTraitsAPIAdress = ncsoftPlayerTraitsAPIAdress[0].address;        
 
         // getting bnstree site address
-        let bnsTreeCharacterProfileAddress = await core.mongoGetData('apis', {'name': 'BNS Tree Character Profile'});
+        let bnsTreeCharacterProfileAddress = await mongoGetData('apis', {'name': 'BNS Tree Character Profile'});
             bnsTreeCharacterProfileAddress = bnsTreeCharacterProfileAddress[0].address;
         
         // getting the character name, if the user doesn't give any, their discord nickname will be used instead
@@ -49,8 +49,8 @@ module.exports = class WhoCommand extends Command {
 			bnstreeProfile = bnstreeProfile.replace(' ','%20'); // replacing the space so discord.js embed wont screaming error
 
         // getting the character equipments from silveress api
-        let charaData = await core.getSiteData(charaAPIAddress+charaQuery);
-        let traitsData = await core.getSiteData(ncsoftPlayerTraitsAPIAdress.replace('CHARACTER_NAME',charaQuery));
+        let charaData = await getSiteData(charaAPIAddress+charaQuery);
+        let traitsData = await getSiteData(ncsoftPlayerTraitsAPIAdress.replace('CHARACTER_NAME',charaQuery));
             traitsData = traitsData.records;
 
         // checking if the data fetch return data or error
@@ -98,42 +98,42 @@ module.exports = class WhoCommand extends Command {
                         'fields': [
                             {
                                 'name': 'Basic Information',
-                                'value': '**Health**: '+core.setDataFormatNumb(charaData.hp)+
-                                        '\n**Attack Power**: '+core.setDataFormatNumb(charaData.ap)+
-                                        '\n**Defense**: '+core.setDataFormatNumb(charaData.defence)+
-                                        '\n**Clan**: '+core.setDataFormatString(charaData.guild)+
-                                        '\n**Faction**: '+core.setDataFormatString(charaData.faction)+' ('+core.setDataFormatString(charaData.factionRank)+')'+
-                                        '\n**Hongmoon Points Allocation (Atk - Def)**: '+core.setDataFormatNumb(charaData.HMAttackPoint)+' - '+core.setDataFormatNumb(charaData.HMDefencePoint)+'\n\u200B'                                    
+                                'value': '**Health**: '+setDataFormatNumb(charaData.hp)+
+                                        '\n**Attack Power**: '+setDataFormatNumb(charaData.ap)+
+                                        '\n**Defense**: '+setDataFormatNumb(charaData.defence)+
+                                        '\n**Clan**: '+setDataFormatString(charaData.guild)+
+                                        '\n**Faction**: '+setDataFormatString(charaData.faction)+' ('+setDataFormatString(charaData.factionRank)+')'+
+                                        '\n**Hongmoon Points Allocation (Atk - Def)**: '+setDataFormatNumb(charaData.HMAttackPoint)+' - '+setDataFormatNumb(charaData.HMDefencePoint)+'\n\u200B'                                    
                             },
                             {
                                 'name': 'Stats',
-                                'value': '**Block**: '+core.setDataFormatNumb(charaData.block)+' ('+(core.setDataFormatNumb(charaData.blockRate)*100).toFixed(2)+'%)'+
-                                        '\n**Evasion**: '+core.setDataFormatNumb(charaData.evasion)+' ('+(core.setDataFormatNumb(charaData.evasionRate)*100).toFixed(2)+'%)'+
-                                        '\n**Boss (Attack Power - Defense)**: '+core.setDataFormatNumb(charaData.ap_boss)+' - '+core.setDataFormatNumb(charaData.defence_boss)+
-                                        '\n**Critical Hit**: '+core.setDataFormatNumb(charaData.crit)+' ('+(core.setDataFormatNumb(charaData.critRate)*100).toFixed(2)+'%)'+
-                                        '\n**Critical Damage**: '+core.setDataFormatNumb(charaData.critDamage)+' ('+(core.setDataFormatNumb(charaData.critDamageRate)*100).toFixed(2)+'%)'+'\n\u200B'
+                                'value': '**Block**: '+setDataFormatNumb(charaData.block)+' ('+(setDataFormatNumb(charaData.blockRate)*100).toFixed(2)+'%)'+
+                                        '\n**Evasion**: '+setDataFormatNumb(charaData.evasion)+' ('+(setDataFormatNumb(charaData.evasionRate)*100).toFixed(2)+'%)'+
+                                        '\n**Boss (Attack Power - Defense)**: '+setDataFormatNumb(charaData.ap_boss)+' - '+setDataFormatNumb(charaData.defence_boss)+
+                                        '\n**Critical Hit**: '+setDataFormatNumb(charaData.crit)+' ('+(setDataFormatNumb(charaData.critRate)*100).toFixed(2)+'%)'+
+                                        '\n**Critical Damage**: '+setDataFormatNumb(charaData.critDamage)+' ('+(setDataFormatNumb(charaData.critDamageRate)*100).toFixed(2)+'%)'+'\n\u200B'
                             },
                             {
                                 'name': 'Equipments',
-                                'value': '**Weapon**: '+core.setDataFormatString(charaData.weaponName)+
-                                        '\n\n**Gems**: '+core.setArrayDataFormat(gemData, '- ', true)+
-                                        '\n\n**Soulshields**: '+core.setArrayDataFormat(soulshieldData, '- ', true)+
-                                        '\n\n**Ring**: '+core.setDataFormatString(charaData.ringName)+
-                                        '\n**Earring**: '+core.setDataFormatString(charaData.earringName)+
-                                        '\n**Necklace**: '+core.setDataFormatString(charaData.necklaceName)+
-                                        '\n**Braclet**: '+core.setDataFormatString(charaData.braceletName)+
-                                        '\n**Belt**: '+core.setDataFormatString(charaData.beltName)+
-                                        '\n**Gloves**: '+core.setDataFormatString(charaData.gloves)+
-                                        '\n**Soul**: '+core.setDataFormatString(charaData.soulName)+
-                                        '\n**Heart**: '+core.setDataFormatString(charaData.soulName2)+
-                                        '\n**Aura Pet**: '+core.setDataFormatString(charaData.petAuraName)+
-                                        '\n**Talisman**: '+core.setDataFormatString(charaData.talismanName)+
-                                        '\n**Soul Badge**: '+core.setDataFormatString(charaData.soulBadgeName)+
-                                        '\n**Mystic Badge**: '+core.setDataFormatString(charaData.mysticBadgeName)+'\n\u200B'
+                                'value': '**Weapon**: '+setDataFormatString(charaData.weaponName)+
+                                        '\n\n**Gems**: '+setArrayDataFormat(gemData, '- ', true)+
+                                        '\n\n**Soulshields**: '+setArrayDataFormat(soulshieldData, '- ', true)+
+                                        '\n\n**Ring**: '+setDataFormatString(charaData.ringName)+
+                                        '\n**Earring**: '+setDataFormatString(charaData.earringName)+
+                                        '\n**Necklace**: '+setDataFormatString(charaData.necklaceName)+
+                                        '\n**Braclet**: '+setDataFormatString(charaData.braceletName)+
+                                        '\n**Belt**: '+setDataFormatString(charaData.beltName)+
+                                        '\n**Gloves**: '+setDataFormatString(charaData.gloves)+
+                                        '\n**Soul**: '+setDataFormatString(charaData.soulName)+
+                                        '\n**Heart**: '+setDataFormatString(charaData.soulName2)+
+                                        '\n**Aura Pet**: '+setDataFormatString(charaData.petAuraName)+
+                                        '\n**Talisman**: '+setDataFormatString(charaData.talismanName)+
+                                        '\n**Soul Badge**: '+setDataFormatString(charaData.soulBadgeName)+
+                                        '\n**Mystic Badge**: '+setDataFormatString(charaData.mysticBadgeName)+'\n\u200B'
                             },                            
                             {
                                 'name': 'Selected Talents',
-                                'value': core.setArrayDataFormat(traitsDataView, '- ', true)
+                                'value': setArrayDataFormat(traitsDataView, '- ', true)
                             }
                             
                         ],

@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const core = require('../../core.js');
+const { mongoGetData, getTimeDifference } = require('../../core');
 
 module.exports = class ShackledIsleCommand extends Command {
     constructor(client) {
@@ -18,10 +18,10 @@ module.exports = class ShackledIsleCommand extends Command {
     async run(msg) {
         msg.channel.startTyping();
 
-        let timeData = await core.mongoGetData('challenges', {});
+        let timeData = await mongoGetData('challenges', {});
             timeData = timeData[0].shackled_isle.time;
 
-        let brModeClosestTime = core.getTimeDifference(timeData);
+        let brModeClosestTime = getTimeDifference(timeData);
 
         //console.debug('[soyun] [shackled isle] ['+msg.guild.name+'] time diffence data: '+JSON.stringify(brModeClosestTime, null, '\t'));
 
