@@ -85,6 +85,8 @@ module.exports = class WhoCommand extends Command {
 
                 let soulshieldData = [charaData.soulshield1, charaData.soulshield2, charaData.soulshield3, charaData.soulshield4, charaData.soulshield5, charaData.soulshield6, charaData.soulshield7, charaData.soulshield8];
 
+                let gearData = [charaData.ringName, charaData.earringName, charaData.necklaceName, charaData.braceletName, charaData.beltName, charaData.gloves, charaData.soulName, charaData.soulName2, charaData.petAuraName, charaData.talismanName, charaData.soulBadgeName, charaData.mysticBadgeName]
+
                //console.debug('[soyun] [who] ['+msg.guild.name+'] charaAPIAddress: '+charaAPIAddress);
                //console.debug('[soyun] [who] ['+msg.guild.name+'] charaData address: '+charaAPIAddress+charaQuery);
                //console.debug('[soyun] [who] ['+msg.guild.name+'] player traits data address: '+ncsoftPlayerTraitsAPIAdress.replace('CHARACTER_NAME',charaQuery));
@@ -103,33 +105,25 @@ module.exports = class WhoCommand extends Command {
                                         '\n**Defense**: '+setDataFormatNumb(charaData.defence)+
                                         '\n**Clan**: '+setDataFormatString(charaData.guild)+
                                         '\n**Faction**: '+setDataFormatString(charaData.faction)+' ('+setDataFormatString(charaData.factionRank)+')'+
-                                        '\n**Hongmoon Points Allocation (Atk - Def)**: '+setDataFormatNumb(charaData.HMAttackPoint)+' - '+setDataFormatNumb(charaData.HMDefencePoint)+'\n\u200B'                                    
+                                        '\n\u200B'                                    
                             },
                             {
                                 'name': 'Stats',
-                                'value': '**Block**: '+setDataFormatNumb(charaData.block)+' ('+(setDataFormatNumb(charaData.blockRate)*100).toFixed(2)+'%)'+
+                                'value': '**Mystic**: '+setDataFormatNumb(charaData.mystic)+' ('+(setDataFormatNumb(charaData.mysticRate)*100).toFixed(2)+'%)'+ 
+                                        '\n**Block**: '+setDataFormatNumb(charaData.block)+' ('+(setDataFormatNumb(charaData.blockRate)*100).toFixed(2)+'%)'+
                                         '\n**Evasion**: '+setDataFormatNumb(charaData.evasion)+' ('+(setDataFormatNumb(charaData.evasionRate)*100).toFixed(2)+'%)'+
                                         '\n**Boss (Attack Power - Defense)**: '+setDataFormatNumb(charaData.ap_boss)+' - '+setDataFormatNumb(charaData.defence_boss)+
                                         '\n**Critical Hit**: '+setDataFormatNumb(charaData.crit)+' ('+(setDataFormatNumb(charaData.critRate)*100).toFixed(2)+'%)'+
-                                        '\n**Critical Damage**: '+setDataFormatNumb(charaData.critDamage)+' ('+(setDataFormatNumb(charaData.critDamageRate)*100).toFixed(2)+'%)'+'\n\u200B'
+                                        '\n**Critical Damage**: '+setDataFormatNumb(charaData.critDamage)+' ('+(setDataFormatNumb(charaData.critDamageRate)*100).toFixed(2)+'%)'+
+                                        '\n\u200B'
                             },
                             {
                                 'name': 'Equipments',
                                 'value': '**Weapon**: '+setDataFormatString(charaData.weaponName)+
                                         '\n\n**Gems**: '+setArrayDataFormat(gemData, '- ', true)+
                                         '\n\n**Soulshields**: '+setArrayDataFormat(soulshieldData, '- ', true)+
-                                        '\n\n**Ring**: '+setDataFormatString(charaData.ringName)+
-                                        '\n**Earring**: '+setDataFormatString(charaData.earringName)+
-                                        '\n**Necklace**: '+setDataFormatString(charaData.necklaceName)+
-                                        '\n**Braclet**: '+setDataFormatString(charaData.braceletName)+
-                                        '\n**Belt**: '+setDataFormatString(charaData.beltName)+
-                                        '\n**Gloves**: '+setDataFormatString(charaData.gloves)+
-                                        '\n**Soul**: '+setDataFormatString(charaData.soulName)+
-                                        '\n**Heart**: '+setDataFormatString(charaData.soulName2)+
-                                        '\n**Aura Pet**: '+setDataFormatString(charaData.petAuraName)+
-                                        '\n**Talisman**: '+setDataFormatString(charaData.talismanName)+
-                                        '\n**Soul Badge**: '+setDataFormatString(charaData.soulBadgeName)+
-                                        '\n**Mystic Badge**: '+setDataFormatString(charaData.mysticBadgeName)+'\n\u200B'
+                                        '\n\n**Accessories**: '+setArrayDataFormat(gearData, '- ', true)+
+                                        '\n\u200B'
                             },                            
                             {
                                 'name': 'Selected Talents',
