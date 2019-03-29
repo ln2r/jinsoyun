@@ -69,9 +69,9 @@ clientDiscord
 
                 'Before I give you access to the rest of the server, I need to know your character name and class that you use in our clan, to do that please write this following command with your information in it\n\n'+
 
-                '```'+
-                '@Jinsoyun reg <character name> <class name>\nExample: @Jinsoyun reg jinsoyun blade dancer'+
-                '```\n'+
+                '`@Jinsoyun join <character name> <class name>`\n'+
+                '**Example**:\n'+
+                '`@Jinsoyun join jinsoyun blade dancer`\n'+
                 
                 'If you need some assistance you can mention or DM available admin'
             );
