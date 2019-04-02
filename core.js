@@ -27,7 +27,7 @@ module.exports = {
             .then((response) => {return response.json()})
             .catch((error) => {
                 console.error('[core] [site-data] Error: '+error);
-                module.exports.sendBotReport({'name':'SiteFetchError', 'message':'Unable to get site data, site might be unreachable or unavailable', 'path':'main/', 'code':00400, 'method':'GET'}, 'itemUpdate-core', 'error');
+                module.exports.sendBotReport({'name':'SiteFetchError', 'message':'Unable to get site data, site might be unreachable or unavailable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
 
                 return {'status': 'error', error}
             })  
@@ -75,7 +75,7 @@ module.exports = {
 
         if(dataItems.status == 'error' || dataItems.status == 'error'){
             console.error('[core] [items-update] api data fetch error, please check the log');
-            module.exports.sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site might be unreachable or unavailable', 'path':'main/', 'code':00400, 'method':'GET'}, 'itemUpdate-core', 'error');
+            module.exports.sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site might be unreachable or unavailable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
             
             let end = Date.now();
             let updateTime = (end-start)/1000+'s';    

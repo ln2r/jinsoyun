@@ -1,7 +1,7 @@
 const { Command, FriendlyError } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
-const { mongoGetData, getSiteData, setDataFormatNumb, setDataFormatString, setArrayDataFormat } = require('../../core');
+const { mongoGetData, getSiteData, setDataFormatNumb, setDataFormatString, setArrayDataFormat, sendBotReport } = require('../../core');
 
 module.exports = class WhoCommand extends Command {
     constructor(client) {
@@ -56,7 +56,7 @@ module.exports = class WhoCommand extends Command {
         // checking if the data fetch return data or error
         if(charaData.status == 'error'){
             console.error('[soyun] [who] ['+msg.guild.name+'] unable to get api data, site might be unreachable or unavailable');
-            sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site might be unreachable or unavailable', 'path':'main/commands/bns/who', 'code':00400, 'method':'GET'}, 'who-'+msg.guild.name, 'error');
+            sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site might be unreachable or unavailable', 'path':'main/commands/bns/who', 'code':10400, 'method':'GET'}, 'who-'+msg.guild.name, 'error');
 
             // dm bot owner for the error
             let found = 0;
