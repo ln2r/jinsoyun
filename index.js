@@ -6,15 +6,16 @@ const MongoClient = require('mongodb').MongoClient;
 const MongoDBProvider = require('./commando-provider-mongo');
 const path = require('path');
 const ontime = require('ontime');
+const dateformat = require('dateformat');
 
-const { mongoGetData, sendResetNotification, mongoItemDataUpdate} = require('./core');
+const { mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport} = require('./core');
 
 // Discord.js Commando scripts start here
 const clientDiscord = new CommandoClient({
     commandPrefix: process.env.bot_default_prefix,
     owner: process.env.bot_owner_id,
     disableEveryone: true,
-    unknownCommandResponse: false
+    unknownCommandResponse: false,
 });
 
 clientDiscord.login(process.env.discord_secret);
@@ -36,18 +37,21 @@ clientDiscord
     .on('warn', console.warn)
     // remove "//" below to enable debug log
     //.on('debug', console.log)
-    .on('disconnect', () => { console.warn('Disconnected!'); })
-	.on('reconnecting', () => { console.warn('Reconnecting...'); })
+    .on('disconnect', () => { console.warn('[soyun] [system] Disconnected!'); })
+	.on('reconnecting', () => { console.warn('[soyun] [system] Reconnecting...'); })
     .on('ready', () => {
         console.log('[soyun] [system] Logged in and ready');
         clientDiscord.user.setPresence({
                  game: { 
-                     name: process.env.bot_default_prefix+'help' ,
-                     type: 'LISTENING'
+                    name: '@Jinsoyun#7507 help' ,
+                    type: 'LISTENING',
                     }
                 }
             )
-            .catch(console.error);
+            .catch((error) => {
+                console.error;
+                sendBotReport(error, 'onReady-soyun', 'error');
+            });
     })
     .on('guildMemberAdd', async (member) => {
         let guildSettingData = await mongoGetData('guilds', {guild: member.guild.id});
@@ -76,11 +80,43 @@ clientDiscord
                 'If you need some assistance you can mention or DM available admin'
             );
         }
+    })
+    .on('commandError', (error, command, message) => {
+        // sending the error report to the database
+        sendBotReport('('+command.code+') '+command.name+': '+command.message, error.name+message.guild.name, 'error');
+        console.error('[soyun] ['+error.name+'] '+command.name+': '+command.message);
+
+        // dm bot owner for the error
+        let found = 0;
+        clientDiscord.guilds.map(function(guild){ //looking for the guild owner data (username and discriminator)
+            guild.members.map((member) => {
+                if(found == 0){
+                    if(member.id == message.guild.ownerID){
+                        found = 1;
+
+                        for(let i=0; i < clientDiscord.owners.length; i++){
+                            clientDiscord.owners[i].send(
+                                'Error Occured on `'+error.name+'`'+
+                                '\n__Details__:'+
+                                '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
+                                '\n**Location**: '+message.guild.name+
+                                '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
+                                '\n**Message**:\n'+command.name+': '+command.message
+                            )
+                        }
+                    }
+                }
+            })
+        }) 
     });
 
 clientDiscord.setProvider(
     MongoClient.connect(process.env.bot_mongodb_url, {useNewUrlParser: true}).then(client => new MongoDBProvider(client, process.env.bot_mongodb_db_name))
-).catch(console.error);    
+).catch((error) => {
+    console.error;
+    sendBotReport(error, 'mongoDBProvider-soyun', 'error');
+});
+
 // Discord.js Commando scripts end here
 
 // Twitter stream scripts start here
@@ -169,7 +205,8 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
 	});
   
 	stream.on('error', function(error) {
-		console.error(error);
+        console.error(error);
+        sendBotReport(error, 'twitter-soyun', 'error');
 	});
 });
 // Twitter stream script end here

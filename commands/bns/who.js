@@ -1,4 +1,4 @@
-const { Command } = require('discord.js-commando');
+const { Command, FriendlyError } = require('discord.js-commando');
 const dateformat = require('dateformat');
 
 const { mongoGetData, getSiteData, setDataFormatNumb, setDataFormatString, setArrayDataFormat } = require('../../core');
@@ -56,6 +56,32 @@ module.exports = class WhoCommand extends Command {
         // checking if the data fetch return data or error
         if(charaData.status == 'error'){
             console.error('[soyun] [who] ['+msg.guild.name+'] unable to get api data, site might be unreachable or unavailable');
+            sendBotReport('unable to get api data, site might be unreachable or unavailable', 'who-'+msg.guild.name, 'error');
+
+            // dm bot owner for the error
+            let found = 0;
+            clientDiscord.guilds.map(function(guild){
+                guild.members.map((member) => {
+                    if(found == 0){
+                        if(member.id == message.guild.ownerID){
+                            found = 1;
+
+                            for(let i=0; i < clientDiscord.owners.length; i++){
+                                clientDiscord.owners[i].send(
+                                    'Error Occured on `'+error.name+'`'+
+                                    '\n__Details__:'+
+                                    '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
+                                    '\n**Location**: '+message.guild.name+
+                                    '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
+                                    '\n**Message**:\n'+command.name+': '+command.message
+                                )
+                            }
+                        }
+                    }
+                })
+            }) 
+
+
             var messageOutput = 'Unable to get charater data, please try again later';
         }else{
            //console.debug('[soyun] [who] ['+msg.guild.name+'] msg.author.nickname: '+msg.member.nickname);

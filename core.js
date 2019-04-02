@@ -17,17 +17,19 @@ module.exports = {
      * @returns data fetched from site in JSON format
      * @example
      *  // Using the function locally
-     *  module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
+     *  module.exports.getSiteData('https://api.silveress.ie/bns/v3/items');
      *  
      *  // Using the function outside the file
-     *  core.getSiteData("https://api.silveress.ie/bns/v3/items");
+     *  core.getSiteData('https://api.silveress.ie/bns/v3/items');
      */
     getSiteData: async function getSiteData(address) {
         return await fetch(address)
             .then((response) => {return response.json()})
             .catch((error) => {
                 console.error('[core] [site-data] Error: '+error);
-                return {"status": "error", error}
+                module.exports.sendBotReport('site data fetch error', 'getSiteData-core', 'error');
+
+                return {'status': 'error', error}
             })  
     },
 
@@ -39,10 +41,10 @@ module.exports = {
      * @returns data fetched from databse
      * @example
      *  // Using the function locally with id as it filter
-     *  module.exports.mongoGetData("classes", {_id: 0});
+     *  module.exports.mongoGetData('classes', {_id: 0});
      *  
      *  // Using the function outside the file without filter
-     *  core.mongoGetData("classes");
+     *  core.mongoGetData('classes');
      */
     mongoGetData: function mongoGetData(collname, filter) { 
         //console.debug('[core] [mongo-fetch] collname: '+collname+', filter: '+JSON.stringify(filter));
@@ -68,16 +70,18 @@ module.exports = {
     mongoItemDataUpdate: async function itemsUpdate(){     
         let start = Date.now();
 
-        var dataItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
-        let marketItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/market/na/current/lowest");
+        var dataItems = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/items');
+        let marketItems = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/market/na/current/lowest');
 
         if(dataItems.status == 'error' || dataItems.status == 'error'){
-            console.error('[soyun] [items-update] api data fetch error, please check the log');
+            console.error('[core] [items-update] api data fetch error, please check the log');
+            module.exports.sendBotReport('api data fetch error', 'itemUpdate-core', 'error');
+
             let end = Date.now();
-            let updateTime = (end-start)/1000+"s";    
+            let updateTime = (end-start)/1000+'s';    
             console.log('[core] [items-update] Update data failed, time: '+updateTime);
         }else{
-            let itemsCollectionName = "items";
+            let itemsCollectionName = 'items';
             MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
@@ -153,7 +157,7 @@ module.exports = {
                             })
 
                             let end = Date.now();
-                            let updateTime = (end-start)/1000+"s";
+                            let updateTime = (end-start)/1000+'s';
                     
                             console.log('[core] [items-update] Data updated, time: '+updateTime); 
                         });                                    
@@ -238,21 +242,21 @@ module.exports = {
             priceOld = 0;
         }
 
-        let priceStatus = ("" + "0.00%") + "➖";
+        let priceStatus = ('' + '0.00%') + '➖';
         if(priceNew != priceOld){
             let percentage = ((priceNew-priceOld)/ 100).toFixed(2);
             let symbol;
             let emoji;
             
             if(percentage < 0){
-                symbol = "";
-                emoji = "🔽";
+                symbol = '';
+                emoji = '🔽';
             }else{
-                symbol = "+";
-                emoji = "🔼";
+                symbol = '+';
+                emoji = '🔼';
             }
     
-            priceStatus = (symbol + percentage+"%") + emoji;
+            priceStatus = (symbol + percentage+'%') + emoji;
         }					
     
         return priceStatus;
@@ -271,18 +275,18 @@ module.exports = {
         let str = Math.round(Number);
             str = str.toString()
         let len = str.length
-        let gold = ""
-        let silver = ""
-        let copper = ""
+        let gold = ''
+        let silver = ''
+        let copper = ''
     
         if(len > 4){
-            gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547>";
+            gold = str.substring( 0 , len -4)+ '<:gold:463569669496897547>';
         }
         if(len > 2){
-            silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586>";
+            silver = str.substring( len -2 ,len - 4 )+ '<:silver:463569669442371586>';
         }
         if(len > 0){
-            copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928>";
+            copper = str.substring( len ,len -2 )+ '<:copper:463569668095868928>';
         } 
     
         let total = gold + silver + copper; 
@@ -493,13 +497,13 @@ module.exports = {
         }
 
         clientGuildData.map(async function(guild){
-            //console.debug('[soyun] [reset] guild list: '+guild.id+'('+guild.name+')');
+            //console.debug('[core] [reset] guild list: '+guild.id+'('+guild.name+')');
 
             // getting guild setting data
             if(guild.available){  
                 let guildSettingData = await module.exports.mongoGetData('guilds', {guild: guild.id});
                     guildSettingData = guildSettingData[0];
-                //console.debug('[soyun] [reset] guild setting data: '+JSON.stringify(guildSettingData, null, '\t'));    
+                //console.debug('[core] [reset] guild setting data: '+JSON.stringify(guildSettingData, null, '\t'));    
                 let resetChannel = '';
                 if(guildSettingData != undefined){
                     resetChannel = guildSettingData.settings.quest_reset
@@ -571,6 +575,37 @@ module.exports = {
             'time_index': closestTime,
             'time_difference_data': timeDifferenceData
         }
+
+    },
+
+    /**
+     * sendBotReport
+     * Saving log data to database
+     * @param {ErrorEvent} logData log message
+     * @param {String} location where the event happens
+     * @param {String} type event type
+     */
+    sendBotReport: function sendReport(logData, location, type){
+        let now = new Date();
+
+        let logCollectionName = 'logs';
+
+        let logPayload = {
+            'location': location,
+            'type': type,     
+            'time': dateformat(Date.now(), 'dddd, mmmm dS, yyyy, h:MM:ss TT'),     
+            'message': logData
+        }
+
+        MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(dbName);
+
+            dbo.collection(logCollectionName).insertOne(logPayload, function(err, res) {  
+                if (err) throw err;    
+                db.close();                
+            });
+        });
 
     }
 };
