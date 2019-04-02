@@ -581,7 +581,7 @@ module.exports = {
     /**
      * sendBotReport
      * Saving log data to database
-     * @param {ErrorEvent} logData log message
+     * @param {Object} logData log message
      * @param {String} location where the event happens
      * @param {String} type event type
      */
