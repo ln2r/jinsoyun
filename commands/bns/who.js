@@ -56,7 +56,7 @@ module.exports = class WhoCommand extends Command {
         // checking if the data fetch return data or error
         if(charaData.status == 'error'){
             console.error('[soyun] [who] ['+msg.guild.name+'] unable to get api data, site might be unreachable or unavailable');
-            sendBotReport('unable to get api data, site might be unreachable or unavailable', 'who-'+msg.guild.name, 'error');
+            sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site might be unreachable or unavailable', 'path':'main/commands/bns/who', 'code':00400, 'method':'GET'}, 'who-'+msg.guild.name, 'error');
 
             // dm bot owner for the error
             let found = 0;

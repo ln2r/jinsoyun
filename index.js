@@ -83,7 +83,7 @@ clientDiscord
     })
     .on('commandError', (error, command, message) => {
         // sending the error report to the database
-        sendBotReport('('+command.code+') '+command.name+': '+command.message, error.name+message.guild.name, 'error');
+        sendBotReport(command, error.name+message.guild.name, 'error');
         console.error('[soyun] ['+error.name+'] '+command.name+': '+command.message);
 
         // dm bot owner for the error
