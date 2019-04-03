@@ -1,45 +1,57 @@
 const { Command } = require('discord.js-commando');
 const { mongoGetData } = require('../../core');
 
-module.exports = class CreateChCommand extends Command {
+module.exports = class CreateCustomRoleCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'create',
-            aliases: ['make', 'setup'],
+            aliases: ['make'],
             group: 'guild',
             memberName: 'create',
-            description: 'Create classes role',
+            description: 'Create custom role',
             examples: ['create'],
             guildOnly: true,
-            userPermission: ['ADMINISTRATOR', 'MANAGE_CHANNELS', 'MANAGE_GUILD', 'MANAGE_MESSAGES', 'MANAGE_NICKNAMES', 'MANAGE_ROLES'],
+            userPermission: ['MANAGE_ROLES'],
         });
     }
 
-    async run(msg) {
+    async run(msg, args) {
         let msgData = '';
-        let guildSettingsData = await mongoGetData('guilds', {guild: msg.guild.id});
-        let classList = ['gunslinger', 'blade dancer', 'destroyer', 'summoner', 'kung fu master', 'assassin', 'force master', 'warlock', 'blade master', 'soul fighter', 'warden'];
+        let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
 
-        // checking if the guild already done the setup or not
-        if(guildSettingsData[0].roles_setup == undefined){
-            for(let i = 0; i < classList.length; i ++){
-                // checking if the current class role existed or not
-                if((msg.guild.roles.find(role => role.name == classList[i])) == null){
-                    // creating the roles
-                    msg.guild.createRole({
-                        'name': classList[i],
-                        'hoist': true
-                    })
-                    //console.debug('[soyun] [role-setup] ['+msg.guild.name+'] '+classList[i]+' role created @ '+msg.guild.name);
-                }                
+        // checking if the role already exist
+        if((msg.guild.roles.find(role => role.name == args)) == null){
+            // creating the roles
+            msg.guild.createRole({
+                'name': args,
+            })
+
+            // mergin the roles data if exist
+            let customRoles = [args];
+            let currentCustomRoles = [];
+
+            if(guildSettings != undefined){
+                currentCustomRoles = guildSettings[0].settings.custom_roles;
             }
 
-            this.client.emit('guildRolesSetup', msg.guild.id, true); // updating the database
+            if(currentCustomRoles != undefined){
+                for(let i=0; i < currentCustomRoles.length; i++){
+                    customRoles.push(currentCustomRoles[i]);
+                }
+            }
 
-            msgData = 'Necessary classes roles created, go to `Server Settings > Roles` to check and configure it'
+            this.client.emit('guildCustomRole', msg.guild.id, customRoles); // updating the database
+
+            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] role name: '+args)
+            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] '+args+' role created @ '+msg.guild.name);
+            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] db roles data: '+currentCustomRoles);
+            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] saved roles data: '+customRoles);
+            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] guild settings data: '+JSON.stringify(guildSettings, null, '\t'));
+
+            msgData = '`'+args+'` role created with basic permission, go to `Server Settings > Roles` to check and configure it';
         }else{
-            msgData = 'Classes roles already created, go to `Server Settings > Roles` to check and configure it'
-        }
+            msgData = 'Unable to create `'+args+'` role, role already exist';
+        } 
 
         return msg.say(msgData);
     }
