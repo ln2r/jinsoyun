@@ -593,7 +593,7 @@ module.exports = {
         let logPayload = {
             'location': location,
             'type': type,     
-            'time': dateformat(Date.now(), 'dddd, mmmm dS, yyyy, h:MM:ss TT'),     
+            'time': now,     
             'message': logData
         }
 
