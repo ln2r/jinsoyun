@@ -89,7 +89,7 @@ module.exports = class WhoCommand extends Command {
            //console.debug('[soyun] [who] ['+msg.guild.name+'] charaData.characterName value: '+charaData.characterName);
             
             if(charaData.characterName == undefined){
-                var messageOutput = 'No Result found on **'+charaQuery+'**. Please check your search and try again.'
+                var messageOutput = 'No result found on **'+charaQuery+'**. Please check your search and try again.'
             }else{
                 // getting the traits data
                 let traitsDataView = [];
