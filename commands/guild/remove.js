@@ -18,10 +18,11 @@ module.exports = class RemoveCustomRoleCommand extends Command {
         msg.channel.startTyping();
 
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
+            guildSettings = guildSettings[0];
         let customRoles = [];
 
         if(guildSettings != undefined){
-            customRoles = guildSettings[0].settings.custom_roles;
+            customRoles = guildSettings.settings.custom_roles;
         }
         // default message
         let msgData = 'No custom role exist with that name, try again?\nAvailable roles: `'+customRoles+'`'; 
@@ -52,7 +53,7 @@ module.exports = class RemoveCustomRoleCommand extends Command {
                     
                     // telling user can't remove role he didn't join
                     if(j == userRolesList.length && found == false){
-                        msgData = 'You can\'t remove what you didn\'t join'
+                        msgData = 'You don\'t have that role, maybe try to join?'
                     }
                 }
             }

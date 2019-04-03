@@ -18,12 +18,12 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
         msg.channel.startTyping();
 
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
+            guildSettings = guildSettings[0];
         let customRoles = ['No data'];
 
         if(guildSettings != undefined){
-            customRoles = guildSettings[0].settings.custom_roles;
+            customRoles = guildSettings.settings.custom_roles;
         }
-        // default message
         
         let embedData = {
             'embed': {

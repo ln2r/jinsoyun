@@ -22,6 +22,7 @@ module.exports = class CreateCustomRoleCommand extends Command {
 
         if(authorPermission){            
             let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
+                guildSettings = guildSettings[0];
 
             // checking if the role already exist
             if((msg.guild.roles.find(role => role.name == args)) == null){
@@ -35,10 +36,10 @@ module.exports = class CreateCustomRoleCommand extends Command {
                 let currentCustomRoles = [];
 
                 if(guildSettings != undefined){
-                    currentCustomRoles = guildSettings[0].settings.custom_roles;
+                    currentCustomRoles = guildSettings.settings.custom_roles;
                 }
 
-                if(currentCustomRoles != undefined){
+                if(currentCustomRoles.length != 0){
                     for(let i=0; i < currentCustomRoles.length; i++){
                         customRoles.push(currentCustomRoles[i]);
                     }
