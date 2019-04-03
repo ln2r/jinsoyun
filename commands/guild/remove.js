@@ -11,11 +11,12 @@ module.exports = class RemoveCustomRoleCommand extends Command {
             description: 'Remove your custom role',
             examples: ['remove'],
             guildOnly: true,
-            userPermission: ['MANAGE_ROLES'],
         });
     }
 
     async run(msg, args) {
+        msg.channel.startTyping();
+
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
         let customRoles = [];
 
@@ -58,6 +59,8 @@ module.exports = class RemoveCustomRoleCommand extends Command {
         }else{
             msgData = 'There\'s no custom roles on this server, maybe make one first?';
         } 
+
+        msg.channel.stopTyping();
 
         return msg.say(msgData);
     }

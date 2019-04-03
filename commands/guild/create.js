@@ -16,42 +16,50 @@ module.exports = class CreateCustomRoleCommand extends Command {
     }
 
     async run(msg, args) {
+        let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
         let msgData = '';
-        let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
+        msg.channel.startTyping();
 
-        // checking if the role already exist
-        if((msg.guild.roles.find(role => role.name == args)) == null){
-            // creating the roles
-            msg.guild.createRole({
-                'name': args,
-            })
+        if(authorPermission){            
+            let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
 
-            // mergin the roles data if exist
-            let customRoles = [args];
-            let currentCustomRoles = [];
+            // checking if the role already exist
+            if((msg.guild.roles.find(role => role.name == args)) == null){
+                // creating the roles
+                msg.guild.createRole({
+                    'name': args,
+                })
 
-            if(guildSettings != undefined){
-                currentCustomRoles = guildSettings[0].settings.custom_roles;
-            }
+                // mergin the roles data if exist
+                let customRoles = [args];
+                let currentCustomRoles = [];
 
-            if(currentCustomRoles != undefined){
-                for(let i=0; i < currentCustomRoles.length; i++){
-                    customRoles.push(currentCustomRoles[i]);
+                if(guildSettings != undefined){
+                    currentCustomRoles = guildSettings[0].settings.custom_roles;
                 }
-            }
 
-            this.client.emit('guildCustomRole', msg.guild.id, customRoles); // updating the database
+                if(currentCustomRoles != undefined){
+                    for(let i=0; i < currentCustomRoles.length; i++){
+                        customRoles.push(currentCustomRoles[i]);
+                    }
+                }
 
-            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] role name: '+args)
-            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] '+args+' role created @ '+msg.guild.name);
-            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] db roles data: '+currentCustomRoles);
-            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] saved roles data: '+customRoles);
-            //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] guild settings data: '+JSON.stringify(guildSettings, null, '\t'));
+                this.client.emit('guildCustomRole', msg.guild.id, customRoles); // updating the database
 
-            msgData = '`'+args+'` role created with basic permission, go to `Server Settings > Roles` to check and configure it';
+                //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] role name: '+args)
+                //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] '+args+' role created @ '+msg.guild.name);
+                //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] db roles data: '+currentCustomRoles);
+                //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] saved roles data: '+customRoles);
+                //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] guild settings data: '+JSON.stringify(guildSettings, null, '\t'));
+
+                msgData = '`'+args+'` role created with basic permission, go to `Server Settings > Roles` to check and configure it';
+            }else{
+                msgData = 'Unable to create `'+args+'` role, role already exist';
+            } 
         }else{
-            msgData = 'Unable to create `'+args+'` role, role already exist';
-        } 
+            msgData = 'You don\'t have the permission to use that command';
+        }
+        msg.channel.stopTyping();
 
         return msg.say(msgData);
     }
