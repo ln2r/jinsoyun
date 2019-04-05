@@ -21,24 +21,27 @@ module.exports = class CreateJoinRoleCommand extends Command {
 
         if(authorPermission){            
             let guildSettingsData = await mongoGetData('guilds', {guild: msg.guild.id});
-            let classList = ['gunslinger', 'blade dancer', 'destroyer', 'summoner', 'kung fu master', 'assassin', 'force master', 'warlock', 'blade master', 'soul fighter', 'warden'];
-
+                guildSettingsData = guildSettingsData[0];
+            
+            let rolesList = await mongoGetData('configs', {});
+                rolesList = rolesList[0];
+        
             let rolesSetupStatus = '';
-            if(guildSettingData != undefined){
-                rolesSetupStatus = guildSettingsData[0].roles_setup
+            if(guildSettingsData != undefined){
+                rolesSetupStatus = guildSettingsData.roles_setup
             }
 
             // checking if the guild already done the setup or not
             if(rolesSetupStatus == undefined){
-                for(let i = 0; i < classList.length; i ++){
+                for(let i = 0; i < rolesList.length; i ++){
                     // checking if the current class role existed or not
-                    if((msg.guild.roles.find(role => role.name == classList[i])) == null){
+                    if((msg.guild.roles.find(role => role.name == rolesList[i])) == null){
                         // creating the roles
                         msg.guild.createRole({
-                            'name': classList[i],
+                            'name': rolesList[i],
                             'hoist': true
                         })
-                        //console.debug('[soyun] [role-setup] ['+msg.guild.name+'] '+classList[i]+' role created @ '+msg.guild.name);
+                        //console.debug('[soyun] [role-setup] ['+msg.guild.name+'] '+rolesList[i]+' role created @ '+msg.guild.name);
                     }                
                 }
 
