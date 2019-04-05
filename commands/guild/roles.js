@@ -19,7 +19,7 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
 
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
             guildSettings = guildSettings[0];
-        let customRoles = ['No data'];
+        let customRoles = ['*No data*'];
 
         if(guildSettings != undefined){
             customRoles = guildSettings.settings.custom_roles;
@@ -29,7 +29,7 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
             'embed': {
                 'title': msg.guild.name+' Custom Roles',
                 'color': 1879160,
-                'description': 'You can use `add` command to join custom role'+setArrayDataFormat(customRoles, '- ', true),
+                'description': 'You can use `add` command to add yourself the custom role'+setArrayDataFormat(customRoles, '- ', true),
                 'footer': {
                     'text': 'Jinsoyun Bot - '+dateformat(Date.now(), 'UTC:dd-mm-yy @ HH:MM')+' UTC'
                 }
