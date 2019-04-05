@@ -8,6 +8,9 @@ package-lock.json
 # .env file
 .env
 
+# test folder
+commands/test/
+
 # misc file
 .dropbox
 desktop.ini
