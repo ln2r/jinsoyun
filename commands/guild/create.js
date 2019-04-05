@@ -16,9 +16,12 @@ module.exports = class CreateCustomRoleCommand extends Command {
     }
 
     async run(msg, args) {
+        msg.channel.startTyping();
+
         let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
         let msgData = '';
-        msg.channel.startTyping();
+
+        args = args.toLowerCase(); // converting the role value to lower case        
 
         if(authorPermission){            
             let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
@@ -37,13 +40,13 @@ module.exports = class CreateCustomRoleCommand extends Command {
 
                 if(guildSettings != undefined){
                     currentCustomRoles = guildSettings.settings.custom_roles;
-                }
 
-                if(currentCustomRoles.length != 0){
-                    for(let i=0; i < currentCustomRoles.length; i++){
-                        customRoles.push(currentCustomRoles[i]);
+                    if(currentCustomRoles.length != 0){
+                        for(let i=0; i < currentCustomRoles.length; i++){
+                            customRoles.push(currentCustomRoles[i]);
+                        }
                     }
-                }
+                }                
 
                 this.client.emit('guildCustomRole', msg.guild.id, customRoles); // updating the database
 
@@ -58,7 +61,7 @@ module.exports = class CreateCustomRoleCommand extends Command {
                 msgData = 'Unable to create `'+args+'` role, role already exist';
             } 
         }else{
-            msgData = 'You don\'t have the permission to use that command';
+            msgData = 'I\'m sorry, you don\'t have the permission to use that command';
         }
         msg.channel.stopTyping();
 
