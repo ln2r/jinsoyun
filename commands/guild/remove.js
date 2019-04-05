@@ -20,6 +20,8 @@ module.exports = class RemoveCustomRoleCommand extends Command {
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
             guildSettings = guildSettings[0];
         let customRoles = [];
+        
+        args = args.toLowerCase(); // converting the role value to lower case
 
         if(guildSettings != undefined){
             customRoles = guildSettings.settings.custom_roles;
