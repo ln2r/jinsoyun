@@ -21,11 +21,13 @@ module.exports = class JoinCustomRoleCommand extends Command {
             guildSettings = guildSettings[0];
         let customRoles = [];
 
+        args = args.toLowerCase(); // converting the role value to lower case
+
         if(guildSettings != undefined){
             customRoles = guildSettings.settings.custom_roles;
         }
         // default message
-        let msgData = 'No custom role exist with that name, try again?\nAvailable roles: `'+customRoles+'`'; 
+        let msgData = ''; 
         let userRolesList = [];
         let userRolesData = msg.guild.members.get(msg.author.id).roles;
             userRolesData.map((role) =>{
@@ -48,18 +50,25 @@ module.exports = class JoinCustomRoleCommand extends Command {
 
                     // add role if user don't have it
                     if(!found){
-                        if(msg.guild.roles.find(role => role.name == customRoles[i]) != null){                        
-                            msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == customRoles[i]));
+                        if(msg.guild.roles.find(role => role.name == customRoles[i]) != null){
+                            //console.debug('[soyun] [add-custom-role] add role permission: '+msg.channel.permissionsFor(this.client.user).has("MANAGE_ROLES", false))
+
+                            // checking the bot permission
+                            if(msg.channel.permissionsFor(this.client.user).has("MANAGE_ROLES", false)){
+                                msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == customRoles[i]));
     
-                            msgData = 'Successfully added `'+customRoles[i]+'` role';                        
+                                msgData = 'Successfully added `'+customRoles[i]+'` role';
+                            }else{
+                                msgData = 'I\'m sorry, I don\'t have the permission to do that';
+                            }                                                    
                         }                        
                     }else{
-                        msgData = 'You already have that role';
+                        msgData = 'I think you already have that role';
                     }
                 }
             }
         }else{
-            msgData = 'There\'s no custom roles on this server, maybe make one first?';
+            msgData = 'Hmm there\'s no custom roles on this server, maybe make one first?';
         }
 
         msg.channel.stopTyping(); 
