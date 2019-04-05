@@ -6,7 +6,7 @@ module.exports = class GuildSettingsCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'setting',
-            aliases: ['set', 'config'],
+            aliases: ['set', 'config', 'change'],
             group: 'guild',
             memberName: 'setting',
             description: 'Change the bot setting. Use `show` to see the current guild/server settings. \n\tAvailable Settings: \n\t- `reset channel-name or disable` (To configure quest reset notification)\n\t- `twitter channel-name or disable` (To configure blade and soul twitter tweet notification)\n\t- `twitch channel-name or disable` (To configure blade and soul twitch broadcast notification)\n\t- `gate channel-name or disable` (To configure new member message channel)\n\t- `text channel-name or disable` (To configure main text channel)',
@@ -124,7 +124,9 @@ module.exports = class GuildSettingsCommand extends Command {
                                 'name': 'Jinsoyun Bot Settings - '+msg.guild.name,
                                 'icon_url': msg.guild.iconURL
                             },
-                            'description': '**Quest reset**: '+settingsDataHandler(guildSettingData[0].settings.quest_reset)+'\n'+
+                            'description': 
+                                        'Use `help setting` to see how to configure your settings\n'+
+                                        '**Quest reset**: '+settingsDataHandler(guildSettingData[0].settings.quest_reset)+'\n'+
                                         '**Twitter notification**: '+settingsDataHandler(guildSettingData[0].settings.twitter)+'\n'+
                                         '**New member channel**: '+settingsDataHandler(guildSettingData[0].settings.member_gate)+'\n'+
                                         '**Default/main text channel**: '+settingsDataHandler(guildSettingData[0].settings.default_text)+'\n'+
