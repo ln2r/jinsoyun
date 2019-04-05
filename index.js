@@ -23,10 +23,10 @@ clientDiscord.login(process.env.discord_secret);
 clientDiscord.registry
     .registerDefaultTypes()
     .registerGroups([
-        ['admin', 'Bot Admin'],
         ['automation', 'Automation'],
         ['guild', 'Guild'],
         ['bns', 'Blade and Soul'],
+        ['test', 'Bot Testing']
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()
@@ -42,8 +42,8 @@ clientDiscord
     .on('ready', () => {
         console.log('[soyun] [system] Logged in and ready');
         clientDiscord.user.setPresence({
-                 game: { 
-                    name: '@Jinsoyun#7507 help' ,
+                game: { 
+                    name: '@Jinsoyun help' ,
                     type: 'LISTENING',
                     }
                 }
@@ -71,13 +71,16 @@ clientDiscord
             member.guild.channels.find(ch => ch.name == memberGate).send(
                 'Hi <@'+member.user.id+'>! Welcome to *'+member.guild.name+'*!\n\n'+
 
-                'Before I give you access to the rest of the server, I need to know your character name and class that you use in our clan, to do that please write this following command with your information in it\n\n'+
+                'Before I give you access to the rest of the server, I need to know your character name and class that you use in our clan, to do that please write this following command with your information in it, but if you arent\'t a clan member replace your class with `guest`\n\n'+
 
                 '`@Jinsoyun join <character name> <class name>`\n'+
                 '**Example**:\n'+
+                '- **If you are a clan member use the like command below**'+
                 '`@Jinsoyun join jinsoyun blade dancer`\n'+
+                '- **If you aren\'t a clan member use `guest` instead of `class` in your command**'+
+                '`@Jinsoyun join jinsoyun guest\n'+
                 
-                'If you need some assistance you can mention or DM available admin'
+                'If you need some assistance you can mention or DM available admin, thank you ❤'
             );
         }
     })
@@ -101,6 +104,7 @@ clientDiscord
                                 '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
                                 '\n**Location**: '+message.guild.name+
                                 '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
+                                '\n**Content**: `'+message.content+'`'+
                                 '\n**Message**:\n'+command.name+': '+command.message
                             )
                         }
