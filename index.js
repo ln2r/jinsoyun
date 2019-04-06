@@ -26,7 +26,7 @@ clientDiscord.registry
         ['automation', 'Automation'],
         ['guild', 'Guild'],
         ['bns', 'Blade and Soul'],
-        ['test', 'Bot Testing']
+        ['dev', 'Bot dev']
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()
@@ -195,7 +195,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
                     let found = 0;
                     guild.channels.map((ch) => {
                         if(found == 0){
-                            if(ch.name == twitterChannel && twitterChannel != '' && twitterChannel != 'disable'){
+                            if(ch.id == twitterChannel && twitterChannel != '' && twitterChannel != 'disable'){
                                 found = 1; 
                                 ch.send(embedData);                        
                             }

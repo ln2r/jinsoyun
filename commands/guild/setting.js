@@ -58,7 +58,9 @@ module.exports = class GuildSettingsCommand extends Command {
 
             let channelName = '';
             let gateMsgData = '';
+            let channelId;
 
+            // replacing the space if there's any
             if(option.length > 2){
                 channelName = option.join('-');
                 channelName = channelName.replace((option[0]+'-'), '');
@@ -66,32 +68,47 @@ module.exports = class GuildSettingsCommand extends Command {
                 channelName = option[1];
             }
 
+            let settingType = option[0];
+
+            if(channelName != null && channelName != 'disable'){            
+                let channelData = msg.guild.channels.find(ch => ch.name == channelName);
+                // getting the channel id
+                msg.guild.channels.map((ch) => {
+                    if(ch.id == channelData.id){
+                        channelId = channelData.id;
+                    }
+                });
+            }else if(channelName == 'disable'){
+                channelId = null;
+            };
+
             //console.debug('[soyun] [setting] ['+msg.guild.name+'] setting option: '+option[0]);
             //console.debug('[soyun] [setting] ['+msg.guild.name+'] channel name: '+channelName);
+            //console.debug('[soyun] [setting] ['+msg.guild.name+'] channel id: '+channelId);
             //console.debug('[soyun] [setting] ['+msg.guild.name+'] manage roles permission: '+msg.guild.me.hasPermission('MANAGE_ROLES'))
             //console.debug('[soyun] [setting] ['+msg.guild.name+'] cricket role is: '+(msg.guild.roles.find(role => role.name == 'cricket')))
 
-            switch(option[0]){
+            switch(settingType){
                 case 'reset':
-                    this.client.emit('notificationResetChange', msg.guild.id, channelName);
+                    this.client.emit('notificationResetChange', msg.guild.id, channelId);
 
                     msgData = '`'+option[0]+'` setting changed to `'+channelName+'`'+gateMsgData;
                 break;
 
                 case 'twitter':
-                    this.client.emit('notificationTwitterChange', msg.guild.id, channelName);
+                    this.client.emit('notificationTwitterChange', msg.guild.id, channelId);
 
                     msgData = '`'+option[0]+'` setting changed to `'+channelName+'`'+gateMsgData;
                 break;
                 
                 case 'twitch':
-                    this.client.emit('notificationTwitchChange', msg.guild.id, channelName);
+                    this.client.emit('notificationTwitchChange', msg.guild.id, channelId);
 
                     msgData = '`'+option[0]+'` setting changed to `'+channelName+'`'+gateMsgData;
                 break;
 
                 case 'gate':
-                    this.client.emit('newMemberChannelChange', msg.guild.id, channelName);
+                    this.client.emit('newMemberChannelChange', msg.guild.id, channelId);
                     
                     // create cricket role if the bot have the permission
                     if(channelName != 'disable'){
@@ -110,14 +127,60 @@ module.exports = class GuildSettingsCommand extends Command {
                 break;
 
                 case 'text':
-                    this.client.emit('mainTextChannelChange', msg.guild.id, channelName);
+                    this.client.emit('mainTextChannelChange', msg.guild.id, channelId);
 
                     msgData = '`'+option[0]+'` setting changed to `'+channelName+'`'+gateMsgData;
                 break;
 
                 case 'show':
                     let guildSettingData = await mongoGetData('guilds', {guild: msg.guild.id});
+                        guildSettingData = guildSettingData[0];
+                    
+                    let channelData;
+                    let twitterChannel;
+                    let resetChannel;
+                    let gateChannel;
+                    let defaultTextChannel;
+                    
+                    if(guildSettingData != undefined){
+                        channelData = msg.guild.channels.find(ch => ch.id == guildSettingData.settings.twitter);
+                        msg.guild.channels.map((ch) => {
+                            if(channelData != null){
+                                if(ch.id == channelData.id){
+                                    twitterChannel = channelData.name;
+                                }
+                            }                            
+                        });
 
+                        channelData = msg.guild.channels.find(ch => ch.id == guildSettingData.settings.quest_reset);
+                        msg.guild.channels.map((ch) => {
+                            if(channelData != null){
+                                if(ch.id == channelData.id){
+                                    resetChannel = channelData.name;
+                                }
+                            }
+                        });
+
+
+                        channelData = msg.guild.channels.find(ch => ch.id == guildSettingData.settings.member_gate);
+                        msg.guild.channels.map((ch) => {
+                            if(channelData != null){
+                                if(ch.id == channelData.id){
+                                    gateChannel = channelData.name;
+                                }
+                            }
+                        });
+
+                        channelData = msg.guild.channels.find(ch => ch.id == guildSettingData.settings.default_text);
+                        msg.guild.channels.map((ch) => {
+                            if(channelData != null){
+                                if(ch.id == channelData.id){
+                                    defaultTextChannel = channelData.name;
+                                }
+                            }
+                        });
+                    }
+                    
                     msgData = {
                         'embed': {
                             'author': {
@@ -126,11 +189,11 @@ module.exports = class GuildSettingsCommand extends Command {
                             },
                             'description': 
                                         'Use `help setting` to see how to configure your settings\n'+
-                                        '**Quest reset**: '+settingsDataHandler(guildSettingData[0].settings.quest_reset)+'\n'+
-                                        '**Twitter notification**: '+settingsDataHandler(guildSettingData[0].settings.twitter)+'\n'+
-                                        '**New member channel**: '+settingsDataHandler(guildSettingData[0].settings.member_gate)+'\n'+
-                                        '**Default/main text channel**: '+settingsDataHandler(guildSettingData[0].settings.default_text)+'\n'+
-                                        '**Commands prefix**: '+settingsDataHandler(guildSettingData[0].settings.prefix)+'\n',
+                                        '**Quest reset**: '+settingsDataHandler(resetChannel)+'\n'+
+                                        '**Twitter notification**: '+settingsDataHandler(twitterChannel)+'\n'+
+                                        '**New member channel**: '+settingsDataHandler(gateChannel)+'\n'+
+                                        '**Default/main text channel**: '+settingsDataHandler(defaultTextChannel)+'\n'+
+                                        '**Commands prefix**: '+settingsDataHandler(guildSettingData.settings.prefix)+'\n',
                             'color': 16741688,
                             'footer': {
                                 'text': 'Jinsoyun Bot - '+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+' UTC'

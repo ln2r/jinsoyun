@@ -512,7 +512,7 @@ module.exports = {
                 let found = 0;
                 guild.channels.map((ch) => {
                     if(found == 0){
-                        if(ch.name == resetChannel && resetChannel != undefined && resetChannel != 'disable'){
+                        if(ch.id == resetChannel && resetChannel != undefined && resetChannel != 'disable'){
                             found = 1; 
                             ch.send(msgData, embedData);                        
                         }
