@@ -9,7 +9,7 @@ package-lock.json
 .env
 
 # test folder
-commands/test/
+commands/dev/
 
 # misc file
 .dropbox
