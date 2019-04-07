@@ -84,6 +84,31 @@ clientDiscord
             );
         }
     })
+    .on('roleDelete', async (role) => {
+        //console.debug('[soyun] [event-roleDelete] role name: '+role.name);
+        //console.debug('[soyun] [event-roleDelete] role id: '+role.id);
+
+        let guildSettingsData = await mongoGetData('guilds', {guild: role.guild.id});
+            guildSettingsData = guildSettingsData[0];
+        
+        let foundRoles = [];
+
+        if(guildSettingsData != undefined){
+            //console.debug('[soyun] [event-roleDelete] custom_roles length: '+guildSettingsData.settings.custom_roles.length);
+            //console.debug('[soyun] [event-roleDelete] custom_roles data: '+guildSettingsData.settings.custom_roles);
+
+            // getting which role is not deleted
+            for(let i=0; i<guildSettingsData.settings.custom_roles.length; i++){
+                if(role.id != guildSettingsData.settings.custom_roles[i]){
+                    foundRoles.push(guildSettingsData.settings.custom_roles[i]);
+                }
+            }
+
+            //console.debug('[soyun] [event-roleDelete] found roles: '+foundRoles);
+            // update the db
+            clientDiscord.emit('guildCustomRole', role.guild.id, foundRoles);
+        }
+    })
     .on('commandError', (error, command, message) => {
         // sending the error report to the database
         sendBotReport(command, error.name+'-'+message.guild.name, 'error');
