@@ -30,12 +30,15 @@ module.exports = class CreateCustomRoleCommand extends Command {
             // checking if the role already exist
             if((msg.guild.roles.find(role => role.name == args)) == null){
                 // creating the roles
-                msg.guild.createRole({
-                    'name': args,
-                })
+                const customRoleData = await msg.guild.createRole({
+                                                'name': args,
+                                                'mentionable': true
+                                            })
+
+                //console.debug('[soyun] [custom-role-create] '+args+' created with id: '+customRoleId);
 
                 // mergin the roles data if exist
-                let customRoles = [args];
+                let customRolesId = [customRoleData.id];
                 let currentCustomRoles = [];
 
                 if(guildSettings != undefined){
@@ -43,12 +46,12 @@ module.exports = class CreateCustomRoleCommand extends Command {
 
                     if(currentCustomRoles.length != 0){
                         for(let i=0; i < currentCustomRoles.length; i++){
-                            customRoles.push(currentCustomRoles[i]);
+                            customRolesId.push(currentCustomRoles[i]);
                         }
                     }
                 }                
 
-                this.client.emit('guildCustomRole', msg.guild.id, customRoles); // updating the database
+                this.client.emit('guildCustomRole', msg.guild.id, customRolesId); // updating the database
 
                 //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] role name: '+args)
                 //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] '+args+' role created @ '+msg.guild.name);
@@ -56,7 +59,7 @@ module.exports = class CreateCustomRoleCommand extends Command {
                 //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] saved roles data: '+customRoles);
                 //console.debug('[soyun] [role-custom-create] ['+msg.guild.name+'] guild settings data: '+JSON.stringify(guildSettings, null, '\t'));
 
-                msgData = '`'+args+'` role created with basic permission, go to `Server Settings > Roles` to check and configure it';
+                msgData = '`'+args+'` role created with `mentionable` permission enabled, go to `Server Settings > Roles` to check and configure it';
             }else{
                 msgData = 'Unable to create `'+args+'` role, role already exist';
             } 

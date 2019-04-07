@@ -20,47 +20,61 @@ module.exports = class RemoveCustomRoleCommand extends Command {
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
             guildSettings = guildSettings[0];
         let customRoles = [];
-        
+
+        let msgData;
+        let argsValid = false; 
+
         args = args.toLowerCase(); // converting the role value to lower case
 
+        let guildCustomRolesData = [];
         if(guildSettings != undefined){
             customRoles = guildSettings.settings.custom_roles;
-        }
-        // default message
-        let msgData = 'No custom role exist with that name, try again?\nAvailable roles: `'+customRoles+'`'; 
-        let userRolesList = [];
-        let userRolesData = msg.guild.members.get(msg.author.id).roles;
-            userRolesData.map((role) =>{
-                userRolesList.push(role.name)
-            })
 
-        let found = false;
+            // getting the roles name
+            for(let i=0; i<customRoles.length; i++){
+                let guildRolesData = msg.guild.roles.find(role => role.id == customRoles[i]);
+                if(guildRolesData != null){
+                    guildCustomRolesData.push(guildRolesData.name);
+                }                 
+            }
+        }        
+
         // checking if the server have custom roles
         if(customRoles.length != 0){
             // checking if the role valid
-            for(let i = 0; i < customRoles.length; i++){                
-                if(args.includes(customRoles[i])){ 
-                    // checking if the user have the role
-                    for(var j = 0; j < userRolesList.length; j++){ 
-                        if(userRolesList[j] == customRoles[i]){
-                            if(msg.guild.roles.find(role => role.name == customRoles[i]) != null){
-                        
-                                msg.guild.members.get(msg.author.id).removeRole(msg.guild.roles.find(role => role.name == customRoles[i]));
-        
-                                msgData = 'Successfully removed `'+customRoles[i]+'` role';                        
-                            }
-                            found = true;
-                        }
-                    }
-                    
-                    // telling user can't remove role he didn't join
-                    if(j == userRolesList.length && found == false){
-                        msgData = 'You don\'t have that role, maybe try to join?'
-                    }
+            let guildRolesData = msg.guild.roles.find(role => role.name == args);
+            let userRolesData = msg.guild.members.get(msg.author.id).roles.find(role => role.id == guildRolesData.id);
+            console.debug('[soyun] [custom-roles-remove] role data: '+guildRolesData);
+            console.debug('[soyun] [custom-roles-remove] user role data: '+userRolesData);
+            console.debug('[soyun] [custom-roles-remove] guild custom roles data:'+guildCustomRolesData);
+
+            // checking if the args is valid
+            for(let i=0; i<guildCustomRolesData.length; i++){
+                if(args.includes(guildCustomRolesData[i])){
+                    argsValid = true;
                 }
             }
+
+            if(guildRolesData != null && argsValid){
+                // checking if user have role
+                if(userRolesData != null){
+                    // checking if the bot have the permission
+                    if(msg.channel.permissionsFor(this.client.user).has("MANAGE_ROLES", false)){
+                        // removing the role
+                        msg.guild.members.get(msg.author.id).removeRole(guildRolesData.id);
+
+                        msgData = 'Successfully removed `'+args+'` role';
+                    }else{
+                        msgData = 'I\'m sorry, I don\'t have the permission to do that';
+                    }    
+                }else{
+                    msgData = 'I don\'t think you have that role';
+                }
+            }else{
+                msgData = 'I can\'t find custom role with that name, try again?\nAvailable roles: `'+guildCustomRolesData+'`'
+            }
         }else{
-            msgData = 'There\'s no custom roles on this server, maybe make one first?';
+            msgData = 'Hmm there\'s no custom roles on this server, maybe make one first?';
         } 
 
         msg.channel.stopTyping();

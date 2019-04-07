@@ -21,51 +21,57 @@ module.exports = class JoinCustomRoleCommand extends Command {
             guildSettings = guildSettings[0];
         let customRoles = [];
 
+        let msgData;
+        let argsValid = false; 
+
         args = args.toLowerCase(); // converting the role value to lower case
 
+        let guildCustomRolesData = [];
         if(guildSettings != undefined){
             customRoles = guildSettings.settings.custom_roles;
-        }
-        // default message
-        let msgData = ''; 
-        let userRolesList = [];
-        let userRolesData = msg.guild.members.get(msg.author.id).roles;
-            userRolesData.map((role) =>{
-                userRolesList.push(role.name)
-            })
 
-        
-        let found = false;
+            // getting the roles name
+            for(let i=0; i<customRoles.length; i++){
+                let guildRolesData = msg.guild.roles.find(role => role.id == customRoles[i]);
+                if(guildRolesData != null){
+                    guildCustomRolesData.push(guildRolesData.name);
+                }                 
+            }
+        }        
+
         // checking if the server have custom roles
         if(customRoles.length != 0){
             // checking if the role valid
-            for(let i = 0; i < customRoles.length; i++){                
-                if(args.includes(customRoles[i])){ 
-                    // checking if the user have the role
-                    for(var j = 0; j < userRolesList.length; j++){ 
-                        if(userRolesList[j] == customRoles[i]){
-                            found = true;
-                        }
-                    } 
+            let guildRolesData = msg.guild.roles.find(role => role.name == args);
+            let userRolesData = msg.guild.members.get(msg.author.id).roles.find(role => role.id == guildRolesData.id);
+            //console.debug('[soyun] [custom-roles-add] role data: '+guildRolesData);
+            //console.debug('[soyun] [custom-roles-add] user role data: '+userRolesData);
+            //console.debug('[soyun] [custom-roles-add] guild custom roles data:'+guildCustomRolesData);
 
-                    // add role if user don't have it
-                    if(!found){
-                        if(msg.guild.roles.find(role => role.name == customRoles[i]) != null){
-                            //console.debug('[soyun] [add-custom-role] add role permission: '+msg.channel.permissionsFor(this.client.user).has("MANAGE_ROLES", false))
-
-                            // checking the bot permission
-                            if(msg.channel.permissionsFor(this.client.user).has("MANAGE_ROLES", false)){
-                                msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name == customRoles[i]));
-    
-                                msgData = 'Successfully added `'+customRoles[i]+'` role';
-                            }else{
-                                msgData = 'I\'m sorry, I don\'t have the permission to do that';
-                            }                                                    
-                        }                        
-                    }else{
-                        msgData = 'I think you already have that role';
-                    }
+            // checking if the args is valid
+            for(let i=0; i<guildCustomRolesData.length; i++){
+                if(args.includes(guildCustomRolesData[i])){
+                    argsValid = true;
                 }
+            }
+
+            if(guildRolesData != null && argsValid){
+                // checking if user have role
+                if(userRolesData == null){
+                    // checking if the bot have the permission
+                    if(msg.channel.permissionsFor(this.client.user).has("MANAGE_ROLES", false)){
+                        // adding the role
+                        msg.guild.members.get(msg.author.id).addRole(guildRolesData.id);
+
+                        msgData = 'Successfully added `'+args+'` role';
+                    }else{
+                        msgData = 'I\'m sorry, I don\'t have the permission to do that';
+                    }    
+                }else{
+                    msgData = 'I think you already have that role';
+                }
+            }else{
+                msgData = 'I can\'t find custom role with that name, try again?\nAvailable roles: `'+guildCustomRolesData+'`'
             }
         }else{
             msgData = 'Hmm there\'s no custom roles on this server, maybe make one first?';

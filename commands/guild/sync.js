@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const { mongoGetData } = require('../../core');
+const { mongoGetData, setDataFormatString } = require('../../core');
 
 module.exports = class SyncCustomRoleCommand extends Command {
     constructor(client) {
@@ -7,18 +7,27 @@ module.exports = class SyncCustomRoleCommand extends Command {
             name: 'sync',
             group: 'guild',
             memberName: 'sync',
-            description: 'Syncronize the custom roles data with the database, use `sync role name` to add existing role to database',
-            examples: ['sync', 'sync role name'],
+            description: 'Add existing roles to use as custom roles',
+            examples: ['sync friends', 'sync best friend'],
             guildOnly: true,
             userPermission: ['MANAGE_ROLES'],
+            args: [
+                {
+                    key: 'roleName',
+                    prompt: 'What is the role name?',
+                    type: 'string'
+                }
+            ]
         });
     }
 
-    async run(msg, args) {
+    async run(msg, {roleName}) {
         msg.channel.startTyping();
 
         let msgData = '';
         let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
+
+        roleName = roleName.toLowerCase(); // converting the role value to lower case
 
         if(authorPermission){            
             let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
@@ -27,53 +36,29 @@ module.exports = class SyncCustomRoleCommand extends Command {
             let customRolesData;
 
             if(guildSettings != undefined){
-                customRolesData = guildSettings.settings.custom_roles;
-            }        
+                let currentCustomRoles = guildSettings.settings.custom_roles;
+                let guildRolesData = msg.guild.roles.find(role => role.name == args);
 
-            // sync the role with db
-            // if the user isn't specified any roles, the bot will just sync the roles in db by deleteing any roles that the bot can't find in the guild/server
-            let foundRoles = [];
-            let absentRoles = [];
-            if(args == ''){
-                // checking if the server have any custom roles
-                if(customRolesData != null && guildSettings != undefined){
-                    for(let i = 0; i < customRolesData.length; i++){
-                        // insert the role into an array if it's exist
-                        if(msg.guild.roles.find(role => role.name == customRolesData[i]) != null){
-                            foundRoles.push(customRolesData[i]);
-                        }else{
-                            absentRoles.push(customRolesData[i]);
-                        }
+                // checking the role existance
+                if(guildRolesData != null){
+                    customRolesData = [guildRolesData.id];
+
+                    for(let i=0; i < currentCustomRoles.length; i++){
+                        customRolesData.push(currentCustomRoles[i]);
                     }
 
                     // update the db
-                    this.client.emit('guildCustomRole', msg.guild.id, foundRoles);
+                    //this.client.emit('guildCustomRole', msg.guild.id, customRolesData);
 
-                    msgData = 'Custom roles syncronized, deleted roles: `'+absentRoles+'`';
+                    msgData = '`'+args+'` role added to the database';
                 }else{
-                    msgData = 'No custom roles found on this guild/server, try `create role` to make a new role or `sync role-name` to add existing role into custom roles';
+                    msgData = 'I can\'t find any role with that name';
                 }
             }else{
-                // mergin the roles data
-                customRolesData = [args];
-
-                if(guildSettings != undefined){
-                    let currentCustomRoles = guildSettings.settings.custom_roles;
-
-                    if(currentCustomRoles.length != 0){
-                        for(let i=0; i < currentCustomRoles.length; i++){
-                            customRolesData.push(currentCustomRoles[i]);
-                        }
-                    }
-                }
-
-                // update the db
-                this.client.emit('guildCustomRole', msg.guild.id, customRolesData);
-
-                msgData = '`'+args+'` role syncronized with the database';
+                msgData = 'I can\'t find any custom role for this guild/server, use `create role name` to make new or `sync role name` to add existing role into custom role';
             }
         }else{
-            msgData = 'I\'m sorry, you don\'t have the permission to use that command'
+            msgData = 'I\'m sorry, you don\'t have the permission to use that command';
         }
 
         msg.channel.stopTyping(); 
