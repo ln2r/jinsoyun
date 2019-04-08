@@ -40,10 +40,16 @@ module.exports = class JoinCustomRoleCommand extends Command {
         }        
 
         // checking if the server have custom roles
+        let userRolesData;
+        let roleFound = false;
         if(customRoles.length != 0){
             // checking if the role valid
             let guildRolesData = msg.guild.roles.find(role => role.name == args);
-            let userRolesData = msg.guild.members.get(msg.author.id).roles.find(role => role.id == guildRolesData.id);
+            
+            if(guildRolesData != null){
+                userRolesData = msg.guild.members.get(msg.author.id).roles.find(role => role.id == guildRolesData.id);
+                roleFound = true;
+            }
             //console.debug('[soyun] [custom-roles-add] role data: '+guildRolesData);
             //console.debug('[soyun] [custom-roles-add] user role data: '+userRolesData);
             //console.debug('[soyun] [custom-roles-add] guild custom roles data:'+guildCustomRolesData);
@@ -55,7 +61,7 @@ module.exports = class JoinCustomRoleCommand extends Command {
                 }
             }
 
-            if(guildRolesData != null && argsValid){
+            if(guildRolesData != null && argsValid && roleFound){
                 // checking if user have role
                 if(userRolesData == null){
                     // checking if the bot have the permission
