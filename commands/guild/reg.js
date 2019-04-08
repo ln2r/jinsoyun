@@ -18,7 +18,9 @@ module.exports = class RegCommand extends Command {
     async run(msg, args) {
         args = args.toLowerCase();
         let rolesList = await mongoGetData('configs', {});
-            rolesList = rolesList[0];
+            rolesList = rolesList[0].roles_list;
+
+        //console.debug('[soyun] [reg] ['+msg.guild.name+'] roles data: '+rolesList);
 
         // checking if the class input is valid or not
         let classValid = false;
@@ -67,7 +69,7 @@ module.exports = class RegCommand extends Command {
                 
                 if(defaultTextChannel != '' && defaultTextChannel != 'disable' && defaultTextChannel != undefined){
                     // add cricket role so they can't see the rest of the guild until they do join command
-                    msg.guild.channels.find(ch => ch.name == defaultTextChannel).send(
+                    msg.guild.channels.find(ch => ch.id == defaultTextChannel).send(
                         'Welcome our new '+rolesList[i]+' <@'+msg.author.id+'>!'
                     );
                 }
