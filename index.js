@@ -33,8 +33,14 @@ clientDiscord.registry
     .registerCommandsIn(path.join(__dirname, 'commands'));
 
 clientDiscord
-    .on('error', console.error)
-    .on('warn', console.warn)
+    .on('error', (error) => {
+        sendBotReport(error, 'system-soyun', 'error');
+        console.error(error);
+    })
+    .on('warn', (warn) =>{
+        sendBotReport(warn, 'system-soyun', 'warning');
+        console.warn(warn);
+    })
     // remove "//" below to enable debug log
     //.on('debug', console.log)
     .on('disconnect', () => { console.warn('[soyun] [system] Disconnected!'); })
@@ -234,8 +240,8 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
 	});
   
 	stream.on('error', function(error) {
-        console.error(error);
         sendBotReport(error, 'twitter-soyun', 'error');
+        console.error(error);        
 	});
 });
 // Twitter stream script end here
