@@ -68,12 +68,12 @@ clientDiscord
             if((member.guild.roles.find(role => role.name == 'cricket')) != null){
                 member.addRole(member.guild.roles.find(x => x.name == 'cricket'));
             }
-            member.guild.channels.find(ch => ch.name == memberGate).send(
+            member.guild.channels.find(ch => ch.id == memberGate).send(
                 'Hi <@'+member.user.id+'>! Welcome to *'+member.guild.name+'*!\n\n'+
 
                 'Before I give you access to the rest of the server, I need to know your character name and class that you use in our clan, to do that please write this following command with your information in it, but if you arent\'t a clan member replace your class with `guest`\n\n'+
 
-                '`@Jinsoyun join <character name> <class name>`\n'+
+                '`@Jinsoyun join character name class name`\n'+
                 '**Example**:\n'+
                 '- **If you are a clan member use the like command below**'+
                 '`@Jinsoyun join jinsoyun blade dancer`\n'+
