@@ -19,16 +19,16 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
 
         let guildSettings = await mongoGetData('guilds', {guild: msg.guild.id});
             guildSettings = guildSettings[0];
-        let customRoles = [];
+        let customRolesName = [];
 
         if(guildSettings != undefined){
-            customRoles = guildSettings.settings.custom_roles;
+            let guildCustomRolesData = guildSettings.settings.custom_roles;
 
-            for(let i=0; i<customRoles.length; i++){
-                let guildRolesData = msg.guild.roles.find(role => role.id == customRoles[i]);
+            for(let i=0; i<guildCustomRolesData.length; i++){
+                let guildRolesData = msg.guild.roles.find(role => role.id == guildCustomRolesData[i]);
 
                 if(guildRolesData != null){
-                    customRoles.push(guildRolesData.name);
+                    customRolesName.push(guildRolesData.name);
                 }                
             }
         }
@@ -37,7 +37,7 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
             'embed': {
                 'title': msg.guild.name+' Custom Roles',
                 'color': 1879160,
-                'description': 'You can use `add role name` command to add yourself the custom role'+setArrayDataFormat(customRoles, '- ', true),
+                'description': 'You can use `add role name` command to add yourself the custom role'+setArrayDataFormat(customRolesName, '- ', true),
                 'footer': {
                     'text': 'Jinsoyun Bot - '+dateformat(Date.now(), 'UTC:dd-mm-yy @ HH:MM')+' UTC'
                 }
