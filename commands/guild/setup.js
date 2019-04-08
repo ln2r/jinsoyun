@@ -24,7 +24,7 @@ module.exports = class CreateJoinRoleCommand extends Command {
                 guildSettingsData = guildSettingsData[0];
             
             let rolesList = await mongoGetData('configs', {});
-                rolesList = rolesList[0];
+                rolesList = rolesList[0].roles_list;
         
             let rolesSetupStatus = '';
             if(guildSettingsData != undefined){
