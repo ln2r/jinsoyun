@@ -191,7 +191,7 @@ module.exports = {
         for(let i = 0; i < data.length; i++){
             // checking if the data in that index is empty or not
             if(data[i] == '' || data[i] == null){
-                formattedData = '- *No data available*';
+                formattedData = '\n- *No data available*';
             }else{
                 formattedData = formattedData + (newline + symbol + data[i]);
             };         
