@@ -31,7 +31,7 @@ module.exports = class RegCommand extends Command {
                 
                 // getting the chara name and make it prettier
                 let userCharaName = args.replace(rolesList[i], '');
-                    userCharaName = userCharaName.replace(/(^|\s)\S/g, l => l.toUpperCase());
+                    //userCharaName = userCharaName.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
                 classValid = true;
 
