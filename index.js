@@ -77,16 +77,15 @@ clientDiscord
             member.guild.channels.find(ch => ch.id == memberGate).send(
                 'Hi <@'+member.user.id+'>! Welcome to *'+member.guild.name+'*!\n\n'+
 
-                'Before I give you access to the rest of the server, I need to know your character name and class that you use in our clan, to do that please write this following command with your information in it, but if you arent\'t a clan member replace your class with `guest`\n\n'+
-
+                'Before I give you access to the rest of the server, I need to know your character\'s name and class you\'re using in our clan, To do that, please use following command with your information in it\n'+
                 '`@Jinsoyun join character name class name`\n'+
                 '**Example**:\n'+
-                '- **If you are a clan member use the like command below**'+
+                '- **If you are our clan member**\n'+
                 '`@Jinsoyun join jinsoyun blade dancer`\n'+
-                '- **If you aren\'t a clan member use `guest` instead of `class` in your command**'+
-                '`@Jinsoyun join jinsoyun guest\n'+
+                '- **if you are our guest use `guest` instead of `class` in your command**\n'+
+                '`@Jinsoyun join jinsoyun guest`\n\n'+
                 
-                'If you need some assistance you can mention or DM available admin, thank you ❤'
+                'if you need any assistance you can mention or DM available admins, thank you ❤'
             );
         }
     })
@@ -164,14 +163,21 @@ const clientTwitter = new Twitter({
 
 clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async  function(stream) {
     let twitterAPIData = await mongoGetData('apis', {name: 'Twitter'});
-        twitterAPIData = twitterAPIData[0];
+    let twitterTrackedUser = twitterAPIData[0].stream_screenname;
+
+    let twitterUserValid = false;
 
 	stream.on('data', function(tweet) {
         let payloadStatus = 'rejected';
         
-		// Filtering data so it only getting data from specified user
-		if((tweet.user.screen_name == twitterAPIData.stream_screenname[0] || tweet.user.screen_name == twitterAPIData.stream_screenname[1] || tweet.user.screen_name == twitterAPIData.stream_screenname[2])){
-			// Variable for filtering
+        // checking if it's valid account
+        for(let i=0; i<twitterTrackedUser.length; i++){
+            if(tweet.user.screen_name == twitterTrackedUser[i]){
+                twitterUserValid = true;
+            }
+        }
+
+		if(twitterUserValid){        
 			var twtFilter = tweet.text.toString().substring(0).split(' ');
 
 			// Filtering the 'RT' and 'mention' stuff
@@ -184,10 +190,14 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
 					twtText = tweet.extended_tweet.full_text.toString().replace('&amp;','&');
                 }
 
+                if(tweet.is_quote_status){
+                    twtText = twtText+' RT @'+tweet.quoted_status.user.screen_name+' '+(tweet.quoted_status.text.toString().replace('&amp;','&'));
+                }
+
 				payloadStatus = 'received';
 
 				// Making the color different for different user
-				if(tweet.user.screen_name == twitterAPIData.stream_screenname[0]){
+				if(tweet.user.screen_name == twitterTrackedUser[0]){
 					twtColor = 16753920;
 				}else{
 					twtColor = 1879160;
