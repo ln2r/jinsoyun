@@ -18,21 +18,20 @@ A Discord bot built for a NA Blade &amp; Soul clan Grumpy Butts.
 DM me on discord for the invitation url (Username and tag on the bottom of this file).
 
 ### Self-Host
-If you want to host the bot yourself just follow the instruction below. The downside is you need to update daily, weekly and event data manually (updated data usually will be provided via API endpoints when available).
+If you want to host the bot yourself just follow the instruction below. The downside is you need to update daily, weekly and event data manually ([manual data api]((http://jinsoyun.ln2r.web.id/api/))).
 
 **Requirements**:
 * [Discord App Token](https://discordapp.com/developers/applications/) - [Guide how to get Discord App Token](https://anidiots.guide/getting-started/getting-started-long-version)
 * [Twitter API Token](https://developer.twitter.com/) - [Guide how to get Twitter API Token](https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
 * [node.js](https://nodejs.org/)
 * [MongoDB](https://www.mongodb.com/)
-* [Jinsoyun Bot Database](https://github.com/ln2r/jinsoyun/tree/dev/mongoexport) (`mongoexport` folder)
+* [Jinsoyun Bot Database](http://jinsoyun.ln2r.web.id/api/)
 
 **How-to**:
-* Make a MongoDB database with the name you specified and then make these collections (check `mongoexport` folder)
+* Make a MongoDB database with the name you specified and then make these collections (check `mongoexport` folder or our [api endpoint](http://jinsoyun.ln2r.web.id/api/))
   * `apis` api info 
   * `challenges` dailies and weeklies rewards and quests
-  * `classes` classes info and data
-  * `configs` configuration data (only containing default market image placeholder for now)
+  * `configs` bot configuration data
   * `dungeons` dungeon data
   * `events` event info and details
   * `items` item data and it's market data
@@ -73,30 +72,7 @@ Template:
 
 ### MongoDB Collection Called configs
 * `DEFAULT_MARKET_THUMBNAIL` default image placeholder when market command can't find item(s)
-
-### Provider Settings (Discord.js Commando MongoDBProvider)
-If you are going to use MongoDB Provider like what being used here follow this steps below to configure it
-* Go to `node_modules > commando-provider-mongo` folder
-* Open `index.js` file
-* Add these listener on listener section
-  ```
-  .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
-  .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
-  .set('notificationTwitchChange', (guild, channel) => this.set(guild, 'twitch', channel))
-  .set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
-  .set('mainTextChannelChange', (guild, channel) => this.set(guild, 'default_text', channel))
-  .set('guildRolesSetup', (guild, value) => this.set(guild, 'roles_setup', value))
-  ```
-Explanation:
-* Listener Format:
-  `.set('listenerName', (guild, value) => this.set(guild, 'setting_name', value))`
-* Used Listener Explanation
-  * `notificationResetChange` when guild change reset notification channel, options: `channel-name`, `disable`
-  * `notificationTwitterChange` when guild change twitter post notification channel, options: `channel-name`, `disable`
-  * `notificationTwitchChange` when guild change twitch stream notification channel, options: `channel-name`, `disable`
-  * `newMemberChannelChange` when guild change which channel new member joined the server got welcomed, options: `channel-name`, `disable`
-  * `mainTextChannelChange` when guild change the main text channel is, options: `channel-name`, `disable`
-  * `guildRolesSetup` when guild do classes roles setup, options: `true`, `false`
+* `roles_list` role list for `join` and `setup` commands
 
 ## Acknowledgments & Credits
 * **Rizky Sedyanto** - *Initial work* - [ln2r](https://ln2r.web.id/); Discord: ln2r#1691
