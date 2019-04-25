@@ -68,4 +68,4 @@ module.exports = class ClassChangeCommand extends Command {
 
         return msg.say("Your class changed to ***"+className+"***");
     }
-}
+};

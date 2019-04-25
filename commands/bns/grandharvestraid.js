@@ -41,4 +41,4 @@ module.exports = class GrandHarvestCommand extends Command {
         }
         return msg.say(embedData);
     }
-}
+};

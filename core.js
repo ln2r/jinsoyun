@@ -273,11 +273,11 @@ module.exports = {
      */
     setCurrencyFormat: function currencyFormat(Number){
         let str = Math.round(Number);
-            str = str.toString()
-        let len = str.length
-        let gold = ""
-        let silver = ""
-        let copper = ""
+            str = str.toString();
+        let len = str.length;
+        let gold = "";
+        let silver = "";
+        let copper = "";
     
         if(len > 4){
             gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547>";
@@ -388,7 +388,7 @@ module.exports = {
         }
 
         // adding event daily challenges rewards to rewards list if it"s not empty
-        if(eventDailyRewards !== ""){dailies.rewards.push(eventDailyRewards + " (Event)")}
+        if(eventDailyRewards !== ""){dailies.rewards.push(eventDailyRewards + " (Event)")};
 
         return dailies;
     },

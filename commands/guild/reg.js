@@ -36,38 +36,38 @@ module.exports = class RegCommand extends Command {
                 classValid = true;
 
                 // adding character class role
-                if(msg.guild.roles.find(role => role.name === rolesList[i]) != null){
+                if(msg.guild.roles.find(role => role.name === rolesList[i]) !==null){
                     msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name === rolesList[i]));
                 }
                 
                 // Adding "member/guest" role so user can talk
                 if(args.includes("guest")){
-                    if(msg.guild.roles.find(role => role.name === "guest") != null){
+                    if(msg.guild.roles.find(role => role.name === "guest") !==null){
                         msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name === "member"));
                     }
                 }else{                    
-                    if(msg.guild.roles.find(role => role.name === "member") != null){
+                    if(msg.guild.roles.find(role => role.name === "member") !==null){
                         msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name === "member"));
                     }                    
                 }
                 
 
                 // Removing "cricket" role
-                if(msg.guild.roles.find(role => role.name === "cricket") != null){
+                if(msg.guild.roles.find(role => role.name === "cricket") !==null){
                     msg.guild.members.get(msg.author.id).removeRole(msg.guild.roles.find(role => role.name === "cricket"));
                 }
                 
                 // changing the nickname
-                if(msg.author.id != msg.guild.ownerID){
+                if(msg.author.id !==msg.guild.ownerID){
                     msg.guild.members.get(msg.author.id).setNickname(userCharaName);
                 }
                
                 let defaultTextChannel = "";
-                if(guildSettingData != undefined){
+                if(guildSettingData !==undefined){
                     defaultTextChannel = guildSettingData.settings.default_text;
                 }
                 
-                if(defaultTextChannel != "" && defaultTextChannel != "disable" && defaultTextChannel != undefined){
+                if(defaultTextChannel !=="" && defaultTextChannel !=="disable" && defaultTextChannel !==undefined){
                     // add cricket role so they can"t see the rest of the guild until they do join command
                     msg.guild.channels.find(ch => ch.id === defaultTextChannel).send(
                         "Welcome our new "+rolesList[i]+" <@"+msg.author.id+">!"
@@ -83,4 +83,4 @@ module.exports = class RegCommand extends Command {
             return msg.say("I can't find the class you wrote, please check and try again (class name need to be it's full name)");
         }
     }
-}
+};

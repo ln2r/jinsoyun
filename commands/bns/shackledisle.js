@@ -41,4 +41,4 @@ module.exports = class ShackledIsleCommand extends Command {
         }
         return msg.say(embedData);
     }
-}
+};

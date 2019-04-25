@@ -58,7 +58,7 @@ module.exports = class LootCommand extends Command {
         let dropData = "";
         for(let i = 0; i < dungeonData.length; i++){
             //console.debug("[soyun] [drop] ["+msg.guild.name+"] result: "+dungeonData[i].length);
-            if(dungeonData[i].length != 0){
+            if(dungeonData[i].length !== 0){
                 for(let j = 0; j < dungeonData[i].length; j++){
                     let itemName;
 
@@ -87,7 +87,7 @@ module.exports = class LootCommand extends Command {
 
         // result formatting
         let result = "Can't find any dungeon that drop **"+item+"**, please check and try again (Item name can't be abbreviated)";
-        if(dropData != ""){
+        if(dropData !== ""){
             result = "Dungeon that contain **"+item+"** drop:"+dropData
         }
 
@@ -109,4 +109,4 @@ module.exports = class LootCommand extends Command {
         
         return msg.say(embedData);     
     }
-}
+};

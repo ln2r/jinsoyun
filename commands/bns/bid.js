@@ -42,7 +42,7 @@ module.exports = class RemoveCustomRoleCommand extends Command {
         
         if(isNaN(itemPrice)){
             let regx = new RegExp("(?:^|\W)"+itemPrice+"+(?:$|\W)", "ig");
-            let dbSearchQuery = {"name": regx}
+            let dbSearchQuery = {"name": regx};
             let itemData = await mongoGetData("items", dbSearchQuery);
 
             itemPrice = itemData[0].market[0].priceEach;
@@ -81,4 +81,4 @@ module.exports = class RemoveCustomRoleCommand extends Command {
 
         return msg.say(embedData);
     }
-}
+};

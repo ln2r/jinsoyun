@@ -32,13 +32,13 @@ module.exports = class DailyCommand extends Command {
         }else if(args === "tomorrow" || args === "tmr"){
             dayQuery = getDayValue(Date.now(), "tomorrow");
         }else{
-            if(args === "mon" || args === "monday"){dayQuery = "Monday"}
-            if(args === "tue" || args === "tuesday"){dayQuery = "Tuesday"}
-            if(args === "wed" || args === "wednesday"){dayQuery = "Wednesday"}
-            if(args === "thu" || args === "thursday"){dayQuery = "Thursday"}
-            if(args === "fri" || args === "friday"){dayQuery = "Friday"}
-            if(args === "sat" || args === "saturday"){dayQuery = "Saturday"}
-            if(args === "sun" || args === "sunday"){dayQuery = "Sunday"}
+            if(args === "mon" || args === "monday"){dayQuery = "Monday"};
+            if(args === "tue" || args === "tuesday"){dayQuery = "Tuesday"};
+            if(args === "wed" || args === "wednesday"){dayQuery = "Wednesday"};
+            if(args === "thu" || args === "thursday"){dayQuery = "Thursday"};
+            if(args === "fri" || args === "friday"){dayQuery = "Friday"};
+            if(args === "sat" || args === "saturday"){dayQuery = "Saturday"};
+            if(args === "sun" || args === "sunday"){dayQuery = "Sunday"};
         }
 
         //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
@@ -71,4 +71,4 @@ module.exports = class DailyCommand extends Command {
 
         return msg.say(embedData);
     }
-}
+};

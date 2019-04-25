@@ -210,4 +210,4 @@ module.exports = class GuildSettingsCommand extends Command {
 
         return msg.say(msgData);
     }
-}
+};

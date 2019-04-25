@@ -18,4 +18,4 @@ module.exports = class ResetNotificationCommand extends Command {
     async run(msg) {
         sendResetNotification(this.client.guilds);
     }
-}
+};

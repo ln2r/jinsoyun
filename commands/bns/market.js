@@ -52,19 +52,19 @@ module.exports = class MarketCommand extends Command {
         //console.debug("[soyun] [market] ["+msg.guild.name+"] searchQuery value: "+searchQuery);
         //console.debug("[soyun] [market] ["+msg.guild.name+"] regx value: "+regx);
 
-        let dbSearchQuery = {"name": regx}
+        let dbSearchQuery = {"name": regx};
         let marketData = await mongoGetData("items", dbSearchQuery);
 
         //console.debug("[soyun] [market] ["+msg.guild.name+"] total result: "+marketData.length);
 
         if(marketData.length === 0){
-            itemData = "No Result found on **"+searchQuery+"**. Please check your search and try again."
+            itemData = "No Result found on **"+searchQuery+"**. Please check your search and try again.";
         }else{
             itemImage = marketData[0].img;
             dataLastUpdate = marketData[0].updated;
 
             if(marketData.length > 5){
-                msgData = "Found **"+marketData.length+"** matching items, please use exact search to get more accurate result"
+                msgData = "Found **"+marketData.length+"** matching items, please use exact search to get more accurate result";
                 maxItemLength = 5;
             }else{
                 maxItemLength = marketData.length;
@@ -110,4 +110,4 @@ module.exports = class MarketCommand extends Command {
 
         return msg.say(msgData, embedData);
     }
-}
+};

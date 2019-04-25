@@ -58,4 +58,4 @@ module.exports = class CreateJoinRoleCommand extends Command {
 
         return msg.say(msgData);
     }
-}
+};

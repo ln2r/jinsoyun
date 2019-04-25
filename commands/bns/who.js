@@ -91,7 +91,7 @@ module.exports = class WhoCommand extends Command {
            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData.characterName value: "+charaData.characterName);
             
             if(charaData.characterName === undefined){
-                messageOutput = "No result found on **"+charaQuery+"**. Please check your search and try again."
+                messageOutput = "No result found on **"+charaQuery+"**. Please check your search and try again.";
             }else{
                 // getting the traits data
                 let traitsDataView = [];
@@ -102,7 +102,7 @@ module.exports = class WhoCommand extends Command {
                         for(let j = 0; j < traitsData[i].traits.length; j++){
                             //console.debug("[soyun] [who] ["+msg.guild.name+"] "+traitsData[i].traits[j].name+" is: "+traitsData[i].traits[j].selected)
                             if(traitsData[i].traits[j].selected === true){
-                                traitsDataView.push(traitsData[i].traits[j].name)
+                                traitsDataView.push(traitsData[i].traits[j].name);
                             }
                         }
                     }
@@ -113,7 +113,7 @@ module.exports = class WhoCommand extends Command {
 
                 let soulshieldData = [charaData.soulshield1, charaData.soulshield2, charaData.soulshield3, charaData.soulshield4, charaData.soulshield5, charaData.soulshield6, charaData.soulshield7, charaData.soulshield8];
 
-                let gearData = [charaData.ringName, charaData.earringName, charaData.necklaceName, charaData.braceletName, charaData.beltName, charaData.gloves, charaData.soulName, charaData.soulName2, charaData.petAuraName, charaData.talismanName, charaData.soulBadgeName, charaData.mysticBadgeName]
+                let gearData = [charaData.ringName, charaData.earringName, charaData.necklaceName, charaData.braceletName, charaData.beltName, charaData.gloves, charaData.soulName, charaData.soulName2, charaData.petAuraName, charaData.talismanName, charaData.soulBadgeName, charaData.mysticBadgeName];
 
                //console.debug("[soyun] [who] ["+msg.guild.name+"] charaAPIAddress: "+charaAPIAddress);
                //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData address: "+charaAPIAddress+charaQuery);
@@ -175,4 +175,4 @@ module.exports = class WhoCommand extends Command {
 
         return msg.say(messageOutput);        
     }
-}
+};

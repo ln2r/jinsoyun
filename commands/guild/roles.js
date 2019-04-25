@@ -48,4 +48,4 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
 
         return msg.say(embedData);
     }
-}
+};

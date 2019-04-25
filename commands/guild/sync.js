@@ -65,4 +65,4 @@ module.exports = class SyncCustomRoleCommand extends Command {
 
         return msg.say(msgData);
     }
-}
+};

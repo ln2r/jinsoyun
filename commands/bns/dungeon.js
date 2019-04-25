@@ -71,16 +71,16 @@ module.exports = class DungeonCommand extends Command {
             //console.debug("[soyun] [dungeon] ["+msg.guild.name+"] normal first data: "+dungeonData.rewards.normal[0]);
             //console.debug("[soyun] [dungeon] ["+msg.guild.name+"] hard first data: "+dungeonData.rewards.hard[0]);
 
-            if(dungeonData.rewards.common[0] != ""){
+            if(dungeonData.rewards.common[0] !==""){
                 rewardsCommon = "\n**Common**"+setArrayDataFormat(dungeonData.rewards.common, "- ", true)+"\n\u200B";   
             }
 
-            if(dungeonData.rewards.normal[0] != ""){
+            if(dungeonData.rewards.normal[0] !==""){
                 rewardsNormal = "\n**Normal**"+setArrayDataFormat(dungeonData.rewards.normal, "- ", true)+"\n\u200B";   
                                 
             }
             
-            if(dungeonData.rewards.hard[0] != ""){
+            if(dungeonData.rewards.hard[0] !==""){
                 rewardsHard = "\n**Hard**"+setArrayDataFormat(dungeonData.rewards.hard, "- ", true)+"\n\u200B";         
             }
 
@@ -119,4 +119,4 @@ module.exports = class DungeonCommand extends Command {
             return msg.say(embedData);
         }        
     }
-}
+};

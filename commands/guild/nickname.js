@@ -33,4 +33,4 @@ module.exports = class NicknameChangeCommand extends Command {
 
         return msg.say("Hello **"+name+"**! nice to meet you!");
     }
-}
+};

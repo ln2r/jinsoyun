@@ -70,4 +70,4 @@ module.exports = class CreateCustomRoleCommand extends Command {
 
         return msg.say(msgData);
     }
-}
+};

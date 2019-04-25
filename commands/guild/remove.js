@@ -76,7 +76,7 @@ module.exports = class RemoveCustomRoleCommand extends Command {
                     msgData = "I don't think you have that role";
                 }
             }else{
-                msgData = "I can't find custom role with that name, try again?\nAvailable roles: `"+guildCustomRolesData+"`"
+                msgData = "I can't find custom role with that name, try again?\nAvailable roles: `"+guildCustomRolesData+"`";
             }
         }else{
             msgData = "Hmm there's no custom roles on this server, maybe make one first?";
@@ -86,4 +86,4 @@ module.exports = class RemoveCustomRoleCommand extends Command {
 
         return msg.say(msgData);
     }
-}
+};

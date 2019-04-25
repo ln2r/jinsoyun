@@ -64,17 +64,17 @@ clientDiscord
             guildSettingData = guildSettingData[0];
 
         let memberGate = "";
-        if(guildSettingData != undefined){
+        if(guildSettingData !== undefined){
             memberGate = guildSettingData.settings.member_gate;
         }
 
         //console.debug("[soyun] [gate] ["+member.guild.name+"] memberGate value: "+memberGate)
-        if(memberGate != "" && memberGate != "disable" && memberGate != undefined){
+        if(memberGate !== "" && memberGate !== "disable" && memberGate !== undefined){
             // add cricket role if it"s exist so they can"t see the rest of the guild until they do join command
-            if((member.guild.roles.find(role => role.name == "cricket")) != null){
-                member.addRole(member.guild.roles.find(x => x.name == "cricket"));
+            if((member.guild.roles.find(role => role.name === "cricket")) !== null){
+                member.addRole(member.guild.roles.find(x => x.name === "cricket"));
             }
-            member.guild.channels.find(ch => ch.id == memberGate).send(
+            member.guild.channels.find(ch => ch.id === memberGate).send(
                 "Hi <@"+member.user.id+">! Welcome to *"+member.guild.name+"*!\n\n"+
 
                 "Before I give you access to the rest of the server, I need to know your character's name and class you're using in our clan, To do that, please use following command with your information in it\n"+
@@ -98,13 +98,13 @@ clientDiscord
         
         let foundRoles = [];
 
-        if(guildSettingsData != undefined){
+        if(guildSettingsData !== undefined){
             //console.debug("[soyun] [event-roleDelete] custom_roles length: "+guildSettingsData.settings.custom_roles.length);
             //console.debug("[soyun] [event-roleDelete] custom_roles data: "+guildSettingsData.settings.custom_roles);
 
             // getting which role is not deleted
             for(let i=0; i<guildSettingsData.settings.custom_roles.length; i++){
-                if(role.id != guildSettingsData.settings.custom_roles[i]){
+                if(role.id !== guildSettingsData.settings.custom_roles[i]){
                     foundRoles.push(guildSettingsData.settings.custom_roles[i]);
                 }
             }
@@ -114,7 +114,7 @@ clientDiscord
             clientDiscord.emit("guildCustomRole", role.guild.id, foundRoles);
         }
     })
-    .on("commandRun", async () =>{
+    .on("commandRun", async () => {
         await sendBotStats(Date.now());
     })
     .on("commandError", (error, command, message) => {
@@ -126,8 +126,8 @@ clientDiscord
         let found = 0;
         clientDiscord.guilds.map(function(guild){ //looking for the guild owner data (username and discriminator)
             guild.members.map((member) => {
-                if(found == 0){
-                    if(member.id == message.guild.ownerID){
+                if(found === 0){
+                    if(member.id === message.guild.ownerID){
                         found = 1;
 
                         for(let i=0; i < clientDiscord.owners.length; i++){
@@ -182,7 +182,7 @@ clientTwitter.stream("statuses/filter", {follow: "3521186773, 819625154"}, async
         
         // checking if it"s valid account
         for(let i=0; i<twitterTrackedUser.length; i++){
-            if(tweet.user.screen_name == twitterTrackedUser[i]){
+            if(tweet.user.screen_name === twitterTrackedUser[i]){
                 twitterUserValid = true;
             }
         }
@@ -191,10 +191,10 @@ clientTwitter.stream("statuses/filter", {follow: "3521186773, 819625154"}, async
 			var twtFilter = tweet.text.toString().substring(0).split(" ");
 
 			// Filtering the "RT" and "mention" stuff
-			if(twtFilter[0] == "RT" || twtFilter[0].charAt(0) == "@"){
+			if(twtFilter[0] === "RT" || twtFilter[0].charAt(0) === "@"){
 				payloadStatus = "rejected";
 			}else{	
-				if(tweet.extended_tweet == null){
+				if(tweet.extended_tweet === null){
 					twtText = tweet.text.toString().replace("&amp;","&");
 				}else{
 					twtText = tweet.extended_tweet.full_text.toString().replace("&amp;","&");
@@ -207,7 +207,7 @@ clientTwitter.stream("statuses/filter", {follow: "3521186773, 819625154"}, async
 				payloadStatus = "received";
 
 				// Making the color different for different user
-				if(tweet.user.screen_name == twitterTrackedUser[0]){
+				if(tweet.user.screen_name === twitterTrackedUser[0]){
 					twtColor = 16753920;
 				}else{
 					twtColor = 1879160;
@@ -239,14 +239,14 @@ clientTwitter.stream("statuses/filter", {follow: "3521186773, 819625154"}, async
                     //console.debug("[soyun] [tweet] guild setting data: "+JSON.stringify(guildSettingData, null, "\t"));    
 
                     let twitterChannel = "";
-                    if(guildSettingData != undefined){
+                    if(guildSettingData !== undefined){
                         twitterChannel = guildSettingData.settings.twitter;
                     }
         
                     let found = 0;
                     guild.channels.map((ch) => {
-                        if(found == 0){
-                            if(ch.id == twitterChannel && twitterChannel != "" && twitterChannel != "disable"){
+                        if(found === 0){
+                            if(ch.id === twitterChannel && twitterChannel !== "" && twitterChannel !== "disable"){
                                 found = 1; 
                                 ch.send(embedData);                        
                             }

@@ -18,4 +18,4 @@ module.exports = class ItemsUpdateCommand extends Command {
         mongoItemDataUpdate();
         return msg.say("Updating items data");
     }
-}
+};

@@ -42,4 +42,4 @@ module.exports = class KoldrakCommand extends Command {
         }
         return msg.say(embedData);
     }
-}
+};
