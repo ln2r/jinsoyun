@@ -8,7 +8,7 @@ const path = require('path');
 const ontime = require('ontime');
 const dateformat = require('dateformat');
 
-const { mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport} = require('./core');
+const { mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport, sendBotStats} = require('./core');
 
 // Discord.js Commando scripts start here
 const clientDiscord = new CommandoClient({
@@ -65,7 +65,7 @@ clientDiscord
 
         let memberGate = '';
         if(guildSettingData != undefined){
-            memberGate = guildSettingData.settings.member_gate
+            memberGate = guildSettingData.settings.member_gate;
         }
 
         //console.debug('[soyun] [gate] ['+member.guild.name+'] memberGate value: '+memberGate)
@@ -106,13 +106,16 @@ clientDiscord
             for(let i=0; i<guildSettingsData.settings.custom_roles.length; i++){
                 if(role.id != guildSettingsData.settings.custom_roles[i]){
                     foundRoles.push(guildSettingsData.settings.custom_roles[i]);
-                }
-            }
+                };
+            };
 
             //console.debug('[soyun] [event-roleDelete] found roles: '+foundRoles);
             // update the db
             clientDiscord.emit('guildCustomRole', role.guild.id, foundRoles);
-        }
+        };
+    })
+    .on('commandRun', async () =>{
+        await sendBotStats(Date.now());
     })
     .on('commandError', (error, command, message) => {
         // sending the error report to the database
@@ -136,12 +139,19 @@ clientDiscord
                                 '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
                                 '\n**Content**: `'+message.content+'`'+
                                 '\n**Message**:\n'+command.name+': '+command.message
-                            )
-                        }
-                    }
-                }
-            })
-        }) 
+                            ).then(
+                                function(message){
+                                    message.react('✅');
+                                    message.react('❎');
+                                }
+                            ).catch((err) => {
+                                sendBotReport(err, 'errorDM-soyun', 'error');
+                            });
+                        };
+                    };
+                };
+            });
+        });
     });
 
 clientDiscord.setProvider(
@@ -188,11 +198,11 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
 					twtText = tweet.text.toString().replace('&amp;','&');
 				}else{
 					twtText = tweet.extended_tweet.full_text.toString().replace('&amp;','&');
-                }
+                };
 
                 if(tweet.is_quote_status){
                     twtText = twtText+' RT @'+tweet.quoted_status.user.screen_name+' '+(tweet.quoted_status.text.toString().replace('&amp;','&'));
-                }
+                };
 
 				payloadStatus = 'received';
 
@@ -217,7 +227,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
                             'icon_url': tweet.user.profile_image_url
                         }
                     }
-                }
+                };
         
                 // sending the tweet
                 clientDiscord.guilds.map(async function(guild) {
@@ -230,7 +240,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
 
                     let twitterChannel = '';
                     if(guildSettingData != undefined){
-                        twitterChannel = guildSettingData.settings.twitter
+                        twitterChannel = guildSettingData.settings.twitter;
                     }
         
                     let found = 0;

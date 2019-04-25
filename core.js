@@ -27,7 +27,7 @@ module.exports = {
             .then((response) => {return response.json()})
             .catch((error) => {
                 console.error('[core] [site-data] Error: '+error);
-                module.exports.sendBotReport({'name':'SiteFetchError', 'message':'Unable to get site data, site might be unreachable or unavailable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
+                module.exports.sendBotReport({'name':'SiteFetchError', 'message':'Unable to get site data, site unreachable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
 
                 return {'status': 'error', error}
             })  
@@ -75,7 +75,7 @@ module.exports = {
 
         if(dataItems.status == 'error' || dataItems.status == 'error'){
             console.error('[core] [items-update] api data fetch error, please check the log');
-            module.exports.sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site might be unreachable or unavailable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
+            module.exports.sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site unreachable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
             
             let end = Date.now();
             let updateTime = (end-start)/1000+'s';    
@@ -605,6 +605,50 @@ module.exports = {
                 if (err) throw err;    
                 db.close();                
             });
+        });
+
+    },
+
+    /**
+     * sendBotStats
+     * Counting current day commands call
+     * @param {Date} date current date
+     */
+    sendBotStats: async function sendStats(date){
+        let statsCollectionName = 'botStats';
+        let statsData = await module.exports.mongoGetData(statsCollectionName, {date: dateformat(date, 'UTC:dd-mmmm-yyyy')});
+        let todayStats = 0;
+        let payload;
+
+        //console.debug('[core] [bot-stats] stats data: '+JSON.stringify(statsData));
+
+        if(statsData.length == 0){
+            todayStats++;
+
+            payload = {
+                'date': dateformat(date, 'UTC:dd-mmmm-yyyy'),
+                'count': todayStats
+            };
+        }else{
+            todayStats = statsData[0].count + 1;
+        }        
+
+        MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(dbName);
+
+            if(statsData.length == 0){
+                dbo.collection(statsCollectionName).insertOne(payload, function(err, res) {  
+                    if (err) throw err;    
+                    db.close();                
+                });
+            }else{
+                dbo.collection(statsCollectionName).updateOne({'date': dateformat(date, 'UTC:dd-mmmm-yyyy')},
+                {$set: {'count': todayStats}}, function(err, res) {  
+                    if (err) throw err;    
+                    db.close();                
+                });
+            };            
         });
 
     }
