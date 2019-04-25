@@ -2,16 +2,12 @@
 A Discord bot built for a NA Blade &amp; Soul clan Grumpy Butts.
 
 ## Features
-### Bot
 * Daily challenges information and announcement on reset
 * Weekly challenges information and announcement on reset
 * Current event summary information and announcement on reset
-* Koldrak's lair access announcement
 * Character information searching
 * Marketplace data
-
-### Other
-* MongoDB based database system.
+* Smart bid calculator
 
 ## Installation / Getting Started
 ### Invitation Url
@@ -28,16 +24,18 @@ If you want to host the bot yourself just follow the instruction below. The down
 * [Jinsoyun Bot Database](http://jinsoyun.ln2r.web.id/api/)
 
 **How-to**:
-* Make a MongoDB database with the name you specified and then make these collections (check `mongoexport` folder or our [api endpoint](http://jinsoyun.ln2r.web.id/api/))
-  * `apis` api info 
-  * `challenges` dailies and weeklies rewards and quests
-  * `configs` bot configuration data
-  * `dungeons` dungeon data
-  * `events` event info and details
-  * `items` item data and it's market data
+* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](https://github.com/ln2r/jinsoyun/tree/stable/mongoexport) folder (might be outdated) or our [api endpoint](http://jinsoyun.ln2r.web.id/api/))
+  - `apis` api info 
+  - `challenges` dailies and weeklies rewards and quests
+  - `configs` bot configuration data
+  - `dungeons` dungeon data
+  - `events` event info and details
+  - `items` item data and it's market data
+  - `botStats` bot statistic
+  - `logs` error log
 * [Create `.env` file](https://github.com/ln2r/jinsoyun/blob/dev/README.md#env-file)
 * Open Node.js command prompt and navigate to your bot directory.
-* Do `npm update` to get bot depencies.
+* Do `npm install` to get bot depencies.
 * Do `node index.js` to run the bot.
 
 ## Bot Configurations
@@ -55,7 +53,7 @@ Bot configuration data is located in 2 places, the one in `.env` file and the ot
 * `twitter_access_token_secret` twitter app access token secret key
 
 Template:
-  ```
+  ```env
   # bot stuff
   bot_mongodb_url = MONGODB_CONNECTION_URL
   bot_mongodb_db_name = MONGODB_DATABASE_NAME

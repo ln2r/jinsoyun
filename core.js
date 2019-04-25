@@ -1,8 +1,8 @@
-const dotenv = require('dotenv').config();
+const dotenv = require("dotenv").config();
 
-const MongoClient = require('mongodb').MongoClient;
-const dateformat = require('dateformat');
-const fetch = require('node-fetch');
+const MongoClient = require("mongodb").MongoClient;
+const dateformat = require("dateformat");
+const fetch = require("node-fetch");
 
 let url = process.env.bot_mongodb_url;
 let dbName = process.env.bot_mongodb_db_name;
@@ -17,19 +17,19 @@ module.exports = {
      * @returns data fetched from site in JSON format
      * @example
      *  // Using the function locally
-     *  module.exports.getSiteData('https://api.silveress.ie/bns/v3/items');
+     *  module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
      *  
      *  // Using the function outside the file
-     *  core.getSiteData('https://api.silveress.ie/bns/v3/items');
+     *  core.getSiteData("https://api.silveress.ie/bns/v3/items");
      */
     getSiteData: async function getSiteData(address) {
         return await fetch(address)
             .then((response) => {return response.json()})
             .catch((error) => {
-                console.error('[core] [site-data] Error: '+error);
-                module.exports.sendBotReport({'name':'SiteFetchError', 'message':'Unable to get site data, site unreachable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
+                console.error("[core] [site-data] Error: "+error);
+                module.exports.sendBotReport({"name":"SiteFetchError", "message":"Unable to get site data, site unreachable", "path":"main/", "code":10400, "method":"GET"}, "itemUpdate-core", "error");
 
-                return {'status': 'error', error}
+                return {"status": "error", error}
             })  
     },
 
@@ -41,13 +41,13 @@ module.exports = {
      * @returns data fetched from databse
      * @example
      *  // Using the function locally with id as it filter
-     *  module.exports.mongoGetData('classes', {_id: 0});
+     *  module.exports.mongoGetData("classes", {_id: 0});
      *  
      *  // Using the function outside the file without filter
-     *  core.mongoGetData('classes');
+     *  core.mongoGetData("classes");
      */
     mongoGetData: function mongoGetData(collname, filter) { 
-        //console.debug('[core] [mongo-fetch] collname: '+collname+', filter: '+JSON.stringify(filter));
+        //console.debug("[core] [mongo-fetch] collname: "+collname+", filter: "+JSON.stringify(filter));
 
         return MongoClient.connect(url, {useNewUrlParser: true})
                     .then(function(db) {
@@ -64,24 +64,24 @@ module.exports = {
     
    /** 
      * itemsUpdate
-     * Used to update the item data with it's market data
+     * Used to update the item data with it"s market data
      * @returns array of update status and time took to update
      */
     mongoItemDataUpdate: async function itemsUpdate(){     
         let start = Date.now();
 
-        var dataItems = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/items');
-        let marketItems = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/market/na/current/lowest');
+        var dataItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
+        let marketItems = await module.exports.getSiteData("https://api.silveress.ie/bns/v3/market/na/current/lowest");
 
-        if(dataItems.status == 'error' || dataItems.status == 'error'){
-            console.error('[core] [items-update] api data fetch error, please check the log');
-            module.exports.sendBotReport({'name':'APIFetchError', 'message':'Unable to get api data, site unreachable', 'path':'main/', 'code':10400, 'method':'GET'}, 'itemUpdate-core', 'error');
+        if(dataItems.status === "error" || dataItems.status === "error"){
+            console.error("[core] [items-update] api data fetch error, please check the log");
+            module.exports.sendBotReport({"name":"APIFetchError", "message":"Unable to get api data, site unreachable", "path":"main/", "code":10400, "method":"GET"}, "itemUpdate-core", "error");
             
             let end = Date.now();
-            let updateTime = (end-start)/1000+'s';    
-            console.log('[core] [items-update] Update data failed, time: '+updateTime);
+            let updateTime = (end-start)/1000+"s";    
+            console.log("[core] [items-update] Update data failed, time: "+updateTime);
         }else{
-            let itemsCollectionName = 'items';
+            let itemsCollectionName = "items";
             MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
@@ -100,7 +100,7 @@ module.exports = {
                         // updating the and formating data
                         for(let j = 0; j < dataItems.length; j++){
                             // getting the data with same id
-                            if(marketItems[i].id == dataItems[j].id){
+                            if(marketItems[i].id === dataItems[j].id){
                                 let marketData = [{
                                         updated: marketItems[i].ISO,
                                         totalListings: marketItems[i].totalListings,
@@ -110,9 +110,9 @@ module.exports = {
                                     }];
 
                                 // merging the old market data with the new one
-                                if(dbData != null){
+                                if(dbData !== null){
                                     for(let k = 0; k < dbData.length; k++){
-                                        if(marketItems[i].id == dbData[k]._id && dbData[k].market.length > 0){
+                                        if(marketItems[i].id === dbData[k]._id && dbData[k].market.length > 0){
                                             for(let l = 0; l < dbData[k].market.length; l++){
                                                 marketData.push(dbData[k].market[l]);
                                             }
@@ -157,13 +157,13 @@ module.exports = {
                             })
 
                             let end = Date.now();
-                            let updateTime = (end-start)/1000+'s';
+                            let updateTime = (end-start)/1000+"s";
                     
-                            console.log('[core] [items-update] Data updated, time: '+updateTime); 
+                            console.log("[core] [items-update] Data updated, time: "+updateTime); 
                         });                                    
                 });
             });
-        };
+        }
 
     },
 
@@ -176,26 +176,26 @@ module.exports = {
      * @returns formatted list-like data
      */
     setArrayDataFormat: function formatArray(data, symbol, newline){
-        if(data == null || data == undefined || data == ''){
-            return '-'
-        };
+        if(data === null || data === undefined || data === ""){
+            return "-"
+        }
 
-        let formattedData = '';
+        let formattedData = "";
 
-        if(newline == true){
-            newline = '\n';
+        if(newline === true){
+            newline = "\n";
         }else{
-            newline = '';
-        };
+            newline = "";
+        }
 
         for(let i = 0; i < data.length; i++){
             // checking if the data in that index is empty or not
-            if(data[i] == '' || data[i] == null){
-                formattedData = '\n- *No data available*';
+            if(data[i] === "" || data[i] === null){
+                formattedData = "\n- *No data available*";
             }else{
                 formattedData = formattedData + (newline + symbol + data[i]);
-            };         
-        };
+            }         
+        }
 
         return formattedData;
     },
@@ -207,8 +207,8 @@ module.exports = {
      * @returns handled data
      */
     setDataFormatString: function formatDataString(data){
-        if(data == '' || data == null || data == undefined){
-            data = ''
+        if(data === "" || data === null || data === undefined){
+            data = ""
         }
 
         return data;
@@ -221,7 +221,7 @@ module.exports = {
      * @returns handled data
      */
     setDataFormatNumb: function formatDataNumb(data){
-        if(data == '' || data == null || data == undefined){
+        if(data === "" || data === null || data === undefined){
             data = 0;
         }
 
@@ -238,25 +238,25 @@ module.exports = {
      * getPriceStatus(2000, 3000) // return +10🔼
      */
     getPriceStatus: function priceStatus(priceOld, priceNew){
-        if(priceOld == null || priceOld == undefined){
+        if(priceOld === null || priceOld === undefined){
             priceOld = 0;
         }
 
-        let priceStatus = ('' + '0.00%') + '➖';
-        if(priceNew != priceOld){
+        let priceStatus = ("" + "0.00%") + "➖";
+        if(priceNew !== priceOld){
             let percentage = ((priceNew-priceOld)/ 100).toFixed(2);
             let symbol;
             let emoji;
             
             if(percentage < 0){
-                symbol = '';
-                emoji = '🔽';
+                symbol = "";
+                emoji = "🔽";
             }else{
-                symbol = '+';
-                emoji = '🔼';
+                symbol = "+";
+                emoji = "🔼";
             }
     
-            priceStatus = (symbol + percentage+'%') + emoji;
+            priceStatus = (symbol + percentage+"%") + emoji;
         }					
     
         return priceStatus;
@@ -275,18 +275,18 @@ module.exports = {
         let str = Math.round(Number);
             str = str.toString()
         let len = str.length
-        let gold = ''
-        let silver = ''
-        let copper = ''
+        let gold = ""
+        let silver = ""
+        let copper = ""
     
         if(len > 4){
-            gold = str.substring( 0 , len -4)+ '<:gold:463569669496897547>';
+            gold = str.substring( 0 , len -4)+ "<:gold:463569669496897547>";
         }
         if(len > 2){
-            silver = str.substring( len -2 ,len - 4 )+ '<:silver:463569669442371586>';
+            silver = str.substring( len -2 ,len - 4 )+ "<:silver:463569669442371586>";
         }
         if(len > 0){
-            copper = str.substring( len ,len -2 )+ '<:copper:463569668095868928>';
+            copper = str.substring( len ,len -2 )+ "<:copper:463569668095868928>";
         } 
     
         let total = gold + silver + copper; 
@@ -297,21 +297,21 @@ module.exports = {
      * getDayValue
      * Used to get the text value of the current date
      * @param {Date} date date data
-     * @param {String} type return type, currently only support 'now'
+     * @param {String} type return type, currently only support "now"
      * @returns day value
      * @example
-     * getDayValue('Fri Mar 01 2019 14:49:58 GMT+0700', 'now') // return Friday
+     * getDayValue("Fri Mar 01 2019 14:49:58 GMT+0700", "now") // return Friday
      */
     getDayValue: function getDay(date, type){
         let dayValue;
 
-        if(type == 'now'){
-            dayValue = dateformat(date, 'dddd', true);
+        if(type === "now"){
+            dayValue = dateformat(date, "dddd", true);
         }else{
             date = new Date(date);
             date.setDate(date.getDate()+ 1);
 
-            dayValue = dateformat(date, 'dddd', true);
+            dayValue = dateformat(date, "dddd", true);
         }
         
         return dayValue;
@@ -326,20 +326,20 @@ module.exports = {
      * @returns formatted string data
      */
     setQuestViewFormat: function setQuestView(data, symbol, newline){
-        let formattedData = '';
+        let formattedData = "";
 
-        if(newline == true){
-            newline = '\n';
+        if(newline === true){
+            newline = "\n";
         }else{
-            newline = '';
+            newline = "";
         }
 
         for(let i = 0; i < data.length; i++){
             // checking if the data in that index is empty or not
-            if(data[i] == '' || data[i] == null){
+            if(data[i] === "" || data[i] === null){
                 formattedData = formattedData
             }else{
-                formattedData = formattedData + (newline + symbol + '**'+data[i].quest+'** - ' + data[i].location);
+                formattedData = formattedData + (newline + symbol + "**"+data[i].quest+"** - " + data[i].location);
             }            
         }
 
@@ -352,43 +352,43 @@ module.exports = {
      * @returns object, daily data (reward, quests list)
      */
     getDailyData: async function getDaily(day){
-        let dailyData = await module.exports.mongoGetData('challenges', {});
+        let dailyData = await module.exports.mongoGetData("challenges", {});
             dailyData = dailyData[0];
 
-        let eventDailyRewards = await module.exports.mongoGetData('events', {});
+        let eventDailyRewards = await module.exports.mongoGetData("events", {});
             eventDailyRewards = eventDailyRewards[0].rewards.daily;    
 
         let dailies;
 
-        //console.debug('[core] [daily] queried day: '+day);
-        //console.debug('[core] [daily] event rewards: '+eventDailyRewards);
+        //console.debug("[core] [daily] queried day: "+day);
+        //console.debug("[core] [daily] event rewards: "+eventDailyRewards);
 
         switch(day){
-            case 'Monday':
+            case "Monday":
                 dailies = dailyData.monday;
             break;
-            case 'Tuesday':
+            case "Tuesday":
                 dailies = dailyData.tuesday;
             break;
-            case 'Wednesday':
+            case "Wednesday":
                 dailies = dailyData.wednesday;
             break;
-            case 'Thursday':
+            case "Thursday":
                 dailies = dailyData.thursday;
             break;
-            case 'Friday':
+            case "Friday":
                 dailies = dailyData.friday;
             break;
-            case 'Saturday':
+            case "Saturday":
                 dailies = dailyData.saturday;
             break;
-            case 'Sunday':
+            case "Sunday":
                 dailies = dailyData.sunday;
             break;
-        };
+        }
 
-        // adding event daily challenges rewards to rewards list if it's not empty
-        if(eventDailyRewards != ''){dailies.rewards.push(eventDailyRewards + ' (Event)')};
+        // adding event daily challenges rewards to rewards list if it"s not empty
+        if(eventDailyRewards !== ""){dailies.rewards.push(eventDailyRewards + " (Event)")}
 
         return dailies;
     },
@@ -399,16 +399,16 @@ module.exports = {
      * @returns object, weekly data (quests list, rewards)
      */
     getWeeklyData: async function getWeekly(){
-        let weeklies = await module.exports.mongoGetData('challenges', {});
+        let weeklies = await module.exports.mongoGetData("challenges", {});
             weeklies = weeklies[0].weekly;
 
-        let eventWeeklyRewards = await module.exports.mongoGetData('events', {});
+        let eventWeeklyRewards = await module.exports.mongoGetData("events", {});
             eventWeeklyRewards = eventWeeklyRewards[0].rewards.weekly;    
 
-        // adding event daily challenges rewards to rewards list if it's not empty
-        if(eventWeeklyRewards != ''){weeklies.rewards.push(eventWeeklyRewards + ' (Event)')};    
+        // adding event daily challenges rewards to rewards list if it"s not empty
+        if(eventWeeklyRewards !== ""){weeklies.rewards.push(eventWeeklyRewards + " (Event)")}    
 
-        //console.debug('[core] [weekly] weeklies data: '+JSON.stringify(weeklies, null, '\t'))    
+        //console.debug("[core] [weekly] weeklies data: "+JSON.stringify(weeklies, null, "\t"))    
         
         return weeklies;
     },
@@ -420,19 +420,19 @@ module.exports = {
      * @returns object, event data (quests list, details)
      */
     getEventData: async function getEvent(day){
-        let eventData = await module.exports.mongoGetData('events', {});
+        let eventData = await module.exports.mongoGetData("events", {});
             eventData = eventData[0];
         let questList = [];
 
         for(let i = 0; i < eventData.quests.length; i++){
             for(let j = 0; j < 7; j++){
-                if(eventData.quests[i].day[j] == day){
+                if(eventData.quests[i].day[j] === day){
                     questList.push(eventData.quests[i])
-                };
-            };
-        };
+                }
+            }
+        }
 
-        //console.debug('[core] [event] questsList value: '+JSON.stringify(questList, null, '\t'));
+        //console.debug("[core] [event] questsList value: "+JSON.stringify(questList, null, "\t"));
 
         eventData.quests = questList;
 
@@ -444,7 +444,7 @@ module.exports = {
      * @param {Guild} clientGuildData discord bot client guild/server connected data
      */
     sendResetNotification: async function sendReset(clientGuildData){
-        let todayDay = module.exports.getDayValue(Date.now(), 'now');
+        let todayDay = module.exports.getDayValue(Date.now(), "now");
 
         let dailiesData = await module.exports.getDailyData(todayDay);
         let eventData = await module.exports.getEventData(todayDay);
@@ -452,67 +452,67 @@ module.exports = {
 
         let fieldsData = [
             {
-                'name': 'Event',
-                'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
-                         '**Duration**: '+eventData.duration+'\n'+
-                         '**Redemption Period**: '+eventData.redeem+'\n'+
-                         '**Quests**'+
-                         module.exports.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B'
+                "name": "Event",
+                "value": "**Name**: ["+eventData.name+"]("+eventData.url+")\n"+
+                         "**Duration**: "+eventData.duration+"\n"+
+                         "**Redemption Period**: "+eventData.redeem+"\n"+
+                         "**Quests**"+
+                         module.exports.setQuestViewFormat(eventData.quests, "- ", true)+"\n\u200B"
             },
             {
-                'name': 'Daily Challenges',
-                'value': '**Rewards**'+
-                        module.exports.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
-                        '**Quests**'+
-                        module.exports.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B'
+                "name": "Daily Challenges",
+                "value": "**Rewards**"+
+                        module.exports.setArrayDataFormat(dailiesData.rewards, "- ", true)+"\n"+
+                        "**Quests**"+
+                        module.exports.setQuestViewFormat(dailiesData.quests, "- ", true)+"\n\u200B"
             }            
         ];
 
-        if(todayDay == 'Wednesday'){
+        if(todayDay === "Wednesday"){
             fieldsData.push(
                 {
-                    'name': 'Weekly Challenges',
-                    'value': '**Rewards**'+
-                            module.exports.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
-                            '**Quests**'+
-                            module.exports.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B'
+                    "name": "Weekly Challenges",
+                    "value": "**Rewards**"+
+                            module.exports.setArrayDataFormat(weekliesData.rewards, "- ", true)+"\n"+
+                            "**Quests**"+
+                            module.exports.setQuestViewFormat(weekliesData.quests, "- ", true)+"\n\u200B"
                 }
             )
         }
 
-        let msgData = 'Hello! \nIt\'s time for reset, below is today\'s/this week\'s list. Have a good day!'
+        let msgData = "Hello! \nIt's time for reset, below is today's/this week's list. Have a good day!"
 
         let embedData = {
-            'embed':{
-                'author':{
-                    'name': todayDay+'\'s List - '+dateformat(Date.now(), 'UTC:dd-mmmm-yyyy'),
-                    'icon_url': 'https://cdn.discordapp.com/emojis/464038094258307073.png?v=1'
+            "embed":{
+                "author":{
+                    "name": todayDay+"'s List - "+dateformat(Date.now(), "UTC:dd-mmmm-yyyy"),
+                    "icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
                 },
-                'color': 1879160,
-                'footer': {
-                    'text': 'Reset Notification - Generated at '+dateformat(Date.now(), 'UTC:dd-mm-yy @ HH:MM')+' UTC'
+                "color": 1879160,
+                "footer": {
+                    "text": "Reset Notification - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
                 },
-                'fields': fieldsData
+                "fields": fieldsData
             }
         }
 
         clientGuildData.map(async function(guild){
-            //console.debug('[core] [reset] guild list: '+guild.id+'('+guild.name+')');
+            //console.debug("[core] [reset] guild list: "+guild.id+"("+guild.name+")");
 
             // getting guild setting data
             if(guild.available){  
-                let guildSettingData = await module.exports.mongoGetData('guilds', {guild: guild.id});
+                let guildSettingData = await module.exports.mongoGetData("guilds", {guild: guild.id});
                     guildSettingData = guildSettingData[0];
-                //console.debug('[core] [reset] guild setting data: '+JSON.stringify(guildSettingData, null, '\t'));    
-                let resetChannel = '';
-                if(guildSettingData != undefined){
+                //console.debug("[core] [reset] guild setting data: "+JSON.stringify(guildSettingData, null, "\t"));    
+                let resetChannel = "";
+                if(guildSettingData !== undefined){
                     resetChannel = guildSettingData.settings.quest_reset
                 }
 
                 let found = 0;
                 guild.channels.map((ch) => {
-                    if(found == 0){
-                        if(ch.id == resetChannel && resetChannel != undefined && resetChannel != 'disable'){
+                    if(found === 0){
+                        if(ch.id === resetChannel && resetChannel !== undefined && resetChannel !== "disable"){
                             found = 1; 
                             ch.send(msgData, embedData);                        
                         }
@@ -520,7 +520,7 @@ module.exports = {
                 }) 
             }
         })
-        console.log('[core] [reset] reset notification sent');
+        console.log("[core] [reset] reset notification sent");
     },
 
     /**
@@ -530,7 +530,7 @@ module.exports = {
      * @returns {Object} containing closest time index and time difference data
      */
     getTimeDifference: function timeDifference(data){
-        if(data.constructor != Array){
+        if(data.constructor !== Array){
             data = [data];
         }
 
@@ -541,24 +541,24 @@ module.exports = {
         let timeDifferenceData;
         let timeDifferenceHourMax = 24;
 
-        //console.debug('[core] [time difference] now: '+timeNow);
+        //console.debug("[core] [time difference] now: "+timeNow);
 
         for(let i = 0; i < data.length; i++){
             let timeData = new Date(0, 0, 0, data[i], 0);
-            //console.debug('[core] [time difference] time data '+timeData);
+            //console.debug("[core] [time difference] time data "+timeData);
 
             let timeRemaining = (timeData - timeNow);
-            //console.debug('[core] [time difference] current: '+timeData);
-            //console.debug('[core] [time difference] remain: '+timeRemaining);
+            //console.debug("[core] [time difference] current: "+timeData);
+            //console.debug("[core] [time difference] remain: "+timeRemaining);
 
             // formatting the data
             let timeDifferenceHour = Math.abs(Math.floor(timeRemaining / 1000 / 60 / 60));
-            // use extra variable so 'timerRemaining' variable remain unchanged
+            // use extra variable so "timerRemaining" variable remain unchanged
             let timeDifferenceHourRaw = timeRemaining - (timeDifferenceHour * 1000 * 60 *60);
                 
             let timeDifferenceMinute = Math.abs(Math.floor(timeDifferenceHourRaw / 1000 / 60));
 
-            //console.debug('[core] [time difference] left: '+timeDifferenceHour+'h '+timeDifferenceMinute+'m')
+            //console.debug("[core] [time difference] left: "+timeDifferenceHour+"h "+timeDifferenceMinute+"m")
     
             // checking if current time is smaller than last one or not
             if(timeDifferenceHour <= timeDifferenceHourMax && timeRemaining > 0){
@@ -568,12 +568,12 @@ module.exports = {
                 timeDifferenceData = [timeDifferenceHour, timeDifferenceMinute];
             }
         }    
-        //console.debug('[core] [time difference] selected: '+new Date(0, 0, 0, data[closestTime], 0));
-        //console.debug('[core] [time difference] time left: '+timeDifferenceData[0]+' hours, '+timeDifferenceData[1]+' minutes');
+        //console.debug("[core] [time difference] selected: "+new Date(0, 0, 0, data[closestTime], 0));
+        //console.debug("[core] [time difference] time left: "+timeDifferenceData[0]+" hours, "+timeDifferenceData[1]+" minutes");
 
         return {
-            'time_index': closestTime,
-            'time_difference_data': timeDifferenceData
+            "time_index": closestTime,
+            "time_difference_data": timeDifferenceData
         }
 
     },
@@ -588,13 +588,13 @@ module.exports = {
     sendBotReport: function sendReport(logData, location, type){
         let now = new Date();
 
-        let logCollectionName = 'logs';
+        let logCollectionName = "logs";
 
         let logPayload = {
-            'location': location,
-            'type': type,     
-            'time': now,     
-            'message': logData
+            "location": location,
+            "type": type,     
+            "time": now,     
+            "message": logData
         }
 
         MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
@@ -615,20 +615,20 @@ module.exports = {
      * @param {Date} date current date
      */
     sendBotStats: async function sendStats(date){
-        let statsCollectionName = 'botStats';
-        let statsData = await module.exports.mongoGetData(statsCollectionName, {date: dateformat(date, 'UTC:dd-mmmm-yyyy')});
+        let statsCollectionName = "botStats";
+        let statsData = await module.exports.mongoGetData(statsCollectionName, {date: dateformat(date, "UTC:dd-mmmm-yyyy")});
         let todayStats = 0;
         let payload;
 
-        //console.debug('[core] [bot-stats] stats data: '+JSON.stringify(statsData));
+        //console.debug("[core] [bot-stats] stats data: "+JSON.stringify(statsData));
 
-        if(statsData.length == 0){
+        if(statsData.length === 0){
             todayStats++;
 
             payload = {
-                'date': dateformat(date, 'UTC:dd-mmmm-yyyy'),
-                'count': todayStats
-            };
+                "date": dateformat(date, "UTC:dd-mmmm-yyyy"),
+                "count": todayStats
+            }
         }else{
             todayStats = statsData[0].count + 1;
         }        
@@ -637,21 +637,21 @@ module.exports = {
             if (err) throw err;
             var dbo = db.db(dbName);
 
-            if(statsData.length == 0){
+            if(statsData.length === 0){
                 dbo.collection(statsCollectionName).insertOne(payload, function(err, res) {  
                     if (err) throw err;    
                     db.close();                
                 });
             }else{
-                dbo.collection(statsCollectionName).updateOne({'date': dateformat(date, 'UTC:dd-mmmm-yyyy')},
-                {$set: {'count': todayStats}}, function(err, res) {  
+                dbo.collection(statsCollectionName).updateOne({"date": dateformat(date, "UTC:dd-mmmm-yyyy")},
+                {$set: {"count": todayStats}}, function(err, res) {  
                     if (err) throw err;    
                     db.close();                
                 });
-            };            
+            }            
         });
 
     }
-};
+}
 
 // Exported function end here
