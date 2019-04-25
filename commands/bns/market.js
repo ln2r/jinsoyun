@@ -75,7 +75,7 @@ module.exports = class MarketCommand extends Command {
                 if(marketData[i].market[1].priceEach === null || marketData[i].market[1].priceEach === undefined){
                     oldPrice = 0;
                 }else{
-                    oldPrice = marketData[i].market[1].priceEach
+                    oldPrice = marketData[i].market[1].priceEach;
                 }
 
                 let priceStatus = getPriceStatus(oldPrice, marketData[i].market[0].priceEach);
@@ -84,7 +84,7 @@ module.exports = class MarketCommand extends Command {
                     "**"+marketData[i].name+"** `"+marketData[i]._id+"`\n"+
                     "- Each: "+setCurrencyFormat(marketData[i].market[0].priceEach)+" `"+priceStatus+"`\n"+
                     "- Lowest: "+setCurrencyFormat(marketData[i].market[0].priceTotal)+" for "+marketData[i].market[0].quantity+"\n"
-                )
+                );
             }            
         }
         
@@ -104,7 +104,7 @@ module.exports = class MarketCommand extends Command {
                     "url": itemImage
                 },
             }
-        }
+        };
 
         msg.channel.stopTyping();
 

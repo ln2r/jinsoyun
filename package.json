@@ -31,5 +31,9 @@
     "npm": "^6.9.0",
     "ontime": "0.0.4",
     "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0"
   }
 }

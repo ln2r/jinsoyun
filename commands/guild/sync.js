@@ -35,12 +35,12 @@ module.exports = class SyncCustomRoleCommand extends Command {
             
             let customRolesData;
 
-            if(guildSettings != undefined){
+            if(guildSettings !==undefined){
                 let currentCustomRoles = guildSettings.settings.custom_roles;
                 let guildRolesData = msg.guild.roles.find(role => role.name === args);
 
                 // checking the role existance
-                if(guildRolesData != null){
+                if(guildRolesData !==null){
                     customRolesData = [guildRolesData.id];
 
                     for(let i=0; i < currentCustomRoles.length; i++){

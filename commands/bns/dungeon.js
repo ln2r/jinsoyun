@@ -27,7 +27,7 @@ module.exports = class DungeonCommand extends Command {
         msg.channel.startTyping();
 
         let regx = new RegExp("("+dungeon+"+)", "ig"); // doing rough search
-        let dbSearchQuery = {"name": regx}
+        let dbSearchQuery = {"name": regx};
         let dungeonData = await mongoGetData("dungeons", dbSearchQuery);
             dungeonData = dungeonData[0];
 
@@ -39,13 +39,13 @@ module.exports = class DungeonCommand extends Command {
 
             switch(dungeonData.type){
                 case 12:
-                    dungeonType = "12 Players"
+                    dungeonType = "12 Players";
                 break;
                 case 6:
-                    dungeonType = "6 Players"
+                    dungeonType = "6 Players";
                 break;
                 case 1:
-                    dungeonType = "Solo Instance"
+                    dungeonType = "Solo Instance";
                 break;
             }
             // empty rewards data handler

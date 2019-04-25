@@ -38,7 +38,7 @@ module.exports = class WhoCommand extends Command {
             // check if the message author have nickname or not
             // if not use their display name instead            
             if(msg.member.nickname === null){
-                charaQuery = msg.member.displayName
+                charaQuery = msg.member.displayName;
             }else{
                 charaQuery = msg.member.nickname;
             }
@@ -81,8 +81,7 @@ module.exports = class WhoCommand extends Command {
                         }
                     }
                 })
-            }) 
-
+            });
 
             messageOutput = "Unable to get charater data, please try again later";
         }else{
@@ -170,7 +169,7 @@ module.exports = class WhoCommand extends Command {
                     }
                 }
             }
-        }
+        };
         msg.channel.stopTyping();
 
         return msg.say(messageOutput);        

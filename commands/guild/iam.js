@@ -26,7 +26,7 @@ module.exports = class ClassChangeCommand extends Command {
                             }
                         }
 
-                        if (found) return true;
+                        if (found){return true};
                         return "I can't find the class you wrote, please check and try again";
                     }
                 }
@@ -62,7 +62,7 @@ module.exports = class ClassChangeCommand extends Command {
 
         msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(
             role => role.name === className)
-        )
+        );
 
         //console.debug("[soyun] [class] ["+msg.guild.name+"] "+msg.author.username+" class changed to "+className)
 

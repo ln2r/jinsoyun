@@ -27,7 +27,7 @@ module.exports = class CreateJoinRoleCommand extends Command {
                 rolesList = rolesList[0].roles_list;
         
             let rolesSetupStatus = "";
-            if(guildSettingsData != undefined){
+            if(guildSettingsData !==undefined){
                 rolesSetupStatus = guildSettingsData.roles_setup
             }
 
@@ -47,9 +47,9 @@ module.exports = class CreateJoinRoleCommand extends Command {
 
                 this.client.emit("guildRolesSetup", msg.guild.id, true); // updating the database
 
-                msgData = "Necessary classes roles created, go to `Server Settings > Roles` to check and configure it"
+                msgData = "Necessary classes roles created, go to `Server Settings > Roles` to check and configure it";
             }else{
-                msgData = "Classes roles already created, go to `Server Settings > Roles` to check and configure it"
+                msgData = "Classes roles already created, go to `Server Settings > Roles` to check and configure it";
             }
         }else{
             msgData = "You don't have the permission to use that command";

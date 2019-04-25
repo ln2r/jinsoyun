@@ -41,7 +41,7 @@ module.exports = class WeeklyCommand extends Command {
                     }
                 ]
             }
-        }
+        };
 
         msg.channel.stopTyping();
 

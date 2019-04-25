@@ -38,7 +38,7 @@ module.exports = class GrandHarvestCommand extends Command {
                 },
                 "description": "Available in "+grandHarvestClosestTime.time_difference_data[0]+" hour(s) and "+grandHarvestClosestTime.time_difference_data[1]+" minute(s)",
             }
-        }
+        };
         return msg.say(embedData);
     }
 };

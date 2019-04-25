@@ -21,13 +21,13 @@ module.exports = class ShowGuildCustomRolesCommand extends Command {
             guildSettings = guildSettings[0];
         let customRolesName = [];
 
-        if(guildSettings != undefined){
+        if(guildSettings !==undefined){
             let guildCustomRolesData = guildSettings.settings.custom_roles;
 
             for(let i=0; i<guildCustomRolesData.length; i++){
                 let guildRolesData = msg.guild.roles.find(role => role.id === guildCustomRolesData[i]);
 
-                if(guildRolesData != null){
+                if(guildRolesData !==null){
                     customRolesName.push(guildRolesData.name);
                 }                
             }

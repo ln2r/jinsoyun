@@ -41,10 +41,10 @@ module.exports = class CreateCustomRoleCommand extends Command {
                 let customRolesId = [customRoleData.id];
                 let currentCustomRoles = [];
 
-                if(guildSettings != undefined){
+                if(guildSettings !== undefined){
                     currentCustomRoles = guildSettings.settings.custom_roles;
 
-                    if(currentCustomRoles.length != 0){
+                    if(currentCustomRoles.length !== 0){
                         for(let i=0; i < currentCustomRoles.length; i++){
                             customRolesId.push(currentCustomRoles[i]);
                         }

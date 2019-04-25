@@ -38,7 +38,7 @@ module.exports = class BnsEventCommand extends Command {
             if(args === "fri" || args === "friday"){dayQuery = "Friday"};
             if(args === "sat" || args === "saturday"){dayQuery = "Saturday"};
             if(args === "sun" || args === "sunday"){dayQuery = "Sunday"};
-        }
+        };
 
         //console.debug("[soyun] [event] ["+msg.guild.name+"] dayQuery value: "+dayQuery);
 

@@ -68,16 +68,15 @@ module.exports = class LootCommand extends Command {
 
                     switch(i){
                         case 0:
-                            itemName = dungeonData[i][j].rewards.common.find(value => regx.test(value))
+                            itemName = dungeonData[i][j].rewards.common.find(value => regx.test(value));
                         break;
                         case 1:
-                            itemName = dungeonData[i][j].rewards.normal.find(value => regx.test(value))
+                            itemName = dungeonData[i][j].rewards.normal.find(value => regx.test(value));
                         break;
                         case 2:
-                            itemName = dungeonData[i][j].rewards.hard.find(value => regx.test(value))
+                            itemName = dungeonData[i][j].rewards.hard.find(value => regx.test(value));
                         break;
-                    }
-                    
+                    };                    
                    
                     //console.debug("[soyun] [drop] ["+msg.guild.name+"] dungeon name: "+dungeonData[i][j].name+" ("+itemName+")");
                     dropData = dropData + ("\n- "+dungeonData[i][j].name+" ("+itemName+")");
@@ -88,8 +87,8 @@ module.exports = class LootCommand extends Command {
         // result formatting
         let result = "Can't find any dungeon that drop **"+item+"**, please check and try again (Item name can't be abbreviated)";
         if(dropData !== ""){
-            result = "Dungeon that contain **"+item+"** drop:"+dropData
-        }
+            result = "Dungeon that contain **"+item+"** drop:"+dropData;
+        };
 
         let embedData = {
             "embed": {

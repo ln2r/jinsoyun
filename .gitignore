@@ -11,6 +11,9 @@ package-lock.json
 # test folder
 commands/dev/
 
+# eslint conf
+.eslintrc.json
+
 # misc file
 .dropbox
 desktop.ini

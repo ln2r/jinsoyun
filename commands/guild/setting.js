@@ -30,7 +30,7 @@ module.exports = class GuildSettingsCommand extends Command {
                                 found = true;
                             }
                         }
-                        if (found) return true;
+                        if (found){return true};
                         return "Setting option is invalid, please check and try again";
                     }
                 }
@@ -117,7 +117,7 @@ module.exports = class GuildSettingsCommand extends Command {
                                 msg.guild.createRole({
                                     "name": "cricket",
                                     "premission": ["SEND_MESSAGES", "READ_MESSAGE_HISTORY"]
-                                })
+                                });
                                 gateMsgData = ", `cricket` role created";
                             }                        
                         }                    
@@ -199,7 +199,7 @@ module.exports = class GuildSettingsCommand extends Command {
                                 "text": "Jinsoyun Bot - "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
                             }
                         }
-                    }
+                    };
                 break;
             }
         }else{

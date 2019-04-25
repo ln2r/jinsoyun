@@ -39,7 +39,7 @@ module.exports = class KoldrakCommand extends Command {
                 "description": "Available in "+koldrakClosestTime.time_difference_data[0]+" hour(s) and "+koldrakClosestTime.time_difference_data[0]+" minute(s)",
             }
 
-        }
+        };
         return msg.say(embedData);
     }
 };
