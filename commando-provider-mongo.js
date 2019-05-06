@@ -78,6 +78,7 @@ class MongoDBProvider extends SettingProvider {
         .set('mainTextChannelChange', (guild, channel) => this.set(guild, 'default_text', channel))
         .set('guildRolesSetup', (guild, status) => this.set(guild, 'roles_setup', status))
         .set('guildCustomRole', (guild, roles) => this.set(guild, 'custom_roles', roles))
+        .set('guildReactionRoleMessageChange', (guild, messageData) => this.set(guild, 'react_role', messageData))
 
         .set('commandPrefixChange', (guild, prefix) => this.set(guild, 'prefix', prefix))
         .set('commandStatusChange', (guild, command, enabled) => this.set(guild, `cmd-${command.name}`, enabled))
