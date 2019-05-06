@@ -352,10 +352,10 @@ module.exports = {
      */
   getDailyData: async function getDaily(day) {
     let dailyData = await module.exports.mongoGetData('challenges', {});
-    dailyData = dailyData[0];
+        dailyData = dailyData[0];
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
-    eventDailyRewards = eventDailyRewards[0].rewards.daily;
+        eventDailyRewards = eventDailyRewards[0].rewards.daily;
 
     let dailies;
 
@@ -387,7 +387,7 @@ module.exports = {
     }
 
     // adding event daily challenges rewards to rewards list if it"s not empty
-    if (eventDailyRewards !== '') {
+    if (eventDailyRewards.length !== 0) {
       dailies.rewards.push(eventDailyRewards + ' (Event)');
     };
 
