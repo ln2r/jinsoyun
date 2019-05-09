@@ -11,76 +11,39 @@ module.exports = class RegCommand extends Command {
             description: "Register yourself into the guild so you can access the rest of the guild",
             examples: ["reg <charcter name> <character class>", "reg jinsoyun blade dancer"],
             guildOnly: true,
+            hidden: true,
             clientPermissions: ["CHANGE_NICKNAME", "MANAGE_NICKNAMES"],                    
         });
     }
 
     async run(msg, args) {
         args = args.toLowerCase();
-        let rolesList = await mongoGetData("configs", {});
-            rolesList = rolesList[0].roles_list;
-
         //console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
+        let guildSettingData = await mongoGetData("guilds", {guild: msg.guild.id});
+            guildSettingData = guildSettingData[0];
 
-        // checking if the class input is valid or not
-        let classValid = false;
-        for(let i = 0; i < rolesList.length; i++){
-            if(args.includes(rolesList[i])){
-                let guildSettingData = await mongoGetData("guilds", {guild: msg.guild.id});
-                    guildSettingData = guildSettingData[0];   
-                
-                // getting the chara name and make it prettier
-                let userCharaName = args.replace(rolesList[i], "");
-                    //userCharaName = userCharaName.replace(/(^|\s)\S/g, l => l.toUpperCase());
+        // formatting the nickname
+        let userCharaName = args.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-                classValid = true;
+        // changing the nickname
+        if(msg.author.id !== msg.guild.ownerID){
+            msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+        }
 
-                // adding character class role
-                if(msg.guild.roles.find(role => role.name === rolesList[i]) !==null){
-                    msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name === rolesList[i]));
-                }
-                
-                // Adding "member/guest" role so user can talk
-                if(args.includes("guest")){
-                    if(msg.guild.roles.find(role => role.name === "guest") !==null){
-                        msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name === "member"));
-                    }
-                }else{                    
-                    if(msg.guild.roles.find(role => role.name === "member") !==null){
-                        msg.guild.members.get(msg.author.id).addRole(msg.guild.roles.find(role => role.name === "member"));
-                    }                    
-                }
-                
-
-                // Removing "cricket" role
-                if(msg.guild.roles.find(role => role.name === "cricket") !==null){
-                    msg.guild.members.get(msg.author.id).removeRole(msg.guild.roles.find(role => role.name === "cricket"));
-                }
-                
-                // changing the nickname
-                if(msg.author.id !==msg.guild.ownerID){
-                    msg.guild.members.get(msg.author.id).setNickname(userCharaName);
-                }
-               
-                let defaultTextChannel = "";
-                if(guildSettingData !==undefined){
-                    defaultTextChannel = guildSettingData.settings.default_text;
-                }
-                
-                if(defaultTextChannel !=="" && defaultTextChannel !=="disable" && defaultTextChannel !==undefined){
-                    // add cricket role so they can"t see the rest of the guild until they do join command
-                    msg.guild.channels.find(ch => ch.id === defaultTextChannel).send(
-                        "Welcome our new "+rolesList[i]+" <@"+msg.author.id+">!"
-                    );
+        if(guildSettingData.settings != undefined){        
+            // checking and adding the role
+            if(guildSettingData.settings.member_gate.role_id !== "" && guildSettingData.settings.member_gate.role_id !== undefined){
+                // checking if the guild have the role, add if yes
+                if ((msg.guild.roles.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
+                    msg.guild.members.get(msg.author.id).addRole(guildSettingData.settings.member_gate.role_id);
                 }
             }
-        }
 
+            if(guildSettingData.settings.member_gate.next !== "" && guildSettingData.settings.member_gate.next !== undefined){
+                msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send("Hello <@"+msg.author.id+">, we've been waiting for you. Please follow the instruction above to continue");
+            }
+        }
         //console.debug("[soyun] [reg] ["+msg.guild.name+"] args value: "+args);
         //console.debug("[soyun] [reg] ["+msg.guild.name+"] class input is: "+classValid);
-
-        if(!classValid){
-            return msg.say("I can't find the class you wrote, please check and try again (class name need to be it's full name)");
-        }
     }
 };
