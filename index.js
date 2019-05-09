@@ -184,7 +184,6 @@ clientDiscord.setProvider(
 // Discord.js Commando scripts end here
 
 // Twitter stream scripts start here
-/*
 const clientTwitter = new Twitter({
   consumer_key: process.env.twitter_consumer_key,
   consumer_secret: process.env.twitter_consumer_secret,
@@ -310,4 +309,3 @@ ontime({
   return;
 }
 );
-*/
