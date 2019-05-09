@@ -18,6 +18,11 @@ const clientDiscord = new CommandoClient({
   unknownCommandResponse: false,
 });
 
+const reactionEvents = {
+  MESSAGE_REACTION_ADD: 'messageReactionAdd',
+	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
+};
+
 clientDiscord.login(process.env.discord_secret);
 
 clientDiscord.registry
@@ -72,50 +77,20 @@ clientDiscord
         memberGate = guildSettingData.settings.member_gate;
       }
 
-      // console.debug("[soyun] [gate] ["+member.guild.name+"] memberGate value: "+memberGate)
-      if (memberGate !== '' && memberGate !== 'disable' && memberGate !== undefined) {
-        // add cricket role if it"s exist so they can"t see the rest of the guild until they do join command
-        if ((member.guild.roles.find((role) => role.name === 'cricket')) !== null) {
-          member.addRole(member.guild.roles.find((x) => x.name === 'cricket'));
-        }
-        member.guild.channels.find((ch) => ch.id === memberGate).send(
-            'Hi <@'+member.user.id+'>! Welcome to *'+member.guild.name+'*!\n\n'+
+      // console.debug("[soyun] [gate] ["+member.guild.name+"] memberGate value: "+memberGate);
 
-                'Before I give you access to the rest of the server, I need to know your character\'s name and class you\'re using in our clan, To do that, please use following command with your information in it\n'+
-                '`@Jinsoyun join character name class name`\n'+
-                '**Example**:\n'+
-                '- **If you are our clan member**\n'+
-                '`@Jinsoyun join jinsoyun blade dancer`\n'+
-                '- **if you are our guest use `guest` instead of `class` in your command**\n'+
-                '`@Jinsoyun join jinsoyun guest`\n\n'+
+      // checking if the guild have the channel and the message set
+      if ((memberGate.channel_id !== '' || memberGate.channel_id !== undefined) && (memberGate.message !== "" || memberGate.message !== undefined)) {
+        member.guild.channels.find((ch) => ch.id === memberGate.channel_id).send(
+          'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
 
-                'if you need any assistance you can mention or DM available admins, thank you ❤'
+          'Before I give you access to the rest of the server, I need to know your character\'s name, To do that, please use following command with your information in it\n'+
+          '`@Jinsoyun join character name`\n'+
+          '**Example**:\n'+
+          '`@Jinsoyun join jinsoyun `\n\n'+
+
+          'if you need any assistance you can mention or DM available admins, thank you ❤'
         );
-      }
-    })
-    .on('roleDelete', async (role) => {
-      // console.debug("[soyun] [event-roleDelete] role name: "+role.name);
-      // console.debug("[soyun] [event-roleDelete] role id: "+role.id);
-
-      let guildSettingsData = await mongoGetData('guilds', {guild: role.guild.id});
-      guildSettingsData = guildSettingsData[0];
-
-      const foundRoles = [];
-
-      if (guildSettingsData !== undefined) {
-        // console.debug("[soyun] [event-roleDelete] custom_roles length: "+guildSettingsData.settings.custom_roles.length);
-        // console.debug("[soyun] [event-roleDelete] custom_roles data: "+guildSettingsData.settings.custom_roles);
-
-        // getting which role is not deleted
-        for (let i=0; i<guildSettingsData.settings.custom_roles.length; i++) {
-          if (role.id !== guildSettingsData.settings.custom_roles[i]) {
-            foundRoles.push(guildSettingsData.settings.custom_roles[i]);
-          }
-        }
-
-        // console.debug("[soyun] [event-roleDelete] found roles: "+foundRoles);
-        // update the db
-        clientDiscord.emit('guildCustomRole', role.guild.id, foundRoles);
       }
     })
     .on('commandRun', async () => {
@@ -156,6 +131,41 @@ clientDiscord
           }
         });
       });
+    })
+    // event handling for reactions
+    .on('raw', async event => {
+      /**
+       * Original code by Sam-DevZ
+       * https://github.com/Sam-DevZ/Discord-RoleReact
+       */
+
+      // check if the event have the reactions property
+      if(!reactionEvents.hasOwnProperty(event.t)) return;
+        const { d: data } = event;
+        // get role data from db
+        let guildReactionRoleData = await mongoGetData("guilds", {guild: data.guild_id});
+            guildReactionRoleData = guildReactionRoleData[0].settings.react_role;
+      
+        const channel = clientDiscord.channels.get(data.channel_id);
+        const message = await channel.fetchMessage(data.message_id);
+        const user = clientDiscord.users.get(data.user_id);
+        const member = message.guild.members.get(user.id);
+
+        for(let i = 0; i < guildReactionRoleData.length; i++){
+          // checking the message id
+          if(data.message_id === guildReactionRoleData[i]){
+            // checking the emoji name
+            if(message.guild.roles.find(role => role.name === data.emoji.name)) { 
+              let roleData = message.guild.roles.find(role => role.name === data.emoji.name);
+              
+              if(event.t === "MESSAGE_REACTION_ADD") {
+                member.addRole(roleData.id);
+              }else{
+                member.removeRole(roleData.id);
+              }
+            };
+          }
+        }
     });
 
 clientDiscord.setProvider(
