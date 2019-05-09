@@ -144,26 +144,32 @@ clientDiscord
         const { d: data } = event;
         // get role data from db
         let guildReactionRoleData = await mongoGetData("guilds", {guild: data.guild_id});
-            guildReactionRoleData = guildReactionRoleData[0].settings.react_role;
+        console.log(guildReactionRoleData);
+        console.log(data)
+        if(guildReactionRoleData !== undefined && guildReactionRoleData.length !== 0){
+          guildReactionRoleData = guildReactionRoleData[0].settings.react_role;
       
-        const channel = clientDiscord.channels.get(data.channel_id);
-        const message = await channel.fetchMessage(data.message_id);
-        const user = clientDiscord.users.get(data.user_id);
-        const member = message.guild.members.get(user.id);
+          if(guildReactionRoleData !== undefined){
+            const channel = clientDiscord.channels.get(data.channel_id);
+            const message = await channel.fetchMessage(data.message_id);
+            const user = clientDiscord.users.get(data.user_id);
+            const member = message.guild.members.get(user.id);
 
-        for(let i = 0; i < guildReactionRoleData.length; i++){
-          // checking the message id
-          if(data.message_id === guildReactionRoleData[i]){
-            // checking the emoji name
-            if(message.guild.roles.find(role => role.name === data.emoji.name)) { 
-              let roleData = message.guild.roles.find(role => role.name === data.emoji.name);
-              
-              if(event.t === "MESSAGE_REACTION_ADD") {
-                member.addRole(roleData.id);
-              }else{
-                member.removeRole(roleData.id);
+            for(let i = 0; i < guildReactionRoleData.length; i++){
+              // checking the message id
+              if(data.message_id === guildReactionRoleData[i]){
+                // checking the emoji name
+                if(message.guild.roles.find(role => role.name === data.emoji.name)) { 
+                  let roleData = message.guild.roles.find(role => role.name === data.emoji.name);
+                  
+                  if(event.t === "MESSAGE_REACTION_ADD") {
+                    member.addRole(roleData.id);
+                  }else{
+                    member.removeRole(roleData.id);
+                  }
+                };
               }
-            };
+            }
           }
         }
     });
@@ -178,6 +184,7 @@ clientDiscord.setProvider(
 // Discord.js Commando scripts end here
 
 // Twitter stream scripts start here
+/*
 const clientTwitter = new Twitter({
   consumer_key: process.env.twitter_consumer_key,
   consumer_secret: process.env.twitter_consumer_secret,
@@ -303,3 +310,4 @@ ontime({
   return;
 }
 );
+*/

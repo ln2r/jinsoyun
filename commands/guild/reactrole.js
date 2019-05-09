@@ -17,19 +17,26 @@ module.exports = class ReactionRoleCommand extends Command {
     async run(msg, args) {
         msg.channel.startTyping();
         let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
+
+        let msgData;
+        let embedData;
+
         if(authorPermission){   
             // getting reaction role data from db
             let guildReactionRoleData = await mongoGetData("guilds", {guild: msg.guild.id});
+                
+            
+            if(guildReactionRoleData[0].settings.react_role === undefined){
+                guildReactionRoleData = []
+            }else{
                 guildReactionRoleData = guildReactionRoleData[0].settings.react_role;
+            }
             
             let reactionEmojiName = [];
             let reactionRoleId = [];
             let reactionRoleName = [];
             let reactionData;
             let reactionMessageContent;
-
-            let msgData;
-            let embedData;
 
             // check if message exist        
             var reactionMessageData = await msg.channel.fetchMessage(args).catch(err => (reactionMessageData = false));
