@@ -25,12 +25,11 @@ module.exports = class RegCommand extends Command {
         // formatting the nickname
         let userCharaName = args.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-        // changing the nickname
-        if(msg.author.id !== msg.guild.ownerID){
-            msg.guild.members.get(msg.author.id).setNickname(userCharaName);
-        }
-
-        if(guildSettingData.settings != undefined){        
+        if(guildSettingData.settings !== undefined && guildSettingData.settings !== ""){     
+            // changing the nickname
+            if(msg.author.id !== msg.guild.ownerID){
+                msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+            }   
             // checking and adding the role
             if(guildSettingData.settings.member_gate.role_id !== "" && guildSettingData.settings.member_gate.role_id !== undefined){
                 // checking if the guild have the role, add if yes
