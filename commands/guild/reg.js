@@ -25,7 +25,7 @@ module.exports = class RegCommand extends Command {
         // formatting the nickname
         let userCharaName = args.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-        if(guildSettingData.settings !== undefined && guildSettingData.settings !== ""){     
+        if((guildSettingData.settings !== undefined && guildSettingData.settings !== "") && guildSettingData.settings.member_gate !== undefined && guildSettingData.settings.member_gate !== ""){     
             // changing the nickname
             if(msg.author.id !== msg.guild.ownerID){
                 msg.guild.members.get(msg.author.id).setNickname(userCharaName);
@@ -41,8 +41,8 @@ module.exports = class RegCommand extends Command {
             if(guildSettingData.settings.member_gate.next !== "" && guildSettingData.settings.member_gate.next !== undefined){
                 msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send("Hello <@"+msg.author.id+">, we've been waiting for you. Please follow the instruction above to continue");
             }
+        }else{
+            msg.channel.send("This guild/server don't have member verification set.");
         }
-        //console.debug("[soyun] [reg] ["+msg.guild.name+"] args value: "+args);
-        //console.debug("[soyun] [reg] ["+msg.guild.name+"] class input is: "+classValid);
     }
 };
