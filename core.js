@@ -189,11 +189,15 @@ module.exports = {
 
     for (let i = 0; i < data.length; i++) {
       // checking if the data in that index is empty or not
-      if (data[i] === '' || data[i] === null) {
-        formattedData = '\n- *No data available*';
-      } else {
+      if(data[i] === "" || data[i] === undefined){
+        formattedData = formattedData;
+      }else{
         formattedData = formattedData + (newline + symbol + data[i]);
-      }
+      }      
+    }
+
+    if(formattedData === ""){
+      formattedData = "\n- *No data available*"
     }
 
     return formattedData;
@@ -457,17 +461,14 @@ module.exports = {
       {
         'name': 'Event',
         'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
-                         '**Duration**: '+eventData.duration+'\n'+
-                         '**Redemption Period**: '+eventData.redeem+'\n'+
-                         '**Quests**'+
-                         module.exports.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B',
+                '**Duration**: '+eventData.duration+'\n'+
+                '**Redemption Period**: '+eventData.redeem+'\n'+
+                '**Quests**'+module.exports.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B',
       },
       {
         'name': 'Daily Challenges',
-        'value': '**Rewards**'+
-                        module.exports.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
-                        '**Quests**'+
-                        module.exports.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B',
+        'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
+                '**Quests**'+module.exports.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B',
       },
     ];
 
@@ -475,10 +476,8 @@ module.exports = {
       fieldsData.push(
           {
             'name': 'Weekly Challenges',
-            'value': '**Rewards**'+
-                            module.exports.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
-                            '**Quests**'+
-                            module.exports.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B',
+            'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
+                     '**Quests**'+module.exports.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B',
           }
       );
     }
