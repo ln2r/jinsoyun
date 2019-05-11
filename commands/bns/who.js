@@ -90,7 +90,7 @@ module.exports = class WhoCommand extends Command {
            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData.characterName value: "+charaData.characterName);
             
             if(charaData.characterName === undefined){
-                messageOutput = "No result found on **"+charaQuery+"**. Please check your search and try again.";
+                messageOutput = "No result found on **"+charaQuery.replace("%20", " ")+"**. Please check your search and try again.";
             }else{
                 // getting the traits data
                 let traitsDataView = [];
@@ -118,7 +118,9 @@ module.exports = class WhoCommand extends Command {
                //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData address: "+charaAPIAddress+charaQuery);
                //console.debug("[soyun] [who] ["+msg.guild.name+"] player traits data address: "+ncsoftPlayerTraitsAPIAdress.replace("CHARACTER_NAME",charaQuery));
                //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsData value: "+traitsData)
-               //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsDataView value: "+traitsDataView)       
+               //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsDataView value: "+traitsDataView) 
+               //console.debug("[soyun] [who] ["+msg.guild.name+"] gems data: "+gemData)  
+               //console.debug("[soyun] [who] ["+msg.guild.name+"] soulshield data: "+soulshieldData)        
 
                 messageOutput = {
                     "embed": {
