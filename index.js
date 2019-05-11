@@ -144,8 +144,7 @@ clientDiscord
         const { d: data } = event;
         // get role data from db
         let guildReactionRoleData = await mongoGetData("guilds", {guild: data.guild_id});
-        console.log(guildReactionRoleData);
-        console.log(data)
+
         if(guildReactionRoleData !== undefined && guildReactionRoleData.length !== 0){
           guildReactionRoleData = guildReactionRoleData[0].settings.react_role;
       
