@@ -54,14 +54,16 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
                     if(roleData){
                         // find the message
                         let messageIndex;
+                        let messageFound = false;
                         for(let i=0; i<reactionRoleData.length; i++){
                             if(reactionRoleData[i].id === msg.guild.currentMessage){
                                 messageIndex = i;
+                                messageFound = true;
                             };
                         };
 
                         // add reaction and save to db
-                        if(messageIndex){
+                        if(messageFound){
                             // get the message
                             var messageData = await msg.channel.fetchMessage(msg.guild.currentMessage).catch(err => (messageData = false));
                             if(messageData){
