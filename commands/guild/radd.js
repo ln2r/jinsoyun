@@ -72,16 +72,18 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
 
                             // check if the reaction already exist
                             let reactionIndex;
+                            let reactionFound = false;
                             if(reactionRoleData[messageIndex].reactions){
                                 for(let i=0; i<reactionRoleData[messageIndex].reactions.length; i++){
                                     if(reactionRoleData[messageIndex].reactions[i].emoji === emojiId){
                                         reactionIndex = i;
+                                        reactionFound = true;
                                     }
                                 }
                             }
 
                             // replace the role if it is, insert new if it isn't
-                            if(reactionIndex){    
+                            if(reactionFound){    
                                 reactionRoleData[messageIndex].reactions[reactionIndex].role = roleId;
 
                                 msgData = "Replaced "+msgEmoji+" with <@&"+roleId+">";
