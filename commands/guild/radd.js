@@ -45,17 +45,17 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
                         emojiId = args.replace(roleIdRaw.toString(), "").trim();
                         msgEmoji = emojiId;
                     }                    
-                    console.debug("args data: "+args);
-                    console.debug("role id: "+roleId);
-                    console.debug("emoji data: "+emojiId);
+                    // console.debug("args data: "+args);
+                    // console.debug("role id: "+roleId);
+                    // console.debug("emoji data: "+emojiId);
                     
                     // check if role exist
                     let roleData = msg.guild.roles.find(role => role.id === roleId);
                     if(roleData){
                         // find the message
                         let messageIndex;
-                        for(let i=0; i<reactionRoleData.messages.length; i++){
-                            if(reactionRoleData.messages[i].id === msg.guild.currentMessage){
+                        for(let i=0; i<reactionRoleData.length; i++){
+                            if(reactionRoleData[i].id === msg.guild.currentMessage){
                                 messageIndex = i;
                             };
                         };
@@ -70,9 +70,9 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
 
                             // check if the reaction already exist
                             let reactionIndex;
-                            if(reactionRoleData.messages[messageIndex].reactions){
-                                for(let i=0; i<reactionRoleData.messages[messageIndex].reactions.length; i++){
-                                    if(reactionRoleData.messages[messageIndex].reactions[i].emoji === emojiId){
+                            if(reactionRoleData[messageIndex].reactions){
+                                for(let i=0; i<reactionRoleData[messageIndex].reactions.length; i++){
+                                    if(reactionRoleData[messageIndex].reactions[i].emoji === emojiId){
                                         reactionIndex = i;
                                     }
                                 }
@@ -80,14 +80,14 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
 
                             // replace the role if it is, insert new if it isn't
                             if(reactionIndex){    
-                                reactionRoleData.messages[messageIndex].reactions[reactionIndex].role = roleId;
+                                reactionRoleData[messageIndex].reactions[reactionIndex].role = roleId;
 
                                 msgData = "Replaced "+msgEmoji+" with <@&"+roleId+">";
                             }else{
-                                if(reactionRoleData.messages[messageIndex].reactions === undefined || reactionRoleData.messages[messageIndex].reactions.length === 0){
-                                    reactionRoleData.messages[messageIndex].reactions = [{emoji: emojiId, role: roleId}];
+                                if(reactionRoleData[messageIndex].reactions === undefined || reactionRoleData[messageIndex].reactions.length === 0){
+                                    reactionRoleData[messageIndex].reactions = [{emoji: emojiId, role: roleId, once: false}];
                                 }else{
-                                    reactionRoleData.messages[messageIndex].reactions.push({emoji: emojiId, role: roleId});
+                                    reactionRoleData[messageIndex].reactions.push({emoji: emojiId, role: roleId, once: false});
                                 };
 
                                 msgData = "Assigned "+msgEmoji+" with <@&"+roleId+">";
