@@ -28,7 +28,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
             let guildData = await mongoGetData("guilds", {guild: msg.guild.id});
             let reactionRoleData = guildData[0].settings.react_role;
 
-            console.debug("guild reaction-role data: "+reactionRoleData);
+            // console.debug("guild reaction-role data: "+reactionRoleData);
 
             // checking if the user gave something like a message id
             if(args.length >= 15 && /^[0-9]*$/.test(args)){
@@ -36,27 +36,28 @@ module.exports = class ReactionRoleMessageCommand extends Command {
 
                 // checking if the selected message is saved
                 let found = false;
-                for(let i=0; i<reactionRoleData.messages.length; i++){
-                    if(reactionRoleData.messages[i].id === messageId){
+                for(let i=0; i<reactionRoleData.length; i++){
+                    if(reactionRoleData[i].id === messageId){
                         found = true;
                     }
                 };
 
                 // check and get message data    
-                console.debug("messageId value: "+messageId);    
+                // console.debug("messageId value: "+messageId);    
                 let reactionMessageData = await msg.channel.fetchMessage(messageId).catch(err => (reactionMessageData = false));
 
-                console.debug("message found: "+reactionMessageData);
+                // console.debug("message found: "+reactionMessageData);
         
                 if(reactionMessageData) {
                     // getting content
                     let reactionMessageContent = reactionMessageData.content;
 
                     // present message content and url
-                    console.debug("message in db: "+found);
+                    // console.debug("message in db: "+found);
 
                     if(!found){
-                        reactionRoleData.messages.push({id: messageId});
+                        reactionRoleData.push({id: messageId, channel: msg.channel.id});
+                        
                         this.client.emit("guildReactionRoleChange", msg.guild.id, reactionRoleData);
 
                         msgData = "Reaction-role message has been added and selected.";
@@ -65,7 +66,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                     }
 
                     msg.guild.currentMessage = messageId;
-                    console.debug("current message: "+msg.guild.currentMessage);
+                    // console.debug("current message: "+msg.guild.currentMessage);
                     
                     embedData = {
                         'embed': {
