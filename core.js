@@ -651,6 +651,24 @@ module.exports = {
       }
     });
   },
+
+  /**
+   * getMentionedChannel
+   * getting mentioned channel id
+   * @param {String} message message data
+   * @return {Snowflake} mentioned channel id
+   */
+  getMentionedChannelId: function getChannelId(message){
+    let channelId;
+
+    if(message.startsWith("<#") && message.endsWith(">")){
+      channelId = message.slice(2, -1);
+    }else{
+      channelId = null;
+    }
+
+    return channelId;
+  },
 };
 
 // Exported function end here
