@@ -222,7 +222,7 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
   stream.on('data', function(tweet) {
     let payloadStatus = 'rejected';
 
-    // checking if it"s valid account
+    // checking if it's valid account
     for (let i=0; i<twitterTrackedUser.length; i++) {
       if (tweet.user.screen_name === twitterTrackedUser[i]) {
         twitterUserValid = true;
@@ -236,10 +236,10 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
       if (twtFilter[0] === 'RT' || twtFilter[0].charAt(0) === '@') {
         payloadStatus = 'rejected';
       } else {
-        if (tweet.extended_tweet === null) {
-          twtText = tweet.text.toString().replace('&amp;', '&');
-        } else {
+        if (tweet.extended_tweet) {
           twtText = tweet.extended_tweet.full_text.toString().replace('&amp;', '&');
+        } else {
+          twtText = tweet.text.toString().replace('&amp;', '&');
         }
 
         if (tweet.is_quote_status) {
@@ -255,13 +255,21 @@ clientTwitter.stream('statuses/filter', {follow: '3521186773, 819625154'}, async
           twtColor = 1879160;
         }
 
+        // getting image if there's any
+        if(tweet.entities.media){
+          twtImage = tweet.entities.media[0].media_url;
+        }else{
+          twtImage = "";
+        }
+
         const embedData = {
           'embed': {
-            'author': {
-              'name': tweet.user.name,
-              'url': 'https://twitter.com/'+tweet.user.screen_name,
-            },
+            'title': tweet.user.name,
+            'url': 'https://twitter.com/'+tweet.user.screen_name,
             'description': twtText,
+            'image': {
+              'url': twtImage
+            },
             'color': twtColor,
             'timestamp': new Date(),
             'footer': {
