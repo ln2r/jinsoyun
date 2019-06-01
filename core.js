@@ -656,18 +656,28 @@ module.exports = {
    * getMentionedChannel
    * getting mentioned channel id
    * @param {String} message message data
-   * @return {Snowflake} mentioned channel id
+   * @return {Snowflake | null} mentioned channel id
    */
   getMentionedChannelId: function getChannelId(message){
-    let channelId;
-
     if(message.startsWith("<#") && message.endsWith(">")){
-      channelId = message.slice(2, -1);
+      return message.slice(2, -1);
     }else{
-      channelId = null;
-    }
+      return null;
+    };
+  },
 
-    return channelId;
+  /**
+   * getMentionedRoleId
+   * getting mentioned role id
+   * @param {String} message message data
+   * @return {Snowflake | null} mentioned role id
+   */
+  getMentionedRoleId: function getRoleId(message){
+    if(message.startsWith("<@&") && message.endsWith(">")){
+      return message.slice(3, -1);
+    }else{
+      return null;
+    }
   },
 };
 
