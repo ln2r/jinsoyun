@@ -164,12 +164,14 @@ clientDiscord
               found = true;
             };
           };
-          //console.debug("found: "+found+" @ "+messageIndex);
+          console.debug("found: "+found+" @ "+messageIndex);
           if(found){
             // checking the message
             if(data.message_id === guildReactionRoleData[messageIndex].id){
               const message = await channel.fetchMessage(data.message_id);
               const member = message.guild.members.get(user.id);
+
+              console.debug("selected reaction: "+data.emoji.name+":"+data.emoji.id);
 
               // checking the emoji and getting the index
               if(guildReactionRoleData[messageIndex].reactions){
@@ -180,11 +182,13 @@ clientDiscord
                   emojiData = data.emoji.name;
                 };
 
+                console.debug("reaction isn't empty");
+
                 // console.debug("emoji data: "+emojiData);
                 // checking the emoji and getting the role id
                 for(let i=0; i<guildReactionRoleData[messageIndex].reactions.length; i++){
                   if(guildReactionRoleData[messageIndex].reactions[i].emoji === emojiData){
-                    
+                    console.debug("role to be added with id: "+guildReactionRoleData[messageIndex].reactions[i].role);
                     // adding or removing the role
                     if(event.t === "MESSAGE_REACTION_ADD"){
                       member.addRole(guildReactionRoleData[messageIndex].reactions[i].role);
