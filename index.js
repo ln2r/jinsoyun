@@ -159,12 +159,12 @@ clientDiscord
           let found = false;
           let messageIndex;
           for(let i=0; i<guildReactionRoleData.length; i++){
-            if(guildReactionRoleData[i].channel === data.channel_id){
+            if(guildReactionRoleData[i].channel === data.channel_id && guildReactionRoleData[i].id === data.message_id){
               messageIndex = i;
               found = true;
             };
           };
-          console.debug("found: "+found+" @ "+messageIndex);
+          console.debug("found: "+found+" @ "+messageIndex+" message id: "+data.message_id);
           if(found){
             // checking the message
             if(data.message_id === guildReactionRoleData[messageIndex].id){
