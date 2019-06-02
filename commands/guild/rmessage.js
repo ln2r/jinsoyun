@@ -28,7 +28,12 @@ module.exports = class ReactionRoleMessageCommand extends Command {
             let guildData = await mongoGetData("guilds", {guild: msg.guild.id});
             let reactionRoleData = guildData[0].settings.react_role;
 
-            // console.debug("guild reaction-role data: "+reactionRoleData);
+            // initialize if it's empty
+            if(!reactionRoleData){
+                reactionRoleData = reactionRoleData = [];
+            };
+
+            // console.debug("guild reaction-role data: "+reactionRoleData+", with the length of: "+reactionRoleData.length);
 
             // checking if the user gave something like a message id
             if(args.length >= 15 && /^[0-9]*$/.test(args)){

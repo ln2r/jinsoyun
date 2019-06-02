@@ -141,59 +141,84 @@ clientDiscord
 
       // check if the event have the reactions property
       if(!reactionEvents.hasOwnProperty(event.t)) return;
-        const { d: data } = event;
-        // get role data from db
-        let guildSettings = await mongoGetData("guilds", {guild: data.guild_id});
+      const { d: data } = event;
+      const user = clientDiscord.users.get(data.user_id);
 
-        if(guildSettings !== undefined && guildSettings.length !== 0){
-          guildReactionRoleData = guildSettings[0].settings.react_role;
+      // console.debug("user id: "+data.user_id);
+
+      // check if it's the bot
+      if(data.user_id === clientDiscord.user.id) return;
       
-          if(guildReactionRoleData !== undefined){
-            const channel = clientDiscord.channels.get(data.channel_id);
-            // checking channel and finding the message
-            let found = false;
-            let messageIndex;
-            for(let i=0; i<guildReactionRoleData.length; i++){
-              if(guildReactionRoleData[i].channel === data.channel_id){
-                messageIndex = i;
-                found = true;
-              };
+      // get role data from db
+      let guildSettings = await mongoGetData("guilds", {guild: data.guild_id});
+
+      if(guildSettings && guildSettings.length !== 0){
+        guildReactionRoleData = guildSettings[0].settings.react_role;
+    
+        if(guildReactionRoleData){
+          const channel = clientDiscord.channels.get(data.channel_id);
+          // checking channel and finding the message
+          let found = false;
+          let messageIndex;
+          for(let i=0; i<guildReactionRoleData.length; i++){
+            if(guildReactionRoleData[i].channel === data.channel_id && guildReactionRoleData[i].id === data.message_id){
+              messageIndex = i;
+              found = true;
             };
+          };
+          // console.debug("found: "+found+" @ "+messageIndex+" message id: "+data.message_id);
+          if(found){
+            // checking the message
+            if(data.message_id === guildReactionRoleData[messageIndex].id){
+              const message = await channel.fetchMessage(data.message_id);
+              const member = message.guild.members.get(user.id);
 
-            if(found){
-              // checking the message
-              if(data.message_id === guildReactionRoleData[messageIndex].id){
-                const message = await channel.fetchMessage(data.message_id);
-                const user = clientDiscord.users.get(data.user_id);
-                const member = message.guild.members.get(user.id);
+              // console.debug("selected reaction: "+data.emoji.name+":"+data.emoji.id);
 
-                // checking the emoji and getting the index
-                if(guildReactionRoleData[messageIndex].reactions){
-                  let emojiData;
-                  if(data.emoji.id){
-                    emojiData = data.emoji.name+":"+data.emoji.id;
+              // checking the emoji and getting the index
+              if(guildReactionRoleData[messageIndex].reactions){
+                let emojiData;
+                if(data.emoji.id){
+                  emojiData = data.emoji.name+":"+data.emoji.id;
+                }else{
+                  emojiData = data.emoji.name;
+                };
+
+                // console.debug("emoji data: "+emojiData);
+                // checking the emoji and getting the role id
+                let reactionFound = false;
+                let reactionIndex;
+                for(let i=0; i<guildReactionRoleData[messageIndex].reactions.length; i++){
+                  if(guildReactionRoleData[messageIndex].reactions[i].emoji === emojiData){
+                    reactionFound = true;
+                    reactionIndex = i;
+                  };
+                };
+
+                if(reactionFound){
+                  // checking if once
+                  if(guildReactionRoleData[messageIndex].reactions[reactionIndex].once){
+                    member.addRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
+                    // removing the reaction
+                    channel.fetchMessage(guildReactionRoleData[messageIndex].id).then(message => {
+                      let filtered = message.reactions.filter(reaction => reaction.emoji.name === data.emoji.name);
+
+                      filtered.forEach(reaction => reaction.remove(user.id));
+                    });
                   }else{
-                    emojiData = data.emoji.name;
-                  };
-
-                  // console.debug("emoji data: "+emojiData);
-                  // checking the emoji and getting the role id
-                  for(let i=0; i<guildReactionRoleData[messageIndex].reactions.length; i++){
-                    if(guildReactionRoleData[messageIndex].reactions[i].emoji === emojiData){
-                      
-                      // adding or removing the role
-                      if(event.t === "MESSAGE_REACTION_ADD"){
-                        member.addRole(guildReactionRoleData[messageIndex].reactions[i].role);
-                      }else{
-                        member.removeRole(guildReactionRoleData[messageIndex].reactions[i].role)
-                      };
+                    // check if the event add or remove
+                    if(event.t === "MESSAGE_REACTION_ADD"){
+                      member.addRole(guildReactionRoleData[messageIndex].reactions[i].role);
+                    }else{
+                      member.removeRole(guildReactionRoleData[messageIndex].reactions[i].role)
                     };
-                  };
-                };                
-              };
+                  }
+                }
+              };                
             };
           };
         };
+      };
     });
 
 clientDiscord.setProvider(
