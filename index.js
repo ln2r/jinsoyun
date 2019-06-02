@@ -208,9 +208,9 @@ clientDiscord
                   }else{
                     // check if the event add or remove
                     if(event.t === "MESSAGE_REACTION_ADD"){
-                      member.addRole(guildReactionRoleData[messageIndex].reactions[i].role);
+                      member.addRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
                     }else{
-                      member.removeRole(guildReactionRoleData[messageIndex].reactions[i].role)
+                      member.removeRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role)
                     };
                   }
                 }
