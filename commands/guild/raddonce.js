@@ -1,15 +1,15 @@
 const { Command } = require("discord.js-commando");
 const { mongoGetData, getMentionedRoleId } = require("../../core");
 
-module.exports = class ReactionRoleReactionAddCommand extends Command {
+module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
     constructor(client) {
         super(client, {
-            name: "radd",
-            aliases: ["reactadd", "ra"],
+            name: "raddonce",
+            aliases: ["reactaddonce", "ronce"],
             group: "guild",
-            memberName: "radd",
+            memberName: "raddonce",
             description: "Add one time type reaction to message for reaction role",
-            examples: ["radd `role` `emoji`", "radd @role-name :tada:"],
+            examples: ["raddonce `role` `emoji`", "raddonce @role-name :tada:"],
             guildOnly: true,
         });
     }
