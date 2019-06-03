@@ -42,15 +42,16 @@ If you want to host the bot yourself just follow the instruction below. The down
 Bot configuration data is located in 2 places, the one in `.env` file and the other one is in the MongoDB collection
 
 ### .env File
-* `bot_mongodb_url` MongoDB connection url
-* `bot_mongodb_db_name` bot MongoDB database name
-* `bot_default_prefix` bot command default prefix
-* `bot_owner_id` your discord profile id
-* `discord_secret` discord bot app token
-* `twitter_consumer_key` twitter app consumer key
-* `twitter_consumer_secret` twitter app consumer secret key
-* `twitter_access_token_key` twitter app access token key
-* `twitter_access_token_secret` twitter app access token secret key
+* `bot_mongodb_url` - `String`: MongoDB connection url
+* `bot_mongodb_db_name` - `String`: bot MongoDB database name
+* `bot_default_prefix` - `String`: bot command default prefix
+* `bot_owner_id` - `String` your discord profile id
+* `bot_maintenance_mode` - `Boolean`: bot maintenance mode, will disable some feature if enabled
+* `discord_secret` - `String` discord bot app token
+* `twitter_consumer_key` - `String`: twitter app consumer key
+* `twitter_consumer_secret` - `String`: twitter app consumer secret key
+* `twitter_access_token_key` - `String`: twitter app access token key
+* `twitter_access_token_secret` - `String`: twitter app access token secret key
 
 Template:
   ```env
