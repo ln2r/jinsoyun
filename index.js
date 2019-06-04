@@ -59,19 +59,29 @@ clientDiscord
     })
     .on('ready', () => {
       console.log('[soyun] [system] Logged in and ready');
-      clientDiscord.user.setPresence({
+
+      let botStatus = {
         game: {
           name: '@Jinsoyun help',
           type: 'LISTENING',
         },
-      }).catch((error) => {
-        console.error;
-        sendBotReport(error, 'onReady-soyun', 'error');
-      });
+      };
 
       if(maintenanceMode){
         console.log("[soyun] [system] maintenance mode is enabled, only commands will run normally");
-      };      
+        botStatus = {
+          game: {
+            name: "MAINTENANCE MODE",
+            type: "PLAYING"
+          },
+          status: "dnd",
+        };
+      };
+
+      clientDiscord.user.setPresence(botStatus).catch((error) => {
+        console.error;
+        sendBotReport(error, 'onReady-soyun', 'error');
+      });
     })
     .on('guildMemberAdd', async (member) => {
       let guildSettingData = await mongoGetData('guilds', {guild: member.guild.id});
@@ -107,8 +117,15 @@ clientDiscord
       if(maintenanceMode){
         console.log("[soyun] [error-report] error reporting disabled");
       }else{
+        if(message.guild){
+          errorLocation = message.guild.name;
+          guildOwnerId = message.guild.ownerID;
+        }else{
+          errorLocation = "DIRECT_MESSAGE";
+          guildOwner = message.author.id;
+        }
         // sending the error report to the database
-        sendBotReport(command.name+': '+command.message, error.name+'-'+message.guild.name, 'error');
+        sendBotReport(command.name+': '+command.message, error.name+'-'+errorLocation, 'error');
         console.error('[soyun] ['+error.name+'] '+command.name+': '+command.message);
 
         // dm bot owner for the error
@@ -116,7 +133,7 @@ clientDiscord
         clientDiscord.guilds.map(function(guild) { // looking for the guild owner data (username and discriminator)
           guild.members.map((member) => {
             if (found === 0) {
-              if (member.id === message.guild.ownerID) {
+              if (member.id === guildOwner) {
                 found = 1;
 
                 for (let i=0; i < clientDiscord.owners.length; i++) {
@@ -124,7 +141,7 @@ clientDiscord
                       'Error Occured on `'+error.name+'`'+
                                   '\n__Details__:'+
                                   '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
-                                  '\n**Location**: '+message.guild.name+
+                                  '\n**Location**: '+errorLocation+
                                   '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
                                   '\n**Content**: `'+message.content+'`'+
                                   '\n**Message**:\n'+command.name+': '+command.message
