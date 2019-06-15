@@ -87,22 +87,23 @@ clientDiscord
       let guildSettingData = await mongoGetData('guilds', {guild: member.guild.id});
       guildSettingData = guildSettingData[0];
 
-      let memberGate = '';
       if (guildSettingData) {
-        memberGate = guildSettingData.settings.member_gate;
+        let memberGate = guildSettingData.settings.member_gate;
         // console.debug("[soyun] [gate] ["+member.guild.name+"] memberGate value: "+memberGate);
         // checking if the guild have the channel and the message set
-        if ((memberGate.channel_id !== '' || memberGate.channel_id) && (memberGate.message !== "" || memberGate.message)) {
-          member.guild.channels.find((ch) => ch.id === memberGate.channel_id).send(
-            'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
+        if(memberGate){
+          if (memberGate.channel_id && memberGate.message) {
+            member.guild.channels.find((ch) => ch.id === memberGate.channel_id).send(
+              'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
 
-            'Before I give you access to the rest of the server, I need to know your character\'s name, To do that, please use following command with your information in it\n'+
-            '`@Jinsoyun join character name`\n'+
-            '**Example**:\n'+
-            '`@Jinsoyun join jinsoyun `\n\n'+
+              'Before I give you access to the rest of the server, I need to know your character\'s name, To do that, please use following command with your information in it\n'+
+              '`@Jinsoyun join character name`\n'+
+              '**Example**:\n'+
+              '`@Jinsoyun join jinsoyun `\n\n'+
 
-            'if you need any assistance you can mention or DM available admins, thank you ❤'
-          );
+              'if you need any assistance you can mention or DM available admins, thank you ❤'
+            );
+          };
         };
       };
     })
@@ -122,7 +123,7 @@ clientDiscord
           guildOwnerId = message.guild.ownerID;
         }else{
           errorLocation = "DIRECT_MESSAGE";
-          guildOwner = message.author.id;
+          guildOwnerId = message.author.id;
         }
         // sending the error report to the database
         sendBotReport(command.name+': '+command.message, error.name+'-'+errorLocation, 'error');
@@ -133,7 +134,7 @@ clientDiscord
         clientDiscord.guilds.map(function(guild) { // looking for the guild owner data (username and discriminator)
           guild.members.map((member) => {
             if (found === 0) {
-              if (member.id === guildOwner) {
+              if (member.id === guildOwnerId) {
                 found = 1;
 
                 for (let i=0; i < clientDiscord.owners.length; i++) {
