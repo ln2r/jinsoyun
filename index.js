@@ -92,7 +92,7 @@ clientDiscord
         // console.debug("[soyun] [gate] ["+member.guild.name+"] memberGate value: "+memberGate);
         // checking if the guild have the channel and the message set
         if(memberGate){
-          if (memberGate.channel_id && memberGate.message) {
+          if (memberGate.channel_id) {
             member.guild.channels.find((ch) => ch.id === memberGate.channel_id).send(
               'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
 
@@ -161,6 +161,11 @@ clientDiscord
         });
       };
     })
+    /**
+     * TODO:
+     * - add check when emojiUpdate happens -> notify the channel emoji used is changed
+     * - add check when emojiDelete happens -> notify the channel emoji used is deleted
+     */
     // event handling for reactions
     .on('raw', async event => {
       /**
@@ -241,8 +246,8 @@ clientDiscord
                     }else{
                       member.removeRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role)
                     };
-                  }
-                }
+                  };
+                };
               };                
             };
           };
