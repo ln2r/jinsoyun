@@ -25,24 +25,27 @@ module.exports = class RegCommand extends Command {
         // formatting the nickname
         let userCharaName = args.replace(/(^|\s)\S/g, l => l.toUpperCase());
 
-        if((guildSettingData.settings !== undefined && guildSettingData.settings !== "") && guildSettingData.settings.member_gate !== undefined && guildSettingData.settings.member_gate !== ""){     
-            // changing the nickname
-            if(msg.author.id !== msg.guild.ownerID){
-                msg.guild.members.get(msg.author.id).setNickname(userCharaName);
-            }   
-            // checking and adding the role
-            if(guildSettingData.settings.member_gate.role_id !== "" && guildSettingData.settings.member_gate.role_id !== undefined){
-                // checking if the guild have the role, add if yes
-                if ((msg.guild.roles.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
-                    msg.guild.members.get(msg.author.id).addRole(guildSettingData.settings.member_gate.role_id);
-                }
-            }
+        if(guildSettingData.settings){ 
+            if(guildSettingData.settings.member_gate){    
+                // changing the nickname
+                if(msg.author.id !== msg.guild.ownerID){
+                    msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+                };
 
-            if(guildSettingData.settings.member_gate.next !== "" && guildSettingData.settings.member_gate.next !== undefined){
-                msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send("Hello <@"+msg.author.id+">, we've been waiting for you. Please follow the instruction above to continue");
-            }
+                // checking and adding the role
+                if(guildSettingData.settings.member_gate.role_id){
+                    // checking if the guild have the role, add if yes
+                    if ((msg.guild.roles.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
+                        msg.guild.members.get(msg.author.id).addRole(guildSettingData.settings.member_gate.role_id);
+                    };
+                };
+
+                if(guildSettingData.settings.member_gate.next){
+                    msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send("Hello <@"+msg.author.id+">, we've been waiting for you. Please follow the instruction above to continue");
+                };
+            };
         }else{
             msg.channel.send("This guild/server don't have member verification set.");
-        }
-    }
+        };
+    };
 };
