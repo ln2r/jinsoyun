@@ -176,7 +176,7 @@ module.exports = {
      */
   setArrayDataFormat: function formatArray(data, symbol, newline) {
     if (data === null || data === undefined || data === '') {
-      return '-';
+      return '\n- *No data available*';
     }
 
     let formattedData = '';
@@ -238,25 +238,40 @@ module.exports = {
      * @param {Number} priceNew the latest price
      * @return status price
      * @example
-     * getPriceStatus(2000, 3000) // return +10🔼
+     * getPriceStatus(2000, 3000) // return +10.00%🔼
      */
   getPriceStatus: function priceStatus(priceOld, priceNew) {
-    if (priceOld === null || priceOld === undefined) {
-      priceOld = 0;
-    }
+    let priceStatus = ('0.00%') + '➖';
+    
+    if(priceNew !== priceOld) {
+      // removing the zeros
+      priceNew = priceNew.toString().replace(/0*$/gm, '');
+      priceOld = priceOld.toString().replace(/0*$/gm, '');
 
-    let priceStatus = ('' + '0.00%') + '➖';
-    if (priceNew !== priceOld) {
+      // formatting the numbers
+      // if new have longer length add 0 to old
+      if(priceNew.length >= priceOld.length){
+          for(let i=1; i<priceNew.length; i++){
+              priceOld += "0";
+          };
+      }
+      
+      if(priceNew.length <= priceOld.length){
+          for(let i=1; i<priceOld.length; i++){
+              priceNew += "0";
+          };
+      };
+    
       const percentage = ((priceNew-priceOld)/ 100).toFixed(2);
       let symbol;
       let emoji;
 
       if (percentage < 0) {
-        symbol = '';
-        emoji = '🔽';
+          symbol = '';
+          emoji = '🔽';
       } else {
-        symbol = '+';
-        emoji = '🔼';
+          symbol = '+';
+          emoji = '🔼';
       }
 
       priceStatus = (symbol + percentage+'%') + emoji;
@@ -679,6 +694,18 @@ module.exports = {
       return null;
     }
   },
+
+  /**
+   * getGuildSettings
+   * getting guild setting data
+   * @param {Snowflake} guildId current guild id
+   * @return {Object | null} guild setting data
+   */
+  // TODO: test
+  getGuildSettings: async function getSettings(guildId){
+    let guildData = await module.exports.mongoGetData('guilds', {guild: guildId});
+    return guildData[0];
+  }
 };
 
 // Exported function end here
