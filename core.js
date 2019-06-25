@@ -238,31 +238,13 @@ module.exports = {
      * @param {Number} priceNew the latest price
      * @return status price
      * @example
-     * getPriceStatus(2000, 3000) // return +10.00%🔼
+     * getPriceStatus(2000, 3000) // return +50.00%🔼
      */
   getPriceStatus: function priceStatus(priceOld, priceNew) {
     let priceStatus = ('0.00%') + '➖';
     
-    if(priceNew !== priceOld) {
-      // removing the zeros
-      priceNew = priceNew.toString().replace(/0*$/gm, '');
-      priceOld = priceOld.toString().replace(/0*$/gm, '');
-
-      // formatting the numbers
-      // if new have longer length add 0 to old
-      if(priceNew.length >= priceOld.length){
-          for(let i=1; i<priceNew.length; i++){
-              priceOld += "0";
-          };
-      }
-      
-      if(priceNew.length <= priceOld.length){
-          for(let i=1; i<priceOld.length; i++){
-              priceNew += "0";
-          };
-      };
-    
-      const percentage = ((priceNew-priceOld)/ 100).toFixed(2);
+    if(priceNew !== priceOld) {     
+      const percentage = (((priceNew - priceOld) / priceOld) * 100).toFixed(2);
       let symbol;
       let emoji;
 
@@ -704,7 +686,12 @@ module.exports = {
   // TODO: test
   getGuildSettings: async function getSettings(guildId){
     let guildData = await module.exports.mongoGetData('guilds', {guild: guildId});
-    return guildData[0];
+    
+    if(guildData.length !== 0){
+      return guildData[0];
+    }else{
+      return undefined;
+    }
   }
 };
 
