@@ -60,30 +60,7 @@ module.exports = class WhoCommand extends Command {
             console.error("[soyun] [who] ["+msg.guild.name+"] unable to get api data, site might be unreachable or unavailable");
             sendBotReport({"name":"APIFetchError", "message":"Unable to get api data, site might be unreachable or unavailable", "path":"main/commands/bns/who", "code":10400, "method":"GET"}, "who-"+msg.guild.name, "error");
 
-            // dm bot owner for the error
-            let found = 0;
-            clientDiscord.guilds.map(function(guild){
-                guild.members.map((member) => {
-                    if(found === 0){
-                        if(member.id === message.guild.ownerID){
-                            found = 1;
-
-                            for(let i=0; i < clientDiscord.owners.length; i++){
-                                clientDiscord.owners[i].send(
-                                    "Error Occured on `"+error.name+"`"+
-                                    "\n__Details__:"+
-                                    "\n**Time**: "+dateformat(Date.now(), "dddd, dS mmmm yyyy, h:MM:ss TT")+
-                                    "\n**Location**: "+message.guild.name+
-                                    "\n**Guild Owner**: "+member.user.username+"#"+member.user.discriminator+
-                                    "\n**Message**:\n"+command.name+": "+command.message
-                                )
-                            }
-                        }
-                    }
-                })
-            });
-
-            messageOutput = "Unable to get charater data, please try again later";
+            messageOutput = "Unable to get charater data, please try again later\n"+"`Error 10400: APIFetchError`";
         }else{
            //console.debug("[soyun] [who] ["+msg.guild.name+"] msg.author.nickname: "+msg.member.nickname);
            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaQuery: "+charaQuery);
