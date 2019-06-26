@@ -8,7 +8,7 @@ const path = require('path');
 const ontime = require('ontime');
 const dateformat = require('dateformat');
 
-const {mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport, sendBotStats} = require('./core');
+const {mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport, sendBotStats, getGuildSettings} = require('./core');
 
 // Maintenance mode
 const maintenanceMode = process.env.bot_maintenance_mode;
@@ -83,9 +83,15 @@ clientDiscord
         sendBotReport(error, 'onReady-soyun', 'error');
       });
     })
+    .on('guildCreate', async guild => {
+      let guildSettingData = await getGuildSettings(guild.id);
+      
+      if(!guildSettingData){
+        clientDiscord.emit('commandPrefixChange', guild.id, process.env.bot_default_prefix);
+      };
+    })
     .on('guildMemberAdd', async (member) => {
-      let guildSettingData = await mongoGetData('guilds', {guild: member.guild.id});
-      guildSettingData = guildSettingData[0];
+      let guildSettingData = await getGuildSettings(member.guild.id);
 
       if (guildSettingData) {
         let memberGate = guildSettingData.settings.member_gate;
@@ -140,36 +146,31 @@ clientDiscord
                 for (let i=0; i < clientDiscord.owners.length; i++) {
                   clientDiscord.owners[i].send(
                       'Error Occured on `'+error.name+'`'+
-                                  '\n__Details__:'+
-                                  '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
-                                  '\n**Location**: '+errorLocation+
-                                  '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
-                                  '\n**Content**: `'+message.content+'`'+
-                                  '\n**Message**:\n'+command.name+': '+command.message
+                      '\n__Details__:'+
+                      '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
+                      '\n**Location**: '+errorLocation+
+                      '\n**Guild Owner**: '+member.user.username+'#'+member.user.discriminator+
+                      '\n**Content**: `'+message.content+'`'+
+                      '\n**Message**:\n'+command.name+': '+command.message
                   ).then(
-                      function(message) {
-                        message.react('✅');
-                        message.react('❎');
-                      }
+                    function(message) {
+                      message.react('✅');
+                      message.react('❎');
+                    }
                   ).catch((err) => {
                     sendBotReport(err, 'errorDM-soyun', 'error');
                   });
-                }
-              }
-            }
+                };
+              };
+            };
           });
         });
       };
     })
-    /**
-     * TODO:
-     * - add check when emojiUpdate happens -> notify the channel emoji used is changed
-     * - add check when emojiDelete happens -> notify the channel emoji used is deleted
-     */
     // event handling for reactions
     .on('raw', async event => {
       /**
-       * Original code by Sam-DevZ
+       * Original algorithm by Sam-DevZ
        * https://github.com/Sam-DevZ/Discord-RoleReact
        */
 
@@ -184,10 +185,10 @@ clientDiscord
       if(data.user_id === clientDiscord.user.id) return;
       
       // get role data from db
-      let guildSettings = await mongoGetData("guilds", {guild: data.guild_id});
+      let guildSettings = await getGuildSettings(data.guild_id);
 
       if(guildSettings && guildSettings.length !== 0){
-        guildReactionRoleData = guildSettings[0].settings.react_role;
+        guildReactionRoleData = guildSettings.settings.react_role;
     
         if(guildReactionRoleData){
           const channel = clientDiscord.channels.get(data.channel_id);
@@ -345,8 +346,7 @@ if(maintenanceMode){
             // console.debug("[soyun] [tweet] guild list: "+guild.id+"("+guild.name+")");
 
             // getting guild setting data
-            let guildSettingData = await mongoGetData('guilds', {guild: guild.id});
-            guildSettingData = guildSettingData[0];
+            let guildSettingData = await getGuildSettings(guild.id);
             // console.debug("[soyun] [tweet] guild setting data: "+JSON.stringify(guildSettingData, null, "\t"));
 
             let twitterChannel = '';
