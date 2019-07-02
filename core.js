@@ -690,7 +690,7 @@ module.exports = {
     if(guildData.length !== 0){
       return guildData[0];
     }else{
-      return undefined;
+      return null;
     }
   }
 };
