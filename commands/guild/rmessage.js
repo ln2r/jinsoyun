@@ -24,6 +24,8 @@ module.exports = class ReactionRoleMessageCommand extends Command {
 
         // check permission
         if(authorPermission){
+            let reactionMessageData;
+
             // getting guild's reaction-role data from db
             let guildData = await mongoGetData("guilds", {guild: msg.guild.id});
             let reactionRoleData = guildData[0].settings.react_role;
@@ -49,11 +51,13 @@ module.exports = class ReactionRoleMessageCommand extends Command {
 
                 // check and get message data    
                 // console.debug("messageId value: "+messageId);    
-                let reactionMessageData = await msg.channel.fetchMessage(messageId).catch(err => (reactionMessageData = false));
+                reactionMessageData = await msg.channel.fetchMessage(messageId).catch(err => (reactionMessageData = false));
+
+                console.log(reactionMessageData);
 
                 // console.debug("message found: "+reactionMessageData);
         
-                if(reactionMessageData) {
+                if(reactionMessageData === true) {
                     // getting content
                     let reactionMessageContent = reactionMessageData.content;
 
@@ -92,7 +96,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                         }
                     };
                 }else{
-                    msgData = "Can't find message with that id: `"+messageId+"`.";
+                    msgData = "Can't find message with id: `"+messageId+"` in this channel (try to use the command on the same channel as the message).";
                 };               
             }else{
                 msgData = "That doesn't look like a message id";
