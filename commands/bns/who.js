@@ -56,7 +56,7 @@ module.exports = class WhoCommand extends Command {
             traitsData = traitsData.records;
 
         // checking if the data fetch return data or error
-        if(charaData.status === "error"){
+        if(charaData.status === "error" || !traitsData){
             console.error("[soyun] [who] ["+msg.guild.name+"] unable to get api data, site might be unreachable or unavailable");
             sendBotReport({"name":"APIFetchError", "message":"Unable to get api data, site might be unreachable or unavailable", "path":"main/commands/bns/who", "code":10400, "method":"GET"}, "who-"+msg.guild.name, "error");
 
@@ -124,13 +124,25 @@ module.exports = class WhoCommand extends Command {
                                         "\n\u200B"
                             },
                             {
-                                "name": "Equipments",
-                                "value": "**Weapon**: "+setDataFormatString(charaData.weaponName)+
-                                        "\n\n**Gems**: "+setArrayDataFormat(gemData, "- ", true)+
-                                        "\n\n**Soulshields**: "+setArrayDataFormat(soulshieldData, "- ", true)+
-                                        "\n\n**Accessories**: "+setArrayDataFormat(gearData, "- ", true)+
-                                        "\n\u200B"
-                            },                            
+                                "name": "Weapon",
+                                "value": setDataFormatString(charaData.weaponName)
+                                        +"\n\u200B"
+                            }, 
+                            {
+                                "name": "Gems",
+                                "value": setArrayDataFormat(gemData, "- ", true)
+                                        +"\n\u200B"
+                            }, 
+                            {
+                                "name": "Soulshield",
+                                "value": setArrayDataFormat(soulshieldData, "- ", true)
+                                        +"\n\u200B"
+                            }, 
+                            {
+                                "name": "Accesories",
+                                "value": setArrayDataFormat(gearData, "- ", true)
+                                        +"\n\u200B"
+                            },                      
                             {
                                 "name": "Selected Talents",
                                 "value": setArrayDataFormat(traitsDataView, "- ", true)
