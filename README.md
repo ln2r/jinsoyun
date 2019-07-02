@@ -60,6 +60,7 @@ Template:
   bot_mongodb_db_name = MONGODB_DATABASE_NAME
   bot_default_prefix = DEFAULT_BOT_PREFIX
   bot_owner_id = YOUR_DISCORD_ID
+  bot_maintenance_mode = false
 
   # keys and secrets
   discord_secret = YOUR_DISCORD_APP_TOKEN
