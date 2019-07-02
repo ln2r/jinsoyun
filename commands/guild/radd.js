@@ -30,7 +30,12 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
             }else{
                 // getting guild's reaction-role data from db
                 let guildData = await mongoGetData("guilds", {guild: msg.guild.id});
-                let reactionRoleData = guildData[0].settings.react_role;
+                let reactionRoleData;
+
+                // get data from db if there's already some
+                if(guildData){
+                    reactionRoleData = guildData[0].settings.react_role;
+                };                
 
                 // checking if user give role
                 let roleIdRaw = args.match(/\<\@(.*?)\>/gs);
