@@ -40,8 +40,15 @@ module.exports = class RegCommand extends Command {
                     };
                 };
 
-                if(guildSettingData.settings.member_gate.next){
-                    msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send("Hello <@"+msg.author.id+">, we've been waiting for you. Please follow the instruction above to continue");
+                if((guildSettingData.settings.member_gate.next && guildSettingData.settings.member_gate.next !== null) && (guildSettingData.settings.join_message && guildSettingData.settings.join_message !== null)){
+                    let joinMessageAuthor = "<@"+msg.author.id+">";
+                    let joinServerName = msg.guild.name;
+                    let customJoinMessage = guildSettingData.settings.join_message;
+                        // replacing some stuff
+                        customJoinMessage = customJoinMessage.replace("MESSAGE_AUTHOR", joinMessageAuthor);
+                        customJoinMessage = customJoinMessage.replace("SERVER_NAME", joinServerName);
+                    
+                    msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send(customJoinMessage);
                 };
             };
         }else{
