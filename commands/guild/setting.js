@@ -1,6 +1,6 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
-const { mongoGetData } = require("../../core");
+const { getGuildSettings, getMentionedChannelId, getMentionedRoleId } = require("../../core");
 
 module.exports = class GuildSettingsCommand extends Command {
     constructor(client) {
@@ -22,104 +22,261 @@ module.exports = class GuildSettingsCommand extends Command {
 
         let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
         if(authorPermission){
-            let guildsData = await mongoGetData("guilds", {guild: msg.guild.id});
-            let guildSettings = guildsData[0].settings;
+            let guildSettings = await getGuildSettings(msg.guild.id);
+            let botPrefix;
 
-            let botPrefix = guildSettings.prefix || "!";
+            if(guildSettings){
+                botPrefix = guildSettings.settings.prefix;
+            }else{
+                botPrefix = "!";
+            }
             
             embedData = {
                 'embed': {
                     'title': "Jinsoyun Bot - Available Settings",
-                    'description': "To configure use `"+botPrefix+"setting option value`.\nExamples:",
+                    'description': "To configure use `"+botPrefix+"setting option value`, to disable replce `#channel-name` or `@role-name` with disable.\nExamples:",
                     'color': 16741688,
                     'fields': [
                         {
                             'inline': true,
                             'name': "Twitter News",
-                            'value': "`"+botPrefix+"setting twitter #channel-name`"
+                            'value': "Change: `"+botPrefix+"setting twitter #channel-name`\nDisable: `"+botPrefix+"setting twitter disable`"
                         },
                         {
                             'inline': true,
-                            'name': "Challanges Quests",
-                            'value': "`"+botPrefix+"setting twitter #channel-name`"
+                            'name': "Challenge Quests and Event Summary",
+                            'value': "Change: `"+botPrefix+"setting reset #channel-name`\nDisable: `"+botPrefix+"setting reset disable`"
                         },
                         {
                             'inline': false,
                             'name': "New Member Verification",
-                            'value': "`"+botPrefix+"setting gate #welcome-channel #follow-up-channel @role-name`"
-                        }
+                            'value': "Change: `"+botPrefix+"setting gate #welcome-channel #follow-up-channel @role-name`\nDisable: `"+botPrefix+"setting gate disable disable disable`\nNote: You can just replace one of them to `disable` if you want that feature disabled (like the follow-up or auto role assignment)."
+                        },
+                        {
+                            'inline': true,
+                            'name': "Join Command Custom Message",
+                            'value': "Change: `"+botPrefix+"setting joinmsg Your message here.`\nDisable: `"+botPrefix+"setting joinmsg disable `\nNote: If you want to mention the message author use MESSAGE_AUTHOR, and SERVER_NAME when you want to add the server name."
+                        },
                     ]
                 }
             };    
 
-            if(guildSettings){
-                let query = args.split(" ");
+            let query = args.split(" ");
+            let changed = false;
 
-                let setting = query[0];
-                let value = query[1];
-                let optionDisplayName;
-                let optionDescription;
-                let optionEmbedData;
+            let setting = query[0];
+            let optionDisplayName;
+            let optionDescription;
+            let optionEmbedData;
 
-                switch(setting){
-                    case "reset":
-                        optionDisplayName = "Challenge Quests";
-                        optionDescription = "Challange quests (daily, weekly) reset and event summary notification.";
-                        optionEmbedData = [
-                            {
-                                'name': "Channel Name",
-                                'value': "#CHANNEL-NAME-HERE",
-                            },
-                        ];
-                    break;
+            let settingResetChannelText = "*No Channel Selected*";
+            let settingTwitterChannelText = "*No Channel Selected*";
+            let settingGateChannelText = "*No Channel Selected*";
+            let settingGateFollowupChannelText = "*No Channel Selected*";
+            let settingGateRoleText = "*No Role Selected*";
+            let settingFollowupMessageText = "*No Message Set*";
 
-                    case "twitter":
-                        optionDisplayName = "Twitter News";
-                        optionDescription = "Blade & Soul and Blade & Soul Ops's tweets channel.";
-                        optionEmbedData = [
-                            {
-                                'name': "Channel Name",
-                                'value': "#CHANNEL-NAME-HERE",
-                            },
-                        ];
-                    break;
+            switch(setting){
+                case "reset":
+                    if(query[1]){
+                        let settingResetChannel;
 
-                    case "gate":
-                        optionDisplayName = "New Member Verification";
-                        optionDescription = "New member varification channel and roles.";
-                        optionEmbedData = [
-                            {
-                                'name': "Welcome Channel",
-                                'value': "#CHANNEL-NAME-HERE"
-                            },
-                            {
-                                'name': "Follow-up Channel",
-                                'value': "#CHANNEL-NAME-HERE",
-                            },
-                            {
-                                'name': "Member Role",
-                                'value': "`@ROLE_NAME`",
-                            },
-                        ];
-                    break;
+                        if(query[1] === "disable"){
+                            settingResetChannel = null;  
+                        }else{
+                            let resetChannelId = getMentionedChannelId(query[1]);                            
+                            settingResetChannel = resetChannelId;  
+                            settingResetChannelText = "<#"+resetChannelId+">";
+                        };
 
-                    case "show":
-                    break;
-                };
+                        // update the database
+                        this.client.emit('notificationResetChange', msg.guild.id, settingResetChannel);
 
-                if(setting === "reset" || setting === "twitter" || setting === "gate"){
+                        changed = true;
+                    };
+
+                    if(query.length === 1){
+                        if(guildSettings.settings.quest_reset && guildSettings.settings.quest_reset !== null){
+                            settingResetChannelText = "<#"+guildSettings.settings.quest_reset+">";
+                        };
+                    };
+
+                    optionDisplayName = "Challenge Quests and Event Summary";
+                    optionDescription = "Challange quests (daily, weekly) reset and event summary notification.";
+                    optionEmbedData = [
+                        {
+                            'name': "Channel Name",
+                            'value': settingResetChannelText,
+                        },
+                    ]; 
+                break;
+
+                case "twitter":
+                    if(query[1]){
+                        let settingTwitterChannel;
+
+                        if(query[1] === "disable"){
+                            settingTwitterChannel = null;  
+                        }else{
+                            let channelId = getMentionedChannelId(query[1]);
+
+                            settingTwitterChannel = channelId;  
+                            settingTwitterChannelText = "<#"+channelId+">";
+                        };
+
+                        // update the database
+                        this.client.emit('notificationTwitterChange', msg.guild.id, settingTwitterChannel);
+
+                        changed = true;
+                    };
+
+                    if(query.length === 1){
+                        if(guildSettings.settings.twitter && guildSettings.settings.twitter !== null){
+                            settingTwitterChannelText = "<#"+guildSettings.settings.twitter+">";
+                        };
+                    };
+
+                    optionDisplayName = "Twitter News";
+                    optionDescription = "Blade & Soul and Blade & Soul Ops's tweets channel.";
+                    optionEmbedData = [
+                        {
+                            'name': "Channel Name",
+                            'value': settingTwitterChannelText,
+                        },
+                    ];
+                break;
+
+                case "gate":
+                    let settingGateChannel = null;
+                    let settingGateFollowupChannel = null;
+                    let settingGateRole = null;
+                    if(query[1]){
+                        if(query[1] === "disable"){
+                            settingGateChannel = null;  
+                        }else{
+                            let channelId = getMentionedChannelId(query[1]);
+
+                            settingGateChannel = channelId;  
+                            settingGateChannelText = "<#"+channelId+">";
+                        };
+
+                        changed = true;
+                    };
+
+                    if(query[2]){
+                        if(query[2] === "disable"){
+                            settingGateFollowupChannel = null;  
+                        }else{
+                            let channelId = getMentionedChannelId(query[2]);
+
+                            settingGateFollowupChannel = channelId;  
+                            settingGateFollowupChannelText = "<#"+channelId+">";
+                        };
+
+                        changed = true;
+                    };
+
+                    if(query[3]){
+                        if(query[3] === "disable"){
+                            settingGateRole = null;  
+                        }else{
+                            let roleId = getMentionedRoleId(query[3]);
+
+                            settingGateRole = roleId;  
+                            settingGateRoleText = "<@&"+roleId+">";
+                        };
+
+                        changed = true;
+                    };
+
+                    if(query.length === 1){
+                        if(guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null){
+                            settingGateChannelText = "<#"+guildSettings.settings.member_gate.channel_id+">";
+                        };
+                        if(guildSettings.settings.member_gate.next && guildSettings.settings.member_gate.next !== null){
+                            settingGateFollowupChannelText = "<#"+guildSettings.settings.member_gate.next+">";
+                        };
+                        if(guildSettings.settings.member_gate.role_id && guildSettings.settings.member_gate.role_id !== null){
+                            settingGateRoleText = "<@&"+guildSettings.settings.member_gate.role_id+">";
+                        };
+                    };
+
+                    optionDisplayName = "New Member Verification";
+                    optionDescription = "New member varification channel and roles.";
+                    optionEmbedData = [
+                        {
+                            'name': "Welcome Channel",
+                            'value': settingGateChannelText
+                        },
+                        {
+                            'name': "Follow-up Channel",
+                            'value': settingGateFollowupChannelText
+                        },
+                        {
+                            'name': "Member Role",
+                            'value': settingGateRoleText
+                        },
+                    ];
+
+                    if(changed){
+                        // update the database
+                        this.client.emit('newMemberChannelChange', msg.guild.id, {
+                            channel_id: settingGateChannel,
+                            role_id: settingGateRole,
+                            next: settingGateFollowupChannel
+                        });
+                    };
+                break;
+
+                case 'joinmsg':
+                    query.shift();
+                    
+                    let settingFollowupMessage = query.join(" ");
+                    if(settingFollowupMessage.length !== 0){
+                        if(settingFollowupMessage === "disable"){
+                            settingFollowupMessage = null;
+                        }else{
+                            settingFollowupMessageText = settingFollowupMessage;
+                        };
+
+                        // update the database
+                        this.client.emit('joinCustomMessageChange', msg.guild.id, settingFollowupMessage);
+
+                        changed = true;
+                    }
+
+                    if(!changed){
+                        if(guildSettings.settings.join_message && guildSettings.settings.join_message !== null){
+                            settingFollowupMessageText = guildSettings.settings.join_message;
+                        };
+                    }
+
+                    optionDisplayName = "Join Message";
+                    optionDescription = "Custom message after user used join command.";
+                    optionEmbedData = [
+                        {
+                            'name': "Message",
+                            'value': settingFollowupMessageText
+                        },
+                    ];
+                break;
+            };
+
+            if(setting === "reset" || setting === "twitter" || setting === "gate" || setting === "joinmsg"){
+                if(changed === true){
                     msgData = msg.guild.name+"'s setting for *"+optionDisplayName+"* has been changed.";
-                    embedData = {
-                        'embed': {
-                            'title': optionDisplayName,
-                            'description': optionDescription,
-                            'color': 16741688,
-                            'fields': optionEmbedData
-                        }
+                }else{
+                    msgData = msg.guild.name+"'s setting for *"+optionDisplayName+"*.";
+                };
+                embedData = {
+                    'embed': {
+                        'title': optionDisplayName,
+                        'description': optionDescription,
+                        'color': 16741688,
+                        'fields': optionEmbedData
                     }
                 }
-                console.log(query);
-            };
+            }
         }else{
             msgData = "You don't have the permission to use that command";
         };
