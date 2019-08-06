@@ -32,10 +32,9 @@ If you want to host the bot yourself just follow the instruction below. The down
   - `events` event info and details
   - `items` item data and it's market data
   - `botStats` bot statistic
-  - `logs` error log
 * [Create `.env` file](https://github.com/ln2r/jinsoyun/blob/dev/README.md#env-file)
 * Open Node.js command prompt and navigate to your bot directory.
-* Do `npm install` to get bot depencies.
+* Do `npm install` to get bot dependencies.
 * Do `node index.js` to run the bot.
 
 ## Bot Configurations
