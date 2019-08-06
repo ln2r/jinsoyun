@@ -29,7 +29,7 @@ module.exports = {
         })
         .catch((error) => {
           console.error('[core] [site-data] Error: '+error);
-          module.exports.sendBotReport({'name': 'SiteFetchError', 'message': 'Unable to get site data, site unreachable', 'path': 'main/', 'code': 10400, 'method': 'GET'}, 'itemUpdate-core', 'error');
+          module.exports.sendBotReport({'name': 'SiteFetchError', 'message': 'Unable to get site data, site unreachable', 'path': 'core.js (getSiteData)', 'code': 10400, 'method': 'GET'}, 'itemUpdate-core', 'error');
 
           return {'status': 'error', error};
         });
@@ -76,7 +76,7 @@ module.exports = {
 
     if (dataItems.status === 'error' || dataItems.status === 'error') {
       console.error('[core] [items-update] api data fetch error, please check the log');
-      module.exports.sendBotReport({'name': 'APIFetchError', 'message': 'Unable to get api data, site unreachable', 'path': 'main/', 'code': 10400, 'method': 'GET'}, 'itemUpdate-core', 'error');
+      module.exports.sendBotReport({'name': 'APIFetchError', 'message': 'Unable to get api data, site unreachable', 'path': 'core.js (getSiteData)', 'code': 10400, 'method': 'GET'}, 'itemUpdate-core', 'error');
 
       const end = Date.now();
       const updateTime = (end-start)/1000+'s';
@@ -408,8 +408,8 @@ module.exports = {
     eventWeeklyRewards = eventWeeklyRewards[0].rewards.weekly;
 
     // adding event daily challenges rewards to rewards list if it"s not empty
-    if (eventWeeklyRewards !== '') {
-      weeklies.rewards.push(eventWeeklyRewards + ' (Event)');
+    if (eventWeeklyRewards.length !== 0) {
+      dailies.rewards.push(eventDailyRewards + ' (Event)');
     };
 
     // console.debug("[core] [weekly] weeklies data: "+JSON.stringify(weeklies, null, "\t"))
