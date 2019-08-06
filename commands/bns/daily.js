@@ -44,31 +44,37 @@ module.exports = class DailyCommand extends Command {
         //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
 
         let dailyData = await getDailyData(dayQuery);
-        let embedData = {
-            "embed": {
-                "author":{
-                    "name": "Daily Challenges - "+dayQuery,
-                    "icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
-                },
-                "color": 15025535,
-                "footer": {
-                    "text": "Daily Challenges - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-                },
-                "fields":[
-                    {
-                       "name": "Completion Rewards",
-                       "value":  setArrayDataFormat(dailyData.rewards, "", true)
+        let embedData;
+        let msgData;
+        if(dailyData){
+            embedData = {
+                "embed": {
+                    "author":{
+                        "name": "Daily Challenges - "+dayQuery,
+                        "icon_url": "https://cdn.discordapp.com/emojis/464038094258307073.png?v=1"
                     },
-                    {
-                        "name": "Quests/Dungeons List (Location - Quest)",
-                        "value": setQuestViewFormat(dailyData.quests, "", true)							
-                    }
-                ]
+                    "color": 15025535,
+                    "footer": {
+                        "text": "Daily Challenges - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    },
+                    "fields":[
+                        {
+                        "name": "Completion Rewards",
+                        "value":  setArrayDataFormat(dailyData.rewards, "", true)
+                        },
+                        {
+                            "name": "Quests/Dungeons List (Location - Quest)",
+                            "value": setQuestViewFormat(dailyData.quests, "", true)							
+                        }
+                    ]
+                }
             }
-        }
+        }else{
+            msgData = "I can't find daily data under ***"+args+"***, please check your command and try again."
+        };
 
         msg.channel.stopTyping();
 
-        return msg.say(embedData);
+        return msg.say(msgData, embedData);
     }
 };
