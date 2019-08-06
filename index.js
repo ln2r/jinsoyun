@@ -102,7 +102,8 @@ clientDiscord
             member.guild.channels.find((ch) => ch.id === memberGate.channel_id).send(
               'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
 
-              'Before I give you access to the rest of the server, I need to know your character\'s name, To do that, please use following command with your information in it\n'+
+              'Before I give you access to the rest of the server I need to know your character\'s name, to do that please use the following command with your information in it\n\n'+
+            
               '`@Jinsoyun join character name`\n'+
               '**Example**:\n'+
               '`@Jinsoyun join jinsoyun `\n\n'+
