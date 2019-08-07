@@ -53,41 +53,56 @@ module.exports = class MarketCommand extends Command {
         //console.debug("[soyun] [market] ["+msg.guild.name+"] regx value: "+regx);
 
         let dbSearchQuery = {"name": regx};
-        let marketData = await mongoGetData("items", dbSearchQuery);
+        //console.debug("[soyun] [market] ["+msg.guild.name+"] dbSearchQuery value: "+JSON.stringify(dbSearchQuery))
+       
+        let marketData = [];
+        let marketError = false;
+        try{
+            marketData = await mongoGetData("items", dbSearchQuery);
+        }catch(err){
+            marketError = true;
+        };
+        //let marketData = await mongoGetData("items", dbSearchQuery);
 
         //console.debug("[soyun] [market] ["+msg.guild.name+"] total result: "+marketData.length);
 
-        if(marketData.length === 0){
-            itemData = "No Result found on **"+searchQuery+"**. Please check your search and try again.";
-        }else{
-            itemImage = marketData[0].img;
-            dataLastUpdate = marketData[0].updated;
-
-            if(marketData.length > 5){
-                msgData = "Found **"+marketData.length+"** matching items, please use exact search to get more accurate result";
-                maxItemLength = 5;
+        if(!marketError){
+            if(marketData.length === 0){
+                itemData = "No Result found on **"+searchQuery+"**.\nPlease check your search and try again.";
             }else{
-                maxItemLength = marketData.length;
-            }
+                itemImage = marketData[0].img;
+                dataLastUpdate = marketData[0].updated;
 
-            for(let i = 0; i < maxItemLength; i++){
-                let oldPrice = 0;
-                if(marketData[i].market[1].priceEach === null || marketData[i].market[1].priceEach === undefined){
-                    oldPrice = 0;
+                if(marketData.length > 5){
+                    msgData = "Found **"+marketData.length+"** matching items, please use exact search to get more accurate result";
+                    maxItemLength = 5;
                 }else{
-                    oldPrice = marketData[i].market[1].priceEach;
+                    maxItemLength = marketData.length;
                 }
 
-                let priceStatus = getPriceStatus(oldPrice, marketData[i].market[0].priceEach);
+                for(let i = 0; i < maxItemLength; i++){
+                    let oldPrice = 0;
+                    if(marketData[i].market[1].priceEach === null || marketData[i].market[1].priceEach === undefined){
+                        oldPrice = 0;
+                    }else{
+                        oldPrice = marketData[i].market[1].priceEach;
+                    }
 
-                itemData = itemData + (
-                    "**"+marketData[i].name+"** `"+marketData[i]._id+"`\n"+
-                    "- Each: "+setCurrencyFormat(marketData[i].market[0].priceEach)+" `"+priceStatus+"`\n"+
-                    "- Lowest: "+setCurrencyFormat(marketData[i].market[0].priceTotal)+" for "+marketData[i].market[0].quantity+"\n"
-                );
-            }            
-        }
-        
+                    let priceStatus = getPriceStatus(oldPrice, marketData[i].market[0].priceEach);
+
+                    itemData = itemData + (
+                        "**"+marketData[i].name+"** `"+marketData[i]._id+"`\n"+
+                        "- Each: "+setCurrencyFormat(marketData[i].market[0].priceEach)+" `"+priceStatus+"`\n"+
+                        "- Lowest: "+setCurrencyFormat(marketData[i].market[0].priceTotal)+" for "+marketData[i].market[0].quantity+"\n"
+                    );
+                }            
+            }
+            
+            
+        }else{
+            itemData = "Unable to get result on **"+searchQuery+"**.\nPlease try to be more specific with your search and try again.";
+        };
+
         embedData = {
             "embed": {
                 "author": {
