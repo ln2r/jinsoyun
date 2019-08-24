@@ -92,6 +92,10 @@ clientDiscord
     })
     .on('guildMemberAdd', async (member) => {
       let guildSettingData = await getGuildSettings(member.guild.id);
+      let guildCommandPrefix = guildSettingData.prefix;
+      if(guildCommandPrefix === undefined || guildCommandPrefix === null){
+        guildCommandPrefix = "!";
+      }
 
       if (guildSettingData) {
         let memberGate = guildSettingData.settings.member_gate;
@@ -104,9 +108,9 @@ clientDiscord
 
               'Before I give you access to the rest of the server I need to know your character\'s name, to do that please use the following command with your information in it\n\n'+
             
-              '`@Jinsoyun join character name`\n'+
+              '`'+guildCommandPrefix+'join character name`\n'+
               '**Example**:\n'+
-              '`@Jinsoyun join jinsoyun `\n\n'+
+              '`'+guildCommandPrefix+'join jinsoyun `\n\n'+
 
               'if you need any assistance you can mention or DM available admins, thank you ❤'
             );
