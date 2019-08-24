@@ -92,7 +92,7 @@ clientDiscord
     })
     .on('guildMemberAdd', async (member) => {
       let guildSettingData = await getGuildSettings(member.guild.id);
-      let guildCommandPrefix = guildSettingData.prefix;
+      let guildCommandPrefix = guildSettingData.settings.prefix;
       if(guildCommandPrefix === undefined || guildCommandPrefix === null){
         guildCommandPrefix = "!";
       }
