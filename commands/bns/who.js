@@ -25,8 +25,12 @@ module.exports = class WhoCommand extends Command {
             charaAPIAddress = charaAPIAddress[0].address;
 
         // getting character traits data api address         
-        let ncsoftPlayerTraitsAPIAdress = await mongoGetData("apis", {"name": "NCSOFT Player Traits Endpoint"});
-            ncsoftPlayerTraitsAPIAdress = ncsoftPlayerTraitsAPIAdress[0].address;        
+        let ncsoftPlayerTraitsAPIAddress = await mongoGetData("apis", {"name": "NCSOFT Player Traits Endpoint"});
+            ncsoftPlayerTraitsAPIAddress = ncsoftPlayerTraitsAPIAddress[0].address;
+            
+        // getting character skills data api address
+        let ncsoftPlayerSkillsAPIAddress = await mongoGetData("apis", {"name": "NCSOFT Player Skills Endpoint"});
+            ncsoftPlayerSkillsAPIAddress = ncsoftPlayerSkillsAPIAddress[0].address;
 
         // getting bnstree site address
         let bnsTreeCharacterProfileAddress = await mongoGetData("apis", {"name": "BNS Tree Character Profile"});
@@ -50,10 +54,14 @@ module.exports = class WhoCommand extends Command {
         let bnstreeProfile = bnsTreeCharacterProfileAddress+charaQuery;		
 			bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 
-        // getting the character equipments from silveress api
+        // getting character equipments from silveress api
         let charaData = await getSiteData(charaAPIAddress+charaQuery);
-        let traitsData = await getSiteData(ncsoftPlayerTraitsAPIAdress.replace("CHARACTER_NAME",charaQuery));
+        // getting character selected traits from f2 page
+        let traitsData = await getSiteData(ncsoftPlayerTraitsAPIAddress.replace("CHARACTER_NAME",charaQuery));
             traitsData = traitsData.records;
+        // getting character skills points distributions
+        let skillsData = await getSiteData(ncsoftPlayerSkillsAPIAddress.replace("CHARACTER_NAME",charaQuery));
+            skillsData = skillsData.records;
 
         // checking if the data fetch return data or error
         if(charaData.status === "error"){
@@ -71,7 +79,7 @@ module.exports = class WhoCommand extends Command {
                     "description": "Unable to get character data.\nSite might be unreachable or unavailable.",  
                 }
             };
-        }else if(charaData.error || !traitsData){
+        }else if(charaData.error || !traitsData || !skillsData){
             let defaultImage = await mongoGetData("configs", {"_id": 0});
                 defaultImage = defaultImage[0].DEFAULT_MARKET_THUMBNAIL;
 
@@ -93,13 +101,28 @@ module.exports = class WhoCommand extends Command {
             // getting the traits data
             let traitsDataView = [];
             if(traitsData.length === 0){
-                traitsDataView = ["**No data available**"];
+                traitsDataView = ["*No data available*"];
             }else{
                 for(let i = 0; i < traitsData.length; i++){
                     for(let j = 0; j < traitsData[i].traits.length; j++){
                         //console.debug("[soyun] [who] ["+msg.guild.name+"] "+traitsData[i].traits[j].name+" is: "+traitsData[i].traits[j].selected)
                         if(traitsData[i].traits[j].selected === true){
                             traitsDataView.push(traitsData[i].traits[j].name);
+                        }
+                    }
+                }
+            }
+
+            // getting the skills data
+            let SPData = [];
+            if(skillsData.length === 0){
+                SPData = ["*No data available*"];
+            }else{
+                for(let i = 0; i < skillsData.length; i++){
+                    for(let j = 0; j < skillsData[i].skills.length; j++){
+                        if(skillsData[i].skills[j].buildup_max_level === 5){
+                            //console.debug("[soyun] [who] ["+msg.guild.name+"] "+skillsData[i].skills[j].name+" is: "+skillsData[i].skills[j].buildup_level+"/"+skillsData[i].skills[j].buildup_max_level);
+                            SPData.push(skillsData[i].skills[j].name+" ("+skillsData[i].skills[j].buildup_level+"/"+skillsData[i].skills[j].buildup_max_level+")");
                         }
                     }
                 }
@@ -127,7 +150,7 @@ module.exports = class WhoCommand extends Command {
 
             //console.debug("[soyun] [who] ["+msg.guild.name+"] charaAPIAddress: "+charaAPIAddress);
             //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData address: "+charaAPIAddress+charaQuery);
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] player traits data address: "+ncsoftPlayerTraitsAPIAdress.replace("CHARACTER_NAME",charaQuery));
+            //console.debug("[soyun] [who] ["+msg.guild.name+"] player traits data address: "+ncsoftPlayerTraitsAPIAddress.replace("CHARACTER_NAME",charaQuery));
             //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsData value: "+traitsData)
             //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsDataView value: "+traitsDataView) 
             //console.debug("[soyun] [who] ["+msg.guild.name+"] gems data: "+gemData)  
@@ -172,17 +195,22 @@ module.exports = class WhoCommand extends Command {
                             "name": "Soulshield",
                             "value": setArrayDataFormat(soulshieldData, "- ", true)
                                     +"\n\u200B"
-                        }, 
+                        },
                         {
                             "name": "Accesories",
                             "value": setArrayDataFormat(gearData, "- ", true)
                                     +"\n\u200B"
-                        },                      
+                        },   
                         {
+                            "inline": true,
+                            "name": "Points Allocation",
+                            "value": setArrayDataFormat(SPData, "- ", true)
+                        },                    
+                        {
+                            "inline": true,
                             "name": "Selected Talents",
                             "value": setArrayDataFormat(traitsDataView, "- ", true)
-                        }
-                        
+                        },                        
                     ],
                     "color": 1879160,
                     "footer":{ 
