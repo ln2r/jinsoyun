@@ -1,6 +1,6 @@
 {
   "name": "jinsoyun",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Grumpy Butts very own discord bot",
   "main": "soyun.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git://github.com/ln2r/jinsoyun.git"
   },
   "keywords": [
-    "heroku",
+    "discord bot",
     "discord.js",
     "grumpy butts",
     "blade and soul"
@@ -26,7 +26,7 @@
     "discord.js-commando": "^0.10.0",
     "dotenv": "^6.2.0",
     "express": "^4.17.1",
-    "mongodb": "^3.2.6",
+    "mongodb": "^3.3.1",
     "node-fetch": "^2.6.0",
     "npm": "^6.10.2",
     "ontime": "0.0.4",
