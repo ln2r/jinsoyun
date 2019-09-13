@@ -57,7 +57,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
 
                 // console.debug("message found: "+reactionMessageData);
         
-                if(reactionMessageData === true) {
+                if(reactionMessageData) {
                     // getting content
                     let reactionMessageContent = reactionMessageData.content;
 
