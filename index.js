@@ -262,7 +262,7 @@ clientDiscord
     });
 
 clientDiscord.setProvider(
-    MongoClient.connect(process.env.bot_mongodb_url, {useNewUrlParser: true}).then((client) => new MongoDBProvider(client, process.env.bot_mongodb_db_name))
+    MongoClient.connect(process.env.bot_mongodb_url, {useNewUrlParser: true, useUnifiedTopology: true}).then((client) => new MongoDBProvider(client, process.env.bot_mongodb_db_name))
 ).catch((error) => {
   console.error;
   sendBotReport(error, 'mongoDBProvider-soyun', 'error');

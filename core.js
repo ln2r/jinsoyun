@@ -51,7 +51,7 @@ module.exports = {
   mongoGetData: function mongoGetData(collname, filter) {
     // console.debug("[core] [mongo-fetch] collname: "+collname+", filter: "+JSON.stringify(filter));
 
-    return MongoClient.connect(url, {useNewUrlParser: true})
+    return MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
         .then(function(db) {
           const dbo = db.db(dbName);
           const collection = dbo.collection(collname);
@@ -83,7 +83,7 @@ module.exports = {
       console.log('[core] [items-update] Update data failed, time: '+updateTime);
     } else {
       const itemsCollectionName = 'items';
-      MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+      MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
         if (err) throw err;
         const dbo = db.db(dbName);
 
@@ -318,41 +318,13 @@ module.exports = {
   },
 
   /**
-     * setQuestViewFormat
-     * Used to set the quest data format (same like arrayDataFormat but with extra data)
-     * @param {Object|Array} data the quest data
-     * @param {String} symbol separator symbol
-     * @param {Boolean} newline add new line or not
-     * @return formatted string data
-     */
-  setQuestViewFormat: function setQuestView(data, symbol, newline) {
-    let formattedData = '';
-
-    if (newline === true) {
-      newline = '\n';
-    } else {
-      newline = '';
-    }
-
-    for (let i = 0; i < data.length; i++) {
-      // checking if the data in that index is empty or not
-      if (data[i] === '' || data[i] === null) {
-        formattedData = formattedData;
-      } else {
-        formattedData = formattedData + (newline + symbol + '**'+data[i].quest+'** - ' + data[i].location);
-      }
-    }
-
-    return formattedData;
-  },
-  /**
      * getDailyData
      * Used to get specified daily data
      * @param {String} day dddd formatted day value
      * @return object, daily data (reward, quests list)
      */
   getDailyData: async function getDaily(day) {
-    let dailyData = await module.exports.mongoGetData('challenges', {});
+    let dailyData = await module.exports.mongoGetData('_challanges', {});
         dailyData = dailyData[0];
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
@@ -595,7 +567,7 @@ module.exports = {
       'message': logData,
     };
 
-    MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
       const dbo = db.db(dbName);
 
@@ -630,7 +602,7 @@ module.exports = {
       todayStats = statsData[0].count + 1;
     }
 
-    MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
       const dbo = db.db(dbName);
 
@@ -683,7 +655,6 @@ module.exports = {
    * @param {Snowflake} guildId current guild id
    * @return {Object | null} guild setting data
    */
-  // TODO: test
   getGuildSettings: async function getSettings(guildId){
     let guildData = await module.exports.mongoGetData('guilds', {guild: guildId});
     
@@ -692,7 +663,7 @@ module.exports = {
     }else{
       return undefined;
     }
-  }
+  },
 };
 
 // Exported function end here
