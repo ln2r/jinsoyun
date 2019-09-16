@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getDayValue, getEventData, setArrayDataFormat, setQuestViewFormat } = require("../../core");
+const { getDayValue, getEventData, setArrayDataFormat, mongoGetData, getQuestsList } = require("../../core");
 
 module.exports = class BnsEventCommand extends Command {
     constructor(client) {
@@ -43,7 +43,18 @@ module.exports = class BnsEventCommand extends Command {
         //console.debug("[soyun] [event] ["+msg.guild.name+"] dayQuery value: "+dayQuery);
 
         let eventData = await getEventData(dayQuery);
+        let dungeonsData = await mongoGetData("_dungeons", {});
 
+        // getting dungeons list
+        let dungeonsList = [];
+        for(let i=0; i<eventData.quests.length; i++){
+            dungeonsList.push(eventData.quests[i].dungeon);
+        };
+
+        console.log(dungeonsList);
+        let questsData = getQuestsList(dungeonsList, dungeonsData);
+
+        console.log(questsData);
         let embedData = {
             "embed": {
                 "author":{
@@ -65,7 +76,7 @@ module.exports = class BnsEventCommand extends Command {
                 "fields":[
                     {
                         "name": "Quests List",
-                        "value":  setQuestViewFormat(eventData.quests, "", true) 								
+                        "value":  setArrayDataFormat(questsData, "", true)							
                     }
                 ]
             }

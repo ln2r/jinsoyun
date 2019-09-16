@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getWeeklyData, setArrayDataFormat, setQuestViewFormat } = require("../../core");
+const { getWeeklyData, setArrayDataFormat, mongoGetData, getQuestsList } = require("../../core");
 
 module.exports = class WeeklyCommand extends Command {
     constructor(client) {
@@ -19,6 +19,9 @@ module.exports = class WeeklyCommand extends Command {
         msg.channel.startTyping();
 
         let weeklyData = await getWeeklyData();
+        let dungeonsData = await mongoGetData("_dungeons", {});
+
+        let questsData = getQuestsList(weeklyData.quests, dungeonsData);
 
         let embedData = {
             "embed": {
@@ -37,7 +40,7 @@ module.exports = class WeeklyCommand extends Command {
                     },
                     {
                         "name": "Quests/Dungeons List (Location - Quest)",
-                        "value": setQuestViewFormat(weeklyData.quests, "", true)							
+                        "value": setArrayDataFormat(questsData, "", true)							
                     }
                 ]
             }

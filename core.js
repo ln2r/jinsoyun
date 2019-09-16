@@ -373,11 +373,11 @@ module.exports = {
      * @return object, weekly data (quests list, rewards)
      */
   getWeeklyData: async function getWeekly() {
-    let weeklies = await module.exports.mongoGetData('challenges', {});
-    weeklies = weeklies[0].weekly;
+    let weeklies = await module.exports.mongoGetData('_challanges', {});
+        weeklies = weeklies[0].weekly;
 
     let eventWeeklyRewards = await module.exports.mongoGetData('events', {});
-    eventWeeklyRewards = eventWeeklyRewards[0].rewards.weekly;
+        eventWeeklyRewards = eventWeeklyRewards[0].rewards.weekly;
 
     // adding event daily challenges rewards to rewards list if it"s not empty
     if (eventWeeklyRewards.length !== 0) {
@@ -664,6 +664,29 @@ module.exports = {
       return undefined;
     }
   },
+
+  /**
+   * getQuestsList
+   * getting quests list data
+   * @param {Array} dungeonList array of dungeon's id
+   * @param {Array} dungeonData array of dungeons data
+   * @return {Array} formatted quests list
+   */
+  getQuestsList: function getQuests(dungeonList, dungeonsData){
+    let questsData = [];
+
+    for(let i=0; i<dungeonList.length; i++){
+      for(let j=0; j<dungeonsData.length; j++){
+          if(dungeonList[i] == dungeonsData[j].id){
+              let dungeonDataQuestName = (dungeonsData[j].quest === "")? "*No Quest Name Provided*" : dungeonsData[j].quest;
+
+              questsData.push("**"+dungeonDataQuestName+"** - "+dungeonsData[j].name);
+          }
+      }
+    }
+
+    return questsData;
+  }
 };
 
 // Exported function end here

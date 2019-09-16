@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getDayValue, getDailyData, setArrayDataFormat, setQuestViewFormat } = require("../../core");
+const { mongoGetData, getDayValue, getDailyData, setArrayDataFormat, getQuestsList } = require("../../core");
 
 module.exports = class DailyCommand extends Command {
     constructor(client) {
@@ -44,9 +44,14 @@ module.exports = class DailyCommand extends Command {
         //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
 
         let dailyData = await getDailyData(dayQuery);
+        let dungeonsData = await mongoGetData("_dungeons", {});
         let embedData;
-        let msgData;
+        let msgData = "";
+
         if(dailyData){
+            // getting the dungeon and quest name
+            let questsData = getQuestsList(dailyData.quests, dungeonsData);
+
             embedData = {
                 "embed": {
                     "author":{
@@ -64,7 +69,7 @@ module.exports = class DailyCommand extends Command {
                         },
                         {
                             "name": "Quests/Dungeons List (Location - Quest)",
-                            "value": setQuestViewFormat(dailyData.quests, "", true)							
+                            "value": setArrayDataFormat(questsData, "", true)							
                         }
                     ]
                 }
