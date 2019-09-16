@@ -43,47 +43,42 @@ module.exports = class BnsEventCommand extends Command {
         //console.debug("[soyun] [event] ["+msg.guild.name+"] dayQuery value: "+dayQuery);
 
         let eventData = await getEventData(dayQuery);
-        let dungeonsData = await mongoGetData("_dungeons", {});
+        let embedData;
+        let msgData = "";
 
-        // getting dungeons list
-        let dungeonsList = [];
-        for(let i=0; i<eventData.quests.length; i++){
-            dungeonsList.push(eventData.quests[i].dungeon);
-        };
-
-        console.log(dungeonsList);
-        let questsData = getQuestsList(dungeonsList, dungeonsData);
-
-        console.log(questsData);
-        let embedData = {
-            "embed": {
-                "author":{
-                    "name": "Current Event - "+dayQuery,
-                    "icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
-                },
-                "title": eventData.name,
-                "url": eventData.url,
-                "description": "**Duration**: "+eventData.duration+"\n"+
-                                "**Redemption Period**: "+eventData.redeem+"\n"+
-                                "**Event Item**: "+setArrayDataFormat(eventData.rewards.items, "- ", true)+"\n"+
-                                "**What to do**: "+setArrayDataFormat(eventData.todo, "- ", true)+"\n"+
-                                "**Redeemable Event**: "+eventData.lastEvent+" ("+eventData.lastEventRedeem+")",
-                "color": 1879160,
-                "footer": {
-                    "icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-                    "text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-                },
-                "fields":[
-                    {
-                        "name": "Quests List",
-                        "value":  setArrayDataFormat(questsData, "", true)							
-                    }
-                ]
+        if(eventData){
+            embedData = {
+                "embed": {
+                    "author":{
+                        "name": "Current Event - "+dayQuery,
+                        "icon_url": "https://cdn.discordapp.com/emojis/479872059376271360.png?v=1"
+                    },
+                    "title": eventData.name,
+                    "url": eventData.url,
+                    "description": "**Duration**: "+eventData.duration+"\n"+
+                                    "**Redemption Period**: "+eventData.redeem+"\n"+
+                                    "**Event Item**: "+setArrayDataFormat(eventData.rewards.items, "- ", true)+"\n"+
+                                    "**What to do**: "+setArrayDataFormat(eventData.todo, "- ", true)+"\n"+
+                                    "**Redeemable Event**: "+eventData.lastEvent+" ("+eventData.lastEventRedeem+")",
+                    "color": 1879160,
+                    "footer": {
+                        "icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
+                        "text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    },
+                    "fields":[
+                        {
+                            "name": "Quests List",
+                            "value":  setArrayDataFormat(eventData.quests, "", true)							
+                        }
+                    ]
+                }
             }
-        }
+        }else{
+            msgData = "I can't find daily data under ***"+args+"***, please check your command and try again."
+        };
 
         msg.channel.stopTyping();
 
-        return msg.say(embedData);
+        return msg.say(msgData, embedData);
     }
 };

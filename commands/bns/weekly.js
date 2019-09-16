@@ -19,9 +19,6 @@ module.exports = class WeeklyCommand extends Command {
         msg.channel.startTyping();
 
         let weeklyData = await getWeeklyData();
-        let dungeonsData = await mongoGetData("_dungeons", {});
-
-        let questsData = getQuestsList(weeklyData.quests, dungeonsData);
 
         let embedData = {
             "embed": {
@@ -40,7 +37,7 @@ module.exports = class WeeklyCommand extends Command {
                     },
                     {
                         "name": "Quests/Dungeons List (Location - Quest)",
-                        "value": setArrayDataFormat(questsData, "", true)							
+                        "value": setArrayDataFormat(weeklyData.quests, "", true)					
                     }
                 ]
             }

@@ -324,47 +324,52 @@ module.exports = {
      * @return object, daily data (reward, quests list)
      */
   getDailyData: async function getDaily(day) {
-    let dailyData = await module.exports.mongoGetData('_challanges', {});
-        dailyData = dailyData[0];
+    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
+    let challengesData = await module.exports.mongoGetData('_challanges', {});
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
         eventDailyRewards = eventDailyRewards[0].rewards.daily;
 
-    let dailies;
-
     // console.debug("[core] [daily] queried day: "+day);
     // console.debug("[core] [daily] event rewards: "+eventDailyRewards);
 
+    let dailiesData;
+
     switch (day) {
       case 'Monday':
-        dailies = dailyData.monday;
+        dailiesData = challengesData[0].monday;
         break;
       case 'Tuesday':
-        dailies = dailyData.tuesday;
+        dailiesData = challengesData[0].tuesday;
         break;
       case 'Wednesday':
-        dailies = dailyData.wednesday;
+        dailiesData = challengesData[0].wednesday;
         break;
       case 'Thursday':
-        dailies = dailyData.thursday;
+        dailiesData = challengesData[0].thursday;
         break;
       case 'Friday':
-        dailies = dailyData.friday;
+        dailiesData = challengesData[0].friday;
         break;
       case 'Saturday':
-        dailies = dailyData.saturday;
+        dailiesData = challengesData[0].saturday;
         break;
       case 'Sunday':
-        dailies = dailyData.sunday;
+        dailiesData = challengesData[0].sunday;
         break;
     }
 
-    // adding event daily challenges rewards to rewards list if it"s not empty
-    if (eventDailyRewards.length !== 0) {
-      dailies.rewards.push(eventDailyRewards + ' (Event)');
+    // adding event rewards
+    let eventRewards = await module.exports.mongoGetData('events', {});
+        eventRewards = eventRewards[0].rewards.weekly;
+    if (eventRewards.length !== 0) {
+      dailiesData.rewards.push(eventDailyRewards + ' (Event)');
     };
 
-    return dailies;
+    // getting the quests list
+    dailiesData.quests = module.exports.getQuestsList(dailiesData.quests, dungeonsData);
+
+    return dailiesData;
   },
 
   /**
@@ -373,20 +378,27 @@ module.exports = {
      * @return object, weekly data (quests list, rewards)
      */
   getWeeklyData: async function getWeekly() {
-    let weeklies = await module.exports.mongoGetData('_challanges', {});
-        weeklies = weeklies[0].weekly;
+    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
+    let challengesData = await module.exports.mongoGetData('_challanges', {});
 
-    let eventWeeklyRewards = await module.exports.mongoGetData('events', {});
-        eventWeeklyRewards = eventWeeklyRewards[0].rewards.weekly;
+    // adding rewards
+    let rewards = challengesData[0].weekly.rewards;
+    // adding the quests list
+    let quests = module.exports.getQuestsList(challengesData[0].weekly.quests, dungeonsData);
 
-    // adding event daily challenges rewards to rewards list if it"s not empty
-    if (eventWeeklyRewards.length !== 0) {
-      dailies.rewards.push(eventDailyRewards + ' (Event)');
+    // adding event rewards
+    let eventRewards = await module.exports.mongoGetData('events', {});
+        eventRewards = eventRewards[0].rewards.weekly;
+    if (eventRewards.length !== 0) {
+      rewards.push(eventDailyRewards + ' (Event)');
     };
 
     // console.debug("[core] [weekly] weeklies data: "+JSON.stringify(weeklies, null, "\t"))
 
-    return weeklies;
+    return {
+      rewards: rewards,
+      quests: quests
+    };
   },
 
   /**
@@ -398,6 +410,9 @@ module.exports = {
   getEventData: async function getEvent(day) {
     let eventData = await module.exports.mongoGetData('events', {});
     eventData = eventData[0];
+
+    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
+
     const questList = [];
 
     for (let i = 0; i < eventData.quests.length; i++) {
@@ -410,7 +425,10 @@ module.exports = {
 
     // console.debug("[core] [event] questsList value: "+JSON.stringify(questList, null, "\t"));
 
-    eventData.quests = questList;
+    for(let i=0; i<questList.length; i++){
+      questList[i] = questList[i].dungeon;
+    }
+    eventData.quests = module.exports.getQuestsList(questList, dungeonsData);;
 
     return eventData;
   },
@@ -432,12 +450,12 @@ module.exports = {
         'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
                 '**Duration**: '+eventData.duration+'\n'+
                 '**Redemption Period**: '+eventData.redeem+'\n'+
-                '**Quests**'+module.exports.setQuestViewFormat(eventData.quests, '- ', true)+'\n\u200B',
+                '**Quests**'+module.exports.setArrayDataFormat(eventData.quests, '- ', true)+'\n\u200B',
       },
       {
         'name': 'Daily Challenges',
         'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
-                '**Quests**'+module.exports.setQuestViewFormat(dailiesData.quests, '- ', true)+'\n\u200B',
+                '**Quests**'+module.exports.setArrayDataFormat(dailiesData.quests, '- ', true)+'\n\u200B',
       },
     ];
 
@@ -446,7 +464,7 @@ module.exports = {
           {
             'name': 'Weekly Challenges',
             'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
-                     '**Quests**'+module.exports.setQuestViewFormat(weekliesData.quests, '- ', true)+'\n\u200B',
+                     '**Quests**'+module.exports.setArrayDataFormat(weekliesData.quests, '- ', true)+'\n\u200B',
           }
       );
     }

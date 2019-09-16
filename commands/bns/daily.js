@@ -44,14 +44,10 @@ module.exports = class DailyCommand extends Command {
         //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
 
         let dailyData = await getDailyData(dayQuery);
-        let dungeonsData = await mongoGetData("_dungeons", {});
         let embedData;
         let msgData = "";
 
         if(dailyData){
-            // getting the dungeon and quest name
-            let questsData = getQuestsList(dailyData.quests, dungeonsData);
-
             embedData = {
                 "embed": {
                     "author":{
@@ -69,7 +65,7 @@ module.exports = class DailyCommand extends Command {
                         },
                         {
                             "name": "Quests/Dungeons List (Location - Quest)",
-                            "value": setArrayDataFormat(questsData, "", true)							
+                            "value": setArrayDataFormat(dailyData.quests, "", true)							
                         }
                     ]
                 }
