@@ -53,8 +53,6 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                 // console.debug("messageId value: "+messageId);    
                 reactionMessageData = await msg.channel.fetchMessage(messageId).catch(err => (reactionMessageData = false));
 
-                console.log(reactionMessageData);
-
                 // console.debug("message found: "+reactionMessageData);
         
                 if(reactionMessageData) {
