@@ -324,8 +324,8 @@ module.exports = {
      * @return object, daily data (reward, quests list)
      */
   getDailyData: async function getDaily(day) {
-    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
-    let challengesData = await module.exports.mongoGetData('_challanges', {});
+    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
+    let challengesData = await module.exports.mongoGetData('challenges', {});
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
         eventDailyRewards = eventDailyRewards[0].rewards.daily;
@@ -378,8 +378,8 @@ module.exports = {
      * @return object, weekly data (quests list, rewards)
      */
   getWeeklyData: async function getWeekly() {
-    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
-    let challengesData = await module.exports.mongoGetData('_challanges', {});
+    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
+    let challengesData = await module.exports.mongoGetData('challenges', {});
 
     // adding rewards
     let rewards = challengesData[0].weekly.rewards;
@@ -411,7 +411,7 @@ module.exports = {
     let eventData = await module.exports.mongoGetData('events', {});
     eventData = eventData[0];
 
-    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
+    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
 
     const questList = [];
 

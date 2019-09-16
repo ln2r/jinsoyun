@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getDayValue, getEventData, setArrayDataFormat, mongoGetData, getQuestsList } = require("../../core");
+const { getDayValue, getEventData, setArrayDataFormat } = require("../../core");
 
 module.exports = class BnsEventCommand extends Command {
     constructor(client) {

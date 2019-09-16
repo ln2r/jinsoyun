@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData, getDayValue, getDailyData, setArrayDataFormat, getQuestsList } = require("../../core");
+const { getDayValue, getDailyData, setArrayDataFormat } = require("../../core");
 
 module.exports = class DailyCommand extends Command {
     constructor(client) {
