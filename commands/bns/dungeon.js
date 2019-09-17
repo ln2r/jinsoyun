@@ -28,66 +28,49 @@ module.exports = class DungeonCommand extends Command {
 
         let regx = new RegExp("("+dungeon+"+)", "ig"); // doing rough search
         let dbSearchQuery = {"name": regx};
-        let dungeonData = await mongoGetData("dungeons", dbSearchQuery);
-            dungeonData = dungeonData[0];
+        let dungeonsData = await mongoGetData("dungeons", dbSearchQuery);
+            dungeonsData = dungeonsData[0];
+        
+        let embedData;
+        let msgData = "";
+        
+        if(dungeonsData){
+            let apInfo = "*Unspecified*";
+            let apEasy = (dungeonsData.attackPower.easy === 0)? "" : "Easy: "+dungeonsData.attackPower.easy+"+ ";
+            let apNormal = (dungeonsData.attackPower.normal === 0)? "" : "Normal: "+dungeonsData.attackPower.normal+"+ ";
+            let apHard = (dungeonsData.attackPower.hard === 0)? "" : "Hard: "+dungeonsData.attackPower.hard+"+ ";
 
-        if(dungeonData === null){
-            msg.channel.stopTyping();
-            return msg.say("I can't find the dungeon you are looking for, please check and try again (dungeon name need to be it's full name)");
-        }else{
-            let dungeonType;    
+            if(apEasy !== "" && apNormal !== "" && apHard !== ""){
+                apInfo = apEasy+apNormal+apHard;
+            }
 
-            switch(dungeonData.type){
-                case 12:
-                    dungeonType = "12 Players";
-                break;
+            let instanceType;
+            switch(dungeonsData.type){
                 case 6:
-                    dungeonType = "6 Players";
+                    instanceType = "6 Players";
+                break;
+                case 12:
+                    instanceType = "12 Players";
                 break;
                 case 1:
-                    dungeonType = "Solo Instance";
+                    instanceType = "Solo Instance";
+                break;
+                default:
+                    instanceType = "Unspecified";
                 break;
             }
-            // empty rewards data handler
-            let rewardsCommon = "";
-            let rewardsNormal = "";
-            let rewardsHard = "";
 
-            // handling the guide data
-            function getGuideData(data){
-                if(data === "" || data === null || data === undefined){
-                    return "-";
+            let guidesData = [];
+            if(dungeonsData.guides.length !== 0){
+                for(let i=0;i<dungeonsData.guides.length;i++){
+                    guidesData.push("["+dungeonsData.guides[i].author+"]("+dungeonsData.guides[i].url+")")
                 }
-
-                let guideData = [];
-                for(let i = 0; i < data.length; i++){
-                    guideData.push("["+data[i].author+"]("+data[i].url+")");
-                }
-
-                return guideData.join(", ");
-            }
-            //console.debug("[soyun] [dungeon] ["+msg.guild.name+"] query: "+dungeon);
-            //console.debug("[soyun] [dungeon] ["+msg.guild.name+"] common first data: "+dungeonData.rewards.common[0]);
-            //console.debug("[soyun] [dungeon] ["+msg.guild.name+"] normal first data: "+dungeonData.rewards.normal[0]);
-            //console.debug("[soyun] [dungeon] ["+msg.guild.name+"] hard first data: "+dungeonData.rewards.hard[0]);
-
-            if(dungeonData.rewards.common[0] !==""){
-                rewardsCommon = "\n**Common**"+setArrayDataFormat(dungeonData.rewards.common, "- ", true)+"\n\u200B";   
             }
 
-            if(dungeonData.rewards.normal[0] !==""){
-                rewardsNormal = "\n**Normal**"+setArrayDataFormat(dungeonData.rewards.normal, "- ", true)+"\n\u200B";   
-                                
-            }
-            
-            if(dungeonData.rewards.hard[0] !==""){
-                rewardsHard = "\n**Hard**"+setArrayDataFormat(dungeonData.rewards.hard, "- ", true)+"\n\u200B";         
-            }
-
-            let embedData = {
+            embedData = {
                 "embed": {
                     "author": {
-                        "name": "Dungeon Info - "+dungeon.replace(/(^|\s)\S/g, l => l.toUpperCase())+" ("+dungeonType+")",
+                        "name": "Dungeon Info - "+dungeon.replace(/(^|\s)\S/g, l => l.toUpperCase())+" ("+instanceType+")",
                         "icon_url": "https://cdn.discordapp.com/emojis/463569668045537290.png?v=1"
                     },
                     "color": 10040319,
@@ -96,27 +79,35 @@ module.exports = class DungeonCommand extends Command {
                     },
                     "fields":[
                         {
-                            "name": "Recommended Attack Power",
-                            "value": "Normal: "+dungeonData.attackPower.normal+"+  Hard: "+dungeonData.attackPower.hard+"+"
-                        },
-                        {
                             "name": "Entry Requirements",
-                            "value": setArrayDataFormat(dungeonData.requirements, "- ", true)
+                            "value": setArrayDataFormat(dungeonsData.requirements, "- ", true)
                         },
                         {
-                            "name": "Guide",
-                            "value": getGuideData(dungeonData.guides)
+                            "name": "Recommended Attack Power",
+                            "value": apInfo
+                        },
+                        {
+                            "name": "Recommended Weapon",
+                            "value": dungeonsData.weapon
+                        },                    
+                        {
+                            "name": "Guides",
+                            "value": setArrayDataFormat(guidesData, "- ", true)
                         },
                         {
                             "name": "Rewards",
-                            "value": rewardsCommon + rewardsNormal + rewardsHard
+                            "value": setArrayDataFormat(dungeonsData.rewards, "- ", true)
                         },
                     ]
                 }
             }
+
             msg.channel.stopTyping();
-        
-            return msg.say(embedData);
-        }        
+        }else{
+            msgData = "I can't find dungeon data under ***"+dungeon+"***, please check your command and try again.";
+            msg.channel.stopTyping();
+        }
+            
+        return msg.say(msgData, embedData);       
     }
 };
