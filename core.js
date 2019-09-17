@@ -175,7 +175,7 @@ module.exports = {
      * @return formatted list-like data
      */
   setArrayDataFormat: function formatArray(data, symbol, newline) {
-    if (data === null || data === undefined || data === '') {
+    if (data.length === 0) {
       return '\n- *No data available*';
     }
 
