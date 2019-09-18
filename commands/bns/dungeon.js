@@ -67,6 +67,8 @@ module.exports = class DungeonCommand extends Command {
                 }
             }
 
+            let weaponSuggestion = (dungeonsData.weapon === "")? "*Unspecified Weapon*": dungeonsData.weapon;
+
             embedData = {
                 "embed": {
                     "author": {
@@ -88,7 +90,7 @@ module.exports = class DungeonCommand extends Command {
                         },
                         {
                             "name": "Recommended Weapon",
-                            "value": dungeonsData.weapon
+                            "value": weaponSuggestion
                         },                    
                         {
                             "name": "Guides",
