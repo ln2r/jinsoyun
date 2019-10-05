@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getDayValue, getDailyData, setArrayDataFormat } = require("../../core");
+const { getDayValue, getDailyData, setArrayDataFormat, setRewardsDataFormat } = require("../../core");
 
 module.exports = class DailyCommand extends Command {
     constructor(client) {
@@ -25,7 +25,6 @@ module.exports = class DailyCommand extends Command {
         //console.debug("[soyun] [daily] ["+msg.guild.name+"] current day: "+getDayValue(Date.now(), "now"));
         //console.debug("[soyun] [daily] ["+msg.guild.name+"] tomorrow is: "+getDayValue(Date.now(), "tomorrow"));
         //console.debug("[soyun] [daily] ["+msg.guild.name+"] user query is: "+args);
-
         
         if(args === ""){
             dayQuery = getDayValue(Date.now(), "now");
@@ -44,9 +43,11 @@ module.exports = class DailyCommand extends Command {
         //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
 
         let dailyData = await getDailyData(dayQuery);
+        let rewardsList = setRewardsDataFormat(dailyData.rewards);
         let embedData;
         let msgData = "";
 
+        
         if(dailyData){
             embedData = {
                 "embed": {
@@ -61,7 +62,7 @@ module.exports = class DailyCommand extends Command {
                     "fields":[
                         {
                         "name": "Completion Rewards",
-                        "value":  setArrayDataFormat(dailyData.rewards, "", true)
+                        "value":  setArrayDataFormat(rewardsList, "", true)
                         },
                         {
                             "name": "Quests/Dungeons List (Location - Quest)",

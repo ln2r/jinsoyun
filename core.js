@@ -359,15 +359,9 @@ module.exports = {
         break;
     }
 
-    // adding event rewards
-    let eventRewards = await module.exports.mongoGetData('events', {});
-        eventRewards = eventRewards[0].rewards.weekly;
-    if (eventRewards.length !== 0) {
-      dailiesData.rewards.push(eventDailyRewards + ' (Event)');
-    };
-
     // getting the quests list
     dailiesData.quests = module.exports.getQuestsList(dailiesData.quests, dungeonsData);
+    dailiesData.rewards = await module.exports.getRewardsList(day);
 
     return dailiesData;
   },
@@ -382,16 +376,9 @@ module.exports = {
     let challengesData = await module.exports.mongoGetData('challenges', {});
 
     // adding rewards
-    let rewards = challengesData[0].weekly.rewards;
+    let rewards = await module.exports.getRewardsList("Weekly");
     // adding the quests list
     let quests = module.exports.getQuestsList(challengesData[0].weekly.quests, dungeonsData);
-
-    // adding event rewards
-    let eventRewards = await module.exports.mongoGetData('events', {});
-        eventRewards = eventRewards[0].rewards.weekly;
-    if (eventRewards.length !== 0) {
-      rewards.push(eventDailyRewards + ' (Event)');
-    };
 
     // console.debug("[core] [weekly] weeklies data: "+JSON.stringify(weeklies, null, "\t"))
 
@@ -438,13 +425,13 @@ module.exports = {
      * @param {Guild} clientGuildData discord bot client guild/server connected data
      */
   sendResetNotification: async function sendReset(clientGuildData) {
-    const todayDay = module.exports.getDayValue(Date.now(), 'now');
+    let todayDay = module.exports.getDayValue(Date.now(), 'now');
 
-    const dailiesData = await module.exports.getDailyData(todayDay);
-    const eventData = await module.exports.getEventData(todayDay);
-    const weekliesData = await module.exports.getWeeklyData();
-
-    const fieldsData = [
+    let dailiesData = await module.exports.getDailyData(todayDay);
+    let dailiesRewards = module.exports.setRewardsDataFormat(dailiesData.rewards);
+    let eventData = await module.exports.getEventData(todayDay);
+    
+    let fieldsData = [
       {
         'name': 'Event',
         'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
@@ -454,24 +441,26 @@ module.exports = {
       },
       {
         'name': 'Daily Challenges',
-        'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesData.rewards, '- ', true)+'\n'+
+        'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesRewards, "", true)+'\n'+
                 '**Quests**'+module.exports.setArrayDataFormat(dailiesData.quests, '- ', true)+'\n\u200B',
       },
     ];
 
     if (todayDay === 'Wednesday') {
+      let weekliesData = await module.exports.getWeeklyData();
+      let weekliesRewards = module.exports.setRewardsDataFormat(weekliesData.rewards);
       fieldsData.push(
           {
             'name': 'Weekly Challenges',
-            'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesData.rewards, '- ', true)+'\n'+
+            'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesRewards, "", true)+'\n'+
                      '**Quests**'+module.exports.setArrayDataFormat(weekliesData.quests, '- ', true)+'\n\u200B',
           }
       );
     }
 
-    const msgData = 'Hello! \nIt\'s time for reset, below is today\'s/this week\'s list. Have a good day!';
+    let msgData = 'Hello! \nIt\'s time for reset, below is today\'s/this week\'s list. Have a good day!';
 
-    const embedData = {
+    let embedData = {
       'embed': {
         'author': {
           'name': todayDay+'\'s List - '+dateformat(Date.now(), 'UTC:dd-mmmm-yyyy'),
@@ -704,7 +693,114 @@ module.exports = {
     }
 
     return questsData;
-  }
+  },
+
+  /**
+   * getRewardsList
+   * getting rewards list with the tier
+   * @param {String} challengesType challenges day/type
+   * @return {Array} formatted rewards list
+   */
+  getRewardsList: async function getRewards(challengesType){
+    let eventData = await module.exports.mongoGetData("events", {});
+    let eventRewards;
+    let challengesData = await module.exports.mongoGetData("challenges", {});
+    let challengesRewards;
+
+    switch(challengesType){
+      case "Monday":
+        challengesRewards = challengesData[0].monday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Tuesday":
+        challengesRewards = challengesData[0].tuesday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Wednesday":
+        challengesRewards = challengesData[0].wednesday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Thursday":
+        challengesRewards = challengesData[0].thursday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Friday":
+        challengesRewards = challengesData[0].friday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Saturday":
+        challengesRewards = challengesData[0].saturday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Sunday":
+        challengesRewards = challengesData[0].sunday.rewards;
+        eventRewards = eventData[0].rewards.daily;
+      break;
+      case "Weekly":
+        challengesRewards = challengesData[0].weekly.rewards;
+        eventRewards = eventData[0].rewards.weekly;
+      break;
+    }
+
+    // adding event rewards
+    if (eventRewards.length !== 0) {
+      for(let i=0; i<eventRewards.length; i++){
+        challengesRewards.push(
+          {
+            name: eventRewards[i].name + " (Event)",
+            tier: eventRewards[i].tier
+          }
+        );
+      }      
+    };
+
+    let tieredRewardsList = []
+    // getting the tier
+    for(let i=0; i<challengesRewards.length; i++){
+      let currentTier = challengesRewards[i].tier;
+      if(challengesRewards[i].tier === currentTier){
+        // gathering rewards which have the same tier
+        let currentTierRewards = [];
+        for(let j=0; j<challengesRewards.length; j++){
+          if(challengesRewards[j].tier === currentTier){
+            currentTierRewards.push(challengesRewards[j].name);
+          }
+        }
+
+        // checking if the tier already exist to prevent duplicate
+        let found = false;
+        for(let j=0; j<tieredRewardsList.length; j++){
+          if(tieredRewardsList[j].tier === currentTier){
+            found = true;
+          }
+        }
+        if(!found){
+          tieredRewardsList.push({
+            tier: currentTier,
+            rewards: currentTierRewards
+          });
+        }
+      }
+    }
+
+    return(tieredRewardsList);
+  },
+
+  /**
+   * setRewardsDataFormat
+   * formatting the rewards data
+   * @param {Array} data array of rewards items
+   * @return {Array} formatted rewards data
+   */
+  setRewardsDataFormat: function setRewardsFormat(data){
+    let formattedData = [];
+    for(let i=0; i<data.length; i++){
+        let itemsList = module.exports.setArrayDataFormat(data[i].rewards, "- ", true);
+        formattedData.push("**"+data[i].tier+" Completions**"+itemsList);
+    }
+
+    return formattedData;
+  },
 };
 
 // Exported function end here
