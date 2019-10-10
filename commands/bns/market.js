@@ -31,7 +31,7 @@ module.exports = class MarketCommand extends Command {
         let msgData = "";
         let itemData = ""; 
         let itemImage = await mongoGetData("configs", {"_id": 0});
-            itemImage = itemImage[0].DEFAULT_MARKET_THUMBNAIL;  
+            itemImage = itemImage[0].not_found;  
             
         let dataLastUpdate = Date.now();
         let maxItemLength;

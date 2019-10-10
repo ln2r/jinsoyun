@@ -67,7 +67,7 @@ module.exports = class WhoCommand extends Command {
         if(charaData.status === "error"){
             // getting default image
             let defaultImage = await mongoGetData("configs", {"_id": 0});
-                defaultImage = defaultImage[0].DEFAULT_MARKET_THUMBNAIL;
+                defaultImage = defaultImage[0].not_found;
 
             messageOutput = {
                 "embed": {
@@ -81,7 +81,7 @@ module.exports = class WhoCommand extends Command {
             };
         }else if(charaData.error || !traitsData || !skillsData){
             let defaultImage = await mongoGetData("configs", {"_id": 0});
-                defaultImage = defaultImage[0].DEFAULT_MARKET_THUMBNAIL;
+                defaultImage = defaultImage[0].not_found;
 
             messageOutput = {
                 "embed": {
@@ -204,7 +204,7 @@ module.exports = class WhoCommand extends Command {
                         {
                             "inline": true,
                             "name": "Points Allocation",
-                            "value": setArrayDataFormat(SPData, "- ", true)
+                            "value": setArrayDataFormat(SPData, "- ", true)+"\n\u200B"
                         },                    
                         {
                             "inline": true,
