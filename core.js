@@ -324,7 +324,6 @@ module.exports = {
      * @return object, daily data (reward, quests list)
      */
   getDailyData: async function getDaily(day) {
-    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
     let challengesData = await module.exports.mongoGetData('challenges', {});
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
@@ -360,7 +359,7 @@ module.exports = {
     }
 
     // getting the quests list
-    dailiesData.quests = module.exports.getQuestsList(dailiesData.quests, dungeonsData);
+    dailiesData.quests = await module.exports.getQuestsList(dailiesData.quests);
     dailiesData.rewards = await module.exports.getRewardsList(day);
 
     return dailiesData;
@@ -372,13 +371,12 @@ module.exports = {
      * @return object, weekly data (quests list, rewards)
      */
   getWeeklyData: async function getWeekly() {
-    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
     let challengesData = await module.exports.mongoGetData('challenges', {});
 
     // adding rewards
     let rewards = await module.exports.getRewardsList("Weekly");
     // adding the quests list
-    let quests = module.exports.getQuestsList(challengesData[0].weekly.quests, dungeonsData);
+    let quests = await module.exports.getQuestsList(challengesData[0].weekly.quests);
 
     // console.debug("[core] [weekly] weeklies data: "+JSON.stringify(weeklies, null, "\t"))
 
@@ -398,8 +396,6 @@ module.exports = {
     let eventData = await module.exports.mongoGetData('events', {});
     eventData = eventData[0];
 
-    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
-
     const questList = [];
 
     for (let i = 0; i < eventData.quests.length; i++) {
@@ -415,7 +411,7 @@ module.exports = {
     for(let i=0; i<questList.length; i++){
       questList[i] = questList[i].dungeon;
     }
-    eventData.quests = module.exports.getQuestsList(questList, dungeonsData);;
+    eventData.quests = await module.exports.getQuestsList(questList);;
 
     return eventData;
   },
@@ -441,7 +437,7 @@ module.exports = {
       },
       {
         'name': 'Daily Challenges',
-        'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesRewards, "", true)+'\n'+
+        'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesRewards, "", true)+'\n\u200B'+
                 '**Quests**'+module.exports.setArrayDataFormat(dailiesData.quests, '- ', true)+'\n\u200B',
       },
     ];
@@ -452,7 +448,7 @@ module.exports = {
       fieldsData.push(
           {
             'name': 'Weekly Challenges',
-            'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesRewards, "", true)+'\n'+
+            'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesRewards, "", true)+'\n\u200B'+
                      '**Quests**'+module.exports.setArrayDataFormat(weekliesData.quests, '- ', true)+'\n\u200B',
           }
       );
@@ -675,24 +671,37 @@ module.exports = {
   /**
    * getQuestsList
    * getting quests list data
-   * @param {Array} dungeonList array of dungeon's id
-   * @param {Array} dungeonData array of dungeons data
+   * @param {Array} questsList array of quests's id
    * @return {Array} formatted quests list
    */
-  getQuestsList: function getQuests(dungeonList, dungeonsData){
-    let questsData = [];
+  getQuestsList: async function getQuests(questsIdList){
+    let questsData = await module.exports.mongoGetData("quests", {});
+    let questsList = [];
 
-    for(let i=0; i<dungeonList.length; i++){
-      for(let j=0; j<dungeonsData.length; j++){
-          if(dungeonList[i] == dungeonsData[j].id){
-              let dungeonDataQuestName = (dungeonsData[j].quest === "")? "*No Quest Name Provided*" : dungeonsData[j].quest;
+    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
 
-              questsData.push("**"+dungeonDataQuestName+"** - "+dungeonsData[j].name);
-          }
+    // getting the quests name and location
+    for(let i=0; i<questsIdList.length; i++){
+      for(let j=0; j<questsData.length; j++){
+        if(questsIdList[i] === questsData[j].id){
+          let questName = questsData[j].name;
+          let questLocations = [];
+
+          // getting the location
+          for(let k=0; k<questsData[j].location.length; k++){
+            for(let l=0; l<dungeonsData.length; l++){
+              if(questsData[j].location[k] === dungeonsData[l].id){
+                questLocations.push(dungeonsData[l].name);
+              }
+            }
+          }          
+
+          questsList.push("**"+questName+"** - "+questLocations.join(", "));
+        }
       }
     }
 
-    return questsData;
+    return questsList;
   },
 
   /**
