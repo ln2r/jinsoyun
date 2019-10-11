@@ -1,1 +1,1 @@
-{"_id":{"$numberInt":"0"},"DEFAULT_MARKET_THUMBNAIL":"https://cdn.discordapp.com/attachments/426043840714244097/518272794077954048/soyun-notfound.png"}
+{"_id":{"$numberInt":"0"},"not_found":"https://cdn.discordapp.com/attachments/426043840714244097/518272794077954048/soyun-notfound.png","announce":{"reset":true,"twitter":true},"commands":{"daily":true,"drop":true,"dungeon":true,"event":true,"grandharvest":true,"koldrak":true,"market":true,"shackledisle":true,"weekly":true,"who":true}}
