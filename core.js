@@ -691,7 +691,11 @@ module.exports = {
           for(let k=0; k<questsData[j].location.length; k++){
             for(let l=0; l<dungeonsData.length; l++){
               if(questsData[j].location[k] === dungeonsData[l].id){
-                questLocations.push(dungeonsData[l].name);
+                if(questsData[j].type === 2){
+                  questLocations.push(dungeonsData[l].name + " (Dynamic)");
+                }else{
+                  questLocations.push(dungeonsData[l].name);
+                }                
               }
             }
           }          
