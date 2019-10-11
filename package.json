@@ -2,7 +2,7 @@
   "name": "jinsoyun",
   "version": "3.0.0",
   "description": "Grumpy Butts very own discord bot",
-  "main": "soyun.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
