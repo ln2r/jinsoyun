@@ -14,7 +14,7 @@ A Discord bot built for a NA Blade &amp; Soul clan Grumpy Butts.
 DM me on discord for the invitation url (Username and tag on the bottom of this file).
 
 ### Self-Host
-If you want to host the bot yourself just follow the instruction below. The downside is you need to update daily, weekly and event data manually ([manual data api]((http://jinsoyun.ln2r.web.id/api/))).
+If you want to host the bot yourself just follow the instruction below. The downside is you need to update daily, weekly and event data manually.
 
 **Requirements**:
 * [Discord App Token](https://discordapp.com/developers/applications/) - [Guide how to get Discord App Token](https://anidiots.guide/getting-started/getting-started-long-version)
@@ -24,14 +24,14 @@ If you want to host the bot yourself just follow the instruction below. The down
 * [Jinsoyun Bot Database](http://jinsoyun.ln2r.web.id/api/)
 
 **How-to**:
-* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](https://github.com/ln2r/jinsoyun/tree/stable/mongoexport) folder (might be outdated) or our [api endpoint](http://jinsoyun.ln2r.web.id/api/))
+* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](https://github.com/ln2r/jinsoyun/tree/stable/mongoexport) folder (challenges and events data might be outdated))
   - `apis` api info 
   - `challenges` dailies and weeklies rewards and quests
   - `configs` bot configuration data
-  - `dungeons` dungeon data
+  - `dungeons` dungeons data
   - `events` event info and details
   - `items` item data and it's market data
-  - `botStats` bot statistic
+  - `quests` quests data
 * [Create `.env` file](https://github.com/ln2r/jinsoyun/blob/dev/README.md#env-file)
 * Open Node.js command prompt and navigate to your bot directory.
 * Do `npm install` to get bot dependencies.
@@ -70,11 +70,11 @@ Template:
   ```
 
 ### MongoDB Collection Called configs
-* `DEFAULT_MARKET_THUMBNAIL` default image placeholder when market command can't find item(s)
+* `not_found` default image placeholder when market command can't find item(s)
 * `roles_list` role list for `join` and `setup` commands
 
 ## Acknowledgments & Credits
-* **Rizky Sedyanto** - *Initial work* - [ln2r](https://ln2r.web.id/); Discord: ln2r#1691
+* **Rizky Sedyanto** - *Initial work* - [ln2r](https://ln2r.tumblr.com/); Discord: ln2r#1691
 * **Built With**
   * [Visual Studio Code](https://code.visualstudio.com/) - Editor
   * [discord.js](https://discord.js.org/) - Discord API node.js module
