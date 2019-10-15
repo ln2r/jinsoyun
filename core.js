@@ -409,7 +409,7 @@ module.exports = {
     // console.debug("[core] [event] questsList value: "+JSON.stringify(questList, null, "\t"));
 
     for(let i=0; i<questList.length; i++){
-      questList[i] = questList[i].dungeon;
+      questList[i] = questList[i].quest;
     }
     eventData.quests = await module.exports.getQuestsList(questList);;
 
@@ -691,11 +691,9 @@ module.exports = {
           for(let k=0; k<questsData[j].location.length; k++){
             for(let l=0; l<dungeonsData.length; l++){
               if(questsData[j].location[k] === dungeonsData[l].id){
-                if(questsData[j].type === 2){
-                  questLocations.push(dungeonsData[l].name + " (Dynamic)");
-                }else{
-                  questLocations.push(dungeonsData[l].name);
-                }                
+                if(questsData[j].type === 2) questName = questName + " (Dynamic)";
+
+                questLocations.push(dungeonsData[l].name);
               }
             }
           }          
@@ -796,7 +794,10 @@ module.exports = {
       }
     }
 
-    return(tieredRewardsList);
+    // sorting the rewards
+    tieredRewardsList = tieredRewardsList.sort(function(a, b){return a.tier - b.tier});
+
+    return tieredRewardsList;
   },
 
   /**
