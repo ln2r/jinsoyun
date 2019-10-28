@@ -7,11 +7,11 @@ module.exports = class ResetNotificationCommand extends Command {
     constructor(client) {
         super(client, {
             name: "reset",
-            group: "automation",
+            group: "system",
             memberName: "reset",
             description: "Send challenges reset notification.",
-            guildOnly: true,
             hidden: true,
+            ownerOnly: true,
         });
     }
 

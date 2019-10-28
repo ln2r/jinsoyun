@@ -5,7 +5,7 @@ module.exports = class ItemsUpdateCommand extends Command {
     constructor(client) {
         super(client, {
             name: "items", // command name
-            group: "automation", // command group
+            group: "system", // command group
             memberName: "items", // name of the command in the group
             description: "Force update item data.", // command desc
             examples: ["items"], 
