@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { mongoGetData, getMentionedRoleId } = require("../../core");
+const { mongoGetData, getMentionedRoleId, getGlobalSettings } = require("../../core");
 
 module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
     constructor(client) {
@@ -16,6 +16,15 @@ module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
 
     async run(msg, args) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("raddonce");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
+
         let msgData;
         let msgEmoji;
 

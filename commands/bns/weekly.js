@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getWeeklyData, setArrayDataFormat, setRewardsDataFormat } = require("../../core");
+const { getWeeklyData, setArrayDataFormat, setRewardsDataFormat, getGlobalSettings } = require("../../core");
 
 module.exports = class WeeklyCommand extends Command {
     constructor(client) {
@@ -17,6 +17,14 @@ module.exports = class WeeklyCommand extends Command {
 
     async run(msg) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("weekly");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         let weeklyData = await getWeeklyData();
         let weeklyRewards = setRewardsDataFormat(weeklyData.rewards);

@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getDayValue, getEventData, setArrayDataFormat } = require("../../core");
+const { getDayValue, getEventData, setArrayDataFormat, getGlobalSettings } = require("../../core");
 
 module.exports = class BnsEventCommand extends Command {
     constructor(client) {
@@ -16,6 +16,14 @@ module.exports = class BnsEventCommand extends Command {
 
     async run(msg, args) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("event");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         args = args.toLowerCase();
 

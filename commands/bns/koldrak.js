@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData, getTimeDifference } = require("../../core");
+const { mongoGetData, getTimeDifference, getGlobalSettings } = require("../../core");
 
 module.exports = class KoldrakCommand extends Command {
     constructor(client) {
@@ -17,6 +17,14 @@ module.exports = class KoldrakCommand extends Command {
 
     async run(msg) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("koldrak");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         let timeData = await mongoGetData("challenges", {});
             timeData = timeData[0].koldrak.time;

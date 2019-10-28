@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData, getPriceStatus, setCurrencyFormat } = require("../../core");
+const { mongoGetData, getPriceStatus, setCurrencyFormat, getGlobalSettings } = require("../../core");
 
 module.exports = class MarketCommand extends Command {
     constructor(client) {
@@ -24,6 +24,14 @@ module.exports = class MarketCommand extends Command {
 
     async run(msg, { searchQuery }) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("market");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         let regx;
 

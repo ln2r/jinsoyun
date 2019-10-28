@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { getDayValue, getDailyData, setArrayDataFormat, setRewardsDataFormat } = require("../../core");
+const { getDayValue, getDailyData, setArrayDataFormat, setRewardsDataFormat, getGlobalSettings } = require("../../core");
 
 module.exports = class DailyCommand extends Command {
     constructor(client) {
@@ -19,12 +19,19 @@ module.exports = class DailyCommand extends Command {
         msg.channel.startTyping();
 
         args = args.toLowerCase();
-
         let dayQuery = "";
 
         //console.debug("[soyun] [daily] ["+msg.guild.name+"] current day: "+getDayValue(Date.now(), "now"));
         //console.debug("[soyun] [daily] ["+msg.guild.name+"] tomorrow is: "+getDayValue(Date.now(), "tomorrow"));
         //console.debug("[soyun] [daily] ["+msg.guild.name+"] user query is: "+args);
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("daily");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
         
         if(args === ""){
             dayQuery = getDayValue(Date.now(), "now");

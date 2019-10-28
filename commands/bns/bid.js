@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { mongoGetData, setCurrencyFormat } = require("../../core");
+const { mongoGetData, setCurrencyFormat, getGlobalSettings } = require("../../core");
 const dateformat = require("dateformat");
 
 module.exports = class RemoveCustomRoleCommand extends Command {
@@ -29,6 +29,14 @@ module.exports = class RemoveCustomRoleCommand extends Command {
 
     async run(msg, {playerCount, itemPrice}) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("bid");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         //console.debug("[soyun] [bid] playerCount value: "+playerCount);
         //console.debug("[soyun] [bid] itemPrice value: "+itemPrice);

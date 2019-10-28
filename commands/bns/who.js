@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData, getSiteData, setDataFormatNumb, setDataFormatString, setArrayDataFormat, sendBotReport } = require("../../core");
+const { mongoGetData, getSiteData, setDataFormatNumb, setDataFormatString, setArrayDataFormat, getGlobalSettings } = require("../../core");
 
 module.exports = class WhoCommand extends Command {
     constructor(client) {
@@ -17,6 +17,14 @@ module.exports = class WhoCommand extends Command {
 
     async run(msg, args) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("who");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         let messageOutput;
 

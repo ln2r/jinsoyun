@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData, setArrayDataFormat} = require("../../core");
+const { mongoGetData, setArrayDataFormat, getGlobalSettings } = require("../../core");
 
 module.exports = class DungeonCommand extends Command {
     constructor(client) {
@@ -25,6 +25,14 @@ module.exports = class DungeonCommand extends Command {
 
     async run(msg, {dungeon}) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("dungeon");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         let regx = new RegExp("("+dungeon+"+)", "ig"); // doing rough search
         let dbSearchQuery = {"name": regx};

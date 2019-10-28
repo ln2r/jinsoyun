@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { mongoGetData } = require("../../core");
+const { mongoGetData, getGlobalSettings } = require("../../core");
 
 module.exports = class RegCommand extends Command {
     constructor(client) {
@@ -18,6 +18,15 @@ module.exports = class RegCommand extends Command {
 
     async run(msg, args) {
         args = args.toLowerCase();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("reg");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
+
         //console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
         let guildSettingData = await mongoGetData("guilds", {guild: msg.guild.id});
             guildSettingData = guildSettingData[0];

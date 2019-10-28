@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { mongoGetData } = require("../../core");
+const { mongoGetData, getGlobalSettings } = require("../../core");
 
 module.exports = class ReactionRoleMessageCommand extends Command {
     constructor(client) {
@@ -16,6 +16,15 @@ module.exports = class ReactionRoleMessageCommand extends Command {
 
     async run(msg, args) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("rmessage");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
+
         let msgData;
         let embedData;
 

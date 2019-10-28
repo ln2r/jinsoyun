@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData } = require("../../core");
+const { mongoGetData, getGlobalSettings } = require("../../core");
 
 module.exports = class LootCommand extends Command {
     constructor(client) {
@@ -25,6 +25,14 @@ module.exports = class LootCommand extends Command {
 
     async run(msg, {item}) {
         msg.channel.startTyping();
+        
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("drop");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
 
         // query example
         // {"rewards.common": { $all: [/(core)/ig] } }

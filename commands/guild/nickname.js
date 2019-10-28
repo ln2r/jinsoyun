@@ -1,4 +1,5 @@
 const { Command } = require("discord.js-commando");
+const { getGlobalSettings } = require("../../core");
 
 module.exports = class NicknameChangeCommand extends Command {
     constructor(client) {
@@ -26,11 +27,22 @@ module.exports = class NicknameChangeCommand extends Command {
         });
     }
 
-    run(msg, { name }) {
+    async run(msg, { name }) {
+        msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("nickname");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
+
         // changing and formatting the nickname
         //console.debug("[soyun] [nickname] ["+msg.guild.name+"] "+msg.author.displayName+" nickname changed to "+name)
         msg.guild.members.get(msg.author.id).setNickname(name.replace(/(^|\s)\S/g, l => l.toUpperCase()));
 
-        return msg.say("Hello **"+name+"**! nice to meet you!");
+        msg.channel.stopTyping();
+        return msg.say("successfully changed your nickname. hello **"+name+"**! nice to meet you!");
     }
 };

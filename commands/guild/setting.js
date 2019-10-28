@@ -1,6 +1,6 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
-const { getGuildSettings, getMentionedChannelId, getMentionedRoleId } = require("../../core");
+const { getGuildSettings, getMentionedChannelId, getMentionedRoleId, getGlobalSettings } = require("../../core");
 
 module.exports = class GuildSettingsCommand extends Command {
     constructor(client) {
@@ -17,6 +17,15 @@ module.exports = class GuildSettingsCommand extends Command {
 
     async run(msg, args) {
         msg.channel.startTyping();
+
+        // checking if the command disabled or not
+        let globalSettings = await getGlobalSettings("setting");
+        if(!globalSettings.status){
+            msg.channel.stopTyping();
+
+            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
+        };
+
         let msgData = "";
         let embedData;
 

@@ -815,6 +815,58 @@ module.exports = {
 
     return formattedData;
   },
+
+  /**
+   * getGlobalSettings
+   * getting the bot global settings
+   * @param {String} system system name (daily, reset, etc)
+   * @return {Object} selected system status
+   */
+  getGlobalSettings: async function getSettings(system){
+    let settingsData = await module.exports.mongoGetData("configs", {});
+
+    switch(system){
+      case "reset":
+        return settingsData[0].announce.reset;
+      case "twitter":
+        return settingsData[0].announce.twitter;
+
+      case "daily":
+        return settingsData[0].commands.daily;
+      case "drop":
+        return settingsData[0].commands.drop;
+      case "dungeon":
+        return settingsData[0].commands.dungeon;
+      case "event":
+        return settingsData[0].commands.event;
+      case "grandharvest":
+        return settingsData[0].commands.grandharvest;
+      case "koldrak":
+        return settingsData[0].commands.koldrak;
+      case "market":
+        return settingsData[0].commands.market;
+      case "shackedisle":
+        return settingsData[0].commands.shackedisle;
+      case "weekly":
+        return settingsData[0].commands.weekly;
+      case "who":
+        return settingsData[0].commands.who;
+      case "nickname":
+        return settingsData[0].commands.nickname;
+      case "radd":
+        return settingsData[0].commands.radd;
+      case "raddonce":
+        return settingsData[0].commands.raddonce;
+      case "reg":
+        return settingsData[0].commands.reg;
+      case "rmessage":
+        return settingsData[0].commands.rmessage;
+      case "rremove":
+        return settingsData[0].commands.rremove;
+      case "setting":
+        return settingsData[0].commands.setting;
+    }
+  },
 };
 
 // Exported function end here

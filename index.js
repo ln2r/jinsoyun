@@ -8,7 +8,7 @@ const path = require('path');
 const ontime = require('ontime');
 const dateformat = require('dateformat');
 
-const {mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport, sendBotStats, getGuildSettings} = require('./core');
+const {mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport, sendBotStats, getGuildSettings, getGlobalSettings } = require('./core');
 
 // Maintenance mode
 const maintenanceMode = process.env.bot_maintenance_mode;
@@ -31,10 +31,10 @@ clientDiscord.login(process.env.discord_secret);
 clientDiscord.registry
     .registerDefaultTypes()
     .registerGroups([
-      ['automation', 'Automation'],
+      ['system', 'Bot System'],
       ['guild', 'Guild'],
       ['bns', 'Blade and Soul'],
-      ['dev', 'Bot dev'],
+      ['dev', 'Bot Dev'],
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()
@@ -286,8 +286,8 @@ if(maintenanceMode){
     const twitterTrackedUser = twitterAPIData[0].stream_screenname;
     let twitterUserValid = false;
 
-    stream.on('data', function(tweet) {
-      let payloadStatus = 'rejected';
+    stream.on('data', async function(tweet) {
+      let payloadStatus = 'received';
 
       // checking if it's valid account
       for (let i=0; i<twitterTrackedUser.length; i++) {
@@ -297,12 +297,21 @@ if(maintenanceMode){
       }
 
       if (twitterUserValid) {
+        // checking global settings
+        let globalSettings = await getGlobalSettings("twitter");
+        if(!globalSettings.status){
+          console.log('[soyun] [twitter] Twitter post notification disabled, '+globalSettings.message);
+          payloadStatus = 'rejected';  
+        }
+
         const twtFilter = tweet.text.toString().substring(0).split(' ');
 
         // Filtering the "RT" and "mention" stuff
         if (twtFilter[0] === 'RT' || twtFilter[0].charAt(0) === '@') {
           payloadStatus = 'rejected';
-        } else {
+        }
+        
+        if(payloadStatus !== "rejected"){
           if (tweet.extended_tweet) {
             twtText = tweet.extended_tweet.full_text.toString().replace('&amp;', '&');
           } else {
@@ -312,8 +321,6 @@ if(maintenanceMode){
           if (tweet.is_quote_status) {
             twtText = twtText+' RT @'+tweet.quoted_status.user.screen_name+' '+(tweet.quoted_status.text.toString().replace('&amp;', '&'));
           }
-
-          payloadStatus = 'received';
 
           // Making the color different for different user
           if (tweet.user.screen_name === twitterTrackedUser[0]) {
@@ -394,7 +401,14 @@ if(maintenanceMode){
     cycle: ['12:00:00'],
     utc: true,
   }, async function(reset) {
-    sendResetNotification(clientDiscord.guilds);
+    // checking if it disabled or not
+    let globalSettings = await getGlobalSettings("reset");
+    if(!globalSettings.status){
+        console.log("[soyun] [reset] reset notification currently disabled, "+globalSettings.message);
+    }else{
+      sendResetNotification(clientDiscord.guilds);
+    };
+
     reset.done();
     return;
   }
