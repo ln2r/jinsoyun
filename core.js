@@ -678,7 +678,7 @@ module.exports = {
     let questsData = await module.exports.mongoGetData("quests", {});
     let questsList = [];
 
-    let dungeonsData = await module.exports.mongoGetData("_dungeons", {});
+    let dungeonsData = await module.exports.mongoGetData("dungeons", {});
 
     // getting the quests name and location
     for(let i=0; i<questsIdList.length; i++){
