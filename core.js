@@ -823,48 +823,52 @@ module.exports = {
    * @return {Object} selected system status
    */
   getGlobalSettings: async function getSettings(system){
-    let settingsData = await module.exports.mongoGetData("configs", {});
+    let settingsData = await module.exports.mongoGetData("configs", {"guild": 0});
 
     switch(system){
+      case "not_found":
+        return settingsData[0].settings.announce.not_found;
+      case "koldrak_announce":
+        return settingsData[0].settings.announce.koldrak;
       case "reset":
-        return settingsData[0].announce.reset;
+        return settingsData[0].settings.announce.reset;
       case "twitter":
-        return settingsData[0].announce.twitter;
+        return settingsData[0].settings.announce.twitter;
 
       case "daily":
-        return settingsData[0].commands.daily;
+        return settingsData[0].settings.commands.daily;
       case "drop":
-        return settingsData[0].commands.drop;
+        return settingsData[0].settings.commands.drop;
       case "dungeon":
-        return settingsData[0].commands.dungeon;
+        return settingsData[0].settings.commands.dungeon;
       case "event":
-        return settingsData[0].commands.event;
+        return settingsData[0].settings.commands.event;
       case "grandharvest":
-        return settingsData[0].commands.grandharvest;
+        return settingsData[0].settings.commands.grandharvest;
       case "koldrak":
-        return settingsData[0].commands.koldrak;
+        return settingsData[0].settings.commands.koldrak;
       case "market":
-        return settingsData[0].commands.market;
+        return settingsData[0].settings.commands.market;
       case "shackedisle":
-        return settingsData[0].commands.shackedisle;
+        return settingsData[0].settings.commands.shackedisle;
       case "weekly":
-        return settingsData[0].commands.weekly;
+        return settingsData[0].settings.commands.weekly;
       case "who":
-        return settingsData[0].commands.who;
+        return settingsData[0].settings.commands.who;
       case "nickname":
-        return settingsData[0].commands.nickname;
+        return settingsData[0].settings.commands.nickname;
       case "radd":
-        return settingsData[0].commands.radd;
+        return settingsData[0].settings.commands.radd;
       case "raddonce":
-        return settingsData[0].commands.raddonce;
+        return settingsData[0].settings.commands.raddonce;
       case "reg":
-        return settingsData[0].commands.reg;
+        return settingsData[0].settings.commands.reg;
       case "rmessage":
-        return settingsData[0].commands.rmessage;
+        return settingsData[0].settings.commands.rmessage;
       case "rremove":
-        return settingsData[0].commands.rremove;
+        return settingsData[0].settings.commands.rremove;
       case "setting":
-        return settingsData[0].commands.setting;
+        return settingsData[0].settings.commands.setting;
     }
   },
 };
