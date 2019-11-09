@@ -36,7 +36,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
             let reactionMessageData;
 
             // getting guild's reaction-role data from db
-            let guildData = await mongoGetData("guilds", {guild: msg.guild.id});
+            let guildData = await mongoGetData("configs", {guild: msg.guild.id});
             let reactionRoleData = guildData[0].settings.react_role;
 
             // initialize if it's empty

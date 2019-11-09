@@ -69,9 +69,14 @@ Template:
   twitter_access_token_secret = YOUR_TWITTER_ACCESS_TOKEN_SECRET
   ```
 
-### MongoDB Collection Called configs
-* `not_found` default image placeholder when market command can't find item(s)
-* `roles_list` role list for `join` and `setup` commands
+### Bot Configuration Data
+Bot configuration is now saved in `configs` with `guild` id `0`, you can check the data in [mongoexport/config.json]()
+Explanation:
+* `reset`: Reset notification containing daily, weekly challenges and event summary.
+* `twitter`: Blade & Soul and Blade & Soul ops twitter post.
+* `koldrak`: Koldrak's Lair access notification.
+* `commands` : List of commands.
+* `not_found` : Default image when item/character can't be found.
 
 ## Acknowledgments & Credits
 * **Rizky Sedyanto** - *Initial work* - [ln2r](https://ln2r.tumblr.com/); Discord: ln2r#1691

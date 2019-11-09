@@ -28,7 +28,7 @@ module.exports = class RegCommand extends Command {
         };
 
         //console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
-        let guildSettingData = await mongoGetData("guilds", {guild: msg.guild.id});
+        let guildSettingData = await mongoGetData("configs", {guild: msg.guild.id});
             guildSettingData = guildSettingData[0];
 
         // formatting the nickname

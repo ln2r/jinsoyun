@@ -45,7 +45,7 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
                 msgData = "Please select a message first using `rmessage message-id`";
             }else{
                 // getting guild's reaction-role data from db
-                let guildData = await mongoGetData("guilds", {guild: msg.guild.id});
+                let guildData = await mongoGetData("configs", {guild: msg.guild.id});
                 let reactionRoleData = guildData[0].settings.react_role;
 
                 let emojiId;
