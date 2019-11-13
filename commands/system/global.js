@@ -55,34 +55,14 @@ module.exports = class ResetNotificationCommand extends Command {
         let query = args.split(" ");
         let changed = false;
 
+        let systems = ["koldrak_announce", "reset", "twitter", "daily", "drop", "dungeon", "event", "grandharvest", "shackedisle", "weekly", "who", "nickname", "radd", "raddonce", "rmessage", "rremove", "setting"];
+
         let system = query[0];
+        let valid = systems.indexOf(system);
 
         let globalSetting = await getGlobalSettings(system);
 
-        let valid = (
-            system === "koldrak_announce" || 
-            system === "reset" || 
-            system === "twitter" ||
-            system === "daily" ||
-            system === "drop" ||
-            system === "dungeon" ||
-            system === "event" ||
-            system === "grandharvest" ||
-            system === "koldrak" ||
-            system === "market" ||
-            system === "shackedisle" ||
-            system === "weekly" ||
-            system === "who" ||
-            system === "nickname" ||
-            system === "radd" ||
-            system === "raddonce" ||
-            system === "reg" ||
-            system === "rmessage" ||
-            system === "rremove" ||
-            system === "setting"
-        )? true : false;
-
-        if(valid && query[1]){
+        if(valid >= 0 && query[1]){
             let setting = ((query[1] === "disable")? false : true);
             let message = "";
 
@@ -91,11 +71,161 @@ module.exports = class ResetNotificationCommand extends Command {
                 message = query.join(" ");
             }
 
-            settingData = {
-                reset:{
-                    status : setting,
-                    message: message
-                }
+            switch(system){
+                case 'koldrak_announce':
+                    settingData = {
+                        koldrak_announce:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break;
+                case 'reset':
+                    settingData = {
+                        reset:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break;
+                case 'twitter':
+                    settingData = {
+                        twitter:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break;  
+                
+                case 'daily':
+                    settingData = {
+                        daily:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'drop':
+                    settingData = {
+                        drop:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'dungeon':
+                    settingData = {
+                        dungeon:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'event':
+                    settingData = {
+                        event:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'grandharvest':
+                    valid = true;
+                    settingData = {
+                        grandharvest:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'market':
+                    settingData = {
+                        market:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'shackedisle':
+                    settingData = {
+                        shackedisle:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'weekly':
+                    settingData = {
+                        weekly:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'who':
+                    settingData = {
+                        who:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'nickname':
+                    settingData = {
+                        nickname:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'radd':
+                    settingData = {
+                        radd:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'raddonce':
+                    settingData = {
+                        raddonce:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'reg':
+                    settingData = {
+                        reg:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'rmessage':
+                    settingData = {
+                        rmessage:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'rremove':
+                    settingData = {
+                        rremove:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
+                case 'setting':
+                    settingData = {
+                        setting:{
+                            status: setting, 
+                            message: message
+                        }
+                    }
+                break; 
             }
 
             // checking the query type and updating the change
@@ -109,7 +239,7 @@ module.exports = class ResetNotificationCommand extends Command {
         }
 
         // changing the message data when the query is valid
-        if(valid){
+        if(valid >= 0){
             if(changed){
                 msgData = "Setting for *"+system+"* has been changed.";
 
