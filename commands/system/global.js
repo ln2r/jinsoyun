@@ -55,7 +55,7 @@ module.exports = class ResetNotificationCommand extends Command {
         let query = args.split(" ");
         let changed = false;
 
-        let systems = ["koldrak_announce", "reset", "twitter", "bid", "daily", "drop", "dungeon", "event", "grandharvest", , "koldrak", "shackledisle", "market", "weekly", "who", "nickname", "radd", "raddonce", "rmessage", "rremove", "setting"];
+        let systems = ["koldrak_announce", "reset", "twitter", "bid", "daily", "drop", "dungeon", "event", "grandharvest", , "koldrak", "shackledisle", "market", "weekly", "who", "nickname", "radd", "raddonce", "reg", "rmessage", "rremove", "setting"];
 
         let system = query[0];
         let valid = systems.indexOf(system);
