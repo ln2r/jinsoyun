@@ -70,7 +70,7 @@ Template:
   ```
 
 ### Bot Configuration Data
-Bot configuration is now saved in `configs` with `guild` id `0`, you can check the data in [mongoexport/config.json]()
+Bot configuration is now saved in `configs` with `guild` id `0`, you can check the data in [mongoexport/config.json](https://github.com/ln2r/jinsoyun/blob/dev/mongoexport/configs.json)
 Explanation:
 * `reset`: Reset notification containing daily, weekly challenges and event summary.
 * `twitter`: Blade & Soul and Blade & Soul ops twitter post.
