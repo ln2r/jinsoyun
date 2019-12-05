@@ -35,16 +35,16 @@ module.exports = class DailyCommand extends Command {
         
         if(args === ""){
             dayQuery = getDayValue(Date.now(), "now");
-        }else if(args === "tomorrow" || args === "tmr"){
-            dayQuery = getDayValue(Date.now(), "tomorrow");
+        }else if(args === "tomorrow" || args === "tmr" || args === "t"){dayQuery = getDayValue(Date.now(), "tomorrow");            
+        }else if(args === "mon" || args === "monday"){dayQuery = "Monday";
+        }else if(args === "tue" || args === "tuesday"){dayQuery = "Tuesday";
+        }else if(args === "wed" || args === "wednesday"){dayQuery = "Wednesday";
+        }else if(args === "thu" || args === "thursday"){dayQuery = "Thursday";
+        }else if(args === "fri" || args === "friday"){dayQuery = "Friday";
+        }else if(args === "sat" || args === "saturday"){dayQuery = "Saturday";
+        }else if(args === "sun" || args === "sunday"){dayQuery = "Sunday";
         }else{
-            if(args === "mon" || args === "monday"){dayQuery = "Monday";};
-            if(args === "tue" || args === "tuesday"){dayQuery = "Tuesday";};
-            if(args === "wed" || args === "wednesday"){dayQuery = "Wednesday";};
-            if(args === "thu" || args === "thursday"){dayQuery = "Thursday";};
-            if(args === "fri" || args === "friday"){dayQuery = "Friday";};
-            if(args === "sat" || args === "saturday"){dayQuery = "Saturday";};
-            if(args === "sun" || args === "sunday"){dayQuery = "Sunday";};
+            dayQuery = getDayValue(Date.now(), "now");
         }
 
         //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
