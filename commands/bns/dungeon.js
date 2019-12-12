@@ -12,7 +12,6 @@ module.exports = class DungeonCommand extends Command {
             memberName: "dungeon",
             description: "Get the dungeon info and it's guide if available",
             examples: ["dungeon <dungeon name>", "dungeon naryu sanctum"],
-            hidden: true, // Remove on stable
             args: [
                 {
                     key: "dungeon",
@@ -43,12 +42,13 @@ module.exports = class DungeonCommand extends Command {
         let msgData = "";
         
         if(dungeonsData){
+            // formatting 
             let apInfo = "*Unspecified*";
             let apEasy = (dungeonsData.attackPower.easy === 0)? "" : "Easy: "+dungeonsData.attackPower.easy+"+ ";
             let apNormal = (dungeonsData.attackPower.normal === 0)? "" : "Normal: "+dungeonsData.attackPower.normal+"+ ";
             let apHard = (dungeonsData.attackPower.hard === 0)? "" : "Hard: "+dungeonsData.attackPower.hard+"+ ";
 
-            if(apEasy !== "" && apNormal !== "" && apHard !== ""){
+            if(apEasy !== "" || apNormal !== "" || apHard !== ""){
                 apInfo = apEasy+apNormal+apHard;
             }
 
@@ -77,6 +77,7 @@ module.exports = class DungeonCommand extends Command {
 
             let weaponSuggestion = (dungeonsData.weapon === "")? "*Unspecified Weapon*": dungeonsData.weapon;
 
+            // filling up the embed data
             embedData = {
                 "embed": {
                     "author": {
@@ -97,7 +98,7 @@ module.exports = class DungeonCommand extends Command {
                             "value": apInfo
                         },
                         {
-                            "name": "Recommended Weapon",
+                            "name": "Cross-Server Matching Weapon",
                             "value": weaponSuggestion
                         },                    
                         {
