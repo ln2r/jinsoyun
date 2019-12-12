@@ -12,7 +12,6 @@ module.exports = class LootCommand extends Command {
             memberName: "drop",
             description: "Get the dungeon info that containing said item drop",
             examples: ["drop <item name>", "drop naryu tablet"],
-            hidden: true, // Remove on stable
             args: [
                 {
                     key: "item",
@@ -34,62 +33,15 @@ module.exports = class LootCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
-        // query example
-        // {"rewards.common": { $all: [/(core)/ig] } }
-
-        //console.debug("[soyun] [drop] ["+msg.guild.name+"] query: "+item);
-
         let regx = new RegExp("("+item+"+)", "ig"); // regex for search
 
-        // array of query to check rewards for common, normal and hard type rewards
-        // query example
-        // {"rewards.common": { $all: [/(core)/ig] } }
-        let dbQuery = [
-            {
-                "rewards.common": {$all: [regx]}
-            }, 
-            {
-                "rewards.normal": {$all: [regx]}
-            }, 
-            {
-                "rewards.hard": {$all: [regx]}
-            },
-        ]
-
         // getting the data and pushing them into an array
-        let dungeonData = [];
-        for(let i  = 0; i < dbQuery.length; i++){
-            dungeonData.push(await mongoGetData("dungeons", dbQuery[i]));
-        }
+        let dungeonData = await mongoGetData("dungeons",  {"rewards": {$all: [regx]}});
 
         // getting the dungeon name and formatting it
         let dropData = "";
         for(let i = 0; i < dungeonData.length; i++){
-            //console.debug("[soyun] [drop] ["+msg.guild.name+"] result: "+dungeonData[i].length);
-            if(dungeonData[i].length !== 0){
-                for(let j = 0; j < dungeonData[i].length; j++){
-                    let itemName;
-
-                    //console.debug("[soyun] [drop] item name @ common: "+dungeonData[i][j].rewards.common.find(value => regx.test(value)));
-                    //console.debug("[soyun] [drop] item name @ normal: "+dungeonData[i][j].rewards.normal.find(value => regx.test(value)));
-                    //console.debug("[soyun] [drop] item name @ hard: "+dungeonData[i][j].rewards.hard.find(value => regx.test(value)));
-
-                    switch(i){
-                        case 0:
-                            itemName = dungeonData[i][j].rewards.common.find(value => regx.test(value));
-                        break;
-                        case 1:
-                            itemName = dungeonData[i][j].rewards.normal.find(value => regx.test(value));
-                        break;
-                        case 2:
-                            itemName = dungeonData[i][j].rewards.hard.find(value => regx.test(value));
-                        break;
-                    };                    
-                   
-                    //console.debug("[soyun] [drop] ["+msg.guild.name+"] dungeon name: "+dungeonData[i][j].name+" ("+itemName+")");
-                    dropData = dropData + ("\n- "+dungeonData[i][j].name+" ("+itemName+")");
-                }
-            }    
+            dropData = dropData + ("\n- "+dungeonData[i].name+" ("+dungeonData[i].rewards.find(value => regx.test(value))+")");  
         }
 
         // result formatting
@@ -98,6 +50,7 @@ module.exports = class LootCommand extends Command {
             result = "Dungeon that contain **"+item+"** drop:"+dropData;
         };
 
+        // filling up the embed data
         let embedData = {
             "embed": {
                 "author": {
