@@ -50,29 +50,22 @@ module.exports = class MarketCommand extends Command {
 
             regx = new RegExp("(?:^|\W)"+searchQuery+"+(?:$|\W)", "ig"); // exact search           
 
-            //console.debug("[soyun] [market] ["+msg.guild.name+"] exact search is used");
         }else{
             regx = new RegExp("("+searchQuery+"+)", "ig"); // rough search
-            //console.debug("[soyun] [market] ["+msg.guild.name+"] rough search is used");
         }      
-        
-        //console.debug("[soyun] [market] ["+msg.guild.name+"] searchQuery value: "+searchQuery);
-        //console.debug("[soyun] [market] ["+msg.guild.name+"] regx value: "+regx);
 
         let dbSearchQuery = {"name": regx};
-        //console.debug("[soyun] [market] ["+msg.guild.name+"] dbSearchQuery value: "+JSON.stringify(dbSearchQuery))
        
         let marketData = [];
         let marketError = false;
+        
         try{
             marketData = await mongoGetData("items", dbSearchQuery);
         }catch(err){
             marketError = true;
         };
-        //let marketData = await mongoGetData("items", dbSearchQuery);
 
-        //console.debug("[soyun] [market] ["+msg.guild.name+"] total result: "+marketData.length);
-
+        // checking the market status
         if(!marketError){
             if(marketData.length === 0){
                 itemData = "No Result found on **"+searchQuery+"**.\nPlease check your search and try again.";
@@ -103,9 +96,7 @@ module.exports = class MarketCommand extends Command {
                         "- Lowest: "+setCurrencyFormat(marketData[i].market[0].priceTotal)+" for "+marketData[i].market[0].quantity+"\n"
                     );
                 }            
-            }
-            
-            
+            } 
         }else{
             itemData = "Unable to get result on **"+searchQuery+"**.\nPlease try to be more specific with your search and try again.";
         };

@@ -21,10 +21,6 @@ module.exports = class DailyCommand extends Command {
         args = args.toLowerCase();
         let dayQuery = "";
 
-        //console.debug("[soyun] [daily] ["+msg.guild.name+"] current day: "+getDayValue(Date.now(), "now"));
-        //console.debug("[soyun] [daily] ["+msg.guild.name+"] tomorrow is: "+getDayValue(Date.now(), "tomorrow"));
-        //console.debug("[soyun] [daily] ["+msg.guild.name+"] user query is: "+args);
-
         // checking if the command disabled or not
         let globalSettings = await getGlobalSettings("daily");
         if(!globalSettings.status){
@@ -46,8 +42,6 @@ module.exports = class DailyCommand extends Command {
         }else{
             dayQuery = getDayValue(Date.now(), "now");
         }
-
-        //console.debug("[soyun] [daily] dayQuery value: "+dayQuery);
 
         let dailyData = await getDailyData(dayQuery);
         let rewardsList = setRewardsDataFormat(dailyData.rewards);

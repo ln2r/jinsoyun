@@ -28,11 +28,6 @@ module.exports = class BnsEventCommand extends Command {
         args = args.toLowerCase();
 
         let dayQuery = "";
-
-        //console.debug("[soyun] [event] ["+msg.guild.name+"] current day: "+getDayValue(Date.now(), "now"));
-        //console.debug("[soyun] [event] ["+msg.guild.name+"] tomorrow is: "+getDayValue(Date.now(), "tomorrow"));
-        //console.debug("[soyun] [event] ["+msg.guild.name+"] user query is: "+args);
-
         
         if(args === ""){
             dayQuery = getDayValue(Date.now(), "now");
@@ -47,8 +42,6 @@ module.exports = class BnsEventCommand extends Command {
             if(args === "sat" || args === "saturday"){dayQuery = "Saturday"};
             if(args === "sun" || args === "sunday"){dayQuery = "Sunday"};
         };
-
-        //console.debug("[soyun] [event] ["+msg.guild.name+"] dayQuery value: "+dayQuery);
 
         let eventData = await getEventData(dayQuery);
         let embedData;

@@ -38,9 +38,6 @@ module.exports = class RemoveCustomRoleCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
-        //console.debug("[soyun] [bid] playerCount value: "+playerCount);
-        //console.debug("[soyun] [bid] itemPrice value: "+itemPrice);
-
         // removing "<>" if the user decided to used it
         playerCount = playerCount.toString().replace(/[<>]/g, ""); 
         itemPrice = itemPrice.replace(/[<>]/g, "");
@@ -62,9 +59,6 @@ module.exports = class RemoveCustomRoleCommand extends Command {
 
         let selfBid = Math.floor(1 * itemPrice * ((playerCount - 1)/playerCount));
         let marketBid = Math.floor((1 * itemPrice * ((playerCount - 1)/playerCount)) * (1 - .05 * 1));
-
-        //console.debug("[soyun] [bid] self: "+selfBid);
-        //console.debug("[soyun] [bid] market: "+marketBid);
 
         let bidData = "**Max bid for the price of "+setCurrencyFormat(itemPrice)+"**\n"+
                     "- Keeping the item for yourself\n"+setCurrencyFormat(selfBid)+"\n"+

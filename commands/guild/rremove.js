@@ -57,7 +57,6 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
                     emojiId = reaction;
                     msgEmoji = emojiId;
                 }
-                // console.debug("emoji data: "+emojiId);
                 
                 // find the message
                 let messageIndex;

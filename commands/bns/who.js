@@ -100,10 +100,6 @@ module.exports = class WhoCommand extends Command {
                 }
             };
         }else{
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] msg.author.nickname: "+msg.member.nickname);
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaQuery: "+charaQuery);
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData.characterName value: "+charaData.characterName);
-
             // getting the traits data
             let traitsDataView = [];
             if(traitsData.length === 0){
@@ -111,7 +107,6 @@ module.exports = class WhoCommand extends Command {
             }else{
                 for(let i = 0; i < traitsData.length; i++){
                     for(let j = 0; j < traitsData[i].traits.length; j++){
-                        //console.debug("[soyun] [who] ["+msg.guild.name+"] "+traitsData[i].traits[j].name+" is: "+traitsData[i].traits[j].selected)
                         if(traitsData[i].traits[j].selected === true){
                             traitsDataView.push(traitsData[i].traits[j].name);
                         }
@@ -127,7 +122,6 @@ module.exports = class WhoCommand extends Command {
                 for(let i = 0; i < skillsData.length; i++){
                     for(let j = 0; j < skillsData[i].skills.length; j++){
                         if(skillsData[i].skills[j].buildup_max_level === 5){
-                            //console.debug("[soyun] [who] ["+msg.guild.name+"] "+skillsData[i].skills[j].name+" is: "+skillsData[i].skills[j].buildup_level+"/"+skillsData[i].skills[j].buildup_max_level);
                             SPData.push(skillsData[i].skills[j].name+" ("+skillsData[i].skills[j].buildup_level+"/"+skillsData[i].skills[j].buildup_max_level+")");
                         }
                     }
@@ -153,14 +147,6 @@ module.exports = class WhoCommand extends Command {
             }else{
                 charaAliases = "*No known aliases*"
             };
-
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaAPIAddress: "+charaAPIAddress);
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] charaData address: "+charaAPIAddress+charaQuery);
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] player traits data address: "+ncsoftPlayerTraitsAPIAddress.replace("CHARACTER_NAME",charaQuery));
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsData value: "+traitsData)
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] traitsDataView value: "+traitsDataView) 
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] gems data: "+gemData)  
-            //console.debug("[soyun] [who] ["+msg.guild.name+"] soulshield data: "+soulshieldData)        
 
             messageOutput = {
                 "embed": {

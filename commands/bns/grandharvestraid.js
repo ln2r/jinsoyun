@@ -31,8 +31,6 @@ module.exports = class GrandHarvestCommand extends Command {
 
         let grandHarvestClosestTime = getTimeDifference(timeData);
 
-        //console.debug("[soyun] [grand harvest raid] ["+msg.guild.name+"] time diffence data: "+JSON.stringify(grandHarvestClosestTime, null, "\t"));
-
         msg.channel.stopTyping();
 
         let embedData = {

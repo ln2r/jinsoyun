@@ -44,8 +44,6 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                 reactionRoleData = reactionRoleData = [];
             };
 
-            // console.debug("guild reaction-role data: "+reactionRoleData+", with the length of: "+reactionRoleData.length);
-
             // checking if the user gave something like a message id
             if(args.length >= 15 && /^[0-9]*$/.test(args)){
                 let messageId = args
@@ -59,18 +57,13 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                 };
 
                 // check and get message data    
-                // console.debug("messageId value: "+messageId);    
                 reactionMessageData = await msg.channel.fetchMessage(messageId).catch(err => (reactionMessageData = false));
-
-                // console.debug("message found: "+reactionMessageData);
         
                 if(reactionMessageData) {
                     // getting content
                     let reactionMessageContent = reactionMessageData.content;
 
                     // present message content and url
-                    // console.debug("message in db: "+found);
-
                     if(!found){
                         reactionRoleData.push({id: messageId, channel: msg.channel.id});
                         
@@ -82,7 +75,6 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                     }
 
                     msg.guild.currentMessage = messageId;
-                    // console.debug("current message: "+msg.guild.currentMessage);
                     
                     embedData = {
                         'embed': {

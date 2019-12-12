@@ -30,7 +30,6 @@ module.exports = class KoldrakCommand extends Command {
             timeData = timeData[0].koldrak.time;
 
         let koldrakClosestTime = getTimeDifference(timeData);
-        //console.debug("[soyun] [koldrak's lair] ["+msg.guild.name+"] time diffence data: "+JSON.stringify(koldrakClosestTime, null, "\t"));
     
         msg.channel.stopTyping();
 

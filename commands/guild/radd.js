@@ -59,9 +59,6 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
                         emojiId = args.replace(roleIdRaw.toString(), "").trim();
                         msgEmoji = emojiId;
                     }                    
-                    // console.debug("args data: "+args);
-                    // console.debug("role id: "+roleId);
-                    // console.debug("emoji data: "+emojiId);
                     
                     // check if role exist
                     let roleData = msg.guild.roles.find(role => role.id === roleId);

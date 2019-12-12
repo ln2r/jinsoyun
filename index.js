@@ -99,7 +99,7 @@ clientDiscord
 
       if (guildSettingData) {
         let memberGate = guildSettingData.settings.member_gate;
-        // console.debug("[soyun] [gate] ["+member.guild.name+"] memberGate value: "+memberGate);
+        
         // checking if the guild have the channel and the message set
         if(memberGate){
           if (memberGate.channel_id) {
@@ -184,8 +184,6 @@ clientDiscord
       const { d: data } = event;
       const user = clientDiscord.users.get(data.user_id);
 
-      // console.debug("user id: "+data.user_id);
-
       // check if it's the bot
       if(data.user_id === clientDiscord.user.id) return;
       
@@ -200,20 +198,19 @@ clientDiscord
           // checking channel and finding the message
           let found = false;
           let messageIndex;
+
           for(let i=0; i<guildReactionRoleData.length; i++){
             if(guildReactionRoleData[i].channel === data.channel_id && guildReactionRoleData[i].id === data.message_id){
               messageIndex = i;
               found = true;
             };
           };
-          // console.debug("found: "+found+" @ "+messageIndex+" message id: "+data.message_id);
+
           if(found){
             // checking the message
             if(data.message_id === guildReactionRoleData[messageIndex].id){
               const message = await channel.fetchMessage(data.message_id);
               const member = message.guild.members.get(user.id);
-
-              // console.debug("selected reaction: "+data.emoji.name+":"+data.emoji.id);
 
               // checking the emoji and getting the index
               if(guildReactionRoleData[messageIndex].reactions){
@@ -224,7 +221,6 @@ clientDiscord
                   emojiData = data.emoji.name;
                 };
 
-                // console.debug("emoji data: "+emojiData);
                 // checking the emoji and getting the role id
                 let reactionFound = false;
                 let reactionIndex;
@@ -355,11 +351,8 @@ if(maintenanceMode){
 
           // sending the tweet
           clientDiscord.guilds.map(async function(guild) {
-            // console.debug("[soyun] [tweet] guild list: "+guild.id+"("+guild.name+")");
-
             // getting guild setting data
             let guildSettingData = await getGuildSettings(guild.id);
-            // console.debug("[soyun] [tweet] guild setting data: "+JSON.stringify(guildSettingData, null, "\t"));
 
             let twitterChannel = '';
             if (guildSettingData !== undefined) {

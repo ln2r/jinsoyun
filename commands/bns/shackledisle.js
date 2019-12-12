@@ -31,8 +31,6 @@ module.exports = class ShackledIsleCommand extends Command {
 
         let brModeClosestTime = getTimeDifference(timeData);
 
-        //console.debug("[soyun] [shackled isle] ["+msg.guild.name+"] time diffence data: "+JSON.stringify(brModeClosestTime, null, "\t"));
-
         msg.channel.stopTyping();
 
         let embedData = {
