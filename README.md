@@ -1,5 +1,5 @@
 # Jinsoyun
-A Discord bot built for a NA Blade &amp; Soul clan Grumpy Butts.
+A discord bot built for Blade &amp; Soul's NA Server
 
 ## Features
 * Daily challenges information and announcement on reset
@@ -86,6 +86,7 @@ Explanation:
   * [Silveress](https://bns.silveress.ie/) - Blade and Soul unofficial API
   * [discord.js commando](https://github.com/discordjs/Commando) - discord.js command framework
   * [Commando MongoDBProvider](https://github.com/paulhobbel/commando-provider-mongo) - MongoDB provider for Commando
+* *Want to get me some coffee so I can stay up more? say no more [ko-fi](https://ko-fi.com/ln2rworks)*
 
 ## License
 *Code of this project is licensed under MIT license*
