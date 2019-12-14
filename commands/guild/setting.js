@@ -104,10 +104,12 @@ module.exports = class GuildSettingsCommand extends Command {
                         changed = true;
                     };
 
-                    if(query.length === 1){
-                        if(guildSettings.settings.quest_reset && guildSettings.settings.quest_reset !== null){
-                            settingResetChannelText = "<#"+guildSettings.settings.quest_reset+">";
-                        };
+                    if(!changed){
+                        if(guildSettings){
+                            if(guildSettings.settings.quest_reset && guildSettings.settings.quest_reset !== null){
+                                settingResetChannelText = "<#"+guildSettings.settings.quest_reset+">";
+                            }
+                        }
                     };
 
                     optionDisplayName = "Challenge Quests and Event Summary";
@@ -139,10 +141,12 @@ module.exports = class GuildSettingsCommand extends Command {
                         changed = true;
                     };
 
-                    if(query.length === 1){
-                        if(guildSettings.settings.twitter && guildSettings.settings.twitter !== null){
-                            settingTwitterChannelText = "<#"+guildSettings.settings.twitter+">";
-                        };
+                    if(!changed){
+                        if(guildSettings){
+                            if(guildSettings.settings.twitter && guildSettings.settings.twitter !== null){
+                                settingTwitterChannelText = "<#"+guildSettings.settings.twitter+">";
+                            }
+                        }                        
                     };
 
                     optionDisplayName = "Twitter News";
@@ -198,16 +202,18 @@ module.exports = class GuildSettingsCommand extends Command {
                         changed = true;
                     };
 
-                    if(query.length === 1){
-                        if(guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null){
-                            settingGateChannelText = "<#"+guildSettings.settings.member_gate.channel_id+">";
-                        };
-                        if(guildSettings.settings.member_gate.next && guildSettings.settings.member_gate.next !== null){
-                            settingGateFollowupChannelText = "<#"+guildSettings.settings.member_gate.next+">";
-                        };
-                        if(guildSettings.settings.member_gate.role_id && guildSettings.settings.member_gate.role_id !== null){
-                            settingGateRoleText = "<@&"+guildSettings.settings.member_gate.role_id+">";
-                        };
+                    if(!changed){
+                        if(guildSettings){
+                            if(guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null){
+                                settingGateChannelText = "<#"+guildSettings.settings.member_gate.channel_id+">";
+                            }
+                            if(guildSettings.settings.member_gate.next && guildSettings.settings.member_gate.next !== null){
+                                settingGateFollowupChannelText = "<#"+guildSettings.settings.member_gate.next+">";
+                            }
+                            if(guildSettings.settings.member_gate.role_id && guildSettings.settings.member_gate.role_id !== null){
+                                settingGateRoleText = "<@&"+guildSettings.settings.member_gate.role_id+">";
+                            }
+                        }
                     };
 
                     optionDisplayName = "New Member Verification";
@@ -255,9 +261,11 @@ module.exports = class GuildSettingsCommand extends Command {
                     }
 
                     if(!changed){
-                        if(guildSettings.settings.join_message && guildSettings.settings.join_message !== null){
-                            settingFollowupMessageText = guildSettings.settings.join_message;
-                        };
+                        if(guildSettings){
+                            if(guildSettings.settings.join_message && guildSettings.settings.join_message !== null){
+                                settingFollowupMessageText = guildSettings.settings.join_message;
+                            }
+                        }                        
                     }
 
                     optionDisplayName = "Join Message";
