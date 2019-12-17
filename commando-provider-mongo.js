@@ -73,10 +73,11 @@ class MongoDBProvider extends SettingProvider {
     this.listeners
         .set('globalSettingChange', (guild, system, setting) => this.set(guild, system, setting))
 
-        .set('guildOverwatchChange', (guild, channel) => this.set(guild, 'overwatch', channel))
+        //.set('guildOverwatchChange', (guild, channel) => this.set(guild, 'overwatch', channel))
         .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
         .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
-        .set('notificationTwitchChange', (guild, channel) => this.set(guild, 'twitch', channel))
+        .set('notificationKoldrakChange', (guild, channel) => this.set(guild, 'koldrak', channel))
+        //.set('notificationTwitchChange', (guild, channel) => this.set(guild, 'twitch', channel))
         .set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
         .set('joinCustomMessageChange', (guild, message) => this.set(guild, 'join_message', message))
         .set('guildReactionRoleChange', (guild, messageData) => this.set(guild, 'react_role', messageData))

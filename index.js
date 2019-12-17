@@ -407,6 +407,50 @@ if(maintenanceMode){
   }
   );
 
+  // Koldrak's Lair access
+  ontime({
+    cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'],
+    utc: true,
+  }, function(koldrakAnnounce){
+    clientDiscord.guilds.map(async function(guild) {
+      // getting guild setting data
+      let guildSettingData = await getGuildSettings(guild.id);
+
+      let koldrakChannel = '';
+      if (guildSettingData !== undefined) {
+        koldrakChannel = guildSettingData.settings.koldrak;
+      }
+
+      let found = 0;
+      guild.channels.map((ch) => {
+        if (found === 0) {
+          if (ch.id === koldrakChannel && koldrakChannel !== '' && koldrakChannel !== 'disable') {
+            found = 1;
+            if(ch.permissionsFor(clientDiscord.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')){
+              ch.send({
+                "embed":{
+                  "color": 8388736,
+                  "description": "**Koldrak's Lair** will be accessible in **10 Minutes**",
+                  "author":{
+                    "name": "Epic Challenge Alert",
+                    
+                  },
+                  "footer":{
+                    "icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
+                    "text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                  }
+                }
+              });
+            };
+          };
+        };
+      });
+    });
+    
+    koldrakAnnounce.done();
+    return;
+  })
+
   // Item data update
   ontime({
     cycle: ['00:02'],

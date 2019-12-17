@@ -47,12 +47,17 @@ module.exports = class GuildSettingsCommand extends Command {
                     'color': 16741688,
                     'fields': [
                         {
-                            'inline': true,
+                            'inline': false,
                             'name': "Twitter News",
                             'value': "Change: `"+botPrefix+"setting twitter #channel-name`\nDisable: `"+botPrefix+"setting twitter disable`"
                         },
                         {
-                            'inline': true,
+                            'inline': false,
+                            'name': "Koldrak's Lair Access",
+                            'value': "Change: `"+botPrefix+"setting koldrak #channel-name`\nDisable: `"+botPrefix+"setting koldrak disable`"
+                        },
+                        {
+                            'inline': false,
                             'name': "Challenge Quests and Event Summary",
                             'value': "Change: `"+botPrefix+"setting reset #channel-name`\nDisable: `"+botPrefix+"setting reset disable`"
                         },
@@ -80,6 +85,7 @@ module.exports = class GuildSettingsCommand extends Command {
 
             let settingResetChannelText = "*No Channel Selected*";
             let settingTwitterChannelText = "*No Channel Selected*";
+            let settingKoldrakChannelText = "*No Channel Selected*";
             let settingGateChannelText = "*No Channel Selected*";
             let settingGateFollowupChannelText = "*No Channel Selected*";
             let settingGateRoleText = "*No Role Selected*";
@@ -155,6 +161,43 @@ module.exports = class GuildSettingsCommand extends Command {
                         {
                             'name': "Channel Name",
                             'value': settingTwitterChannelText,
+                        },
+                    ];
+                break;
+
+                case "koldrak":
+                    if(query[1]){
+                        let settingKoldrakChannel;
+
+                        if(query[1] === "disable"){
+                            settingKoldrakChannel = null;  
+                        }else{
+                            let channelId = getMentionedChannelId(query[1]);
+
+                            settingKoldrakChannel = channelId;  
+                            settingKoldrakChannelText = "<#"+channelId+">";
+                        };
+
+                        // update the database
+                        this.client.emit('notificationKoldrakChange', msg.guild.id, settingKoldrakChannel);
+
+                        changed = true;
+                    };
+
+                    if(!changed){
+                        if(guildSettings){
+                            if(guildSettings.settings.koldrak && guildSettings.settings.koldrak !== null){
+                                settingKoldrakChannelText = "<#"+guildSettings.settings.koldrak+">";
+                            }
+                        }  
+                    };
+
+                    optionDisplayName = "Koldrak's Lair Access";
+                    optionDescription = "Koldrak's Lair Access Notification.";
+                    optionEmbedData = [
+                        {
+                            'name': "Channel Name",
+                            'value': settingKoldrakChannelText,
                         },
                     ];
                 break;
@@ -279,7 +322,7 @@ module.exports = class GuildSettingsCommand extends Command {
                 break;
             };
 
-            if(setting === "reset" || setting === "twitter" || setting === "gate" || setting === "joinmsg"){
+            if(setting === "reset" || setting === "twitter" || setting === "koldrak" || setting === "gate" || setting === "joinmsg"){
                 if(changed === true){
                     msgData = msg.guild.name+"'s setting for *"+optionDisplayName+"* has been changed.";
                 }else{
