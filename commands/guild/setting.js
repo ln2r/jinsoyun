@@ -320,9 +320,69 @@ module.exports = class GuildSettingsCommand extends Command {
                         },
                     ];
                 break;
+
+                case "show":
+                    if(guildSettings){
+                        // reset notification
+                        if(guildSettings.settings.quest_reset && guildSettings.settings.quest_reset !== null){
+                            settingResetChannelText = "<#"+guildSettings.settings.quest_reset+">";
+                        }
+
+                        // twitter
+                        if(guildSettings.settings.twitter && guildSettings.settings.twitter !== null){
+                            settingTwitterChannelText = "<#"+guildSettings.settings.twitter+">";
+                        }
+
+                        // koldrak's lair
+                        if(guildSettings.settings.koldrak && guildSettings.settings.koldrak !== null){
+                            settingKoldrakChannelText = "<#"+guildSettings.settings.koldrak+">";
+                        }
+
+                        // new member gate
+                        if(guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null){
+                            settingGateChannelText = "<#"+guildSettings.settings.member_gate.channel_id+">";
+                        }
+                        if(guildSettings.settings.member_gate.next && guildSettings.settings.member_gate.next !== null){
+                            settingGateFollowupChannelText = "<#"+guildSettings.settings.member_gate.next+">";
+                        }
+                        if(guildSettings.settings.member_gate.role_id && guildSettings.settings.member_gate.role_id !== null){
+                            settingGateRoleText = "<@&"+guildSettings.settings.member_gate.role_id+">";
+                        }
+
+                        // join command custom message
+                        if(guildSettings.settings.join_message && guildSettings.settings.join_message !== null){
+                            settingFollowupMessageText = guildSettings.settings.join_message;
+                        }
+                    } 
+
+                    optionDisplayName = "Current Guild's Settings";
+                    optionDescription = "List of current guild's settings, use `"+botPrefix+"set` to see the options.";
+                    optionEmbedData = [
+                        {
+                            'name': "Reset",
+                            'value': settingResetChannelText
+                        },
+                        {
+                            'name': "Twitter",
+                            'value': settingTwitterChannelText
+                        },
+                        {
+                            'name': "Koldrak",
+                            'value': settingKoldrakChannelText
+                        },
+                        {
+                            'name': "New Member Verification",
+                            'value': "Welcome Channel: "+settingGateChannelText+"\nFollow-up Channel: "+settingGateFollowupChannelText+"\nMember Role: "+settingGateRoleText
+                        },
+                        {
+                            'name': "Join Command Custom Message",
+                            'value': settingFollowupMessageText
+                        },
+                    ];
+                break;
             };
 
-            if(setting === "reset" || setting === "twitter" || setting === "koldrak" || setting === "gate" || setting === "joinmsg"){
+            if(setting === "reset" || setting === "twitter" || setting === "koldrak" || setting === "gate" || setting === "joinmsg" || setting === "show"){
                 if(changed === true){
                     msgData = msg.guild.name+"'s setting for *"+optionDisplayName+"* has been changed.";
                 }else{
