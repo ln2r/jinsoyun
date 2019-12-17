@@ -475,7 +475,7 @@ module.exports = {
 
       // getting guild setting data
       if (guild.available) {
-        let guildSettingData = await module.exports.mongoGetData('guilds', {guild: guild.id});
+        let guildSettingData = await module.exports.mongoGetData('configs', {guild: guild.id});
         guildSettingData = guildSettingData[0];
         // console.debug("[core] [reset] guild setting data: "+JSON.stringify(guildSettingData, null, "\t"));
         let resetChannel = '';
@@ -659,7 +659,7 @@ module.exports = {
    * @return {Object | null} guild setting data
    */
   getGuildSettings: async function getSettings(guildId){
-    let guildData = await module.exports.mongoGetData('guilds', {guild: guildId});
+    let guildData = await module.exports.mongoGetData('configs', {guild: guildId});
     
     if(guildData.length !== 0){
       return guildData[0];
