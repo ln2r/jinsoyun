@@ -446,6 +446,8 @@ if(maintenanceMode){
         };
       });
     });
+
+    console.log("[soyun] [koldrak] koldrak access notification sent");
     
     koldrakAnnounce.done();
     return;
