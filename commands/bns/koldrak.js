@@ -26,8 +26,8 @@ module.exports = class KoldrakCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
-        let timeData = await mongoGetData("challenges", {});
-            timeData = timeData[0].koldrak.time;
+        let timeData = await mongoGetData("challenges_", {name: "Koldrak"});
+            timeData = timeData[0].time;
 
         let koldrakClosestTime = getTimeDifference(timeData);
     

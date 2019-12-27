@@ -324,45 +324,16 @@ module.exports = {
      * @return object, daily data (reward, quests list)
      */
   getDailyData: async function getDaily(day) {
-    let challengesData = await module.exports.mongoGetData('challenges', {});
+    let challengesData = await module.exports.mongoGetData('challenges_', {name: day});
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
         eventDailyRewards = eventDailyRewards[0].rewards.daily;
 
-    // console.debug("[core] [daily] queried day: "+day);
-    // console.debug("[core] [daily] event rewards: "+eventDailyRewards);
-
-    let dailiesData;
-
-    switch (day) {
-      case 'Monday':
-        dailiesData = challengesData[0].monday;
-        break;
-      case 'Tuesday':
-        dailiesData = challengesData[0].tuesday;
-        break;
-      case 'Wednesday':
-        dailiesData = challengesData[0].wednesday;
-        break;
-      case 'Thursday':
-        dailiesData = challengesData[0].thursday;
-        break;
-      case 'Friday':
-        dailiesData = challengesData[0].friday;
-        break;
-      case 'Saturday':
-        dailiesData = challengesData[0].saturday;
-        break;
-      case 'Sunday':
-        dailiesData = challengesData[0].sunday;
-        break;
-    }
-
-    // getting the quests list
-    dailiesData.quests = await module.exports.getQuestsList(dailiesData.quests);
-    dailiesData.rewards = await module.exports.getRewardsList(day);
-
-    return dailiesData;
+    return {
+      // getting the quests list
+      quests: await module.exports.getQuestsList(challengesData[0].quests),
+      rewards: await module.exports.getRewardsList(day)
+    };
   },
 
   /**
@@ -371,18 +342,13 @@ module.exports = {
      * @return object, weekly data (quests list, rewards)
      */
   getWeeklyData: async function getWeekly() {
-    let challengesData = await module.exports.mongoGetData('challenges', {});
-
-    // adding rewards
-    let rewards = await module.exports.getRewardsList("Weekly");
-    // adding the quests list
-    let quests = await module.exports.getQuestsList(challengesData[0].weekly.quests);
-
-    // console.debug("[core] [weekly] weeklies data: "+JSON.stringify(weeklies, null, "\t"))
+    let challengesData = await module.exports.mongoGetData('challenges_', {name: "Weekly"});
 
     return {
-      rewards: rewards,
-      quests: quests
+      // getting quests
+      quests: await module.exports.getQuestsList(challengesData[0].quests),
+      // getting rewards
+      rewards: await module.exports.getRewardsList("Weekly")      
     };
   },
 
@@ -715,43 +681,11 @@ module.exports = {
   getRewardsList: async function getRewards(challengesType){
     let eventData = await module.exports.mongoGetData("events", {});
     let eventRewards;
-    let challengesData = await module.exports.mongoGetData("challenges", {});
+    let challengesData = await module.exports.mongoGetData("challenges_", {name: challengesType});
     let challengesRewards;
 
-    switch(challengesType){
-      case "Monday":
-        challengesRewards = challengesData[0].monday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Tuesday":
-        challengesRewards = challengesData[0].tuesday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Wednesday":
-        challengesRewards = challengesData[0].wednesday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Thursday":
-        challengesRewards = challengesData[0].thursday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Friday":
-        challengesRewards = challengesData[0].friday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Saturday":
-        challengesRewards = challengesData[0].saturday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Sunday":
-        challengesRewards = challengesData[0].sunday.rewards;
-        eventRewards = eventData[0].rewards.daily;
-      break;
-      case "Weekly":
-        challengesRewards = challengesData[0].weekly.rewards;
-        eventRewards = eventData[0].rewards.weekly;
-      break;
-    }
+    challengesRewards = challengesData[0].rewards;
+    eventRewards = eventData[0].rewards.daily;
 
     // adding event rewards
     if (eventRewards.length !== 0) {
@@ -872,6 +806,40 @@ module.exports = {
       case "setting":
         return settingsData[0].settings.setting;
     }
+  },
+
+  /**
+   * getChallengesInfo
+   * getting any data if the dungeon is in any challenges
+   * @param {Number} id dungeon id
+   * @return {Array} challenges list
+   */
+  getChallengesInfo: async function getChallenges(id){
+    let challengesData = await module.exports.mongoGetData("challenges_", {});
+    let questsData = await module.exports.mongoGetData("quests", {});
+    let challengesList = [];
+
+    console.log(questsData.length);
+
+    // checking the quests list
+    for(let i=0; i<(challengesData.length - 2); i++){
+      // getting the quest
+      for(let j=0; j<challengesData[i].quests.length; j++){
+        for(let k=0; k<questsData.length; k++){
+          if(challengesData[i].quests[j] === questsData[k].id){
+            // getting the location
+            for(let l=0; l<questsData[k].location.length; l++){
+              if(questsData[k].location[l] == id){
+                // pushing the challenges to the array list
+                challengesList.push(challengesData[i].name);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return challengesList;
   },
 };
 

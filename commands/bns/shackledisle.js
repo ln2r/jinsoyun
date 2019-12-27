@@ -26,8 +26,8 @@ module.exports = class ShackledIsleCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
-        let timeData = await mongoGetData("challenges", {});
-            timeData = timeData[0].shackled_isle.time;
+        let timeData = await mongoGetData("challenges_", {name: "Shackled Isle"});
+            timeData = timeData[0].time;
 
         let brModeClosestTime = getTimeDifference(timeData);
 
