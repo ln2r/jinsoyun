@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
 
-const { mongoGetData, setArrayDataFormat, getGlobalSettings } = require("../../core");
+const { mongoGetData, setArrayDataFormat, getGlobalSettings, getChallengesInfo } = require("../../core");
 
 module.exports = class DungeonCommand extends Command {
     constructor(client) {
@@ -77,6 +77,8 @@ module.exports = class DungeonCommand extends Command {
 
             let weaponSuggestion = (dungeonsData.weapon === "")? "*Unspecified Weapon*": dungeonsData.weapon;
 
+            let challengesInfo = await getChallengesInfo(dungeonsData.id);
+            
             // filling up the embed data
             embedData = {
                 "embed": {
@@ -92,6 +94,10 @@ module.exports = class DungeonCommand extends Command {
                         {
                             "name": "Entry Requirements",
                             "value": setArrayDataFormat(dungeonsData.requirements, "- ", true)
+                        },
+                        {
+                            "name": "Challenges",
+                            "value": challengesInfo.join(", ")
                         },
                         {
                             "name": "Recommended Attack Power",
