@@ -50,6 +50,7 @@ module.exports = {
      *  core.mongoGetData("classes");
      */
   mongoGetData: function mongoGetData(collname, filter, sorting) {
+    filter = (filter === null || filter === undefined)? {} : filter;
     sorting = (sorting === null || sorting === undefined)? {} : sorting;
 
     return MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
