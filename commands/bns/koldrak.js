@@ -26,12 +26,18 @@ module.exports = class KoldrakCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         let timeData = await mongoGetData("challenges_", {name: "Koldrak"});
             timeData = timeData[0].time;
 
         let koldrakClosestTime = getTimeDifference(timeData);
     
         msg.channel.stopTyping();
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
 
         let embedData = {
             "embed": {
@@ -41,7 +47,7 @@ module.exports = class KoldrakCommand extends Command {
                 "color": 8388736,
                 "footer": {
                     "icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-                    "text": "Koldrak's Lair - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    "text": "Koldrak's Lair - Served in "+serveTime
                 },
                 "description": "Available in "+koldrakClosestTime.time_difference_data[0]+" hour(s) and "+koldrakClosestTime.time_difference_data[0]+" minute(s)",
             }

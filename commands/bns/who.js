@@ -26,7 +26,18 @@ module.exports = class WhoCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         let messageOutput;
+        let imageUrl;
+        let descriptionMessage;
+        let embedColour;
+
+        let charaStats;
+
+        let errorStatus = false;
 
         // getting character equipments api address from the database
         let charaAPIAddress = await mongoGetData("apis", {"name": "Silveress Character"});
@@ -74,31 +85,17 @@ module.exports = class WhoCommand extends Command {
         // checking if the data fetch return data or error
         if(charaData.status === "error"){
             // getting default image
-            let defaultImage = await getGlobalSettings("not_found");
-
-            messageOutput = {
-                "embed": {
-                    "title": "Character Information",
-                    "thumbnail": {
-                        "url": defaultImage
-                    },
-                    "color": 15605837,
-                    "description": "Unable to get character data.\nSite might be unreachable or unavailable.",  
-                }
-            };
+            imageUrl = await getGlobalSettings("not_found");
+            descriptionMessage = "Unable to get character data.\nSite might be unreachable or unavailable.";
+            embedColour = 15605837;
+            
+            errorStatus = true;
         }else if(charaData.error || !traitsData || !skillsData){
-            let defaultImage = await getGlobalSettings("not_found");
+            imageUrl = await getGlobalSettings("not_found");
+            descriptionMessage = "No Result found on **"+charaQuery+"**.\nPlease check your search and try again.";
+            embedColour = 16574595;
 
-            messageOutput = {
-                "embed": {
-                    "title": "Character Information",
-                    "thumbnail": {
-                        "url": defaultImage
-                    },
-                    "color": 16574595,
-                    "description": "No Result found on **"+charaQuery+"**.\nPlease check your search and try again.",  
-                }
-            };
+            errorStatus = true;
         }else{
             // getting the traits data
             let traitsDataView = [];
@@ -148,73 +145,98 @@ module.exports = class WhoCommand extends Command {
                 charaAliases = "*No known aliases*"
             };
 
+            imageUrl = charaData.characterImg;
+            embedColour = 1879160;
+            charaStats = [
+                {
+                    "name": "Basic Information",
+                    "value": "**Health**: "+setDataFormatNumb(charaData.hp)+
+                            "\n**Attack Power**: "+setDataFormatNumb(charaData.ap)+
+                            "\n**Defense**: "+setDataFormatNumb(charaData.defence)+
+                            "\n**Clan**: "+charaClanName+
+                            "\n**Faction**: "+setDataFormatString(charaData.faction)+" ("+setDataFormatString(charaData.factionRank)+")"+
+                            "\n**Aliases**: "+charaAliases+
+                            "\n\u200B"                                    
+                },
+                {
+                    "name": "Stats",
+                    "value": "**Mystic**: "+setDataFormatNumb(charaData.mystic)+" ("+(setDataFormatNumb(charaData.mysticRate)*100).toFixed(2)+"%)"+ 
+                            "\n**Block**: "+setDataFormatNumb(charaData.block)+" ("+(setDataFormatNumb(charaData.blockRate)*100).toFixed(2)+"%)"+
+                            "\n**Evasion**: "+setDataFormatNumb(charaData.evasion)+" ("+(setDataFormatNumb(charaData.evasionRate)*100).toFixed(2)+"%)"+
+                            "\n**Boss (Attack Power - Defense)**: "+setDataFormatNumb(charaData.ap_boss)+" - "+setDataFormatNumb(charaData.defence_boss)+
+                            "\n**Critical Hit**: "+setDataFormatNumb(charaData.crit)+" ("+(setDataFormatNumb(charaData.critRate)*100).toFixed(2)+"%)"+
+                            "\n**Critical Damage**: "+setDataFormatNumb(charaData.critDamage)+" ("+(setDataFormatNumb(charaData.critDamageRate)*100).toFixed(2)+"%)"+
+                            "\n\u200B"
+                },
+                {
+                    "name": "Weapon",
+                    "value": setDataFormatString(charaData.weaponName)
+                            +"\n\u200B"
+                }, 
+                {
+                    "name": "Gems",
+                    "value": setArrayDataFormat(gemData, "- ", true)
+                            +"\n\u200B"
+                }, 
+                {
+                    "name": "Soulshield",
+                    "value": setArrayDataFormat(soulshieldData, "- ", true)
+                            +"\n\u200B"
+                },
+                {
+                    "name": "Accesories",
+                    "value": setArrayDataFormat(gearData, "- ", true)
+                            +"\n\u200B"
+                },   
+                {
+                    "inline": true,
+                    "name": "Points Allocation",
+                    "value": setArrayDataFormat(SPData, "- ", true)+"\n\u200B"
+                },                    
+                {
+                    "inline": true,
+                    "name": "Selected Talents",
+                    "value": setArrayDataFormat(traitsDataView, "- ", true)
+                },                        
+            ]
+        };
+
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
+
+        if(errorStatus){
+            messageOutput = {
+                "embed": {
+                    "title": "Character Search",
+                    "color": embedColour,
+                    "description": descriptionMessage,
+                    "footer":{ 
+                        "icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
+                        "text": "Powered by Silveress's BnS API - Served in "+serveTime
+                    },
+                    "thumbnail": {
+                        "url": imageUrl
+                    }           
+                }
+            }
+        }else{
             messageOutput = {
                 "embed": {
                     "title":charaData.server+"'s "+charaData.style+" "+charaData.playerClass+" "+charaData.characterName+" - Level "+charaData.playerLevel+" HM Level "+charaData.playerLevelHM,
                     "url": bnstreeProfile,
-                    "fields": [
-                        {
-                            "name": "Basic Information",
-                            "value": "**Health**: "+setDataFormatNumb(charaData.hp)+
-                                    "\n**Attack Power**: "+setDataFormatNumb(charaData.ap)+
-                                    "\n**Defense**: "+setDataFormatNumb(charaData.defence)+
-                                    "\n**Clan**: "+charaClanName+
-                                    "\n**Faction**: "+setDataFormatString(charaData.faction)+" ("+setDataFormatString(charaData.factionRank)+")"+
-                                    "\n**Aliases**: "+charaAliases+
-                                    "\n\u200B"                                    
-                        },
-                        {
-                            "name": "Stats",
-                            "value": "**Mystic**: "+setDataFormatNumb(charaData.mystic)+" ("+(setDataFormatNumb(charaData.mysticRate)*100).toFixed(2)+"%)"+ 
-                                    "\n**Block**: "+setDataFormatNumb(charaData.block)+" ("+(setDataFormatNumb(charaData.blockRate)*100).toFixed(2)+"%)"+
-                                    "\n**Evasion**: "+setDataFormatNumb(charaData.evasion)+" ("+(setDataFormatNumb(charaData.evasionRate)*100).toFixed(2)+"%)"+
-                                    "\n**Boss (Attack Power - Defense)**: "+setDataFormatNumb(charaData.ap_boss)+" - "+setDataFormatNumb(charaData.defence_boss)+
-                                    "\n**Critical Hit**: "+setDataFormatNumb(charaData.crit)+" ("+(setDataFormatNumb(charaData.critRate)*100).toFixed(2)+"%)"+
-                                    "\n**Critical Damage**: "+setDataFormatNumb(charaData.critDamage)+" ("+(setDataFormatNumb(charaData.critDamageRate)*100).toFixed(2)+"%)"+
-                                    "\n\u200B"
-                        },
-                        {
-                            "name": "Weapon",
-                            "value": setDataFormatString(charaData.weaponName)
-                                    +"\n\u200B"
-                        }, 
-                        {
-                            "name": "Gems",
-                            "value": setArrayDataFormat(gemData, "- ", true)
-                                    +"\n\u200B"
-                        }, 
-                        {
-                            "name": "Soulshield",
-                            "value": setArrayDataFormat(soulshieldData, "- ", true)
-                                    +"\n\u200B"
-                        },
-                        {
-                            "name": "Accesories",
-                            "value": setArrayDataFormat(gearData, "- ", true)
-                                    +"\n\u200B"
-                        },   
-                        {
-                            "inline": true,
-                            "name": "Points Allocation",
-                            "value": setArrayDataFormat(SPData, "- ", true)+"\n\u200B"
-                        },                    
-                        {
-                            "inline": true,
-                            "name": "Selected Talents",
-                            "value": setArrayDataFormat(traitsDataView, "- ", true)
-                        },                        
-                    ],
-                    "color": 1879160,
+                    "color": embedColour,
+                    "fields": charaStats,
                     "footer":{ 
                         "icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-                        "text": "Powered by Silveress's BnS API - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                        "text": "Powered by Silveress's BnS API - Served in "+serveTime
                     },
                     "thumbnail": {
-                        "url": charaData.characterImg
+                        "url": imageUrl
                     }           
                 }
             }
-        };
+        }
+
         msg.channel.stopTyping();
 
         return msg.say(messageOutput);        

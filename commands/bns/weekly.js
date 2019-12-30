@@ -26,8 +26,15 @@ module.exports = class WeeklyCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         let weeklyData = await getWeeklyData();
         let weeklyRewards = setRewardsDataFormat(weeklyData.rewards);
+
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
 
         let embedData = {
             "embed": {
@@ -37,7 +44,7 @@ module.exports = class WeeklyCommand extends Command {
                 },
                 "color": 15025535,
                 "footer": {
-                    "text": "Weekly Challenges - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    "text": "Weekly Challenges - Served in "+serveTime
                 },
                 "fields":[
                     {

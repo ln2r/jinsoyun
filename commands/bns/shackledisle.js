@@ -26,12 +26,18 @@ module.exports = class ShackledIsleCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         let timeData = await mongoGetData("challenges_", {name: "Shackled Isle"});
             timeData = timeData[0].time;
 
         let brModeClosestTime = getTimeDifference(timeData);
 
         msg.channel.stopTyping();
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
 
         let embedData = {
             "embed": {
@@ -40,7 +46,7 @@ module.exports = class ShackledIsleCommand extends Command {
                 },
                 "color": 8388736,
                 "footer": {
-                    "text": "Shackled Isle - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    "text": "Shackled Isle - Served in "+serveTime
                 },
                 "description": "Available in "+brModeClosestTime.time_difference_data[0]+" hour(s) and "+brModeClosestTime.time_difference_data[1]+" minute(s)",
             }

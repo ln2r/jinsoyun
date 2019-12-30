@@ -1,5 +1,4 @@
 const { Command } = require("discord.js-commando");
-const dateformat = require("dateformat");
 
 const { mongoGetData, setArrayDataFormat, getGlobalSettings, getChallengesInfo } = require("../../core");
 
@@ -32,6 +31,10 @@ module.exports = class DungeonCommand extends Command {
 
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
+
+        const start = Date.now();
+        let end;
+        let serveTime;
 
         let regx = new RegExp("("+dungeon+"+)", "ig"); // doing rough search
         let dbSearchQuery = {"name": regx};
@@ -78,6 +81,9 @@ module.exports = class DungeonCommand extends Command {
             let weaponSuggestion = (dungeonsData.weapon === "")? "*Unspecified Weapon*": dungeonsData.weapon;
 
             let challengesInfo = await getChallengesInfo(dungeonsData.id);
+
+            end = Date.now();
+            serveTime = (end-start)/1000+'s';
             
             // filling up the embed data
             embedData = {
@@ -88,7 +94,7 @@ module.exports = class DungeonCommand extends Command {
                     },
                     "color": 10040319,
                     "footer": {
-                        "text": "Dungeon Data - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                        "text": "Dungeon Data - Served in "+serveTime
                     },
                     "fields":[
                         {
@@ -121,6 +127,9 @@ module.exports = class DungeonCommand extends Command {
 
             msg.channel.stopTyping();
         }else{
+            end = Date.now();
+            serveTime = (end-start)/1000+'s';
+            
             msgData = "I can't find dungeon data under ***"+dungeon+"***, please check your command and try again.";
             msg.channel.stopTyping();
         }

@@ -1,5 +1,4 @@
 const { Command } = require("discord.js-commando");
-const dateformat = require("dateformat");
 
 const { getDayValue, getDailyData, setArrayDataFormat, setRewardsDataFormat, getGlobalSettings } = require("../../core");
 
@@ -28,6 +27,10 @@ module.exports = class DailyCommand extends Command {
 
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
+
+        const start = Date.now();
+        let end;
+        let serveTime;
         
         if(args === ""){
             dayQuery = getDayValue(Date.now(), "now");
@@ -48,6 +51,8 @@ module.exports = class DailyCommand extends Command {
         let embedData;
         let msgData = "";
 
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
         
         if(dailyData){
             embedData = {
@@ -58,7 +63,7 @@ module.exports = class DailyCommand extends Command {
                     },
                     "color": 15025535,
                     "footer": {
-                        "text": "Daily Challenges - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                        "text": "Daily Challenges - Served in "+serveTime
                     },
                     "fields":[
                         {

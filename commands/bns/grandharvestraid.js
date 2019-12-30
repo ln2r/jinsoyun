@@ -28,12 +28,18 @@ module.exports = class GrandHarvestCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         let timeData = await mongoGetData("challenges", {});
             timeData = timeData[0].grand_harvest_raid.time;
 
         let grandHarvestClosestTime = getTimeDifference(timeData);
 
         msg.channel.stopTyping();
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
 
         let embedData = {
             "embed": {
@@ -42,7 +48,7 @@ module.exports = class GrandHarvestCommand extends Command {
                 },
                 "color": 8388736,
                 "footer": {
-                    "text": "Grand Harvest Raid - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    "text": "Grand Harvest Raid - Served in "+serveTime
                 },
                 "description": "Available in "+grandHarvestClosestTime.time_difference_data[0]+" hour(s) and "+grandHarvestClosestTime.time_difference_data[1]+" minute(s)",
             }

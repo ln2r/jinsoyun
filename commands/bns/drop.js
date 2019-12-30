@@ -1,5 +1,4 @@
 const { Command } = require("discord.js-commando");
-const dateformat = require("dateformat");
 
 const { mongoGetData, getGlobalSettings } = require("../../core");
 
@@ -33,6 +32,10 @@ module.exports = class LootCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         let regx = new RegExp("("+item+"+)", "ig"); // regex for search
 
         // getting the data and pushing them into an array
@@ -43,6 +46,9 @@ module.exports = class LootCommand extends Command {
         for(let i = 0; i < dungeonData.length; i++){
             dropData = dropData + ("\n- "+dungeonData[i].name+" ("+dungeonData[i].rewards.find(value => regx.test(value))+")");  
         }
+
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
 
         // result formatting
         let result = "Can't find any dungeon that drop **"+item+"**, please check and try again (Item name can't be abbreviated)";
@@ -59,7 +65,7 @@ module.exports = class LootCommand extends Command {
                 },
                 "color": 16753920,
                 "footer": {
-                    "text": "Dungeon Item Drop - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    "text": "Dungeon Item Drop - Served in "+serveTime
                 },
                 "description": result
             }

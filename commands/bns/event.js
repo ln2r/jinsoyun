@@ -25,6 +25,10 @@ module.exports = class BnsEventCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        const start = Date.now();
+        let end;
+        let serveTime;
+
         args = args.toLowerCase();
 
         let dayQuery = "";
@@ -47,6 +51,9 @@ module.exports = class BnsEventCommand extends Command {
         let embedData;
         let msgData = "";
 
+        end = Date.now();
+        serveTime = (end-start)/1000+'s';
+
         if(eventData){
             embedData = {
                 "embed": {
@@ -64,7 +71,7 @@ module.exports = class BnsEventCommand extends Command {
                     "color": 1879160,
                     "footer": {
                         "icon_url": "https://static.bladeandsoul.com/img/global/nav-bs-logo.png",
-                        "text": "Blade & Soul Event - Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                        "text": "Blade & Soul Event - Served in "+serveTime
                     },
                     "fields":[
                         {
