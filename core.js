@@ -40,6 +40,7 @@ module.exports = {
      * Used to get data from MongoDB database
      * @param {String} collname data collection name
      * @param {Object} filter data filter
+     * @param {Object} sorting data sorting
      * @return data fetched from databse
      * @example
      *  // Using the function locally with id as it filter
@@ -48,14 +49,14 @@ module.exports = {
      *  // Using the function outside the file without filter
      *  core.mongoGetData("classes");
      */
-  mongoGetData: function mongoGetData(collname, filter) {
-    // console.debug("[core] [mongo-fetch] collname: "+collname+", filter: "+JSON.stringify(filter));
+  mongoGetData: function mongoGetData(collname, filter, sorting) {
+    sorting = (sorting === null || sorting === undefined)? {} : sorting;
 
     return MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
         .then(function(db) {
           const dbo = db.db(dbName);
           const collection = dbo.collection(collname);
-          return collection.find(filter).toArray()
+          return collection.find(filter).sort(sorting).toArray()
               .then(db.close());
         })
         .then(function(items) {
@@ -71,10 +72,10 @@ module.exports = {
   mongoItemDataUpdate: async function itemsUpdate() {
     const start = Date.now();
 
-    const dataItems = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/items');
-    const marketItems = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/market/na/current/lowest');
+    const itemsData = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/items');
+    const marketData = await module.exports.getSiteData('https://api.silveress.ie/bns/v3/market/na/current/lowest');
 
-    if (dataItems.status === 'error' || dataItems.status === 'error') {
+    if (itemsData.status === 'error' || itemsData.status === 'error') {
       console.error('[core] [items-update] api data fetch error, please check the log');
       module.exports.sendBotReport({'name': 'APIFetchError', 'message': 'Unable to get api data, site unreachable', 'path': 'core.js (getSiteData)', 'code': 10400, 'method': 'GET'}, 'itemUpdate-core', 'error');
 
@@ -82,86 +83,41 @@ module.exports = {
       const updateTime = (end-start)/1000+'s';
       console.log('[core] [items-update] Update data failed, time: '+updateTime);
     } else {
-      const itemsCollectionName = 'items';
+      let itemsCollectionName = "items_";
+      let marketCollectionName = "market";
+      
       MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
         if (err) throw err;
         const dbo = db.db(dbName);
 
-        dbo.collection(itemsCollectionName).find({}).toArray(function(err, result) {
-          if (err) throw err;
-          const dbData = result;
+        dbo.listCollections({name: itemsCollectionName})
+          .next(function(err, collinfo) {
+            if (err) throw err;
 
-          let fetchTime = new Date();
-          fetchTime = fetchTime.toISOString();
-          const latestData = [];
-
-          // formatting and merging the data between item data and the market data
-          for (let i = 0; i < marketItems.length; i++) {
-            // updating the and formating data
-            for (let j = 0; j < dataItems.length; j++) {
-              // getting the data with same id
-              if (marketItems[i].id === dataItems[j].id) {
-                const marketData = [{
-                  updated: marketItems[i].ISO,
-                  totalListings: marketItems[i].totalListings,
-                  priceEach: marketItems[i].priceEach,
-                  priceTotal: marketItems[i].priceTotal,
-                  quantity: marketItems[i].quantity,
-                }];
-
-                // merging the old market data with the new one
-                if (dbData !== null) {
-                  for (let k = 0; k < dbData.length; k++) {
-                    if (marketItems[i].id === dbData[k]._id && dbData[k].market.length > 0) {
-                      for (let l = 0; l < dbData[k].market.length; l++) {
-                        marketData.push(dbData[k].market[l]);
-                      }
-                    }
-                  }
-                }
-
-                const data = {
-                  _id: dataItems[j].id,
-                  updated: fetchTime,
-                  firstAdded: dataItems[j].firstAdded,
-                  name: dataItems[j].name,
-                  itemTaxRate: dataItems[j].itemTaxRate,
-                  img: dataItems[j].img,
-                  rank: dataItems[j].rank,
-                  merchantValue: dataItems[j].merchantValue,
-                  characterLevel: dataItems[j].characterLevel,
-                  class: dataItems[j].class,
-                  market: marketData,
-                };
-
-                latestData.push(data);
-              }
-            }
-          }
-
-          dbo.listCollections({name: itemsCollectionName})
-              .next(function(err, collinfo) {
+            // checking if the collection is exist or not
+            if (collinfo) {
+              dbo.collection(itemsCollectionName).drop(function(err) {
                 if (err) throw err;
-
-                // checking if the collection is exist or not
-                if (collinfo) {
-                  dbo.collection(itemsCollectionName).drop(function(err) {
-                    if (err) throw err;
-                  });
-                }
-
-                // inserting the data to the collection
-                dbo.collection(itemsCollectionName).insertMany(latestData, function(err, res) {
-                  if (err) throw err;
-                  db.close();
-                });
-
-                const end = Date.now();
-                const updateTime = (end-start)/1000+'s';
-
-                console.log('[core] [items-update] Data updated, time: '+updateTime);
               });
-        });
+            }
+
+            // updating items data
+            dbo.collection(itemsCollectionName).insertMany(itemsData, function(err, res) {
+              if (err) throw err;
+              db.close();
+            });
+
+            // updating market data
+            dbo.collection(marketCollectionName).insertMany(marketData, function(err, res) {
+              if (err) throw err;
+              db.close();
+            });
+
+            const end = Date.now();
+            const updateTime = (end-start)/1000+'s';
+
+            console.log('[core] [items-update] Data updated, time: '+updateTime);
+          });
       });
     }
   },

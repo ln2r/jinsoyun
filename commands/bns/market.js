@@ -37,11 +37,14 @@ module.exports = class MarketCommand extends Command {
 
         let embedData = "";
         let msgData = "";
-        let itemData = ""; 
+        let queryResult = ""; 
         let itemImage = await getGlobalSettings("not_found");
             
-        let dataLastUpdate = Date.now();
         let maxItemLength;
+
+        const start = Date.now();
+        let end;
+        let serveTime;
 
         // checking the search query
         if(searchQuery.match(/[<>]/g)){
@@ -56,49 +59,59 @@ module.exports = class MarketCommand extends Command {
 
         let dbSearchQuery = {"name": regx};
        
-        let marketData = [];
+        let itemsData;
         let marketError = false;
         
+        // getting the item data
         try{
-            marketData = await mongoGetData("items", dbSearchQuery);
+            itemsData = await mongoGetData("items_", dbSearchQuery);
         }catch(err){
             marketError = true;
         };
+        
 
         // checking the market status
         if(!marketError){
-            if(marketData.length === 0){
-                itemData = "No Result found on **"+searchQuery+"**.\nPlease check your search and try again.";
-            }else{
-                itemImage = marketData[0].img;
-                dataLastUpdate = marketData[0].updated;
+            if(itemsData.length === 0){
+                end = Date.now();
+                serveTime = (end-start)/1000+'s';
 
-                if(marketData.length > 5){
-                    msgData = "Found **"+marketData.length+"** matching items, please use exact search to get more accurate result";
+                queryResult = "No Result found on **"+searchQuery+"**.\nPlease check your search and try again.";
+            }else{
+                itemImage = itemsData[0].img;
+                
+                // adding limit to the result
+                if(itemsData.length > 5){
+                    msgData = "Found **"+itemsData.length+"** matching items, please use exact search to get more accurate result";
                     maxItemLength = 5;
                 }else{
-                    maxItemLength = marketData.length;
+                    maxItemLength = itemsData.length;
                 }
 
+                // populating the results
                 for(let i = 0; i < maxItemLength; i++){
-                    let oldPrice = 0;
-                    if(marketData[i].market[1].priceEach === null || marketData[i].market[1].priceEach === undefined){
-                        oldPrice = 0;
-                    }else{
-                        oldPrice = marketData[i].market[1].priceEach;
-                    }
+                    // getting the item price
+                    let marketData = await mongoGetData("market", {id: itemsData[i].id}, {ISO: -1});
 
-                    let priceStatus = getPriceStatus(oldPrice, marketData[i].market[0].priceEach);
-
-                    itemData = itemData + (
-                        "**"+marketData[i].name+"** `"+marketData[i]._id+"`\n"+
-                        "- Each: "+setCurrencyFormat(marketData[i].market[0].priceEach)+" `"+priceStatus+"`\n"+
-                        "- Lowest: "+setCurrencyFormat(marketData[i].market[0].priceTotal)+" for "+marketData[i].market[0].quantity+"\n"
+                    // comparising the prices
+                    let oldPrice = (marketData[1] !== undefined)? marketData[1].priceEach : 0;
+                    let priceStatus = getPriceStatus(oldPrice, marketData[0].priceEach);
+  
+                    queryResult = queryResult + (
+                        "**"+itemsData[i].name+"** `"+dateformat(marketData[0].ISO, "UTC:dd-mm-yy:HH.MM")+" UTC`\n"+
+                        "- Each: "+setCurrencyFormat(marketData[0].priceEach)+" `"+priceStatus+"`\n"+
+                        "- Lowest: "+setCurrencyFormat(marketData[0].priceTotal)+" for "+marketData[0].quantity+"\n"
                     );
+
+                    end = Date.now();
+                    serveTime = (end-start)/1000+'s';
                 }            
             } 
         }else{
-            itemData = "Unable to get result on **"+searchQuery+"**.\nPlease try to be more specific with your search and try again.";
+            end = Date.now();
+            serveTime = (end-start)/1000+'s';
+
+            queryResult = "Unable to get result on **"+searchQuery+"**.\nPlease try to be more specific with your search and try again.";
         };
 
         embedData = {
@@ -107,11 +120,11 @@ module.exports = class MarketCommand extends Command {
                     "name": "Marketplace - Search result of "+searchQuery.replace(/(^|\s)\S/g, l => l.toUpperCase()),
                     "icon_url": "https://cdn.discordapp.com/emojis/464036617531686913.png?v=1"
                 },
-                "description": itemData,
+                "description": queryResult,
                 "color": 16766720,
                 "footer": {
                     "icon_url": "https://slate.silveress.ie/docs_bns/images/logo.png",
-                    "text": "Powered by Silveress's BnS API - Last update: "+dateformat(dataLastUpdate, "UTC:dd-mm-yy @ HH:MM")+" UTC"
+                    "text": "Powered by Silveress's BnS API - Served in "+serveTime
                 },
                 "thumbnail": {
                     "url": itemImage
