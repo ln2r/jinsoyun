@@ -776,8 +776,6 @@ module.exports = {
     let questsData = await module.exports.mongoGetData("quests", {});
     let challengesList = [];
 
-    console.log(questsData.length);
-
     // checking the quests list
     for(let i=0; i<(challengesData.length - 2); i++){
       // getting the quest
