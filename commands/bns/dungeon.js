@@ -78,10 +78,12 @@ module.exports = class DungeonCommand extends Command {
                 }
             }
 
+            console.log(guidesData)
+
             let weaponSuggestion = (dungeonsData.weapon === "")? "*Unspecified Weapon*": dungeonsData.weapon;
 
             let challengesInfo = await getChallengesInfo(dungeonsData.id);
-
+           
             end = Date.now();
             serveTime = (end-start)/1000+'s';
             
@@ -103,7 +105,7 @@ module.exports = class DungeonCommand extends Command {
                         },
                         {
                             "name": "Challenges",
-                            "value": challengesInfo.join(", ")
+                            "value": (challengesInfo.length === 0)? "*Not in any challenges*" : challengesInfo.join(", ")
                         },
                         {
                             "name": "Recommended Attack Power",
@@ -115,7 +117,7 @@ module.exports = class DungeonCommand extends Command {
                         },                    
                         {
                             "name": "Guides",
-                            "value": setArrayDataFormat(guidesData, "- ", true)
+                            "value": (guidesData[0] === "[]()" || guidesData.length === 0)? "*No data available*" : setArrayDataFormat(guidesData, "- ", true)
                         },
                         {
                             "name": "Rewards",
