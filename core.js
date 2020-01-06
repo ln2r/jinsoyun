@@ -281,7 +281,7 @@ module.exports = {
      * @return object, daily data (reward, quests list)
      */
   getDailyData: async function getDaily(day) {
-    let challengesData = await module.exports.mongoGetData('challenges_', {name: day});
+    let challengesData = await module.exports.mongoGetData('challenges', {name: day});
 
     let eventDailyRewards = await module.exports.mongoGetData('events', {});
         eventDailyRewards = eventDailyRewards[0].rewards.daily;
@@ -299,7 +299,7 @@ module.exports = {
      * @return object, weekly data (quests list, rewards)
      */
   getWeeklyData: async function getWeekly() {
-    let challengesData = await module.exports.mongoGetData('challenges_', {name: "Weekly"});
+    let challengesData = await module.exports.mongoGetData('challenges', {name: "Weekly"});
 
     return {
       // getting quests
