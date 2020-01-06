@@ -30,7 +30,7 @@ module.exports = class KoldrakCommand extends Command {
         let end;
         let serveTime;
 
-        let timeData = await mongoGetData("challenges_", {name: "Koldrak"});
+        let timeData = await mongoGetData("challenges", {name: "Koldrak"});
             timeData = timeData[0].time;
 
         let koldrakClosestTime = getTimeDifference(timeData);

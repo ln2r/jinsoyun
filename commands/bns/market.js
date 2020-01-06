@@ -64,7 +64,7 @@ module.exports = class MarketCommand extends Command {
         
         // getting the item data
         try{
-            itemsData = await mongoGetData("items_", dbSearchQuery);
+            itemsData = await mongoGetData("items", dbSearchQuery);
         }catch(err){
             marketError = true;
         };

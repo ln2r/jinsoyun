@@ -53,7 +53,7 @@ module.exports = class RemoveCustomRoleCommand extends Command {
         if(isNaN(itemPrice)){
             let regx = new RegExp("(?:^|\W)"+itemPrice+"+(?:$|\W)", "ig");
             let dbSearchQuery = {"name": regx};
-            let itemData = await mongoGetData("items_", dbSearchQuery);       
+            let itemData = await mongoGetData("items", dbSearchQuery);       
 
             if(itemData.length === 0){
                 invalidItem = true;

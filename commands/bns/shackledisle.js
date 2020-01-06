@@ -30,7 +30,7 @@ module.exports = class ShackledIsleCommand extends Command {
         let end;
         let serveTime;
 
-        let timeData = await mongoGetData("challenges_", {name: "Shackled Isle"});
+        let timeData = await mongoGetData("challenges", {name: "Shackled Isle"});
             timeData = timeData[0].time;
 
         let brModeClosestTime = getTimeDifference(timeData);

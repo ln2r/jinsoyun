@@ -84,7 +84,7 @@ module.exports = {
       const updateTime = (end-start)/1000+'s';
       console.log('[core] [items-update] Update data failed, time: '+updateTime);
     } else {
-      let itemsCollectionName = "items_";
+      let itemsCollectionName = "items";
       let marketCollectionName = "market";
       
       MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
@@ -638,7 +638,7 @@ module.exports = {
   getRewardsList: async function getRewards(challengesType){
     let eventData = await module.exports.mongoGetData("events", {});
     let eventRewards;
-    let challengesData = await module.exports.mongoGetData("challenges_", {name: challengesType});
+    let challengesData = await module.exports.mongoGetData("challenges", {name: challengesType});
     let challengesRewards;
 
     challengesRewards = challengesData[0].rewards;
@@ -772,7 +772,7 @@ module.exports = {
    * @return {Array} challenges list
    */
   getChallengesInfo: async function getChallenges(id){
-    let challengesData = await module.exports.mongoGetData("challenges_", {});
+    let challengesData = await module.exports.mongoGetData("challenges", {});
     let questsData = await module.exports.mongoGetData("quests", {});
     let challengesList = [];
 
