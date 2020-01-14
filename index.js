@@ -209,8 +209,22 @@ clientDiscord
           if(found){
             // checking the message
             if(data.message_id === guildReactionRoleData[messageIndex].id){
-              const message = await channel.fetchMessage(data.message_id);
-              const member = message.guild.members.get(user.id);
+              const message;
+              const member;
+              
+              try{
+                message = await channel.fetchMessage(data.message_id);
+                member = message.guild.members.get(user.id);
+              }catch(err){
+                clientDiscord.owners[i].send(
+                  'Error Occured on `'+error.name+'`'+
+                    '\n__Details__:'+
+                    '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
+                    '\n**Location**: '+data.guild_id+
+                    '\n**Content**: '+err+
+                    '\n**Message**:\n'+message
+                )
+              }
 
               // checking the emoji and getting the index
               if(guildReactionRoleData[messageIndex].reactions){
