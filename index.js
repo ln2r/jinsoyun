@@ -209,10 +209,13 @@ clientDiscord
           if(found){
             // checking the message
             if(data.message_id === guildReactionRoleData[messageIndex].id){
-              
+              let message;
+              let member;
+
+              // for error debugging, remove later
               try{
-                const message = await channel.fetchMessage(data.message_id);
-                const member = message.guild.members.get(user.id);
+                message = await channel.fetchMessage(data.message_id);
+                member = message.guild.members.get(user.id);
               }catch(err){
                 clientDiscord.owners[i].send(
                   'Error Occured on `'+error.name+'`'+
