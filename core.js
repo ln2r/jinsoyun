@@ -796,6 +796,40 @@ module.exports = {
 
     return challengesList;
   },
+
+  /**
+   * getAuthorPermission
+   * getting message author permission for commands
+   * @param {Object} messageData 
+   * @param {String} guildId 
+   * @return {Boolean} permission boolean
+   */
+  getAuthorPermission: async function getPermission(messageData, guildId){
+    let configsData = await module.exports.getGuildSettings(guildId);
+    let guildAdminRolesData = configsData.settings.admin_roles;
+    let found;
+
+    // checking if the guild have admin roles set
+    if(guildAdminRolesData && guildAdminRolesData !== null){
+      // check if its the guild owner
+      if(messageData.author.id === messageData.guild.ownerID){
+        return true;
+      }
+
+      // checking author roles
+      messageData.member.roles.map((role) => {
+        for(let i=0; i<guildAdminRolesData.length; i++){
+          if(guildAdminRolesData[i] === role.id){
+            found = true;
+          }
+        }
+      })
+
+      return (found)? true : false;
+    }else{
+      return messageData.channel.permissionsFor(messageData.author).has("MANAGE_ROLES", false)
+    }
+  },
 };
 
 // Exported function end here

@@ -1,6 +1,6 @@
 const { Command } = require("discord.js-commando");
 const dateformat = require("dateformat");
-const { getGuildSettings, getMentionedChannelId, getMentionedRoleId, getGlobalSettings } = require("../../core");
+const { getGuildSettings, getMentionedChannelId, getMentionedRoleId, getGlobalSettings, getAuthorPermission } = require("../../core");
 
 module.exports = class GuildSettingsCommand extends Command {
     constructor(client) {
@@ -26,11 +26,12 @@ module.exports = class GuildSettingsCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
+        let subQuery = ["reset", "twitter", "koldrak", "gate", "joinmsg", "show", "admin"];
         let msgData = "";
         let embedData;
 
-        let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
-        if(authorPermission){
+        // checking permission
+        if(await getAuthorPermission(msg, msg.guild.id)){
             let guildSettings = await getGuildSettings(msg.guild.id);
             let botPrefix;
 
@@ -47,30 +48,29 @@ module.exports = class GuildSettingsCommand extends Command {
                     'color': 16741688,
                     'fields': [
                         {
-                            'inline': false,
                             'name': "Twitter News",
                             'value': "Change: `"+botPrefix+"setting twitter #channel-name`\nDisable: `"+botPrefix+"setting twitter disable`"
                         },
                         {
-                            'inline': false,
                             'name': "Koldrak's Lair Access",
                             'value': "Change: `"+botPrefix+"setting koldrak #channel-name`\nDisable: `"+botPrefix+"setting koldrak disable`"
                         },
                         {
-                            'inline': false,
                             'name': "Challenge Quests and Event Summary",
                             'value': "Change: `"+botPrefix+"setting reset #channel-name`\nDisable: `"+botPrefix+"setting reset disable`"
                         },
                         {
-                            'inline': false,
                             'name': "New Member Verification",
                             'value': "Change: `"+botPrefix+"setting gate #welcome-channel #follow-up-channel @role-name`\nDisable: `"+botPrefix+"setting gate disable disable disable`\nNote: You can just replace one of them to `disable` if you want that feature disabled (like the follow-up or auto role assignment)."
                         },
                         {
-                            'inline': true,
                             'name': "Join Command Custom Message",
                             'value': "Change: `"+botPrefix+"setting joinmsg Your message here.`\nDisable: `"+botPrefix+"setting joinmsg disable `\nNote: If you want to mention the message author use MESSAGE_AUTHOR, and SERVER_NAME when you want to add the server name."
                         },
+                        {
+                            'name': "Bot Admin Roles",
+                            'value': "Change: `"+botPrefix+"setting admin @mentioned-role.`\nDisable: `"+botPrefix+"setting admin disable `\nNote: Guild/Server owner will always have permission regardles having the roles or not."
+                        }
                     ]
                 }
             };    
@@ -90,6 +90,7 @@ module.exports = class GuildSettingsCommand extends Command {
             let settingGateFollowupChannelText = "*No Channel Selected*";
             let settingGateRoleText = "*No Role Selected*";
             let settingFollowupMessageText = "*No Message Set*";
+            let settingAdminRoleText = ["*No Role Set*"];
 
             switch(setting){
                 case "reset":
@@ -380,9 +381,54 @@ module.exports = class GuildSettingsCommand extends Command {
                         },
                     ];
                 break;
+
+                case 'admin':
+                    query.shift();
+                    let settingAdminRoles = query;
+
+                    if(settingAdminRoles.length !== 0){
+                        if(settingAdminRoles[0] === "disable"){
+                            settingAdminRoles = null;
+                        }else{
+                            settingAdminRoleText = []; // emptying the array
+
+                            for(let i=0; i<settingAdminRoles.length; i++){
+                                settingAdminRoleText.push(settingAdminRoles[i]);
+                                settingAdminRoles[i] = getMentionedRoleId(settingAdminRoles[i]);
+                            }
+                        };
+
+                        // update the database
+                        this.client.emit('adminRolesChange', msg.guild.id, settingAdminRoles);
+
+                        changed = true;
+                    }
+
+                    if(!changed){
+                        if(guildSettings){
+                            if(guildSettings.settings.admin_roles && guildSettings.settings.admin_roles[0] !== null){
+                                settingAdminRoleText = []; // emptying the array
+
+                                for(let i=0; i<guildSettings.settings.admin_roles.length; i++){
+                                    settingAdminRoleText.push("<@&"+guildSettings.settings.admin_roles[i]+">");
+                                }
+                            }
+                        }                        
+                    }
+                    
+                    optionDisplayName = "Bot Admin Roles";
+                    optionDescription = "List of admin roles who can modified bot's settings";
+                    optionEmbedData = [
+                        {
+                            'name': "Roles",
+                            'value': settingAdminRoleText.join(", ")
+                        }
+                    ];
+                    
+                break;
             };
 
-            if(setting === "reset" || setting === "twitter" || setting === "koldrak" || setting === "gate" || setting === "joinmsg" || setting === "show"){
+            if(subQuery.includes(setting)){
                 if(changed === true){
                     msgData = msg.guild.name+"'s setting for *"+optionDisplayName+"* has been changed.";
                 }else{
