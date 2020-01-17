@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { mongoGetData, getGlobalSettings } = require("../../core");
+const { mongoGetData, getGlobalSettings, getAuthorPermission } = require("../../core");
 
 module.exports = class ReactionRoleMessageCommand extends Command {
     constructor(client) {
@@ -28,11 +28,8 @@ module.exports = class ReactionRoleMessageCommand extends Command {
         let msgData;
         let embedData;
 
-        // get user permission
-        let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
-
         // check permission
-        if(authorPermission){
+        if(await getAuthorPermission(msg, msg.guild.id)){
             let reactionMessageData;
 
             // getting guild's reaction-role data from db

@@ -1,5 +1,5 @@
 const { Command } = require("discord.js-commando");
-const { mongoGetData, getMentionedRoleId, getGlobalSettings } = require("../../core");
+const { mongoGetData, getMentionedRoleId, getGlobalSettings, getAuthorPermission } = require("../../core");
 
 module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
     constructor(client) {
@@ -28,11 +28,8 @@ module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
         let msgData;
         let msgEmoji;
 
-        // get user permission
-        let authorPermission = msg.channel.permissionsFor(msg.author).has("MANAGE_ROLES", false);
-
         // check permission
-        if(authorPermission){
+        if(await getAuthorPermission(msg, msg.guild.id)){
             // check if message is selected
             if(!msg.guild.currentMessage){
                 msgData = "Please select a message first using `rmessage message-id`";
