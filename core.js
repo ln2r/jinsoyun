@@ -41,6 +41,7 @@ module.exports = {
      * @param {String} collname data collection name
      * @param {Object} filter data filter
      * @param {Object} sorting data sorting
+     * @param {Number} limit returned data limit
      * @return data fetched from databse
      * @example
      *  // Using the function locally with id as it filter
@@ -49,20 +50,24 @@ module.exports = {
      *  // Using the function outside the file without filter
      *  core.mongoGetData("classes");
      */
-  mongoGetData: function mongoGetData(collname, filter, sorting) {
+    
+  mongoGetData: function mongoGetData(collname, filter, sorting, limit) {
     filter = (filter === null || filter === undefined)? {} : filter;
     sorting = (sorting === null || sorting === undefined)? {} : sorting;
-
+    limit = (limit === null || limit === undefined)? 0 : limit;  
+    
     return MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
-        .then(function(db) {
-          const dbo = db.db(dbName);
-          const collection = dbo.collection(collname);
-          return collection.find(filter).sort(sorting).toArray()
-              .then(db.close());
-        })
-        .then(function(items) {
-          return items;
-        });
+      .then(async function(db) {
+        const dbo = db.db(dbName);
+        const result = await dbo.collection(collname).find(filter).sort(sorting).limit(limit).toArray();
+        
+        db.close();
+
+        return result;
+      })
+      .then(function(items) {
+        return items;
+      });      
   },
 
   /**
