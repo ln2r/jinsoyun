@@ -82,7 +82,7 @@ module.exports = class MarketCommand extends Command {
                 
                 // adding limit to the result
                 if(itemsData.length > 5){
-                    msgData = "Found **"+itemsData.length+"** matching items, please use exact search to get more accurate result";
+                    msgData = "Found **"+itemsData.length+"** matching items, please use exact search to get more accurate result. (`market <"+searchQuery+">`)";
                     maxItemLength = 5;
                 }else{
                     maxItemLength = itemsData.length;
@@ -91,21 +91,24 @@ module.exports = class MarketCommand extends Command {
                 // populating the results
                 for(let i = 0; i < maxItemLength; i++){
                     // getting the item price
-                    let marketData = await mongoGetData("market", {id: itemsData[i].id}, {ISO: -1});
+                    let marketData = await mongoGetData("market", {id: itemsData[i].id}, {ISO: -1}, 2);
 
-                    // comparising the prices
-                    let oldPrice = (marketData[1] !== undefined)? marketData[1].priceEach : 0;
-                    let priceStatus = getPriceStatus(oldPrice, marketData[0].priceEach);
-  
-                    queryResult = queryResult + (
-                        "**"+itemsData[i].name+"** `"+dateformat(marketData[0].ISO, "UTC:dd-mm-yy:HH.MM")+" UTC`\n"+
-                        "- Each: "+setCurrencyFormat(marketData[0].priceEach)+" `"+priceStatus+"`\n"+
-                        "- Lowest: "+setCurrencyFormat(marketData[0].priceTotal)+" for "+marketData[0].quantity+"\n"
-                    );
-
-                    end = Date.now();
-                    serveTime = (end-start)/1000+'s';
-                }            
+                    // checking if the item have market data
+                    if(marketData.length !== 0){
+                        // comparising the prices
+                        let oldPrice = (marketData[1] !== undefined)? marketData[1].priceEach : 0;
+                        let priceStatus = getPriceStatus(oldPrice, marketData[0].priceEach);
+    
+                        queryResult = queryResult + (
+                            "**"+itemsData[i].name+"** `"+dateformat(marketData[0].ISO, "UTC:dd-mm-yy:HH.MM")+" UTC`\n"+
+                            "- Each: "+setCurrencyFormat(marketData[0].priceEach)+" `"+priceStatus+"`\n"+
+                            "- Lowest: "+setCurrencyFormat(marketData[0].priceTotal)+" for "+marketData[0].quantity+"\n"
+                        );
+                    }                  
+                }
+                
+                end = Date.now();
+                serveTime = (end-start)/1000+'s';
             } 
         }else{
             end = Date.now();
