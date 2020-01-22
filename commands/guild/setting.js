@@ -26,7 +26,7 @@ module.exports = class GuildSettingsCommand extends Command {
             return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
         };
 
-        let subQuery = ["reset", "twitter", "koldrak", "gate", "joinmsg", "show", "admin"];
+        let subQuery = ["reset", "twitter", "koldrak", "gate", "joinmsg", "show", "admin", "hunter"];
         let msgData = "";
         let embedData;
 
@@ -54,6 +54,10 @@ module.exports = class GuildSettingsCommand extends Command {
                         {
                             'name': "Koldrak's Lair Access",
                             'value': "Change: `"+botPrefix+"setting koldrak #channel-name`\nDisable: `"+botPrefix+"setting koldrak disable`"
+                        },
+                        {
+                            'name': "Hunter's Refugee Access",
+                            'value': "Change: `"+botPrefix+"setting hunter #channel-name`\nDisable: `"+botPrefix+"setting hunter disable`"
                         },
                         {
                             'name': "Challenge Quests and Event Summary",
@@ -91,6 +95,7 @@ module.exports = class GuildSettingsCommand extends Command {
             let settingGateRoleText = "*No Role Selected*";
             let settingFollowupMessageText = "*No Message Set*";
             let settingAdminRoleText = ["*No Role Set*"];
+            let settingHuntersRefugeeText = "*No Channel Selected*";
 
             switch(setting){
                 case "reset":
@@ -339,6 +344,11 @@ module.exports = class GuildSettingsCommand extends Command {
                             settingKoldrakChannelText = "<#"+guildSettings.settings.koldrak+">";
                         }
 
+                        // hunter's refugee
+                        if(guildSettings.settings.hunters_refugee && guildSettings.settings.hunters_refugee !== null){
+                            settingHuntersRefugeeText = "<#"+guildSettings.settings.hunters_refugee+">";
+                        }
+
                         // new member gate
                         if(guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null){
                             settingGateChannelText = "<#"+guildSettings.settings.member_gate.channel_id+">";
@@ -353,6 +363,15 @@ module.exports = class GuildSettingsCommand extends Command {
                         // join command custom message
                         if(guildSettings.settings.join_message && guildSettings.settings.join_message !== null){
                             settingFollowupMessageText = guildSettings.settings.join_message;
+                        }
+
+                        // bot's admins
+                        if(guildSettings.settings.admin_roles && guildSettings.settings.admin_roles[0] !== null){
+                            settingAdminRoleText = []; // emptying the array
+
+                            for(let i=0; i<guildSettings.settings.admin_roles.length; i++){
+                                settingAdminRoleText.push("<@&"+guildSettings.settings.admin_roles[i]+">");
+                            }
                         }
                     } 
 
@@ -372,12 +391,20 @@ module.exports = class GuildSettingsCommand extends Command {
                             'value': settingKoldrakChannelText
                         },
                         {
+                            'name': "Hunter's Refugee",
+                            'value': settingHuntersRefugeeText
+                        },
+                        {
                             'name': "New Member Verification",
                             'value': "Welcome Channel: "+settingGateChannelText+"\nFollow-up Channel: "+settingGateFollowupChannelText+"\nMember Role: "+settingGateRoleText
                         },
                         {
                             'name': "Join Command Custom Message",
                             'value': settingFollowupMessageText
+                        },
+                        {
+                            'name': "Bot's Admin Roles",
+                            'value': settingAdminRoleText
                         },
                     ];
                 break;
@@ -426,7 +453,45 @@ module.exports = class GuildSettingsCommand extends Command {
                     ];
                     
                 break;
+
+                case "hunter":
+                    if(query[1]){
+                        let settingHuntersRefugeeChannel;
+
+                        if(query[1] === "disable"){
+                            settingHuntersRefugeeChannel = null;  
+                        }else{
+                            let channelId = getMentionedChannelId(query[1]);
+
+                            settingHuntersRefugeeChannel = channelId;  
+                            settingHuntersRefugeeText = "<#"+channelId+">";
+                        };
+
+                        // update the database
+                        this.client.emit('notificationHuntersChange', msg.guild.id, settingHuntersRefugeeChannel);
+
+                        changed = true;
+                    };
+
+                    if(!changed){
+                        if(guildSettings){
+                            if(guildSettings.settings.hunters_refugee && guildSettings.settings.hunters_refugee !== null){
+                                settingHuntersRefugeeText = "<#"+guildSettings.settings.hunters_refugee+">";
+                            }
+                        }  
+                    };
+
+                    optionDisplayName = "Hunter's Refugee Access";
+                    optionDescription = "Hunter's Refugee Access Notification.";
+                    optionEmbedData = [
+                        {
+                            'name': "Channel Name",
+                            'value': settingHuntersRefugeeText,
+                        },
+                    ];
+                break;
             };
+            
 
             if(subQuery.includes(setting)){
                 if(changed === true){
