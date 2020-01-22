@@ -777,12 +777,12 @@ module.exports = {
    * @return {Array} challenges list
    */
   getChallengesInfo: async function getChallenges(id){
-    let challengesData = await module.exports.mongoGetData("challenges", {});
-    let questsData = await module.exports.mongoGetData("quests", {});
+    let challengesData = await module.exports.mongoGetData("challenges");
+    let questsData = await module.exports.mongoGetData("quests");
     let challengesList = [];
 
     // checking the quests list
-    for(let i=0; i<(challengesData.length - 2); i++){
+    for(let i=0; i<(challengesData.length); i++){
       // getting the quest
       for(let j=0; j<challengesData[i].quests.length; j++){
         for(let k=0; k<questsData.length; k++){
