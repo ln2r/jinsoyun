@@ -78,8 +78,6 @@ module.exports = class DungeonCommand extends Command {
                 }
             }
 
-            console.log(guidesData)
-
             let weaponSuggestion = (dungeonsData.weapon === "")? "*Unspecified Weapon*": dungeonsData.weapon;
 
             let challengesInfo = await getChallengesInfo(dungeonsData.id);
