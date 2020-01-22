@@ -12,6 +12,8 @@ module.exports = class ShackledIsleCommand extends Command {
             memberName: "shackledisle",
             description: "Get Shackled Isle access time",
             examples: ["shackledisle"],
+            hidden: true,
+            ownerOnly: true,
         });    
     }
 

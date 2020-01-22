@@ -12,6 +12,8 @@ module.exports = class KoldrakCommand extends Command {
             memberName: "koldrak",
             description: "Get Koldrak's Lair access time",
             examples: ["koldrak"],
+            hidden: true,
+            ownerOnly: true,
         });    
     }
 
