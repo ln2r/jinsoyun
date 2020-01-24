@@ -81,7 +81,7 @@ module.exports = class WhoCommand extends Command {
         // getting character skills points distributions
         let skillsData = await getSiteData(ncsoftPlayerSkillsAPIAddress.replace("CHARACTER_NAME",charaQuery));
             skillsData = skillsData.records;
-
+            
         // checking if the data fetch return data or error
         if(charaData.status === "error"){
             // getting default image
@@ -118,7 +118,7 @@ module.exports = class WhoCommand extends Command {
             }else{
                 for(let i = 0; i < skillsData.length; i++){
                     for(let j = 0; j < skillsData[i].skills.length; j++){
-                        if(skillsData[i].skills[j].buildup_max_level === 5){
+                        if(skillsData[i].skills[j].buildup_max_level !== 0){
                             SPData.push(skillsData[i].skills[j].name+" ("+skillsData[i].skills[j].buildup_level+"/"+skillsData[i].skills[j].buildup_max_level+")");
                         }
                     }
