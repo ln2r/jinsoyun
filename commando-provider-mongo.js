@@ -72,8 +72,8 @@ class MongoDBProvider extends SettingProvider {
     // Listen for changes
     this.listeners
         .set('globalSettingChange', (guild, system, setting) => this.set(guild, system, setting))
+        .set('botGameStatusChagne', (guild, status) => this.set(guild, 'status', status))
 
-        //.set('guildOverwatchChange', (guild, channel) => this.set(guild, 'overwatch', channel))
         .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
         .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
         .set('notificationKoldrakChange', (guild, channel) => this.set(guild, 'koldrak', channel))
@@ -81,7 +81,7 @@ class MongoDBProvider extends SettingProvider {
         .set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
         .set('joinCustomMessageChange', (guild, message) => this.set(guild, 'join_message', message))
         .set('adminRolesChange', (guild, roles) => this.set(guild, 'admin_roles', roles))
-        .set('guildReactionRoleChange', (guild, messageData) => this.set(guild, 'react_role', messageData))
+        .set('guildReactionRoleChange', (guild, messageData) => this.set(guild, 'react_role', messageData))        
 
         .set('commandPrefixChange', (guild, prefix) => this.set(guild, 'prefix', prefix))
         .set('commandStatusChange', (guild, command, enabled) => this.set(guild, `cmd-${command.name}`, enabled))

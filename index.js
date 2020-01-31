@@ -57,15 +57,10 @@ clientDiscord
     .on('reconnecting', () => {
       console.warn('[soyun] [system] Reconnecting...');
     })
-    .on('ready', () => {
-      console.log('[soyun] [system] Logged in and ready');
-
-      let botStatus = {
-        game: {
-          name: '@Jinsoyun help',
-          type: 'LISTENING',
-        },
-      };
+    .on('ready', async () => {
+      
+      let globalSettings = await getGuildSettings(0);
+      let botStatus = globalSettings.settings.status;
 
       if(maintenanceMode){
         console.log("[soyun] [system] maintenance mode is enabled, only commands will run normally");
@@ -82,6 +77,8 @@ clientDiscord
         console.error;
         sendBotReport(error, 'onReady-soyun', 'error');
       });
+
+      console.log('[soyun] [system] Logged in and ready');
     })
     .on('guildCreate', async guild => {
       let guildSettingData = await getGuildSettings(guild.id);
@@ -93,6 +90,7 @@ clientDiscord
     .on('guildMemberAdd', async (member) => {
       let guildSettingData = await getGuildSettings(member.guild.id);
       let guildCommandPrefix = guildSettingData.settings.prefix;
+      
       if(guildCommandPrefix === undefined || guildCommandPrefix === null){
         guildCommandPrefix = "!";
       }
