@@ -296,7 +296,7 @@ if(maintenanceMode){
     let twitterUserValid = false;
 
     stream.on('data', async function(tweet) {
-      let payloadStatus = 'received';
+      let payloadStatus = true;
 
       // checking if it's valid account
       for (let i=0; i<twitterTrackedUser.length; i++) {
@@ -310,17 +310,17 @@ if(maintenanceMode){
         let globalSettings = await getGlobalSettings("twitter");
         if(!globalSettings.status){
           console.log('[soyun] [twitter] Twitter post notification disabled, '+globalSettings.message);
-          payloadStatus = 'rejected';  
+          payloadStatus = false;  
         }
 
         const twtFilter = tweet.text.toString().substring(0).split(' ');
 
         // Filtering the "RT" and "mention" stuff
         if (twtFilter[0] === 'RT' || twtFilter[0].charAt(0) === '@') {
-          payloadStatus = 'rejected';
+          payloadStatus = false;
         }
         
-        if(payloadStatus !== "rejected"){
+        if(payloadStatus){
           if (tweet.extended_tweet) {
             twtText = tweet.extended_tweet.full_text.toString().replace('&amp;', '&');
           } else {
@@ -387,7 +387,7 @@ if(maintenanceMode){
           console.log('[soyun] [twitter] '+tweet.user.name+'\'s tweet sent');
         }
       }
-      console.log('[soyun] [twitter] Twitter stream activity detected, status: '+payloadStatus);
+      console.log('[soyun] [twitter] Twitter stream activity detected, status: '+(payloadStatus)? "received": "rejected");
     });
 
     stream.on('error', function(error) {
