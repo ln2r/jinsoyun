@@ -39,21 +39,19 @@ module.exports = class WhoCommand extends Command {
 
         let errorStatus = false;
 
+        // getting api data
+        let apiData = await mongoGetData("apis", {}, {_id: 1});
+        
         // getting character equipments api address from the database
-        let charaAPIAddress = await mongoGetData("apis", {"name": "Silveress Character"});
-            charaAPIAddress = charaAPIAddress[0].address;
-
+        let charaAPIAddress = apiData[0].address;
         // getting character traits data api address         
-        let ncsoftPlayerTraitsAPIAddress = await mongoGetData("apis", {"name": "NCSOFT Player Traits Endpoint"});
-            ncsoftPlayerTraitsAPIAddress = ncsoftPlayerTraitsAPIAddress[0].address;
-            
+        let ncsoftPlayerTraitsAPIAddress = apiData[7].address;            
         // getting character skills data api address
-        let ncsoftPlayerSkillsAPIAddress = await mongoGetData("apis", {"name": "NCSOFT Player Skills Endpoint"});
-            ncsoftPlayerSkillsAPIAddress = ncsoftPlayerSkillsAPIAddress[0].address;
-
+        let ncsoftPlayerSkillsAPIAddress = apiData[5].address;
         // getting bnstree site address
-        let bnsTreeCharacterProfileAddress = await mongoGetData("apis", {"name": "BNS Tree Character Profile"});
-            bnsTreeCharacterProfileAddress = bnsTreeCharacterProfileAddress[0].address;
+        let ncsoftPlayerInformationAPIAddress = apiData[6].address;
+        // getting class icon for embed
+        let ncsoftCharacterClassImageAddress = apiData[8].address;
         
         // getting the character name, if the user doesn't give any, their discord nickname will be used instead
         let charaQuery;
@@ -70,8 +68,8 @@ module.exports = class WhoCommand extends Command {
             charaQuery = encodeURIComponent(args);
         }
 
-        let bnstreeProfile = bnsTreeCharacterProfileAddress+charaQuery;		
-			bnstreeProfile = bnstreeProfile.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
+        let f2ProfileURL = ncsoftPlayerInformationAPIAddress+charaQuery;		
+			f2ProfileURL = f2ProfileURL.replace(" ","%20"); // replacing the space so discord.js embed wont screaming error
 
         // getting character equipments from silveress api
         let charaData = await getSiteData(charaAPIAddress+charaQuery);
@@ -96,7 +94,9 @@ module.exports = class WhoCommand extends Command {
             embedColour = 16574595;
 
             errorStatus = true;
-        }else{
+        }
+
+        if(!errorStatus){
             // getting the traits data
             let traitsDataView = [];
             if(traitsData.length === 0){
@@ -145,7 +145,9 @@ module.exports = class WhoCommand extends Command {
                 charaAliases = "*No known aliases*"
             };
 
-            imageUrl = charaData.characterImg;
+            let imageName = (charaData.playerClass === "Kung Fu Master")?"kungfufighter":(charaData.playerClass.toLowerCase()).replace(/ /gm, "");
+            imageUrl = ncsoftCharacterClassImageAddress+imageName+".png";
+
             embedColour = 1879160;
             charaStats = [
                 {
@@ -199,7 +201,7 @@ module.exports = class WhoCommand extends Command {
                     "value": setArrayDataFormat(traitsDataView, "- ", true)
                 },                        
             ]
-        };
+        }
 
         end = Date.now();
         serveTime = (end-start)/1000+'s';
@@ -223,7 +225,7 @@ module.exports = class WhoCommand extends Command {
             messageOutput = {
                 "embed": {
                     "title":charaData.server+"'s "+charaData.style+" "+charaData.playerClass+" "+charaData.characterName+" - Level "+charaData.playerLevel+" HM Level "+charaData.playerLevelHM,
-                    "url": bnstreeProfile,
+                    "url": f2ProfileURL,
                     "color": embedColour,
                     "fields": charaStats,
                     "footer":{ 
