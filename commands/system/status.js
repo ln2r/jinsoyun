@@ -48,8 +48,12 @@ module.exports = class ResetNotificationCommand extends Command {
             // saving to db
             this.client.emit('botGameStatusChagne', "global", statusData);
 
+            msg.channel.stopTyping();
+
             return msg.say("Bot status changed to `"+status+"`, with type `"+type+"` and message `"+text+"`")
         }else{
+            msg.channel.stopTyping();
+            
             return msg.say("Invalid command format.", {
                 'embed': {
                     'title': "Valid Format",
