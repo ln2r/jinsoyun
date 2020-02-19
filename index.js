@@ -387,7 +387,7 @@ if(maintenanceMode){
           console.log('[soyun] [twitter] '+tweet.user.name+'\'s tweet sent');
         }
       }
-      console.log('[soyun] [twitter] Twitter stream activity detected, status: '+(payloadStatus)? "received": "rejected");
+      console.log('[soyun] [twitter] Twitter stream activity detected');
     });
 
     stream.on('error', function(error) {
