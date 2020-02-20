@@ -726,6 +726,8 @@ module.exports = {
         return settingsData[0].settings.not_found;
       case "koldrak_announce":
         return settingsData[0].settings.koldrak_announce;
+	    case "hunters_refugee":
+        return settingsData[0].settings.hunters_refugee;
       case "reset":
         return settingsData[0].settings.reset;
       case "twitter":
