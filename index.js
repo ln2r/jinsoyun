@@ -424,7 +424,18 @@ if(maintenanceMode){
   ontime({
     cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'],
     utc: true,
-  }, function(koldrakAnnounce){
+  }, async function(koldrakAnnounce){
+    
+    // checking global settings
+    let globalSettings = await getGlobalSettings("koldrak_announce");
+    if(!globalSettings.status){
+      console.log("[soyun] [koldrak] koldrak access notification disabled, "+globalSettings.message);
+    
+      huntersAnnounce.done();
+
+      return;
+    };
+
     clientDiscord.guilds.map(async function(guild) {
       // getting guild setting data
       let guildSettingData = await getGuildSettings(guild.id);
@@ -470,7 +481,18 @@ if(maintenanceMode){
   ontime({
     cycle: ['01:50:00'],
     utc: true,
-  }, function(huntersAnnounce){
+  }, async function(huntersAnnounce){
+
+    // checking global settings
+    let globalSettings = await getGlobalSettings("hunters_refugee");
+    if(!globalSettings.status){
+      console.log("[soyun] [hunter's] hunter's access notification disabled, "+globalSettings.message);
+    
+      huntersAnnounce.done();
+
+      return;
+    };
+
     clientDiscord.guilds.map(async function(guild) {
       // getting guild setting data
       let guildSettingData = await getGuildSettings(guild.id);
