@@ -94,7 +94,7 @@ module.exports = class GuildSettingsCommand extends Command {
             let settingGateFollowupChannelText = "*No Channel Selected*";
             let settingGateRoleText = "*No Role Selected*";
             let settingFollowupMessageText = "*No Message Set*";
-            let settingAdminRoleText = ["*No Role Set*"];
+            let settingAdminRoleText = "*No Role Set*";
             let settingHuntersRefugeeText = "*No Channel Selected*";
 
             switch(setting){
