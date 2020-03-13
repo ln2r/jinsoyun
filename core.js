@@ -349,40 +349,50 @@ module.exports = {
      * @param {Guild} clientGuildData discord bot client guild/server connected data
      */
   sendResetNotification: async function sendReset(clientGuildData) {
+    const eventSetting = await module.exports.getGlobalSettings("event");
+    const dailySetting = await module.exports.getGlobalSettings("daily");
+    const weeklySetting = await module.exports.getGlobalSettings("weekly");
+
     let todayDay = module.exports.getDayValue(Date.now(), 'now');
 
-    let dailiesData = await module.exports.getDailyData(todayDay);
-    let dailiesRewards = module.exports.setRewardsDataFormat(dailiesData.rewards);
-    let eventData = await module.exports.getEventData(todayDay);
+    let weeklyContent;
+    let fieldsData = [];
     
-    let fieldsData = [
-      {
+    if(eventSetting.status){
+      let eventData = await module.exports.getEventData(todayDay);
+
+      fieldsData.push({
         'name': 'Event',
         'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
                 '**Duration**: '+eventData.duration+'\n'+
                 '**Redemption Period**: '+eventData.redeem+'\n'+
                 '**Quests**'+module.exports.setArrayDataFormat(eventData.quests, '- ', true)+'\n\u200B',
-      },
-      {
+      })
+    }
+
+    if(dailySetting.status){
+      let dailiesData = await module.exports.getDailyData(todayDay);
+      let dailiesRewards = module.exports.setRewardsDataFormat(dailiesData.rewards);  
+      
+      fieldsData.push({
         'name': 'Daily Challenges',
         'value': '**Rewards**'+module.exports.setArrayDataFormat(dailiesRewards, "", true)+'\n\u200B'+
                 '**Quests**'+module.exports.setArrayDataFormat(dailiesData.quests, '- ', true)+'\n\u200B',
-      },
-    ];
-
-    if (todayDay === 'Wednesday') {
-      let weekliesData = await module.exports.getWeeklyData();
-      let weekliesRewards = module.exports.setRewardsDataFormat(weekliesData.rewards);
-      fieldsData.push(
-          {
-            'name': 'Weekly Challenges',
-            'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesRewards, "", true)+'\n\u200B'+
-                     '**Quests**'+module.exports.setArrayDataFormat(weekliesData.quests, '- ', true)+'\n\u200B',
-          }
-      );
+      })
     }
 
-    let msgData = 'Hello! \nIt\'s time for reset, below is today\'s/this week\'s list. Have a good day!';
+    if (todayDay === 'Wednesday' && weeklySetting.status) {
+      let weekliesData = await module.exports.getWeeklyData();
+      let weekliesRewards = module.exports.setRewardsDataFormat(weekliesData.rewards);
+
+      fieldsData.push({
+        'name': 'Weekly Challenges',
+        'value': '**Rewards**'+module.exports.setArrayDataFormat(weekliesRewards, "", true)+'\n\u200B'+
+                  '**Quests**'+module.exports.setArrayDataFormat(weekliesData.quests, '- ', true)+'\n\u200B',
+      })
+    }
+
+    let msgData = 'Hello! It\'s time for reset. Have a good day!';
 
     let embedData = {
       'embed': {
@@ -414,7 +424,7 @@ module.exports = {
         let found = 0;
         guild.channels.map((ch) => {
           if (found === 0) {
-            if (ch.id === resetChannel && resetChannel !== undefined && resetChannel !== 'disable') {
+            if (ch.id === resetChannel) {
               found = 1;
               ch.send(msgData, embedData);
             }
