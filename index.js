@@ -130,19 +130,7 @@ if(maintenanceMode){
   ontime({
     cycle: ['12:00:00'],
     utc: true,
-  }, async function(reset) {
-    // checking if it disabled or not
-    let globalSettings = await getGlobalSettings("reset");
-    if(!globalSettings.status){
-        console.log("[soyun] [reset] reset notification currently disabled, "+globalSettings.message);
-    }else{
-      sendResetNotification(clientDiscord.guilds);
-    };
-
-    reset.done();
-    return;
-  }
-  );
+  }, services.automationQuestReset(clientDiscord.guilds));
 
   // Koldrak's Lair access
   ontime({
