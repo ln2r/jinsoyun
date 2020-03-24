@@ -5,8 +5,9 @@
 node_modules/
 package-lock.json
 
-# .env file
+# Config Files
 .env
+config.json
 
 # test folder
 commands/dev/
