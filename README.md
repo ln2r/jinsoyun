@@ -1,13 +1,10 @@
 # Jinsoyun
 A discord bot built for Blade &amp; Soul's NA Server
 
-## Features
-* Daily challenges information and announcement on reset
-* Weekly challenges information and announcement on reset
-* Current event summary information and announcement on reset
-* Character information searching
+## Noteable Features
+* Daily, weekly and event information and announcement on reset
+* Character searching
 * Marketplace data
-* Smart bid calculator
 
 ## Installation / Getting Started
 ### Invitation Url
@@ -38,35 +35,46 @@ If you want to host the bot yourself just follow the instruction below. The down
 * Do `node index.js` to run the bot.
 
 ## Bot Configurations
-Bot configuration data is located in 2 places, the one in `.env` file and the other one is in the MongoDB collection
+Bot configuration data is located in 2 places, theres one in `config.json` and the other one is in the MongoDB collection
 
 ### .env File
-* `bot_mongodb_url` - `String`: MongoDB connection url
-* `bot_mongodb_db_name` - `String`: bot MongoDB database name
-* `bot_default_prefix` - `String`: bot command default prefix
-* `bot_owner_id` - `String` your discord profile id
-* `bot_maintenance_mode` - `Boolean`: bot maintenance mode, will disable some feature if enabled
-* `discord_secret` - `String` discord bot app token
-* `twitter_consumer_key` - `String`: twitter app consumer key
-* `twitter_consumer_secret` - `String`: twitter app consumer secret key
-* `twitter_access_token_key` - `String`: twitter app access token key
-* `twitter_access_token_secret` - `String`: twitter app access token secret key
+* `bot.default_prefix` - `String`: bot command default prefix
+* `bot.author_id` - `Array`: array of bot author id
+* `bot.maintenance` - `Boolean`: bot maintenance mode, will disable some feature if enabled
+* `database.url` - `String` MongoDB database connection URL
+* `database.name` - `String`: name of MongoDB database which will be used
+* `key.discord` - `String` discord bot app token
+* `key.twitter.consumer_key` - `String`: twitter app consumer key
+* `key.twitter.consumer_secret` - `String`: twitter app consumer secret key
+* `key.twitter.token_key` - `String`: twitter app access token key
+* `key.twitter.token_secret` - `String`: twitter app access token secret key
+* `twitter.id` - `String`: followed accounts id
 
 Template:
-  ```env
-  # bot stuff
-  bot_mongodb_url = MONGODB_CONNECTION_URL
-  bot_mongodb_db_name = MONGODB_DATABASE_NAME
-  bot_default_prefix = DEFAULT_BOT_PREFIX
-  bot_owner_id = YOUR_DISCORD_ID
-  bot_maintenance_mode = false
-
-  # keys and secrets
-  discord_secret = YOUR_DISCORD_APP_TOKEN
-  twitter_consumer_key = YOUR_TWITTER_CONSUMER_KEY
-  twitter_consumer_secret = YOUR_TWITTER_CONSUMER_SECRET
-  twitter_access_token_key = YOUR_TWITTER_ACCESS_TOKEN_KEY
-  twitter_access_token_secret = YOUR_TWITTER_ACCESS_TOKEN_SECRET
+  ```JSON
+  {
+    "bot":{
+      "default_prefix": "!",
+      "author_id": ["YOUR DISCORD ID HERE"],
+      "maintenance": false
+    },
+    "database":{
+      "url": "YOUR MONGODB CONNECTION URL HERE",
+      "name": "YOUR MONGODB DATABASE NAME HERE"
+    },
+    "key":{
+      "discord": "YOUR DISCORD TOKEN HERE",
+      "twitter":{
+        "consumer_key": "YOUR TWITTER CONSUMER KEY HERE",
+        "consumer_secret": "YOUR TWITTER CONSUMER SECRET KEY HERE",
+        "token_key": "YOUR TWITTER TOKEN KEY HERE",
+        "token_secret": "YOUR TWITTER TOKEN SECRET HERE"
+      }
+    },
+    "twitter":{
+      "id": "TWITTER ID NUMBER HERE"
+    }
+  }
   ```
 
 ### Bot Configuration Data
@@ -86,7 +94,10 @@ Explanation:
   * [Silveress](https://bns.silveress.ie/) - Blade and Soul unofficial API
   * [discord.js commando](https://github.com/discordjs/Commando) - discord.js command framework
   * [Commando MongoDBProvider](https://github.com/paulhobbel/commando-provider-mongo) - MongoDB provider for Commando
-* *Want to get me some coffee so I can stay up more? say no more [ko-fi](https://ko-fi.com/ln2rworks)*
+
+## Support
+If you find this bot useful and want to give some tips or something like that you can use this thing below.
+* [ko-fi](https://ko-fi.com/ln2rworks)
 
 ## License
 *Code of this project is licensed under MIT license*
