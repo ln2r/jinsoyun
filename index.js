@@ -148,11 +148,5 @@ if(maintenanceMode){
   ontime({
     cycle: ['00:02'],
     utc: true,
-  }, function(itemUpdate) {
-    mongoItemDataUpdate();
-
-    itemUpdate.done();
-    return;
-  }
-  );
+  }, services.updateItemsMarket());
 };
