@@ -136,64 +136,13 @@ if(maintenanceMode){
   ontime({
     cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'],
     utc: true,
-  }, await services.automationKoldrak(clientDiscord.guilds))
+  }, await services.automationKoldrak(clientDiscord.guilds));
 
   // Hunter's Refugee access
   ontime({
     cycle: ['01:50:00'],
     utc: true,
-  }, async function(huntersAnnounce){
-
-    // checking global settings
-    let globalSettings = await getGlobalSettings("hunters_refugee");
-    if(!globalSettings.status){
-      console.log("[soyun] [hunter's] hunter's access notification disabled, "+globalSettings.message);
-    
-      huntersAnnounce.done();
-
-      return;
-    };
-
-    clientDiscord.guilds.map(async function(guild) {
-      // getting guild setting data
-      let guildSettingData = await getGuildSettings(guild.id);
-
-      let huntersChannel = '';
-      if (guildSettingData !== undefined) {
-        huntersChannel = guildSettingData.settings.hunters_refugee;
-      }
-
-      let found = 0;
-      guild.channels.map((ch) => {
-        if (found === 0) {
-          if (ch.id === huntersChannel && huntersChannel !== '' && huntersChannel !== 'disable') {
-            found = 1;
-            if(ch.permissionsFor(clientDiscord.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')){
-              ch.send({
-                "embed":{
-                  "color": 8388736,
-                  "description": "**Hunter's Refugee** will be accessible in **10 Minutes**",
-                  "author":{
-                    "name": "Event Alert",
-                    
-                  },
-                  "footer":{
-                    "icon_url": "https://cdn.discordapp.com/emojis/463569669584977932.png?v=1",
-                    "text": "Generated at "+dateformat(Date.now(), "UTC:dd-mm-yy @ HH:MM")+" UTC"
-                  }
-                }
-              });
-            };
-          };
-        };
-      });
-    });
-
-    console.log("[soyun] [hunter's] hunter's access notification sent");
-    
-    huntersAnnounce.done();
-    return;
-  })
+  }, await services.automationHunters(clientDiscord.guilds));
 
   // Item data update
   ontime({
