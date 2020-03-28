@@ -9,7 +9,7 @@ const dbName = process.env.SOYUN_BOT_DB_NAME;
  * Counting current day commands call
  * @param {Date} date current date
  */
-module.exports = function(date){
+module.exports = async function(date){
   const statsCollectionName = 'botStats';
   const statsData = await utils.fetchDB(statsCollectionName, {date: dateformat(date, 'UTC:dd-mmmm-yyyy')});
   let todayStats = 0;
