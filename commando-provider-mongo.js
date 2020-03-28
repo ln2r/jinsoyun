@@ -71,43 +71,43 @@ class MongoDBProvider extends SettingProvider {
 
     // Listen for changes
     this.listeners
-        .set('globalSettingChange', (guild, system, setting) => this.set(guild, system, setting))
-        .set('botGameStatusChagne', (guild, status) => this.set(guild, 'status', status))
+      .set('globalSettingChange', (guild, system, setting) => this.set(guild, system, setting))
+      .set('botGameStatusChagne', (guild, status) => this.set(guild, 'status', status))
 
-        .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
-        .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
-        .set('notificationKoldrakChange', (guild, channel) => this.set(guild, 'koldrak', channel))
-        .set('notificationHuntersChange', (guild, channel) => this.set(guild, 'hunters_refugee', channel))
-        .set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
-        .set('joinCustomMessageChange', (guild, message) => this.set(guild, 'join_message', message))
-        .set('adminRolesChange', (guild, roles) => this.set(guild, 'admin_roles', roles))
-        .set('guildReactionRoleChange', (guild, messageData) => this.set(guild, 'react_role', messageData))        
+      .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
+      .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
+      .set('notificationKoldrakChange', (guild, channel) => this.set(guild, 'koldrak', channel))
+      .set('notificationHuntersChange', (guild, channel) => this.set(guild, 'hunters_refugee', channel))
+      .set('newMemberChannelChange', (guild, channel) => this.set(guild, 'member_gate', channel))
+      .set('joinCustomMessageChange', (guild, message) => this.set(guild, 'join_message', message))
+      .set('adminRolesChange', (guild, roles) => this.set(guild, 'admin_roles', roles))
+      .set('guildReactionRoleChange', (guild, messageData) => this.set(guild, 'react_role', messageData))
 
-        .set('commandPrefixChange', (guild, prefix) => this.set(guild, 'prefix', prefix))
-        .set('commandStatusChange', (guild, command, enabled) => this.set(guild, `cmd-${command.name}`, enabled))
-        .set('groupStatusChange', (guild, group, enabled) => this.set(guild, `grp-${group.id}`, enabled))
-        .set('guildCreate', (guild) => {
-          const settings = this.settings.get(guild.id);
-          if (!settings) return;
-          this.setupGuild(guild.id, settings);
-        })
-        .set('commandRegister', (command) => {
-          for (const [guild, settings] of this.settings) {
-            if (guild !== 'global' && !client.guilds.has(guild)) continue;
-            this.setupGuildCommand(client.guilds.get(guild), command, settings);
-          }
-        })
-        .set('groupRegister', (group) => {
-          for (const [guild, settings] of this.settings) {
-            if (guild !== 'global' && !client.guilds.has(guild)) continue;
-            this.setupGuildGroup(client.guilds.get(guild), group, settings);
-          }
-        });
+      .set('commandPrefixChange', (guild, prefix) => this.set(guild, 'prefix', prefix))
+      .set('commandStatusChange', (guild, command, enabled) => this.set(guild, `cmd-${command.name}`, enabled))
+      .set('groupStatusChange', (guild, group, enabled) => this.set(guild, `grp-${group.id}`, enabled))
+      .set('guildCreate', (guild) => {
+        const settings = this.settings.get(guild.id);
+        if (!settings) return;
+        this.setupGuild(guild.id, settings);
+      })
+      .set('commandRegister', (command) => {
+        for (const [guild, settings] of this.settings) {
+          if (guild !== 'global' && !client.guilds.has(guild)) continue;
+          this.setupGuildCommand(client.guilds.get(guild), command, settings);
+        }
+      })
+      .set('groupRegister', (group) => {
+        for (const [guild, settings] of this.settings) {
+          if (guild !== 'global' && !client.guilds.has(guild)) continue;
+          this.setupGuildGroup(client.guilds.get(guild), group, settings);
+        }
+      });
     for (const [event, listener] of this.listeners) client.on(event, listener);
   }
 
   async destroy() {
-    // Close database connection
+  // Close database connection
     this.mongoClient.close();
 
     // Remove all listeners from the client
