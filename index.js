@@ -1,23 +1,18 @@
 const { CommandoClient } = require('discord.js-commando');
-const Twitter = require('twitter');
 const MongoClient = require('mongodb').MongoClient;
 const MongoDBProvider = require('./commando-provider-mongo');
 const path = require('path');
 const ontime = require('ontime');
-const dateformat = require('dateformat');
 
-const config = require('config.json');
+const config = require('./config.json');
 const services = require('./services/index.js');
 const events = require('./events/index.js');
 const utils = require('./utils/index.js');
 
-const {mongoGetData, sendResetNotification, mongoItemDataUpdate, sendBotReport, sendBotStats, getGuildSettings, getGlobalSettings } = require('./core');
+const { sendBotReport } = require('./core');
 
 // Load config file
 services.loadConfig();
-
-// Maintenance mode
-const maintenanceMode = config.bot.maintenance;
 
 // Discord.js Commando scripts start here
 const clientDiscord = new CommandoClient({
@@ -26,11 +21,6 @@ const clientDiscord = new CommandoClient({
   disableEveryone: true,
   unknownCommandResponse: false,
 });
-
-const reactionEvents = {
-  MESSAGE_REACTION_ADD: 'messageReactionAdd',
-	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
-};
 
 clientDiscord.login(process.env.SOYUN_BOT_DISCORD_SECRET);
 
@@ -64,10 +54,10 @@ clientDiscord
     console.warn('[soyun] [system] Reconnecting...');
   })
   .on('ready', async () => {    
-    let globalSettings = await getGuildSettings(0);
+    let globalSettings = await utils.getGuildSettings(0);
     let botStatus = globalSettings.settings.status;
 
-    if(maintenanceMode){
+    if(config.bot.maintenance){
       console.log("[soyun] [system] maintenance mode is enabled, only commands will run normally");
       botStatus = {
         game: {
@@ -86,7 +76,7 @@ clientDiscord
     console.log('[soyun] [system] Logged in and ready');
   })
   .on('guildCreate', async guild => {
-    let guildSettingData = await getGuildSettings(guild.id);
+    let guildSettingData = await utils.getGuildSettings(guild.id);
     
     if(!guildSettingData){
       clientDiscord.emit('commandPrefixChange', guild.id, process.env.bot_default_prefix);
@@ -96,7 +86,7 @@ clientDiscord
     await events.onMemberAdd(member);
   })
   .on('commandRun', async () => {
-    if(maintenanceMode){
+    if(config.bot.maintenance){
       console.log("[soyun] [stats] command counter disabled");
     }else{
       await services.sendStats(Date.now());
@@ -120,33 +110,53 @@ clientDiscord.setProvider(
 // Discord.js Commando scripts end here
 
 // Twitter stream
-await services.twitterStream();
+services.twitterStream();
 
-// Automation scripts start here
+// Automation
 // Quest reset notification
-if(maintenanceMode){
+if(config.bot.maintenance){
   console.log("[soyun] [automation] system automation is disabled");
 }else{
   ontime({
     cycle: ['12:00:00'],
     utc: true,
-  }, await services.automationQuestReset(clientDiscord.guilds));
+  }, async function(reset){
+    await services.automationQuestReset(clientDiscord.guilds);
+
+    reset.done();
+    return;
+  });
 
   // Koldrak's Lair access
   ontime({
     cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'],
     utc: true,
-  }, await services.automationKoldrak(clientDiscord.guilds));
+  }, async function(koldrak){
+    await services.automationKoldrak(clientDiscord.guilds);
+
+    koldrak.done();
+    return;
+  });
 
   // Hunter's Refugee access
   ontime({
     cycle: ['01:50:00'],
     utc: true,
-  }, await services.automationHunters(clientDiscord.guilds));
+  }, async function(hunter){
+    await services.automationHunters(clientDiscord.guilds);
+    
+    hunter.done();
+    return;
+  });
 
   // Item data update
   ontime({
     cycle: ['00:02'],
     utc: true,
-  }, services.updateItemsMarket());
+  }, function(items){
+    services.updateItemsMarket();
+
+    items.done();
+    return;
+  });
 };
