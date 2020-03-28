@@ -5,7 +5,7 @@ const reactionEvents = {
 	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
 };
 
-module.exports = function(event, clientDiscord){
+module.exports = async function(event, clientDiscord){
   /**
    * Original algorithm by Sam-DevZ
    * https://github.com/Sam-DevZ/Discord-RoleReact
@@ -20,7 +20,7 @@ module.exports = function(event, clientDiscord){
   if(data.user_id === clientDiscord.user.id) return;
   
   // get role data from db
-  let guildSettings = await getGuildSettings(data.guild_id);
+  let guildSettings = await utils.getGuildSettings(data.guild_id);
 
   if(guildSettings && guildSettings.length !== 0){
     guildReactionRoleData = guildSettings.settings.react_role;
