@@ -14,7 +14,4 @@ module.exports = async function(guildsData){
   }else{
     services.sendResetNotification(guildsData);
   };
-
-  reset.done();
-  return;
 }
