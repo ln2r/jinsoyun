@@ -1,67 +1,67 @@
-const { Command } = require("discord.js-commando");
-const { mongoGetData, getGlobalSettings } = require("../../core");
+const {Command} = require('discord.js-commando');
+const utils = require('../../utils/index.js');
 
 module.exports = class RegCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: "reg",
-            aliases: ["join", "register"],
-            group: "guild",
-            memberName: "reg",
-            description: "Register yourself into the guild so you can access the rest of the guild",
-            examples: ["reg <charcter name> <character class>", "reg jinsoyun blade dancer"],
-            guildOnly: true,
-            hidden: true,
-            clientPermissions: ["CHANGE_NICKNAME", "MANAGE_NICKNAMES"],                    
-        });
+  constructor(client) {
+    super(client, {
+      name: 'reg',
+      aliases: ['join', 'register'],
+      group: 'guild',
+      memberName: 'reg',
+      description: 'Register yourself into the guild so you can access the rest of the guild',
+      examples: ['reg <charcter name> <character class>', 'reg jinsoyun blade dancer'],
+      guildOnly: true,
+      hidden: true,
+      clientPermissions: ['CHANGE_NICKNAME', 'MANAGE_NICKNAMES'],
+    });
+  }
+
+  async run(msg, args) {
+    args = args.toLowerCase();
+
+    // checking if the command disabled or not
+    const globalSettings = await utils.getGlobalSetting('reg');
+    if (!globalSettings.status) {
+      msg.channel.stopTyping();
+
+      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
     }
 
-    async run(msg, args) {
-        args = args.toLowerCase();
+    // console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
+    let guildSettingData = await utils.fetchDB('configs', {guild: msg.guild.id});
+    guildSettingData = guildSettingData[0];
 
-        // checking if the command disabled or not
-        let globalSettings = await getGlobalSettings("reg");
-        if(!globalSettings.status){
-            msg.channel.stopTyping();
+    // formatting the nickname
+    const userCharaName = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
-            return msg.say("This command is currently disabled.\nReason: "+globalSettings.message);
-        };
+    if (guildSettingData.settings) {
+      if (guildSettingData.settings.member_gate) {
+        // changing the nickname
+        if (msg.author.id !== msg.guild.ownerID) {
+          msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+        }
 
-        //console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
-        let guildSettingData = await mongoGetData("configs", {guild: msg.guild.id});
-            guildSettingData = guildSettingData[0];
+        // checking and adding the role
+        if (guildSettingData.settings.member_gate.role_id) {
+          // checking if the guild have the role, add if yes
+          if ((msg.guild.roles.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
+            msg.guild.members.get(msg.author.id).addRole(guildSettingData.settings.member_gate.role_id);
+          }
+        }
 
-        // formatting the nickname
-        let userCharaName = args.replace(/(^|\s)\S/g, l => l.toUpperCase());
+        if ((guildSettingData.settings.member_gate.next && guildSettingData.settings.member_gate.next !== null) && (guildSettingData.settings.join_message && guildSettingData.settings.join_message !== null)) {
+          const joinMessageAuthor = '<@'+msg.author.id+'>';
+          const joinServerName = msg.guild.name;
+          let customJoinMessage = guildSettingData.settings.join_message;
+          // replacing some stuff
+          customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
+          customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
 
-        if(guildSettingData.settings){ 
-            if(guildSettingData.settings.member_gate){    
-                // changing the nickname
-                if(msg.author.id !== msg.guild.ownerID){
-                    msg.guild.members.get(msg.author.id).setNickname(userCharaName);
-                };
-
-                // checking and adding the role
-                if(guildSettingData.settings.member_gate.role_id){
-                    // checking if the guild have the role, add if yes
-                    if ((msg.guild.roles.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
-                        msg.guild.members.get(msg.author.id).addRole(guildSettingData.settings.member_gate.role_id);
-                    };
-                };
-
-                if((guildSettingData.settings.member_gate.next && guildSettingData.settings.member_gate.next !== null) && (guildSettingData.settings.join_message && guildSettingData.settings.join_message !== null)){
-                    let joinMessageAuthor = "<@"+msg.author.id+">";
-                    let joinServerName = msg.guild.name;
-                    let customJoinMessage = guildSettingData.settings.join_message;
-                        // replacing some stuff
-                        customJoinMessage = customJoinMessage.replace("MESSAGE_AUTHOR", joinMessageAuthor);
-                        customJoinMessage = customJoinMessage.replace("SERVER_NAME", joinServerName);
-                    
-                    msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send(customJoinMessage);
-                };
-            };
-        }else{
-            msg.channel.send("This guild/server don't have member verification set.");
-        };
-    };
+          msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send(customJoinMessage);
+        }
+      }
+    } else {
+      msg.channel.send('This guild/server don\'t have member verification set.');
+    }
+  }
 };

@@ -1,21 +1,21 @@
-const { Command } = require("discord.js-commando");
-const { mongoItemDataUpdate} = require("../../core");
+const {Command} = require('discord.js-commando');
+const service = require('../../services/index');
 
 module.exports = class ItemsUpdateCommand extends Command {
-    constructor(client) {
-        super(client, {
-            name: "items", // command name
-            group: "system", // command group
-            memberName: "items", // name of the command in the group
-            description: "Force update item data.", // command desc
-            examples: ["items"], 
-            ownerOnly: true
-        });
-    }
+  constructor(client) {
+    super(client, {
+      name: 'items',
+      group: 'system',
+      memberName: 'items',
+      description: 'Force update item data.',
+      examples: ['items'],
+      ownerOnly: true,
+    });
+  }
 
-    run(msg) {
-        // what command do here
-        mongoItemDataUpdate();
-        return msg.say("Updating items data");
-    }
+  run(msg) {
+    service.automationItemUpdate();
+
+    return msg.say('Updating items data');
+  }
 };
