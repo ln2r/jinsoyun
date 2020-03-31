@@ -21,7 +21,7 @@ If you want to host the bot yourself just follow the instruction below. The down
 * [Jinsoyun Bot Database](http://jinsoyun.ln2r.web.id/api/)
 
 **How-to**:
-* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](https://github.com/ln2r/jinsoyun/tree/stable/mongoexport) folder (challenges and events data might be outdated))
+* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](https://github.com/ln2r/jinsoyun/tree/stable/mongoexport) folder)
   - `apis` api info 
   - `challenges` dailies and weeklies rewards and quests
   - `configs` bot configuration data
@@ -29,26 +29,29 @@ If you want to host the bot yourself just follow the instruction below. The down
   - `events` event info and details
   - `items` item data and it's market data
   - `quests` quests data
-* [Create `.env` file](https://github.com/ln2r/jinsoyun/blob/dev/README.md#env-file)
+* [Create `.env` file](#.env)
 * Open Node.js command prompt and navigate to your bot directory.
 * Do `npm install` to get bot dependencies.
 * Do `node index.js` to run the bot.
 
 ## Bot Configurations
-Bot configuration data is located in 2 places, theres one in `config.json` and the other one is in the MongoDB collection
+Bot configuration data is located in 2 places, theres one in `config.json` and `.env` for sensitive variables.
 
-### .env File
-* `bot.default_prefix` - `String`: bot command default prefix
-* `bot.author_id` - `Array`: array of bot author id
-* `bot.maintenance` - `Boolean`: bot maintenance mode, will disable some feature if enabled
-* `database.url` - `String` MongoDB database connection URL
-* `database.name` - `String`: name of MongoDB database which will be used
-* `key.discord` - `String` discord bot app token
-* `key.twitter.consumer_key` - `String`: twitter app consumer key
-* `key.twitter.consumer_secret` - `String`: twitter app consumer secret key
-* `key.twitter.token_key` - `String`: twitter app access token key
-* `key.twitter.token_secret` - `String`: twitter app access token secret key
-* `twitter.id` - `String`: followed accounts id
+### config.json
+* `bot.default_prefix` - `String`: bot command default prefix.
+* `bot.author_id` - `Array`: array of bot author id.
+* `bot.maintenance` - `Boolean`: bot maintenance mode, will disable some feature if enabled.
+* `twitter.id` - `String`: followed accounts id.
+
+### .env
+* `SOYUN_BOT_DB_CONNECT_URL` = Your MongoDB database connection URL.
+* `SOYUN_BOT_DB_NAME` = Your MongoDB database name.
+
+* `SOYUN_BOT_DISCORD_SECRET` = Your Discord token.
+* `SOYUN_BOT_TWITTER_CONSUMER_KEY` = Your twitter consumer key. 
+* `SOYUN_BOT_TWITTER_CONSUMER_SECRET` = Your twitter consumer secret key. 
+* `SOYUN_BOT_TWITTER_ACCESS_KEY` = Your twitter access token key. 
+* `SOYUN_BOT_TWITTER_ACCESS_SECRET` = Your twitter access token secret key.
 
 Template:
   ```JSON
@@ -77,6 +80,17 @@ Template:
   }
   ```
 
+  ```.env
+  SOYUN_BOT_DB_CONNECT_URL =
+  SOYUN_BOT_DB_NAME = 
+
+  SOYUN_BOT_DISCORD_SECRET = 
+  SOYUN_BOT_TWITTER_CONSUMER_KEY =  
+  SOYUN_BOT_TWITTER_CONSUMER_SECRET =  
+  SOYUN_BOT_TWITTER_ACCESS_KEY =  
+  SOYUN_BOT_TWITTER_ACCESS_SECRET = 
+  ```
+
 ### Bot Configuration Data
 Bot configuration is now saved in `configs` with `guild` id `0`, you can check the data in [mongoexport/config.json](https://github.com/ln2r/jinsoyun/blob/dev/mongoexport/configs.json)
 Explanation:
@@ -94,6 +108,7 @@ Explanation:
   * [Silveress](https://bns.silveress.ie/) - Blade and Soul unofficial API
   * [discord.js commando](https://github.com/discordjs/Commando) - discord.js command framework
   * [Commando MongoDBProvider](https://github.com/paulhobbel/commando-provider-mongo) - MongoDB provider for Commando
+  * [BnSTools](https://bnstools.info/) - Smart Bid Algorithm
 
 ## Support
 If you find this bot useful and want to give some tips or something like that you can use this thing below.
