@@ -4,4 +4,4 @@ const onCommandError = require('./onCommandError.js');
 module.exports = {
   onMemberAdd,
   onCommandError,
-}
+};
