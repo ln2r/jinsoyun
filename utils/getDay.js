@@ -1,3 +1,5 @@
+const dateformat = require('dateformat');
+
 /**
  * getDay
  * Used to get the text value of the current date
@@ -7,7 +9,7 @@
  * @example
  * getDay("Fri Mar 01 2019 14:49:58 GMT+0700", "now") // return Friday
  */
-module.exports = function(date, type){
+module.exports = function(date, type) {
   let dayValue;
 
   if (type === 'now') {
@@ -20,4 +22,4 @@ module.exports = function(date, type){
   }
 
   return dayValue;
-}
+};

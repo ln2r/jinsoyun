@@ -7,24 +7,24 @@
  * @example
  * getPriceStatus(2000, 3000) // return +50.00%🔼
  */
-module.exports = function(priceOld, priceNew){
+module.exports = function(priceOld, priceNew) {
   let priceStatus = ('0.00%') + '➖';
-    
-    if(priceNew !== priceOld) {     
-      const percentage = (((priceNew - priceOld) / priceOld) * 100).toFixed(2);
-      let symbol;
-      let emoji;
 
-      if (percentage < 0) {
-          symbol = '';
-          emoji = '🔽';
-      } else {
-          symbol = '+';
-          emoji = '🔼';
-      }
+  if (priceNew !== priceOld) {
+    const percentage = (((priceNew - priceOld) / priceOld) * 100).toFixed(2);
+    let symbol;
+    let emoji;
 
-      priceStatus = (symbol + percentage+'%') + emoji;
+    if (percentage < 0) {
+      symbol = '';
+      emoji = '🔽';
+    } else {
+      symbol = '+';
+      emoji = '🔼';
     }
 
-    return priceStatus;
-}
+    priceStatus = (symbol + percentage+'%') + emoji;
+  }
+
+  return priceStatus;
+};

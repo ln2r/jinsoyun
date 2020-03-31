@@ -4,10 +4,10 @@
  * @param {String} message message data
  * @return {Snowflake | null} mentioned channel id
  */
-module.exports = function(){
-  if(message.startsWith("<#") && message.endsWith(">")){
+module.exports = function(message) {
+  if (message.startsWith('<#') && message.endsWith('>')) {
     return message.slice(2, -1);
-  }else{
+  } else {
     return null;
-  };
-}
+  }
+};

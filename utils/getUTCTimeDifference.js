@@ -4,7 +4,7 @@
  * @param {Array} data time data, preferably array of time data
  * @return {Object} containing closest time index and time difference data
  */
-module.exports = function(data){
+module.exports = function(data) {
   if (data.constructor !== Array) {
     data = [data];
   }
@@ -50,4 +50,4 @@ module.exports = function(data){
     'time_index': closestTime,
     'time_difference_data': timeDifferenceData,
   };
-}
+};

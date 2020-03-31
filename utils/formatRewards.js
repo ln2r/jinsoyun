@@ -1,4 +1,4 @@
-const utils = require('./index')
+const formatArray = require('./formatArray');
 
 /**
  * setRewardsDataFormat
@@ -6,12 +6,12 @@ const utils = require('./index')
  * @param {Array} data array of rewards items
  * @return {Array} formatted rewards data
  */
-module.exports = function(data){
-  let formattedData = [];
-  for(let i=0; i<data.length; i++){
-      let itemsList = utils.formatArray(data[i].rewards, "- ", true);
-      formattedData.push("**"+data[i].tier+" Completions**"+itemsList);
+module.exports = function(data) {
+  const formattedData = [];
+  for (let i=0; i<data.length; i++) {
+    const itemsList = formatArray(data[i].rewards, '- ', true);
+    formattedData.push('**'+data[i].tier+' Completions**'+itemsList);
   }
 
   return formattedData;
-}
+};

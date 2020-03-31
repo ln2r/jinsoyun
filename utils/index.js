@@ -24,14 +24,14 @@ const getAuthorPermission = require('./getAuthorPermission');
 module.exports = {
   fetchDB,
   fetchSite,
-  
+
   formatArray,
   formatString,
   formatNumber,
   formatRewards,
   formatCurrency,
 
-  getPriceStatus,  
+  getPriceStatus,
   getDay,
   getDaily,
   getWeekly,
@@ -40,8 +40,8 @@ module.exports = {
   getChannelId,
   getRoleId,
   getGuildSettings,
-  getRewards,  
+  getRewards,
   getGlobalSetting,
   getChallengesList,
   getAuthorPermission,
-}
+};

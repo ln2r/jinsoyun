@@ -6,7 +6,7 @@
  * @param {Boolean} newline add new line at every start of the item or not
  * @return formatted list-like data
  */
-module.exports = function(data, symbol, newline){
+module.exports = function(data, symbol, newline) {
   if (data.length === 0) {
     return '\n- *No data available*';
   }
@@ -20,17 +20,15 @@ module.exports = function(data, symbol, newline){
   }
 
   for (let i = 0; i < data.length; i++) {
-    // checking if the data in that index is empty or not
-    if(data[i] === "" || data[i] === undefined){
-      formattedData = formattedData;
-    }else{
+  // checking if the data in that index is empty or not
+    if (data[i] !== '' || data[i] !== undefined) {
       formattedData = formattedData + (newline + symbol + data[i]);
-    }      
+    }
   }
 
-  if(formattedData === ""){
-    formattedData = "\n- *No data available*"
+  if (formattedData === '') {
+    formattedData = '\n- *No data available*';
   }
 
   return formattedData;
-}
+};

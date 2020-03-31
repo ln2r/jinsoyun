@@ -1,4 +1,6 @@
-const utils = require('../utils/index');
+const fetchDB = require('./fetchDB');
+const getRewards = require('./getRewards');
+const formatArray = require('./formatArray');
 
 /**
  * getDaily
@@ -6,12 +8,17 @@ const utils = require('../utils/index');
  * @param {String} day dddd formatted day value
  * @return object, daily data (reward, quests list)
  */
-module.exports = async function(day){
-  let challengesData = await utils.fetchDB('challenges', {name: day});
+module.exports = async function(day) {
+  const challengesData = await fetchDB('challenges', {name: day});
+  let questsList = [];
+
+  for(let i=0; i<challengesData[0].quests.length; i++){
+    questsList.push(`**${challengesData[0].quests[i].name}** - ${challengesData[0].quests[i].location.join(', ')}`);
+  }
 
   return {
-    // getting the quests list
-    quests: challengesData[0].quests,
-    rewards: await utils.getRewards(day)
-    };
-}
+  // getting the quests list
+    quests: questsList,
+    rewards: await getRewards(day),
+  };
+};
