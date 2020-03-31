@@ -1,21 +1,22 @@
-const utils = require('../utils/index');
+const dateformat = require('dateformat');
+const utils = require('../utils/index.js');
 
 /**
  * sendResetNotification
  * Used to send quest reset notification
  * @param {Guild} clientGuildData discord bot client guild/server connected data
  */
-module.exports = async function(clientGuildData){
-  const eventSetting = await utils.fetchDB("event");
-  const dailySetting = await utils.fetchDB("daily");
-  const weeklySetting = await utils.fetchDB("weekly");
+module.exports = async function(clientGuildData) {
+  const eventSetting = await utils.fetchDB('event');
+  const dailySetting = await utils.fetchDB('daily');
+  const weeklySetting = await utils.fetchDB('weekly');
 
-  let todayDay = utils.getDay(Date.now(), 'now');
+  const todayDay = utils.getDay(Date.now(), 'now');
 
-  let fieldsData = [];
-  
-  if(eventSetting.status){
-    let eventData = await utils.getEventQuests(todayDay);
+  const fieldsData = [];
+
+  if (eventSetting.status) {
+    const eventData = await utils.getEventQuests(todayDay);
 
     fieldsData.push({
       'name': 'Event',
@@ -23,34 +24,34 @@ module.exports = async function(clientGuildData){
               '**Duration**: '+eventData.duration+'\n'+
               '**Redemption Period**: '+eventData.redeem+'\n'+
               '**Quests**'+utils.formatArray(eventData.quests, '- ', true)+'\n\u200B',
-    })
+    });
   }
 
-  if(dailySetting.status){
-    let dailiesData = await utils.getDaily(todayDay);
-    let dailiesRewards = utils.formatRewards(dailiesData.rewards);  
-    
+  if (dailySetting.status) {
+    const dailiesData = await utils.getDaily(todayDay);
+    const dailiesRewards = utils.formatRewards(dailiesData.rewards);
+
     fieldsData.push({
       'name': 'Daily Challenges',
-      'value': '**Rewards**'+utils.formatArray(dailiesRewards, "", true)+'\n\u200B'+
+      'value': '**Rewards**'+utils.formatArray(dailiesRewards, '', true)+'\n\u200B'+
               '**Quests**'+utils.formatArray(dailiesData.quests, '- ', true)+'\n\u200B',
-    })
+    });
   }
 
   if (todayDay === 'Wednesday' && weeklySetting.status) {
-    let weekliesData = await utils.getWeekly();
-    let weekliesRewards = utils.formatRewards(weekliesData.rewards);
+    const weekliesData = await utils.getWeekly();
+    const weekliesRewards = utils.formatRewards(weekliesData.rewards);
 
     fieldsData.push({
       'name': 'Weekly Challenges',
-      'value': '**Rewards**'+utils.formatArray(weekliesRewards, "", true)+'\n\u200B'+
+      'value': '**Rewards**'+utils.formatArray(weekliesRewards, '', true)+'\n\u200B'+
                 '**Quests**'+utils.formatArray(weekliesData.quests, '- ', true)+'\n\u200B',
-    })
+    });
   }
 
-  let msgData = 'Hello! It\'s time for reset. Have a good day!';
+  const msgData = 'Hello! It\'s time for reset. Have a good day!';
 
-  let embedData = {
+  const embedData = {
     'embed': {
       'author': {
         'name': todayDay+'\'s List - '+dateformat(Date.now(), 'UTC:dd-mmmm-yyyy'),
@@ -65,7 +66,7 @@ module.exports = async function(clientGuildData){
   };
 
   clientGuildData.map(async function(guild) {
-    // getting guild setting data
+  // getting guild setting data
     if (guild.available) {
       let guildSettingData = await utils.fetchDB('configs', {guild: guild.id});
       guildSettingData = guildSettingData[0];
@@ -86,5 +87,6 @@ module.exports = async function(clientGuildData){
     }
   });
 
+  //TODO: winston integration
   console.log('[core] [reset] reset notification sent');
-}
+};

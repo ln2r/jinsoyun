@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const utils = require('../utils/index');
+const utils = require('../utils/index.js');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -16,13 +16,12 @@ module.exports = async function() {
 
   if (itemsData.status === 'error' || itemsData.status === 'error') {
     //TODO: winston integration
-    //console.error('[core] [items-update] api data fetch error, please check the log');
-    //module.exports.sendBotReport({'name': 'APIFetchError', 'message': 'Unable to get api data, site unreachable', 'path': 'core.js (getSiteData)', 'code': 10400, 'method': 'GET'}, 'itemUpdate-core', 'error');
+    console.error('[core] [items-update] api data fetch error, please check the log');
 
     const end = Date.now();
     const updateTime = (end-start)/1000+'s';
     //TODO: winston integration
-    //console.log('[core] [items-update] Update data failed, time: '+updateTime);
+    console.log('[core] [items-update] Update data failed, time: '+updateTime);
   } else {
     const itemsCollectionName = 'items';
     const marketCollectionName = 'market';
@@ -58,7 +57,7 @@ module.exports = async function() {
           const updateTime = (end-start)/1000+'s';
           
           //TODO: winston integration
-          //console.log('[core] [items-update] Data updated, time: '+updateTime);
+          console.log('[core] [items-update] Data updated, time: '+updateTime);
         });
     });
   }

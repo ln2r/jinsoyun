@@ -1,6 +1,6 @@
-const loadConfig = require('./loadConfig');
+//const loadConfig = require('./loadConfig');
 const reactionRole = require('./reactionRole');
-const updateItemsMarket = require('./updateItemsMarket');
+const automationItemUpdate = require('./automationItemUpdate');
 const sendResetNotification = require('./sendResetNotification');
 const sendStats = require('./sendStats');
 
@@ -11,9 +11,9 @@ const automationKoldrak = require('./automationKoldrak');
 const automationHunters = require('./automationHunters');
 
 module.exports = {
-  loadConfig,
+  //loadConfig,
   reactionRole,
-  updateItemsMarket,
+  automationItemUpdate,
   sendResetNotification,
   sendStats,
 
@@ -22,4 +22,4 @@ module.exports = {
   automationQuestReset,
   automationKoldrak,
   automationHunters,
-}
+};

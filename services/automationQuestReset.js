@@ -1,17 +1,18 @@
-const utils = require('../utils/index');
-const services = require('./index');
+const utils = require('../utils/index.js');
+const sendResetNotification = require('./sendResetNotification');
 
 /**
  * automationQuestReset
  * send quest reset notification to enabled guilds
  * @param {Object} guildsData connected guilds data
  */
-module.exports = async function(guildsData){
+module.exports = async function(guildsData) {
   // checking if it disabled or not
-  let globalSettings = await utils.getGlobalSettings("reset");
-  if(!globalSettings.status){
-      console.log("[soyun] [reset] reset notification currently disabled, "+globalSettings.message);
-  }else{
-    services.sendResetNotification(guildsData);
-  };
-}
+  const globalSettings = await utils.getGlobalSetting('reset');
+  if (!globalSettings.status) {
+    //TODO: winston integration
+    console.log('[soyun] [reset] reset notification currently disabled, '+globalSettings.message);
+  } else {
+    sendResetNotification(guildsData);
+  }
+};

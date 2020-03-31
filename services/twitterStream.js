@@ -1,6 +1,5 @@
 const Twitter = require('twitter');
-const utils = require('../utils/index');
-
+const utils = require('../utils/index.js');
 const config = require('../config.json');
 
 // Maintenance mode
@@ -10,21 +9,27 @@ const maintenanceMode = config.bot.maintenance;
  * twitterStream
  * send twitter's tweet to enabled guild
  */
-module.exports = async function(){
-  if(maintenanceMode){
-    console.log("[soyun] [twitter] twitter is disabled");
-  }else{
+module.exports = async function(clientDiscord) {
+  if (maintenanceMode) {
+    //TODO: winston integration
+    console.log('[soyun] [twitter] twitter is disabled');
+  } else {
     const clientTwitter = new Twitter({
-      consumer_key: process.env.twitter_consumer_key,
-      consumer_secret: process.env.twitter_consumer_secret,
-      access_token_key: process.env.twitter_access_token_key,
-      access_token_secret: process.env.twitter_access_token_secret,
+      consumer_key: process.env.SOYUN_BOT_TWITTER_CONSUMER_KEY,
+      consumer_secret: process.env.SOYUN_BOT_TWITTER_CONSUMER_SECRET,
+      access_token_key: process.env.SOYUN_BOT_TWITTER_ACCESS_KEY,
+      access_token_secret: process.env.SOYUN_BOT_TWITTER_ACCESS_SECRET,
     });
+
+    console.log('[soyun] [twitter] twitter stream started');
 
     clientTwitter.stream('statuses/filter', {follow: config.twitter.id}, async function(stream) {
       const twitterAPIData = await utils.fetchDB('apis', {name: 'Twitter'});
       const twitterTrackedUser = twitterAPIData[0].stream_screenname;
       let twitterUserValid = false;
+      let twtText;
+      let twtColor;
+      let twtThumbnail;
 
       stream.on('data', async function(tweet) {
         let payloadStatus = true;
@@ -38,10 +43,10 @@ module.exports = async function(){
 
         if (twitterUserValid) {
           // checking global settings
-          let globalSettings = await utils.getGlobalSetting("twitter");
-          if(!globalSettings.status){
+          const globalSettings = await utils.getGlobalSetting('twitter');
+          if (!globalSettings.status) {
             console.log('[soyun] [twitter] Twitter post notification disabled, '+globalSettings.message);
-            payloadStatus = false;  
+            payloadStatus = false;
           }
 
           const twtFilter = tweet.text.toString().substring(0).split(' ');
@@ -50,8 +55,8 @@ module.exports = async function(){
           if (twtFilter[0] === 'RT' || twtFilter[0].charAt(0) === '@') {
             payloadStatus = false;
           }
-          
-          if(payloadStatus){
+
+          if (payloadStatus) {
             if (tweet.extended_tweet) {
               twtText = tweet.extended_tweet.full_text.toString().replace('&amp;', '&');
             } else {
@@ -70,10 +75,10 @@ module.exports = async function(){
             }
 
             // getting image if there's any
-            if(tweet.entities.media){
+            if (tweet.entities.media) {
               twtThumbnail = tweet.entities.media[0].media_url;
-            }else{
-              twtThumbnail = "";
+            } else {
+              twtThumbnail = '';
             }
 
             const embedData = {
@@ -82,7 +87,7 @@ module.exports = async function(){
                 'url': 'https://twitter.com/'+tweet.user.screen_name,
                 'description': twtText,
                 'image': {
-                  'url': twtThumbnail
+                  'url': twtThumbnail,
                 },
                 'color': twtColor,
                 'timestamp': new Date(),
@@ -96,7 +101,7 @@ module.exports = async function(){
             // sending the tweet
             clientDiscord.guilds.map(async function(guild) {
               // getting guild setting data
-              let guildSettingData = await utils.getGuildSettings(guild.id);
+              const guildSettingData = await utils.getGuildSettings(guild.id);
 
               let twitterChannel = '';
               if (guildSettingData !== undefined) {
@@ -108,23 +113,26 @@ module.exports = async function(){
                 if (found === 0) {
                   if (ch.id === twitterChannel && twitterChannel !== '' && twitterChannel !== 'disable') {
                     found = 1;
-                    if(ch.permissionsFor(clientDiscord.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')){
+                    if (ch.permissionsFor(clientDiscord.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
                       ch.send(embedData);
-                    };
-                  };
-                };
+                    }
+                  }
+                }
               });
             });
+            //TODO: winston integration
             console.log('[soyun] [twitter] '+tweet.user.name+'\'s tweet sent');
           }
         }
+        //TODO: winston integration
         console.log('[soyun] [twitter] Twitter stream activity detected');
       });
 
       stream.on('error', function(error) {
-        sendBotReport(error, 'twitter-soyun', 'error');
+        //TODO: winston integration
+        //sendBotReport(error, 'twitter-soyun', 'error');
         console.error(error);
       });
     });
   }
-}
+};
