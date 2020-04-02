@@ -51,6 +51,7 @@ module.exports = class RemoveCustomRoleCommand extends Command {
 
     // getting item price from market
     if (isNaN(itemPrice)) {
+      // eslint-disable-next-line no-useless-escape
       const regx = new RegExp('(?:^|\W)'+itemPrice+'+(?:$|\W)', 'ig');
       const dbSearchQuery = {'name': regx};
       const itemData = await utils.fetchDB('items', dbSearchQuery);
