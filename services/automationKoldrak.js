@@ -1,5 +1,6 @@
 const utils = require('../utils/index.js');
 const dateformat = require('dateformat');
+const sendLog = require('./sendLog');
 
 /**
  * automationKoldrak
@@ -9,11 +10,11 @@ module.exports = async function(guildData) {
   // checking global settings
   const globalSettings = await utils.getGlobalSetting('koldrak_announce');
   if (!globalSettings.status) {
-    console.log('[soyun] [koldrak] koldrak access notification disabled, '+globalSettings.message);
+    sendLog('warn', 'koldrak-announce', 'koldrak access notification disabled, '+globalSettings.message);
     return;
   }
 
-  guildData.guilds.map(async function(guild) {
+  guildData.guilds.cache.map(async function(guild) {
   // getting guild setting data
     const guildSettingData = await utils.getGuildSettings(guild.id);
 
@@ -23,7 +24,7 @@ module.exports = async function(guildData) {
     }
 
     let found = 0;
-    guild.channels.map((ch) => {
+    guild.channels.cache.map((ch) => {
       if (found === 0) {
         if (ch.id === koldrakChannel && koldrakChannel !== '' && koldrakChannel !== 'disable') {
           found = 1;
@@ -47,7 +48,6 @@ module.exports = async function(guildData) {
       }
     });
   });
-  //TODO: winston integration
-  console.log('[soyun] [koldrak] koldrak access notification sent');
+  sendLog('info', 'Koldrak Announce', 'Koldrak access notification sent');
   return;
 };

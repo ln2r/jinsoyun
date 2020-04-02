@@ -1,6 +1,5 @@
 const fetchDB = require('./fetchDB');
 const getRewards = require('./getRewards');
-const formatArray = require('./formatArray');
 
 /**
  * getDaily

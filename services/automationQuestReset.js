@@ -1,5 +1,6 @@
 const utils = require('../utils/index.js');
 const sendResetNotification = require('./sendResetNotification');
+const sendLog = require('./sendLog');
 
 /**
  * automationQuestReset
@@ -10,8 +11,7 @@ module.exports = async function(guildsData) {
   // checking if it disabled or not
   const globalSettings = await utils.getGlobalSetting('reset');
   if (!globalSettings.status) {
-    //TODO: winston integration
-    console.log('[soyun] [reset] reset notification currently disabled, '+globalSettings.message);
+    sendLog('warn', 'Reset', 'Notification disabled, '+globalSettings.message);
   } else {
     sendResetNotification(guildsData);
   }

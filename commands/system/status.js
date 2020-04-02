@@ -1,4 +1,5 @@
 const {Command} = require('discord.js-commando');
+const services = require('../../services/index');
 
 module.exports = class ResetNotificationCommand extends Command {
   constructor(client) {
@@ -38,13 +39,11 @@ module.exports = class ResetNotificationCommand extends Command {
 
       // changing bot presence
       this.client.user.setPresence(statusData).catch((error) => {
-        //TODO: winston integration
-        console.error(error);
-        //sendBotReport(error, 'onReady-soyun', 'error');
+        services.sendLog('error', 'CMD Presence', error);
       });
 
       // saving to db
-      this.client.emit('botGameStatusChagne', 'global', statusData);
+      this.client.emit('botGameStatusChange', 'global', statusData);
 
       msg.channel.stopTyping();
 

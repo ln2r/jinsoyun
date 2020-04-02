@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const services = require('../services/index');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -31,7 +32,6 @@ module.exports = function (collname, filter, sorting, limit) {
         return items;
       });
   } catch (err) {
-    //TODO: winson integration
-    console.log(err);
+    services.sendLog('error', 'fetchDB', err);
   }
 };

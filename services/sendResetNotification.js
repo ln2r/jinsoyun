@@ -1,5 +1,6 @@
 const dateformat = require('dateformat');
 const utils = require('../utils/index.js');
+const sendLog = require('./sendLog');
 
 /**
  * sendResetNotification
@@ -65,7 +66,7 @@ module.exports = async function(clientGuildData) {
     },
   };
 
-  clientGuildData.map(async function(guild) {
+  clientGuildData.cache.map(async function(guild) {
   // getting guild setting data
     if (guild.available) {
       let guildSettingData = await utils.fetchDB('configs', {guild: guild.id});
@@ -76,7 +77,7 @@ module.exports = async function(clientGuildData) {
       }
 
       let found = 0;
-      guild.channels.map((ch) => {
+      guild.channels.cache.map((ch) => {
         if (found === 0) {
           if (ch.id === resetChannel) {
             found = 1;
@@ -86,7 +87,5 @@ module.exports = async function(clientGuildData) {
       });
     }
   });
-
-  //TODO: winston integration
-  console.log('[core] [reset] reset notification sent');
+  sendLog('info', 'Reset', 'Reset notification sent');
 };

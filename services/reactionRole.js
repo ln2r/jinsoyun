@@ -15,7 +15,7 @@ module.exports = async function(event, clientDiscord) {
   // check if the event have the reactions property
   if (!reactionEvents.hasOwnProperty(event.t)) return;
   const {d: data} = event;
-  const user = clientDiscord.users.get(data.user_id);
+  const user = clientDiscord.users.cache.get(data.user_id);
 
   // check if it's the bot
   if (data.user_id === clientDiscord.user.id) return;
@@ -27,7 +27,7 @@ module.exports = async function(event, clientDiscord) {
     guildReactionRoleData = guildSettings.settings.react_role;
 
     if (guildReactionRoleData) {
-      const channel = clientDiscord.channels.get(data.channel_id);
+      const channel = clientDiscord.channels.cache.get(data.channel_id);
       // checking channel and finding the message
       let found = false;
       let messageIndex;
@@ -42,8 +42,8 @@ module.exports = async function(event, clientDiscord) {
       if (found) {
         // checking the message
         if (data.message_id === guildReactionRoleData[messageIndex].id) {
-          let message = await channel.fetchMessage(data.message_id);
-          let member = message.guild.members.get(user.id);
+          let message = await channel.fetch(data.message_id);
+          let member = message.guild.members.cache.get(user.id);
 
           // checking the emoji and getting the index
           if (guildReactionRoleData[messageIndex].reactions) {
@@ -69,7 +69,7 @@ module.exports = async function(event, clientDiscord) {
               if (guildReactionRoleData[messageIndex].reactions[reactionIndex].once) {
                 member.addRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
                 // removing the reaction
-                channel.fetchMessage(guildReactionRoleData[messageIndex].id).then((message) => {
+                channel.fetch(guildReactionRoleData[messageIndex].id).then((message) => {
                   const filtered = message.reactions.filter((reaction) => reaction.emoji.name === data.emoji.name);
 
                   filtered.forEach((reaction) => reaction.remove(user.id));
@@ -77,9 +77,9 @@ module.exports = async function(event, clientDiscord) {
               } else {
                 // check if the event add or remove
                 if (event.t === 'MESSAGE_REACTION_ADD') {
-                  member.addRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
+                  member.roles.add(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
                 } else {
-                  member.removeRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
+                  member.roles.remove(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
                 }
               }
             }

@@ -3,6 +3,7 @@ const reactionRole = require('./reactionRole');
 const automationItemUpdate = require('./automationItemUpdate');
 const sendResetNotification = require('./sendResetNotification');
 const sendStats = require('./sendStats');
+const sendLog = require('./sendLog');
 
 const twitterStream = require('./twitterStream');
 
@@ -16,6 +17,7 @@ module.exports = {
   automationItemUpdate,
   sendResetNotification,
   sendStats,
+  sendLog,
 
   twitterStream,
 

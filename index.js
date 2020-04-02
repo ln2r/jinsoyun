@@ -8,8 +8,9 @@ const ontime = require('ontime');
 
 const config = require('./config.json');
 const services = require('./services/index.js');
-const events = require('./events/index.js');
 const utils = require('./utils/index.js');
+const dateformat = require('dateformat');
+
 
 // Load config file
 //services.loadConfig();
@@ -38,32 +39,25 @@ clientDiscord.registry
 
 clientDiscord
   .on('error', (error) => {
-    //TODO: winston integration
-    //sendBotReport(error, 'system-soyun', 'error');
-    console.error(error);
+    services.sendLog('error', 'Discord', error);
   })
   .on('warn', (warn) => {
-    //TODO: winston integration
-    //sendBotReport(warn, 'system-soyun', 'warning');
-    console.warn(warn);
+    services.sendLog('warn', 'Discord', warn);
   })
 // remove "//" below to enable debug log
 // .on("debug", console.log)
   .on('disconnect', () => {
-    //TODO: winston integration
-    console.warn('[soyun] [system] Disconnected!');
+    services.sendLog('warn', 'Discord', 'Connection disconnected!');
   })
   .on('reconnecting', () => {
-    //TODO: winston integration
-    console.warn('[soyun] [system] Reconnecting...');
+    services.sendLog('info', 'Discord', 'Trying to reconnect...');
   })
   .on('ready', async () => {
     const globalSettings = await utils.getGuildSettings(0);
     let botStatus = globalSettings.settings.status;
 
     if (config.bot.maintenance) {
-      //TODO: winston integration
-      console.log('[soyun] [system] maintenance mode is enabled, only commands will run normally');
+      services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
       botStatus = {
         game: {
           name: 'MAINTENANCE MODE',
@@ -74,12 +68,9 @@ clientDiscord
     }
 
     clientDiscord.user.setPresence(botStatus).catch((error) => {
-      //TODO: winston integration
-      console.error;
-      //sendBotReport(error, 'onReady-soyun', 'error');
+      services.sendLog('error', 'Bot', error);
     });
-    //TODO: winston integration
-    console.log('[soyun] [system] Logged in and ready');
+    services.sendLog('info', 'Bot', 'Logged in and ready.');
   })
   .on('guildCreate', async (guild) => {
     const guildSettingData = await utils.getGuildSettings(guild.id);
@@ -88,19 +79,90 @@ clientDiscord
       clientDiscord.emit('commandPrefixChange', guild.id, process.env.bot_default_prefix);
     }
   })
-  .on('guildMemberAdd', async (member) => {
-    await events.onMemberAdd(member);
-  })
   .on('commandRun', async () => {
     if (config.bot.maintenance) {
-      //TODO: winston integration
-      console.log('[soyun] [stats] command counter disabled');
+      services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
     } else {
       await services.sendStats(Date.now());
     }
   })
+  .on('guildMemberAdd', async (member) => {
+    const guildSettingData = await utils.getGuildSettings(member.guild.id);
+    let guildCommandPrefix = guildSettingData.settings.prefix;
+
+    if (guildCommandPrefix === undefined || guildCommandPrefix === null) {
+      guildCommandPrefix = config.bot.default_prefix;
+    }
+
+    if (guildSettingData) {
+      const memberGate = guildSettingData.settings.member_gate;
+
+      // checking if the guild have the channel and the message set
+      // TODO: make the message customizable
+      if (memberGate) {
+        if (memberGate.channel_id) {
+          member.guild.channels.cache.find((ch) => ch.id === memberGate.channel_id).send(
+            'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
+
+            'Before I give you access to the rest of the server I need to know your character\'s name, to do that please use the following command with your information in it\n\n'+
+
+            '`'+guildCommandPrefix+'join character name`\n'+
+            '**Example**:\n'+
+            '`'+guildCommandPrefix+'join jinsoyun `\n\n'+
+
+            'if you need any assistance you can mention or DM available admins, thank you ❤'
+          );
+        }
+      }
+    }
+  })
   .on('commandError', (error, command, message) => {
-    events.onCommandError(error, command, message, clientDiscord);
+    let errorLocation;
+    let guildOwnerId;
+    let guildOwnerData;
+  
+    if (config.bot.maintenance) {
+      services.sendLog('info', 'onCommandError', 'Error dm reporting is disabled');
+    } else {
+      if (message.guild) {
+        errorLocation = message.guild.name;
+        guildOwnerId = message.guild.ownerID;
+      } else {
+        errorLocation = 'DIRECT_MESSAGE';
+        guildOwnerId = message.author.id;
+      }
+
+      let found = 0;
+      clientDiscord.guilds.cache.map(function(guild) {
+        // looking for the guild owner data (username and discriminator)
+        guild.members.cache.map((member) => {
+          if (found === 0) {
+            if (member.id === guildOwnerId) {
+              found = 1;
+              guildOwnerData = member.user.username+'#'+member.user.discriminator;
+            }
+          }
+        });
+      });
+  
+      // sending dm
+      for (let i=0; i < clientDiscord.owners.length; i++) {
+        clientDiscord.owners[i].send(
+          'Error Occured on `'+error.name+'`'+
+            '\n__Details__:'+
+            '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
+            '\n**Location**: '+errorLocation+
+            '\n**Guild Owner**: '+guildOwnerData+
+            '\n**Content**: `'+message.content+'`'+
+            '\n**Message**:\n'+command.name+': '+command.message
+        ).catch((err) => {
+          services.sendLog('error', 'onCommandError', err);
+        });
+      }
+
+      // logging the error report
+      services.sendLog('error', errorLocation, command.message);
+    }  
   })
 // event handling for reactions
   .on('raw', async (event) => {
@@ -110,9 +172,7 @@ clientDiscord
 clientDiscord.setProvider(
   MongoClient.connect(process.env.SOYUN_BOT_DB_CONNECT_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then((client) => new MongoDBProvider(client, process.env.SOYUN_BOT_DB_NAME))
 ).catch((error) => {
-  //TODO: winston integration
-  console.error;
-  //sendBotReport(error, 'mongoDBProvider-soyun', 'error');
+  services.sendLog('error', 'Database', error);
 });
 
 // Discord.js Commando scripts end here
@@ -123,8 +183,7 @@ services.twitterStream(clientDiscord);
 // Automation
 // Quest reset notification
 if (config.bot.maintenance) {
-  //TODO: winston integration
-  console.log('[soyun] [automation] system automation is disabled');
+  services.sendLog('warn', 'Automation', 'Maintenance mode is enabled, automation disabled.');
 } else {
   ontime({
     cycle: ['12:00:00'],

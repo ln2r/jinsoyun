@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const services = require('../services/index');
 
 /**
  * getSiteData
@@ -18,9 +19,7 @@ module.exports = async function(address) {
       return response.json();
     })
     .catch((error) => {
-      //TODO: winston integration
-      console.error('[core] [site-data] Error: '+error);
-
+      services.sendLog('error', 'fetchSite', error);
       return {'status': 'error', error};
     });
 };

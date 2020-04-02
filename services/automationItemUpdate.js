@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const utils = require('../utils/index.js');
+const sendLog = require('./sendLog');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -15,13 +16,9 @@ module.exports = async function() {
   const marketData = await utils.fetchSite('https://api.silveress.ie/bns/v3/market/na/current/lowest');
 
   if (itemsData.status === 'error' || itemsData.status === 'error') {
-    //TODO: winston integration
-    console.error('[core] [items-update] api data fetch error, please check the log');
-
     const end = Date.now();
     const updateTime = (end-start)/1000+'s';
-    //TODO: winston integration
-    console.log('[core] [items-update] Update data failed, time: '+updateTime);
+    sendLog('warn', 'Items', `'Data update failed. (${updateTime})\n${itemsData}`);
   } else {
     const itemsCollectionName = 'items';
     const marketCollectionName = 'market';
@@ -55,9 +52,8 @@ module.exports = async function() {
 
           const end = Date.now();
           const updateTime = (end-start)/1000+'s';
-          
-          //TODO: winston integration
-          console.log('[core] [items-update] Data updated, time: '+updateTime);
+                    
+          sendLog('info', 'Items', 'Data updated, time: '+updateTime);
         });
     });
   }
