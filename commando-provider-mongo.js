@@ -55,8 +55,6 @@ class MongoDBProvider extends SettingProvider {
   async init(client) {
     this.client = client;
 
-    //console.log(client.guilds)
-
     // Load or create the settings collection
     const collection = await this.db.collection('configs');
 
@@ -74,7 +72,7 @@ class MongoDBProvider extends SettingProvider {
     // Listen for changes
     this.listeners
       .set('globalSettingChange', (guild, system, setting) => this.set(guild, system, setting))
-      .set('botGameStatusChagne', (guild, status) => this.set(guild, 'status', status))
+      .set('botGameStatusChange', (guild, status) => this.set(guild, 'status', status))
 
       .set('notificationResetChange', (guild, channel) => this.set(guild, 'quest_reset', channel))
       .set('notificationTwitterChange', (guild, channel) => this.set(guild, 'twitter', channel))
