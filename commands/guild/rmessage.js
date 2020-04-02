@@ -1,5 +1,6 @@
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
+const services = require('../../services/index');
 
 module.exports = class ReactionRoleMessageCommand extends Command {
   constructor(client) {
@@ -54,9 +55,8 @@ module.exports = class ReactionRoleMessageCommand extends Command {
         }
 
         // check and get message data
-        reactionMessageData = await msg.channel.fetchMessage(messageId).catch((err) => {
-          //TODO: winston integration
-          console.error(err);
+        reactionMessageData = await msg.channel.fetch(messageId).catch((err) => {
+          services.sendLog('error', 'Reaction Message', err);
           reactionMessageData = false;
         });
 

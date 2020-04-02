@@ -28,8 +28,7 @@ module.exports = class RegCommand extends Command {
     }
 
     // console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
-    let guildSettingData = await utils.fetchDB('configs', {guild: msg.guild.id});
-    guildSettingData = guildSettingData[0];
+    let guildSettingData = await utils.getGuildSettings(msg.guild.id);
 
     // formatting the nickname
     const userCharaName = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
@@ -38,14 +37,14 @@ module.exports = class RegCommand extends Command {
       if (guildSettingData.settings.member_gate) {
         // changing the nickname
         if (msg.author.id !== msg.guild.ownerID) {
-          msg.guild.members.get(msg.author.id).setNickname(userCharaName);
+          msg.guild.members.cache.get(msg.author.id).setNickname(userCharaName);
         }
 
         // checking and adding the role
         if (guildSettingData.settings.member_gate.role_id) {
           // checking if the guild have the role, add if yes
-          if ((msg.guild.roles.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
-            msg.guild.members.get(msg.author.id).addRole(guildSettingData.settings.member_gate.role_id);
+          if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.settings.member_gate.role_id)) !== null) {
+            msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.settings.member_gate.role_id);
           }
         }
 
@@ -57,7 +56,7 @@ module.exports = class RegCommand extends Command {
           customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
           customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
 
-          msg.guild.channels.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send(customJoinMessage);
+          msg.guild.channels.cache.find((ch) => ch.id === guildSettingData.settings.member_gate.next).send(customJoinMessage);
         }
       }
     } else {

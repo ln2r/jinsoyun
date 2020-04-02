@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -82,7 +83,7 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
           // get the message and remove the reaction
           const emojiName = emojiId.replace(/\:(.*?)$/, '');
           // console.debug("emoji name: "+emojiName);
-          channel.fetchMessage(msg.guild.currentMessage).then((message) => {
+          channel.fetch(msg.guild.currentMessage).then((message) => {
             const filtered = message.reactions.filter((reaction) => reaction.emoji.name === emojiName);
 
             filtered.forEach((reaction) => reaction.remove(this.client.user.id));

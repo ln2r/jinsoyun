@@ -1,5 +1,7 @@
+/* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
+const services = require('../../services/index');
 
 module.exports = class ReactionRoleReactionAddCommand extends Command {
   constructor(client) {
@@ -58,7 +60,7 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
           }
 
           // check if role exist
-          const roleData = msg.guild.roles.find((role) => role.id === roleId);
+          const roleData = msg.guild.roles.cache.find((role) => role.id === roleId);
           if (roleData) {
             // find the message
             let messageIndex;
@@ -73,15 +75,18 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
             // add reaction and save to db
             if (messageFound) {
               // get the message
-              var messageData = await msg.channel.fetchMessage(msg.guild.currentMessage).catch((err) => {
-                //TODO: winston integration
-                console.error(err);
-                messageData = false;
-              });
-              if (messageData) {
-                messageData.react(emojiId);
-              }
-
+              msg.channel.fetch(msg.guild.currentMessage)
+                .then(m => {
+                  m.messages.cache.map(x =>{
+                    if(x.id == msg.guild.currentMessage){
+                      x.react(emojiId);
+                    }
+                  });
+                })
+                .catch((err) => {
+                  services.sendLog('error', 'Reaction Add', err);
+                });
+              
               // check if the reaction already exist
               let reactionIndex;
               let reactionFound = false;
