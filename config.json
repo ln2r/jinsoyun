@@ -2,7 +2,8 @@
   "bot":{
     "default_prefix": "!",
     "author_id": ["132712988875423745"],
-    "maintenance": true
+    "maintenance": false,
+    "error_log": ["695148991343624233"]
   },
   "twitter":{
     "id": "3521186773, 819625154"
