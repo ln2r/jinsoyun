@@ -58,13 +58,6 @@ clientDiscord
 
     if (config.bot.maintenance) {
       services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
-      botStatus = {
-        game: {
-          name: 'MAINTENANCE MODE',
-          type: 'PLAYING',
-        },
-        status: 'dnd',
-      };
     }
 
     clientDiscord.user.setPresence(botStatus).catch((error) => {
