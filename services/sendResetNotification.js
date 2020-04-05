@@ -8,23 +8,24 @@ const sendLog = require('./sendLog');
  * @param {Guild} clientGuildData discord bot client guild/server connected data
  */
 module.exports = async function(clientGuildData) {
-  const eventSetting = await utils.fetchDB('event');
-  const dailySetting = await utils.fetchDB('daily');
-  const weeklySetting = await utils.fetchDB('weekly');
+  const eventSetting = await utils.getGlobalSetting('event');
+  const dailySetting = await utils.getGlobalSetting('daily');
+  const weeklySetting = await utils.getGlobalSetting('weekly');
 
   const todayDay = utils.getDay(Date.now(), 'now');
 
   const fieldsData = [];
 
   if (eventSetting.status) {
-    const eventData = await utils.getEventQuests(todayDay);
+    const eventData = await utils.fetchDB('event');
+    const eventQuests = await utils.getEventQuests(eventData[0], todayDay);
 
     fieldsData.push({
       'name': 'Event',
-      'value': '**Name**: ['+eventData.name+']('+eventData.url+')\n'+
-              '**Duration**: '+eventData.duration+'\n'+
-              '**Redemption Period**: '+eventData.redeem+'\n'+
-              '**Quests**'+utils.formatArray(eventData.quests, '- ', true)+'\n\u200B',
+      'value': '**Name**: ['+eventData[0].name+']('+eventData[0].event_page+')\n'+
+              '**Duration**: '+eventData[0].duration+'\n'+
+              '**Redemption Period**: '+eventData[0].redeem+'\n'+
+              '**Quests**'+utils.formatArray(eventQuests, '- ', true)+'\n\u200B',
     });
   }
 
@@ -66,11 +67,10 @@ module.exports = async function(clientGuildData) {
     },
   };
 
-  clientGuildData.cache.map(async function(guild) {
-  // getting guild setting data
+  clientGuildData.cache.map(async function(guild) {  
     if (guild.available) {
-      let guildSettingData = await utils.fetchDB('configs', {guild: guild.id});
-      guildSettingData = guildSettingData[0];
+      // getting guild setting data
+      let guildSettingData = await utils.getGuildSettings(guild.id);
       let resetChannel = '';
       if (guildSettingData !== undefined) {
         resetChannel = guildSettingData.settings.quest_reset;
