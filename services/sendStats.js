@@ -29,7 +29,7 @@ module.exports = async function(date) {
     todayStats = statsData[0].count + 1;
   }
 
-  MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+  MongoClient.connect(url, {poolSize: 5, useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
     if (err) throw err;
     const dbo = db.db(dbName);
 
