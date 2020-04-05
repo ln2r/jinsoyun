@@ -2,8 +2,8 @@ const {createLogger, format, transports} = require('winston');
 
 require('winston-mongodb');
 const { combine, timestamp, label, printf } = format;
-const levels = {error: 0, warn: 1, query: 2, info: 3, debug: 4, silly: 5};
-const colors = {error: 'red', warn: 'yellow', info: 'green', debug: 'blue', silly: 'magenta'};
+const levels = {error: 0, warn: 1, info: 3};
+const colors = {error: 'red', warn: 'yellow', info: 'green'};
 
 const myLevels = {levels: levels, colors: colors};
 
@@ -21,6 +21,7 @@ module.exports = function(level, location, message){
 
   const logger = createLogger({
     format: combine(
+      format.colorize(),
       format.errors({ stack: true }),
       label({ label: location }),
       timestamp(),
@@ -30,25 +31,14 @@ module.exports = function(level, location, message){
     transports: [
       new transports.Console(),
       new transports.MongoDB({
-        db: 'mongodb://localhost:27017/jinsoyun',
+        db: process.env.SOYUN_BOT_DB_CONNECT_URL,
         collection: 'log',
         options: {
-          poolSize: 2,
+          poolSize: 5,
           useNewUrlParser: true,
           useUnifiedTopology: true
         },
-      }),
-    ],
-    exceptionHandlers: [
-      new transports.Console(),
-      new transports.MongoDB({
-        db: 'mongodb://localhost:27017/jinsoyun',
-        collection: 'winston',
-        options: {
-          poolSize: 2,
-          useNewUrlParser: true,
-          useUnifiedTopology: true
-        },
+        level: 'error'
       }),
     ],    
     levels: myLevels.levels
