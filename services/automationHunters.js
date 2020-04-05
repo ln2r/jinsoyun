@@ -6,7 +6,7 @@ const sendLog = require('./sendLog');
  * automationHunters
  * send koldrak access to enabled guild
  */
-module.exports = async function(guildData) {
+module.exports = async function(clientData) {
   // checking global settings
   const globalSettings = await utils.getGlobalSetting('hunters_refugee');
   if (!globalSettings.status) {
@@ -14,7 +14,7 @@ module.exports = async function(guildData) {
     return;
   }
 
-  guildData.cache.map(async function(guild) {
+  clientData.guilds.cache.map(async function(guild) {
     if(guild.available){
       // getting guild setting data
       const guildSettingData = await utils.getGuildSettings(guild.id);
@@ -29,7 +29,7 @@ module.exports = async function(guildData) {
         if (found === 0) {
           if (ch.id === huntersChannel && huntersChannel !== '' && huntersChannel !== 'disable') {
             found = 1;
-            if (ch.permissionsFor(guildData.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
+            if (ch.permissionsFor(clientData.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
               ch.send({
                 'embed': {
                   'color': 8388736,
