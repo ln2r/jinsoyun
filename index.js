@@ -182,7 +182,7 @@ if (config.bot.maintenance) {
     cycle: ['12:00:00'],
     utc: true,
   }, async function(reset) {
-    await services.automationQuestReset(clientDiscord.guilds);
+    await services.automationQuestReset(clientDiscord);
 
     reset.done();
     return;
@@ -193,7 +193,7 @@ if (config.bot.maintenance) {
     cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'],
     utc: true,
   }, async function(koldrak) {
-    await services.automationKoldrak(clientDiscord.guilds);
+    await services.automationKoldrak(clientDiscord);
 
     koldrak.done();
     return;
@@ -204,7 +204,7 @@ if (config.bot.maintenance) {
     cycle: ['01:50:00'],
     utc: true,
   }, async function(hunter) {
-    await services.automationHunters(clientDiscord.guilds);
+    await services.automationHunters(clientDiscord);
 
     hunter.done();
     return;

@@ -7,7 +7,7 @@ const sendLog = require('./sendLog');
  * Used to send quest reset notification
  * @param {Guild} clientGuildData discord bot client guild/server connected data
  */
-module.exports = async function(clientGuildData) {
+module.exports = async function(clientData) {
   const eventSetting = await utils.getGlobalSetting('event');
   const dailySetting = await utils.getGlobalSetting('daily');
   const weeklySetting = await utils.getGlobalSetting('weekly');
@@ -67,7 +67,7 @@ module.exports = async function(clientGuildData) {
     },
   };
 
-  clientGuildData.cache.map(async function(guild) {  
+  clientData.guilds.cache.map(async function(guild) {  
     if (guild.available) {
       // getting guild setting data
       let guildSettingData = await utils.getGuildSettings(guild.id);
@@ -81,7 +81,9 @@ module.exports = async function(clientGuildData) {
         if (found === 0) {
           if (ch.id === resetChannel) {
             found = 1;
-            ch.send(msgData, embedData);
+            if (ch.permissionsFor(clientData.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
+              ch.send(msgData, embedData);
+            }
           }
         }
       });
