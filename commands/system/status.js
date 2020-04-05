@@ -30,9 +30,9 @@ module.exports = class ResetNotificationCommand extends Command {
       const text = payloadTemp.join(' ');
 
       statusData = {
-        game: {
+        activity: {
           name: text,
-          type: type,
+          type: type.toUpperCase(),
         },
         status: status,
       };
