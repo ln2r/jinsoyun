@@ -60,7 +60,7 @@ module.exports = class BnsEventCommand extends Command {
     }
 
     const eventData = await utils.fetchDB('event');
-    const eventQuests = await utils.getEventQuests(eventData, dayQuery);
+    const eventQuests = await utils.getEventQuests(eventData[0], dayQuery);
     let embedData;
     let msgData = '';
 
