@@ -1,34 +1,45 @@
-{"_id":{"$oid":"5d9b0ff51c9d440000be8cd3"},"id":{"$numberInt":"0"},"name":"Brawl in the Basin","location":[{"$numberInt":"43"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b186c1c9d440000be8cd5"},"id":{"$numberInt":"1"},"name":"In the Dead of the Winter","location":[{"$numberInt":"20"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b188f1c9d440000be8cd6"},"id":{"$numberInt":"2"},"name":"The Leader of the Pack","location":[{"$numberInt":"9"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b18b01c9d440000be8cd7"},"id":{"$numberInt":"3"},"name":"Bad Karma","location":[{"$numberInt":"5"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b19bd1c9d440000be8cd8"},"id":{"$numberInt":"4"},"name":"Shadowmoor Rising","location":[{"$numberInt":"4"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b19e11c9d440000be8cd9"},"id":{"$numberInt":"5"},"name":"Setting the Stage for Revenge","location":[{"$numberInt":"3"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b19f31c9d440000be8cda"},"id":{"$numberInt":"6"},"name":"Warped Beyond Reason","location":[{"$numberInt":"29"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9b1a1e1c9d440000be8cdb"},"id":{"$numberInt":"7"},"name":"Brood Awakening (Hard)","location":[{"$numberInt":"2"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c895e1c9d440000df0d9a"},"id":{"$numberInt":"8"},"name":"A Mid-Bummer Night's Dream","location":[{"$numberInt":"42"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c89cb1c9d440000df0d9b"},"id":{"$numberInt":"9"},"name":"Rose from the Past","location":[{"$numberInt":"23"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c89e81c9d440000df0d9c"},"id":{"$numberInt":"10"},"name":"Horrors of the Hollow","location":[{"$numberInt":"8"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c8a011c9d440000df0d9d"},"id":{"$numberInt":"11"},"name":"Rolling in the Deeps","location":[{"$numberInt":"7"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c8a1b1c9d440000df0d9e"},"id":{"$numberInt":"12"},"name":"Live by the Sword","location":[{"$numberInt":"6"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c8a371c9d440000df0d9f"},"id":{"$numberInt":"13"},"name":"Brood Awakening","location":[{"$numberInt":"2"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c8a541c9d440000df0da0"},"id":{"$numberInt":"14"},"name":"Waiting in the Wings","location":[{"$numberInt":"6"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c8a731c9d440000df0da1"},"id":{"$numberInt":"15"},"name":"Setting the Stage for Revenge (Hard)","location":[{"$numberInt":"3"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c94a46ff3180774b88405"},"id":{"$numberInt":"16"},"name":"Waiting in the Wings (Hard)","location":[{"$numberInt":"55"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c94fb6ff3180774b88406"},"id":{"$numberInt":"17"},"name":"Rage Against the Longgui","location":[{"$numberInt":"41"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d9c96156ff3180774b88407"},"id":{"$numberInt":"18"},"name":"Favor and Fortune","location":[{"$numberInt":"7"},{"$numberInt":"2"},{"$numberInt":"6"},{"$numberInt":"29"},{"$numberInt":"5"},{"$numberInt":"55"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db3ea575c6c111c186b7b"},"id":{"$numberInt":"19"},"name":"Echoes of the Past","location":[{"$numberInt":"54"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db41d575c6c111c186b7c"},"id":{"$numberInt":"20"},"name":"Undying Fire","location":[{"$numberInt":"53"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db44c575c6c111c186b7d"},"id":{"$numberInt":"21"},"name":"Whirlwind Valley Triple Crown","location":[{"$numberInt":"49"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db47a575c6c111c186b7e"},"id":{"$numberInt":"22"},"name":"Beluga Lagoon Triple Crown","location":[{"$numberInt":"48"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db49f575c6c111c186b7f"},"id":{"$numberInt":"23"},"name":"Go Supernova","location":[{"$numberInt":"51"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db4c3575c6c111c186b80"},"id":{"$numberInt":"24"},"name":"Breaking the Barrier","location":[{"$numberInt":"38"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db4e1575c6c111c186b81"},"id":{"$numberInt":"25"},"name":"Templar of Doom","location":[{"$numberInt":"37"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db504575c6c111c186b82"},"id":{"$numberInt":"26"},"name":"Double Dose","location":[{"$numberInt":"31"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9db540575c6c111c186b83"},"id":{"$numberInt":"27"},"name":"Which Doctor","location":[{"$numberInt":"30"}],"type":{"$numberInt":"1"}}
-{"_id":{"$oid":"5d9ed3d16ddda218e84fa87c"},"id":{"$numberInt":"28"},"name":"Warped Beyond Reason (Hard)","location":[{"$numberInt":"29"}],"type":{"$numberInt":"0"}}
-{"_id":{"$oid":"5da0bfda84ea2020e8f769d8"},"id":{"$numberInt":"29"},"name":"Aransu Has Fallen","location":[{"$numberInt":"54"}],"type":{"$numberInt":"2"}}
-{"_id":{"$oid":"5da0bffc84ea2020e8f769d9"},"id":{"$numberInt":"30"},"name":"The Eternal Champion \t","location":[{"$numberInt":"53"}],"type":{"$numberInt":"2"}}
-{"_id":{"$oid":"5da0c02d84ea2020e8f769da"},"id":{"$numberInt":"31"},"name":"Fall of the Machines","location":[{"$numberInt":"38"}],"type":{"$numberInt":"2"}}
-{"_id":{"$oid":"5da0c05b84ea2020e8f769db"},"id":{"$numberInt":"32"},"name":"Templar Tussle","location":[{"$numberInt":"37"}],"type":{"$numberInt":"2"}}
-{"_id":{"$oid":"5da0c0e084ea2020e8f769dc"},"id":{"$numberInt":"33"},"name":"Candycloud on the Horizon","location":[{"$numberInt":"57"}],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b0ff51c9d440000be8cd3"},"id":{"$numberInt":"0"},"name":"Brawl in the Basin","location":["Celestial Basin"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b186c1c9d440000be8cd5"},"id":{"$numberInt":"1"},"name":"In the Dead of the Winter","location":["Cold Storage"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b188f1c9d440000be8cd6"},"id":{"$numberInt":"2"},"name":"The Leader of the Pack","location":["Starstone Mines"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b18b01c9d440000be8cd7"},"id":{"$numberInt":"3"},"name":"Bad Karma","location":["Sandstorm Temple"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b19bd1c9d440000be8cd8"},"id":{"$numberInt":"4"},"name":"Shadowmoor Rising","location":["The Shadowmoor"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b19e11c9d440000be8cd9"},"id":{"$numberInt":"5"},"name":"Setting the Stage for Revenge","location":["Dreamsong Theater"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b19f31c9d440000be8cda"},"id":{"$numberInt":"6"},"name":"Warped Beyond Reason","location":["Warped Citadel"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9b1a1e1c9d440000be8cdb"},"id":{"$numberInt":"7"},"name":"Brood Awakening (Hard)","location":["Brood Chamber"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c895e1c9d440000df0d9a"},"id":{"$numberInt":"8"},"name":"A Mid-Bummer Night's Dream","location":["Moon Refuge"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c89cb1c9d440000df0d9b"},"id":{"$numberInt":"9"},"name":"Rose from the Past","location":["Heaven's Mandate"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c89e81c9d440000df0d9c"},"id":{"$numberInt":"10"},"name":"Horrors of the Hollow","location":["Hollow's Heart"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c8a011c9d440000df0d9d"},"id":{"$numberInt":"11"},"name":"Rolling in the Deeps","location":["Drowning Deeps"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c8a1b1c9d440000df0d9e"},"id":{"$numberInt":"12"},"name":"Live by the Sword","location":["Ransacked Treasury"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c8a371c9d440000df0d9f"},"id":{"$numberInt":"13"},"name":"Brood Awakening","location":["Brood Chamber"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c8a541c9d440000df0da0"},"id":{"$numberInt":"14"},"name":"Waiting in the Wings","location":["Cathedra Cliffs"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c8a731c9d440000df0da1"},"id":{"$numberInt":"15"},"name":"Setting the Stage for Revenge (Hard)","location":["Dreamsong Theater"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c94a46ff3180774b88405"},"id":{"$numberInt":"16"},"name":"Waiting in the Wings (Hard)","location":["Cathedra Cliffs"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c94fb6ff3180774b88406"},"id":{"$numberInt":"17"},"name":"Rage Against the Longgui","location":["Midnight Skypetal Plains"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d9c96156ff3180774b88407"},"id":{"$numberInt":"18"},"name":"Favor and Fortune","location":["Sandstorm Temple","Cathedra Cliffs","The Shadowmoor","Hangar 0","Brood Chamber","Stonescale Passage"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db3ea575c6c111c186b7b"},"id":{"$numberInt":"19"},"name":"Echoes of the Past","location":["Fallen Aransu School"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db41d575c6c111c186b7c"},"id":{"$numberInt":"20"},"name":"Undying Fire","location":["Snowjade Fortress"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db44c575c6c111c186b7d"},"id":{"$numberInt":"21"},"name":"Whirlwind Valley Triple Crown","location":["Whirlwind Valley"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db47a575c6c111c186b7e"},"id":{"$numberInt":"22"},"name":"Beluga Lagoon Triple Crown","location":["Beluga Lagoon"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db49f575c6c111c186b7f"},"id":{"$numberInt":"23"},"name":"Go Supernova","location":["Nova Core"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db4c3575c6c111c186b80"},"id":{"$numberInt":"24"},"name":"Breaking the Barrier","location":["Hall of Keeper"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db4e1575c6c111c186b81"},"id":{"$numberInt":"25"},"name":"Templar of Doom","location":["Hall of Templar"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db504575c6c111c186b82"},"id":{"$numberInt":"26"},"name":"Double Dose","location":["Titan Chamber"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9db540575c6c111c186b83"},"id":{"$numberInt":"27"},"name":"Which Doctor","location":["Botany Center"],"type":{"$numberInt":"1"}}
+{"_id":{"$oid":"5d9ed3d16ddda218e84fa87c"},"id":{"$numberInt":"28"},"name":"Warped Beyond Reason (Hard)","location":["Warped Citadel"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5da0bfda84ea2020e8f769d8"},"id":{"$numberInt":"29"},"name":"Aransu Has Fallen","location":["Fallen Aransu School"],"type":{"$numberInt":"2"}}
+{"_id":{"$oid":"5da0bffc84ea2020e8f769d9"},"id":{"$numberInt":"30"},"name":"The Eternal Champion \t","location":["Snowjade Fortress"],"type":{"$numberInt":"2"}}
+{"_id":{"$oid":"5da0c02d84ea2020e8f769da"},"id":{"$numberInt":"31"},"name":"Fall of the Machines","location":["Hall of Keeper"],"type":{"$numberInt":"2"}}
+{"_id":{"$oid":"5da0c05b84ea2020e8f769db"},"id":{"$numberInt":"32"},"name":"Templar Tussle","location":["Hall of Templar"],"type":{"$numberInt":"2"}}
+{"_id":{"$oid":"5da0c0e084ea2020e8f769dc"},"id":{"$numberInt":"33"},"name":"Candycloud on the Horizon","location":["Candycloud Park"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5df61cceaf93a40300a188ea"},"id":{"$numberInt":"34"},"name":"Ground Zero","location":["Hangar 0"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5df61cfeaf93a40300a188eb"},"id":{"$numberInt":"35"},"name":"Ground Zero (Hard)","location":["Hangar 0"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5e27b34e1c9d440000db6a69"},"id":{"$numberInt":"36"},"name":"The Final Training","location":["Mushin's Tower - 8th Floor"],"type":{"$numberInt":"0"}}
+{"_id":{"$oid":"5e9065d5f92a5f24d88d5a41"},"location":["Stonescale Passage"],"name":"Sword and Scale","type":{"$numberInt":"0"},"id":{"$numberInt":"37"}}
+{"_id":{"$oid":"5e9066eff92a5f24d88d5a42"},"location":["Arena Match"],"name":"One on One","type":{"$numberInt":"0"},"id":{"$numberInt":"38"}}
+{"_id":{"$oid":"5e906713f92a5f24d88d5a43"},"location":["Beluga Lagoon"],"name":"One Win on Beluga Lagoon","type":{"$numberInt":"0"},"id":{"$numberInt":"39"}}
+{"_id":{"$oid":"5e906724f92a5f24d88d5a44"},"location":["Whirlwind Valley"],"name":"One Whirlwind Valley","type":{"$numberInt":"0"},"id":{"$numberInt":"40"}}
+{"_id":{"$oid":"5e90673af92a5f24d88d5a45"},"location":["Nova Core"],"name":"Shot at Stardom","type":{"$numberInt":"0"},"id":{"$numberInt":"41"}}
+{"_id":{"$oid":"5e90675bf92a5f24d88d5a46"},"location":["Arena Match"],"name":"Tag Match Win","type":{"$numberInt":"0"},"id":{"$numberInt":"42"}}
+{"_id":{"$oid":"5e90677ef92a5f24d88d5a48"},"location":["Koldrak's Lair"],"name":"The Dragon's Lair","type":{"$numberInt":"0"},"id":{"$numberInt":"43"}}
+{"_id":{"$oid":"5e906fd1f92a5f24d88d5a49"},"location":["Brood Chamber","Stonescale Passage"],"name":"A Masterful Task","type":{"$numberInt":"1"},"id":{"$numberInt":"44"}}
