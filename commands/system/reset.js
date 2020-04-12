@@ -14,6 +14,6 @@ module.exports = class ResetNotificationCommand extends Command {
   }
 
   async run() {
-    service.automationQuestReset(this.client.guilds);
+    service.automationQuestReset(this.client);
   }
 };
