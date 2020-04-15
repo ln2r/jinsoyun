@@ -1,91 +1,30 @@
 const utils = require('../utils/index.js');
 
-const reactionEvents = {
-  MESSAGE_REACTION_ADD: 'messageReactionAdd',
-  MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
-};
+module.exports = async function(reactionData, user, action, botId) {
+  if(user.id === botId) return;
 
-module.exports = async function(event, clientDiscord) {
-  /**
-   * Original algorithm by Sam-DevZ
-   * https://github.com/Sam-DevZ/Discord-RoleReact
-   */
+  const guildSettings = await utils.getGuildSettings(reactionData.message.channel.guild.id);
+  const emojiId = (reactionData.emoji.id)? reactionData.emoji.name+':'+reactionData.emoji.id: reactionData.emoji.name;
+  const userMemberData = await reactionData.message.channel.guild.members.fetch(user.id);
 
-  let guildReactionRoleData;
-  // check if the event have the reactions property
-  if (!reactionEvents.hasOwnProperty(event.t)) return;
-  const {d: data} = event;
-  const user = clientDiscord.users.cache.get(data.user_id);
-
-  // check if it's the bot
-  if (data.user_id === clientDiscord.user.id) return;
-
-  // get role data from db
-  const guildSettings = await utils.getGuildSettings(data.guild_id);
-
-  if (guildSettings && guildSettings.length !== 0) {
-    guildReactionRoleData = guildSettings.settings.react_role;
-
-    if (guildReactionRoleData) {
-      const channel = clientDiscord.channels.cache.get(data.channel_id);
-      // checking channel and finding the message
-      let found = false;
-      let messageIndex;
-
-      for (let i=0; i<guildReactionRoleData.length; i++) {
-        if (guildReactionRoleData[i].channel === data.channel_id && guildReactionRoleData[i].id === data.message_id) {
-          messageIndex = i;
-          found = true;
-        }
-      }
-
-      if (found) {
-        // checking the message
-        if (data.message_id === guildReactionRoleData[messageIndex].id) {
-          let message = await channel.fetch(data.message_id);
-          let member = message.guild.members.cache.get(user.id);
-
-          // checking the emoji and getting the index
-          if (guildReactionRoleData[messageIndex].reactions) {
-            let emojiData;
-            if (data.emoji.id) {
-              emojiData = data.emoji.name+':'+data.emoji.id;
-            } else {
-              emojiData = data.emoji.name;
-            }
-
-            // checking the emoji and getting the role id
-            let reactionFound = false;
-            let reactionIndex;
-            for (let i=0; i<guildReactionRoleData[messageIndex].reactions.length; i++) {
-              if (guildReactionRoleData[messageIndex].reactions[i].emoji === emojiData) {
-                reactionFound = true;
-                reactionIndex = i;
-              }
-            }
-
-            if (reactionFound) {
-              // checking if once
-              if (guildReactionRoleData[messageIndex].reactions[reactionIndex].once) {
-                member.addRole(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
-                // removing the reaction
-                channel.fetch(guildReactionRoleData[messageIndex].id).then((message) => {
-                  const filtered = message.reactions.filter((reaction) => reaction.emoji.name === data.emoji.name);
-
-                  filtered.forEach((reaction) => reaction.remove(user.id));
-                });
-              } else {
-                // check if the event add or remove
-                if (event.t === 'MESSAGE_REACTION_ADD') {
-                  member.roles.add(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
-                } else {
-                  member.roles.remove(guildReactionRoleData[messageIndex].reactions[reactionIndex].role);
-                }
-              }
+  if(guildSettings){    
+    guildSettings.react_role.map(r => {
+      if(reactionData.message.channel.id === r.channel && reactionData.message.id === r.id){
+        r.reactions.map(reactions => {
+          if(reactions.emoji === emojiId){
+            switch(action){
+            case 'add':
+              userMemberData.roles.add(reactions.role);
+  
+              if(reactions.once) reactionData.users.remove(user.id);
+              break;
+            case 'remove':
+              userMemberData.roles.remove(reactions.role);
+              break;
             }
           }
-        }
+        });
       }
-    }
+    });
   }
 };

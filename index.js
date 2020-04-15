@@ -21,6 +21,7 @@ const clientDiscord = new CommandoClient({
   owner: config.bot.author_id,
   disableEveryone: true,
   unknownCommandResponse: false,
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 
 clientDiscord.login(process.env.SOYUN_BOT_DISCORD_SECRET);
@@ -34,7 +35,9 @@ clientDiscord.registry
     ['dev', 'Bot Dev'],
   ])
   .registerDefaultGroups()
-  .registerDefaultCommands()
+  .registerDefaultCommands({
+    unknownCommand:false
+  })
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 clientDiscord
@@ -54,7 +57,7 @@ clientDiscord
   })
   .on('ready', async () => {
     const globalSettings = await utils.getGuildSettings(0);
-    let botStatus = globalSettings.settings.status;
+    let botStatus = globalSettings.status;
 
     if (config.bot.maintenance) {
       services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
@@ -157,9 +160,19 @@ clientDiscord
       services.sendLog('error', errorLocation, command.message);
     }  
   })
-// event handling for reactions
-  .on('raw', async (event) => {
-    services.reactionRole(event, clientDiscord);
+  .on('messageReactionAdd', async (reaction, user) => {
+    // fetching the reaction data
+    if (reaction.message.partial) await reaction.message.fetch();
+    if (reaction.partial) await reaction.fetch();
+
+    services.reactionRole(reaction, user, 'add', clientDiscord.user.id);
+  })
+  .on('messageReactionRemove', async (reaction, user) => {
+    // fetching the reaction data
+    if (reaction.message.partial) await reaction.message.fetch();
+    if (reaction.partial) await reaction.fetch();
+
+    services.reactionRole(reaction, user, 'remove', clientDiscord.user.id);
   });
 
 clientDiscord.setProvider(
