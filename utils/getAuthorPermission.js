@@ -8,10 +8,10 @@ const getGuildSettings = require('./getGuildSettings');
  * @return {Boolean} permission boolean
  */
 module.exports = async function(messageData, guildId) {
-  const configsData = await getGuildSettings(guildId);
-  const guildAdminRolesData = configsData.settings.admin_roles;
+  const guildSettings = await getGuildSettings(guildId);
+  const guildAdminRolesData = guildSettings.admin_roles;
   let found;
-
+  
   // checking if the guild have admin roles set
   if (guildAdminRolesData && guildAdminRolesData !== null) {
   // check if its the guild owner
@@ -20,7 +20,7 @@ module.exports = async function(messageData, guildId) {
     }
 
     // checking author roles
-    messageData.member.roles.map((role) => {
+    messageData.member.roles.cache.map((role) => {
       for (let i=0; i<guildAdminRolesData.length; i++) {
         if (guildAdminRolesData[i] === role.id) {
           found = true;
