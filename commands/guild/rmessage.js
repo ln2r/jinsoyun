@@ -54,16 +54,13 @@ module.exports = class ReactionRoleMessageCommand extends Command {
           }
         }
 
-        // check and get message data
-        reactionMessageData = await msg.channel.fetch(messageId).catch((err) => {
+        // check and get message data        
+        reactionMessageData = await msg.channel.messages.fetch(messageId).catch((err) => {
           services.sendLog('error', 'Reaction Message', err);
           reactionMessageData = false;
         });
 
-        if (reactionMessageData) {
-          // getting content
-          const reactionMessageContent = reactionMessageData.content;
-
+        if (reactionMessageData) {                            
           // present message content and url
           if (!found) {
             reactionRoleData.push({id: messageId, channel: msg.channel.id});
@@ -90,7 +87,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
                 },
                 {
                   'name': 'Content',
-                  'value': reactionMessageContent,
+                  'value': reactionMessageData.content,
                 },
               ],
             },
