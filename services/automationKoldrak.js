@@ -21,7 +21,7 @@ module.exports = async function(clientData) {
 
       let koldrakChannel = '';
       if (guildSettingData !== undefined) {
-        koldrakChannel = guildSettingData.settings.koldrak;
+        koldrakChannel = guildSettingData.koldrak;
       }
 
       let found = 0;

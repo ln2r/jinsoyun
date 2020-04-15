@@ -73,7 +73,7 @@ module.exports = async function(clientData) {
       let guildSettingData = await utils.getGuildSettings(guild.id);
       let resetChannel = '';
       if (guildSettingData !== undefined) {
-        resetChannel = guildSettingData.settings.quest_reset;
+        resetChannel = guildSettingData.quest_reset;
       }
 
       let found = 0;

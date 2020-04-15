@@ -84,14 +84,14 @@ clientDiscord
   })
   .on('guildMemberAdd', async (member) => {
     const guildSettingData = await utils.getGuildSettings(member.guild.id);
-    let guildCommandPrefix = guildSettingData.settings.prefix;
+    let guildCommandPrefix = guildSettingData.prefix;
 
     if (guildCommandPrefix === undefined || guildCommandPrefix === null) {
       guildCommandPrefix = config.bot.default_prefix;
     }
 
     if (guildSettingData) {
-      const memberGate = guildSettingData.settings.member_gate;
+      const memberGate = guildSettingData.member_gate;
 
       // checking if the guild have the channel and the message set
       // TODO: make the message customizable

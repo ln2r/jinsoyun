@@ -105,7 +105,7 @@ module.exports = async function(clientDiscord) {
 
               let twitterChannel = '';
               if (guildSettingData !== undefined) {
-                twitterChannel = guildSettingData.settings.twitter;
+                twitterChannel = guildSettingData.twitter;
               }
 
               let found = 0;

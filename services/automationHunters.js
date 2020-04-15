@@ -21,7 +21,7 @@ module.exports = async function(clientData) {
 
       let huntersChannel = '';
       if (guildSettingData !== undefined) {
-        huntersChannel = guildSettingData.settings.hunters_refugee;
+        huntersChannel = guildSettingData.hunters_refugee;
       }
 
       let found = 0;
