@@ -10,7 +10,7 @@ module.exports = async function(guildId) {
   const guildData = await fetchDB('configs', {guild: guildId});
 
   if (guildData.length !== 0) {
-    return guildData[0];
+    return guildData[0].settings;
   } else {
     return null;
   }

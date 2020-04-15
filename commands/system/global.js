@@ -25,7 +25,7 @@ module.exports = class ResetNotificationCommand extends Command {
     let settingData;
 
     if (guildSettings) {
-      botPrefix = guildSettings.settings.prefix;
+      botPrefix = guildSettings.prefix;
     } else {
       botPrefix = '!';
     }

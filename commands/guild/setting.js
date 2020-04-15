@@ -34,7 +34,7 @@ module.exports = class GuildSettingsCommand extends Command {
       let botPrefix;
 
       if (guildSettings) {
-        botPrefix = guildSettings.settings.prefix;
+        botPrefix = guildSettings.prefix;
       } else {
         botPrefix = '!';
       }
@@ -124,8 +124,8 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.quest_reset && guildSettings.settings.quest_reset !== null) {
-              settingResetChannelText = '<#'+guildSettings.settings.quest_reset+'>';
+            if (guildSettings.quest_reset && guildSettings.quest_reset !== null) {
+              settingResetChannelText = '<#'+guildSettings.quest_reset+'>';
             }
           }
         }
@@ -161,8 +161,8 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.twitter && guildSettings.settings.twitter !== null) {
-              settingTwitterChannelText = '<#'+guildSettings.settings.twitter+'>';
+            if (guildSettings.twitter && guildSettings.twitter !== null) {
+              settingTwitterChannelText = '<#'+guildSettings.twitter+'>';
             }
           }
         }
@@ -198,8 +198,8 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.koldrak && guildSettings.settings.koldrak !== null) {
-              settingKoldrakChannelText = '<#'+guildSettings.settings.koldrak+'>';
+            if (guildSettings.koldrak && guildSettings.koldrak !== null) {
+              settingKoldrakChannelText = '<#'+guildSettings.koldrak+'>';
             }
           }
         }
@@ -256,14 +256,14 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null) {
-              settingGateChannelText = '<#'+guildSettings.settings.member_gate.channel_id+'>';
+            if (guildSettings.member_gate.channel_id && guildSettings.member_gate.channel_id !== null) {
+              settingGateChannelText = '<#'+guildSettings.member_gate.channel_id+'>';
             }
-            if (guildSettings.settings.member_gate.next && guildSettings.settings.member_gate.next !== null) {
-              settingGateFollowupChannelText = '<#'+guildSettings.settings.member_gate.next+'>';
+            if (guildSettings.member_gate.next && guildSettings.member_gate.next !== null) {
+              settingGateFollowupChannelText = '<#'+guildSettings.member_gate.next+'>';
             }
-            if (guildSettings.settings.member_gate.role_id && guildSettings.settings.member_gate.role_id !== null) {
-              settingGateRoleText = '<@&'+guildSettings.settings.member_gate.role_id+'>';
+            if (guildSettings.member_gate.role_id && guildSettings.member_gate.role_id !== null) {
+              settingGateRoleText = '<@&'+guildSettings.member_gate.role_id+'>';
             }
           }
         }
@@ -314,8 +314,8 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.join_message && guildSettings.settings.join_message !== null) {
-              settingFollowupMessageText = guildSettings.settings.join_message;
+            if (guildSettings.join_message && guildSettings.join_message !== null) {
+              settingFollowupMessageText = guildSettings.join_message;
             }
           }
         }
@@ -333,47 +333,47 @@ module.exports = class GuildSettingsCommand extends Command {
       case 'show':
         if (guildSettings) {
           // reset notification
-          if (guildSettings.settings.quest_reset && guildSettings.settings.quest_reset !== null) {
-            settingResetChannelText = '<#'+guildSettings.settings.quest_reset+'>';
+          if (guildSettings.quest_reset && guildSettings.quest_reset !== null) {
+            settingResetChannelText = '<#'+guildSettings.quest_reset+'>';
           }
 
           // twitter
-          if (guildSettings.settings.twitter && guildSettings.settings.twitter !== null) {
-            settingTwitterChannelText = '<#'+guildSettings.settings.twitter+'>';
+          if (guildSettings.twitter && guildSettings.twitter !== null) {
+            settingTwitterChannelText = '<#'+guildSettings.twitter+'>';
           }
 
           // koldrak's lair
-          if (guildSettings.settings.koldrak && guildSettings.settings.koldrak !== null) {
-            settingKoldrakChannelText = '<#'+guildSettings.settings.koldrak+'>';
+          if (guildSettings.koldrak && guildSettings.koldrak !== null) {
+            settingKoldrakChannelText = '<#'+guildSettings.koldrak+'>';
           }
 
           // hunter's refugee
-          if (guildSettings.settings.hunters_refugee && guildSettings.settings.hunters_refugee !== null) {
-            settingHuntersRefugeeText = '<#'+guildSettings.settings.hunters_refugee+'>';
+          if (guildSettings.hunters_refugee && guildSettings.hunters_refugee !== null) {
+            settingHuntersRefugeeText = '<#'+guildSettings.hunters_refugee+'>';
           }
 
           // new member gate
-          if (guildSettings.settings.member_gate.channel_id && guildSettings.settings.member_gate.channel_id !== null) {
-            settingGateChannelText = '<#'+guildSettings.settings.member_gate.channel_id+'>';
+          if (guildSettings.member_gate.channel_id && guildSettings.member_gate.channel_id !== null) {
+            settingGateChannelText = '<#'+guildSettings.member_gate.channel_id+'>';
           }
-          if (guildSettings.settings.member_gate.next && guildSettings.settings.member_gate.next !== null) {
-            settingGateFollowupChannelText = '<#'+guildSettings.settings.member_gate.next+'>';
+          if (guildSettings.member_gate.next && guildSettings.member_gate.next !== null) {
+            settingGateFollowupChannelText = '<#'+guildSettings.member_gate.next+'>';
           }
-          if (guildSettings.settings.member_gate.role_id && guildSettings.settings.member_gate.role_id !== null) {
-            settingGateRoleText = '<@&'+guildSettings.settings.member_gate.role_id+'>';
+          if (guildSettings.member_gate.role_id && guildSettings.member_gate.role_id !== null) {
+            settingGateRoleText = '<@&'+guildSettings.member_gate.role_id+'>';
           }
 
           // join command custom message
-          if (guildSettings.settings.join_message && guildSettings.settings.join_message !== null) {
-            settingFollowupMessageText = guildSettings.settings.join_message;
+          if (guildSettings.join_message && guildSettings.join_message !== null) {
+            settingFollowupMessageText = guildSettings.join_message;
           }
 
           // bot's admins
-          if (guildSettings.settings.admin_roles && guildSettings.settings.admin_roles[0] !== null) {
+          if (guildSettings.admin_roles && guildSettings.admin_roles[0] !== null) {
             settingAdminRoleText = []; // emptying the array
 
-            for (let i=0; i<guildSettings.settings.admin_roles.length; i++) {
-              settingAdminRoleText.push('<@&'+guildSettings.settings.admin_roles[i]+'>');
+            for (let i=0; i<guildSettings.admin_roles.length; i++) {
+              settingAdminRoleText.push('<@&'+guildSettings.admin_roles[i]+'>');
             }
           }
         }
@@ -436,11 +436,11 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.admin_roles && guildSettings.settings.admin_roles[0] !== null) {
+            if (guildSettings.admin_roles && guildSettings.admin_roles[0] !== null) {
               settingAdminRoleText = []; // emptying the array
 
-              for (let i=0; i<guildSettings.settings.admin_roles.length; i++) {
-                settingAdminRoleText.push('<@&'+guildSettings.settings.admin_roles[i]+'>');
+              for (let i=0; i<guildSettings.admin_roles.length; i++) {
+                settingAdminRoleText.push('<@&'+guildSettings.admin_roles[i]+'>');
               }
             }
           }
@@ -478,8 +478,8 @@ module.exports = class GuildSettingsCommand extends Command {
 
         if (!changed) {
           if (guildSettings) {
-            if (guildSettings.settings.hunters_refugee && guildSettings.settings.hunters_refugee !== null) {
-              settingHuntersRefugeeText = '<#'+guildSettings.settings.hunters_refugee+'>';
+            if (guildSettings.hunters_refugee && guildSettings.hunters_refugee !== null) {
+              settingHuntersRefugeeText = '<#'+guildSettings.hunters_refugee+'>';
             }
           }
         }
