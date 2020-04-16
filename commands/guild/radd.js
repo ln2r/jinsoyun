@@ -37,12 +37,12 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
         msgData = 'Please select a message first using `rmessage message-id`';
       } else {
         // getting guild's reaction-role data from db
-        const guildData = await utils.fetchDB('configs', {guild: msg.guild.id});
+        const guildData = await utils.getGuildSettings(msg.guild.id);
         let reactionRoleData;
 
         // get data from db if there's already some
         if (guildData) {
-          reactionRoleData = guildData[0].settings.react_role;
+          reactionRoleData = guildData.react_role;
         }
 
         // checking if user give role

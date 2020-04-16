@@ -43,8 +43,8 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
         msgData = 'Please select a message first using `rmessage message-id`';
       } else {
         // getting guild's reaction-role data from db
-        const guildData = await utils.fetchDB('configs', {guild: msg.guild.id});
-        const reactionRoleData = guildData[0].settings.react_role;
+        const guildData = await utils.getGuildSettings(msg.guild.id);
+        const reactionRoleData = guildData.react_role;
 
         let emojiId;
         // removing unecessary stuff
