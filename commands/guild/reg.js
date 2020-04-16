@@ -33,7 +33,7 @@ module.exports = class RegCommand extends Command {
     // formatting the nickname
     const userCharaName = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
-    if (guildSettingData.settings) {
+    if (guildSettingData) {
       if (guildSettingData.member_gate) {
         // changing the nickname
         if (msg.author.id !== msg.guild.ownerID) {
