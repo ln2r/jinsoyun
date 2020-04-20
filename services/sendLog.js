@@ -1,11 +1,9 @@
-const {createLogger, format, transports} = require('winston');
+/* eslint-disable no-console */
+const MongoClient = require('mongodb').MongoClient;
+const dateformat = require('dateformat');
 
-require('winston-mongodb');
-const { combine, timestamp, label, printf } = format;
-const levels = {error: 0, warn: 1, info: 3};
-const colors = {error: 'red', warn: 'yellow', info: 'green'};
-
-const myLevels = {levels: levels, colors: colors};
+const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
+const dbName = process.env.SOYUN_BOT_DB_NAME;
 
 /**
  * SendLog
@@ -15,35 +13,26 @@ const myLevels = {levels: levels, colors: colors};
  * @param {String} message log message 
  */
 module.exports = function(level, location, message){
-  const myFormat = printf(info => {
-    return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
-  });
+  const currentTime = new Date();
 
-  const logger = createLogger({
-    format: combine(
-      format.colorize(),
-      format.errors({ stack: true }),
-      label({ label: location }),
-      timestamp(),
-      format.splat(),
-      myFormat
-    ),
-    transports: [
-      new transports.Console(),
-      new transports.MongoDB({
-        db: process.env.SOYUN_BOT_DB_CONNECT_URL,
-        collection: 'log',
-        options: {
-          poolSize: 5,
-          useNewUrlParser: true,
-          useUnifiedTopology: true
-        },
-        level: 'error'
-      }),
-    ],    
-    levels: myLevels.levels
-  });
+  if(level === 'error'){
+    const payload = {
+      'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
+      'level': level,
+      'location': location,
+      'message': message,
+    };
 
-  // winston logger
-  logger.log(level, message);
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+      if (err) throw err;
+      const dbo = db.db(dbName);    
+  
+      dbo.collection('logs').insertOne(payload, function(err) {
+        if (err) throw err;
+        db.close();
+      });
+    });
+  }  
+
+  console.log(`${dateformat(currentTime, 'UTC:dd-mmmm-yyyy')} [${location}] ${level}: ${message}`);
 };
