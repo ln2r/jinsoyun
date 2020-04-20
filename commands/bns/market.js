@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const dateformat = require('dateformat');
 const utils = require('../../utils/index.js');
