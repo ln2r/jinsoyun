@@ -4,9 +4,8 @@
   "description": "Grumpy Butts very own discord bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pretest": "eslint --ignore-path .gitignore .",
-    "lintfix": "eslint --fix --ignore-path .gitignore ."
+    "lint-todo": "eslint --ignore-path .gitignore .",
+    "lint-fix": "eslint --fix --ignore-path .gitignore ."
   },
   "repository": {
     "type": "git",
