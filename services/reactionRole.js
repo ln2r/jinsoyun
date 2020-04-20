@@ -7,7 +7,7 @@ module.exports = async function(reactionData, user, action, botId) {
   const emojiId = (reactionData.emoji.id)? reactionData.emoji.name+':'+reactionData.emoji.id: reactionData.emoji.name;
   const userMemberData = await reactionData.message.channel.guild.members.fetch(user.id);
 
-  if(guildSettings){    
+  if(guildSettings && guildSettings.react_role){    
     guildSettings.react_role.map(r => {
       if(reactionData.message.channel.id === r.channel && reactionData.message.id === r.id){
         r.reactions.map(reactions => {
