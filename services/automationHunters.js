@@ -10,7 +10,7 @@ module.exports = async function(clientData) {
   // checking global settings
   const globalSettings = await utils.getGlobalSetting('hunters_refugee');
   if (!globalSettings.status) {
-    sendLog('warn', 'Hunter\'s Access', 'Access notification disabled, '+globalSettings.message);
+    await sendLog('warn', 'Hunter\'s Access', 'Access notification disabled, '+globalSettings.message);
     return;
   }
 
@@ -50,6 +50,6 @@ module.exports = async function(clientData) {
       });
     }
   });
-  sendLog('info', 'Hunter\'s Access', 'Access notification sent');
+  await sendLog('info', 'Hunter\'s Access', 'Access notification sent');
   return;
 };

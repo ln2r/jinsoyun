@@ -10,7 +10,7 @@ module.exports = async function(clientData) {
   // checking global settings
   const globalSettings = await utils.getGlobalSetting('koldrak_announce');
   if (!globalSettings.status) {
-    sendLog('warn', 'koldrak-announce', 'koldrak access notification disabled, '+globalSettings.message);
+    await sendLog('warn', 'koldrak-announce', 'koldrak access notification disabled, '+globalSettings.message);
     return;
   }
 
@@ -50,6 +50,6 @@ module.exports = async function(clientData) {
       });
     }
   });
-  sendLog('info', 'Koldrak Announce', 'Koldrak access notification sent');
+  await sendLog('info', 'Koldrak Announce', 'Koldrak access notification sent');
   return;
 };

@@ -13,7 +13,7 @@ const dbName = process.env.SOYUN_BOT_DB_NAME;
  * @param {Number} limit max data fetched
  * @return data fetched from databse
  */
-module.exports = function (collname, filter, sorting, limit) {
+module.exports = async function (collname, filter, sorting, limit) {
   filter = (filter === null || filter === undefined)? {} : filter;
   sorting = (sorting === null || sorting === undefined)? {} : sorting;
   limit = (limit === null || limit === undefined)? 0 : limit;
@@ -32,6 +32,6 @@ module.exports = function (collname, filter, sorting, limit) {
         return items;
       });
   } catch (err) {
-    services.sendLog('error', 'fetchDB', err);
+    await services.sendLog('error', 'fetchDB', err);
   }
 };

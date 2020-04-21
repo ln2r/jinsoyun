@@ -38,8 +38,8 @@ module.exports = class ResetNotificationCommand extends Command {
       };
 
       // changing bot presence
-      this.client.user.setPresence(statusData).catch((error) => {
-        services.sendLog('error', 'CMD Presence', error);
+      this.client.user.setPresence(statusData).catch(async (error) => {
+        await services.sendLog('error', 'Presence', error);
       });
 
       // saving to db

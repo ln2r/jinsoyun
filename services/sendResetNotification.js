@@ -89,5 +89,5 @@ module.exports = async function(clientData) {
       });
     }
   });
-  sendLog('info', 'Reset', 'Reset notification sent');
+  await sendLog('info', 'Reset', 'Reset notification sent');
 };

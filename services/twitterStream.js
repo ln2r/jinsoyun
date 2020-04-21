@@ -12,7 +12,7 @@ const maintenanceMode = config.bot.maintenance;
  */
 module.exports = async function(clientDiscord) {
   if (maintenanceMode) {
-    sendLog('warn', 'Twitter', 'Maintenance mode is enabled, twitter disabled.');
+    await sendLog('warn', 'Twitter', 'Maintenance mode is enabled, twitter disabled.');
   } else {
     const clientTwitter = new Twitter({
       consumer_key: process.env.SOYUN_BOT_TWITTER_CONSUMER_KEY,
@@ -21,7 +21,7 @@ module.exports = async function(clientDiscord) {
       access_token_secret: process.env.SOYUN_BOT_TWITTER_ACCESS_SECRET,
     });
 
-    sendLog('info', 'Twitter', 'Twitter stream started.');
+    await sendLog('info', 'Twitter', 'Twitter stream started.');
 
     clientTwitter.stream('statuses/filter', {follow: config.twitter.id}, async function(stream) {
       const twitterAPIData = await utils.fetchDB('apis', {name: 'Twitter'});
@@ -45,7 +45,7 @@ module.exports = async function(clientDiscord) {
           // checking global settings
           const globalSettings = await utils.getGlobalSetting('twitter');
           if (!globalSettings.status) {
-            sendLog('warn', 'Twitter', 'Twitter stream disabled, '+globalSettings.message);
+            await sendLog('warn', 'Twitter', 'Twitter stream disabled, '+globalSettings.message);
             payloadStatus = false;
           }
 
@@ -120,14 +120,14 @@ module.exports = async function(clientDiscord) {
                 }
               });
             });
-            sendLog('info', 'Twitter', tweet.user.name+'\'s tweet sent');
+            await sendLog('info', 'Twitter', tweet.user.name+'\'s tweet sent');
           }
         }
-        sendLog('info', 'Twitter', 'Stream activity detected');
+        await sendLog('info', 'Twitter', 'Stream activity detected');
       });
 
-      stream.on('error', function(error) {
-        sendLog('info', 'Twitter', 'Error occured on Twitter stream.\n'+error);
+      stream.on('error', async function(error) {
+        await sendLog('info', 'Twitter', 'Error occured on Twitter stream.\n'+error);
       });
     });
   }

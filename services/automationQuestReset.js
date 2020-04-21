@@ -11,7 +11,7 @@ module.exports = async function(guildsData) {
   // checking if it disabled or not
   const globalSettings = await utils.getGlobalSetting('reset');
   if (!globalSettings.status) {
-    sendLog('warn', 'Reset', 'Notification disabled, '+globalSettings.message);
+    await sendLog('warn', 'Reset', 'Notification disabled, '+globalSettings.message);
   } else {
     sendResetNotification(guildsData);
   }

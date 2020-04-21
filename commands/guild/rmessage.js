@@ -55,8 +55,8 @@ module.exports = class ReactionRoleMessageCommand extends Command {
         }
 
         // check and get message data        
-        reactionMessageData = await msg.channel.messages.fetch(messageId).catch((err) => {
-          services.sendLog('error', 'Reaction Message', err);
+        reactionMessageData = await msg.channel.messages.fetch(messageId).catch(async (err) => {
+          await services.sendLog('error', 'Reaction Message', err);
           reactionMessageData = false;
         });
 

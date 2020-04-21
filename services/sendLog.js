@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const MongoClient = require('mongodb').MongoClient;
 const dateformat = require('dateformat');
+const utils = require('../utils/index.js');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -12,9 +13,10 @@ const dbName = process.env.SOYUN_BOT_DB_NAME;
  * @param {String} location current log location
  * @param {String} message log message 
  */
-module.exports = function(level, location, message){
+module.exports = async function(level, location, message){
   const currentTime = new Date();
 
+  // error logging
   if(level === 'error'){
     const payload = {
       'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
@@ -32,7 +34,43 @@ module.exports = function(level, location, message){
         db.close();
       });
     });
-  }  
+  }
+  
+  // bot request counting
+  if(level === 'query'){
+    const statsData = await utils.fetchDB('botStats', {currentTime: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
+    let todayStats = 0;
+    let payload;
+  
+    if (statsData.length === 0) {
+      todayStats++;
+  
+      payload = {
+        'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
+        'count': todayStats,
+      };
+    } else {
+      todayStats = statsData[0].count + 1;
+    }
+  
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+      if (err) throw err;
+      const dbo = db.db(dbName);
+  
+      if (statsData.length === 0) {
+        dbo.collection('botStats').insertOne(payload, function(err) {
+          if (err) throw err;
+          db.close();
+        });
+      } else {
+        dbo.collection('botStats').updateOne({'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy')},
+          {$set: {'count': todayStats}}, function(err) {
+            if (err) throw err;
+            db.close();
+          });
+      }
+    });  
+  }
 
-  console.log(`${dateformat(currentTime, 'UTC:dd-mmmm-yyyy')} [${location}] ${level}: ${message}`);
+  console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:SS')} UTC [${location}] ${level}: ${message}`);
 };

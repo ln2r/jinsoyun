@@ -18,8 +18,8 @@ module.exports = async function(address) {
     .then((response) => {
       return response.json();
     })
-    .catch((error) => {
-      services.sendLog('error', 'fetchSite', error);
+    .catch(async (error) => {
+      await services.sendLog('error', 'fetchSite', error);
       return {'status': 'error', error};
     });
 };

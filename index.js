@@ -41,32 +41,32 @@ clientDiscord.registry
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 clientDiscord
-  .on('error', (error) => {
-    services.sendLog('error', 'Discord', error);
+  .on('error', async (error) => {
+    await services.sendLog('error', 'Discord', error);
   })
-  .on('warn', (warn) => {
-    services.sendLog('warn', 'Discord', warn);
+  .on('warn', async (warn) => {
+    await services.sendLog('warn', 'Discord', warn);
   })
 // remove "//" below to enable debug log
 // .on("debug", console.log)
-  .on('disconnect', () => {
-    services.sendLog('warn', 'Discord', 'Connection disconnected!');
+  .on('disconnect', async () => {
+    await services.sendLog('warn', 'Discord', 'Connection disconnected!');
   })
-  .on('reconnecting', () => {
-    services.sendLog('info', 'Discord', 'Trying to reconnect...');
+  .on('reconnecting', async () => {
+    await services.sendLog('info', 'Discord', 'Trying to reconnect...');
   })
   .on('ready', async () => {
     const globalSettings = await utils.getGuildSettings(0);
     let botStatus = globalSettings.status;
 
     if (config.bot.maintenance) {
-      services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
+      await services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
     }
 
-    clientDiscord.user.setPresence(botStatus).catch((error) => {
-      services.sendLog('error', 'Bot', error);
+    clientDiscord.user.setPresence(botStatus).catch(async (error) => {
+      await services.sendLog('error', 'Bot', error);
     });
-    services.sendLog('info', 'Bot', 'Logged in and ready.');
+    await services.sendLog('info', 'Bot', 'Logged in and ready.');
   })
   .on('guildCreate', async (guild) => {
     const guildSettingData = await utils.getGuildSettings(guild.id);
@@ -75,11 +75,11 @@ clientDiscord
       clientDiscord.emit('commandPrefixChange', guild.id, process.env.bot_default_prefix);
     }
   })
-  .on('commandRun', async () => {
+  .on('commandRun', async (command) => {
     if (config.bot.maintenance) {
-      services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
+      await services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
     } else {
-      await services.sendStats(Date.now());
+      await services.sendLog('query', command, 'Request received.');
     }
   })
   .on('guildMemberAdd', async (member) => {
@@ -112,13 +112,13 @@ clientDiscord
       }
     }
   })
-  .on('commandError', (error, command, message) => {
+  .on('commandError', async (error, command, message) => {
     let errorLocation;
     let guildOwnerId;
     let guildOwnerData;
   
     if (config.bot.maintenance) {
-      services.sendLog('info', 'onCommandError', 'Error dm reporting is disabled');
+      await services.sendLog('info', 'onCommandError', 'Error dm reporting is disabled');
     } else {
       if (message.guild) {
         errorLocation = message.guild.name;
@@ -151,13 +151,13 @@ clientDiscord
             '\n**Guild Owner**: '+guildOwnerData+
             '\n**Content**: `'+message.content+'`'+
             '\n**Message**:\n'+command.name+': '+command.message
-        ).catch((err) => {
-          services.sendLog('error', 'onCommandError', err);
+        ).catch(async (err) => {
+          await services.sendLog('error', 'onCommandError', err);
         });
       }
 
       // logging the error report
-      services.sendLog('error', errorLocation, command.message);
+      await services.sendLog('error', errorLocation, command.message);
     }  
   })
   .on('messageReactionAdd', async (reaction, user) => {
@@ -177,8 +177,8 @@ clientDiscord
 
 clientDiscord.setProvider(
   MongoClient.connect(process.env.SOYUN_BOT_DB_CONNECT_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then((client) => new MongoDBProvider(client, process.env.SOYUN_BOT_DB_NAME))
-).catch((error) => {
-  services.sendLog('error', 'Database', error);
+).catch(async (error) => {
+  await services.sendLog('error', 'Database', error);
 });
 
 // Discord.js Commando scripts end here

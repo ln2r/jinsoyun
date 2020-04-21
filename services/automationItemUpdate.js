@@ -18,7 +18,7 @@ module.exports = async function() {
   if (itemsData.status === 'error' || itemsData.status === 'error') {
     const end = Date.now();
     const updateTime = (end-start)/1000+'s';
-    sendLog('warn', 'Items', `'Data update failed. (${updateTime})\n${itemsData}`);
+    await sendLog('warn', 'Items', `'Data update failed. (${updateTime})\n${itemsData}`);
   } else {
     const itemsCollectionName = 'items';
     const marketCollectionName = 'market';
@@ -28,7 +28,7 @@ module.exports = async function() {
       const dbo = db.db(dbName);
 
       dbo.listCollections({name: itemsCollectionName})
-        .next(function(err, collinfo) {
+        .next(async function(err, collinfo) {
           if (err) throw err;
 
           // checking if the collection is exist or not
@@ -53,7 +53,7 @@ module.exports = async function() {
           const end = Date.now();
           const updateTime = (end-start)/1000+'s';
                     
-          sendLog('info', 'Items', 'Data updated, time: '+updateTime);
+          await sendLog('info', 'Items', 'Data updated, time: '+updateTime);
         });
     });
   }

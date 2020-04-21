@@ -78,8 +78,8 @@ module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
                     }
                   });
                 })
-                .catch((err) => {
-                  services.sendLog('error', 'Reaction Add Once', err);
+                .catch(async (err) => {
+                  await services.sendLog('error', 'Reaction Add Once', err);
                 });
 
               // check if the reaction already exist
