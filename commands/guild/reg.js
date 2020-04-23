@@ -34,21 +34,21 @@ module.exports = class RegCommand extends Command {
     const userCharaName = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
     if (guildSettingData) {
-      if (guildSettingData.member_gate) {
+      if (guildSettingData.welcome) {
         // changing the nickname
         if (msg.author.id !== msg.guild.ownerID) {
           msg.guild.members.cache.get(msg.author.id).setNickname(userCharaName);
         }
 
         // checking and adding the role
-        if (guildSettingData.member_gate.role_id) {
+        if (guildSettingData.welcome.role_id) {
           // checking if the guild have the role, add if yes
-          if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.member_gate.role_id)) !== null) {
-            msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.member_gate.role_id);
+          if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.welcome.role_id)) !== null) {
+            msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.welcome.role_id);
           }
         }
 
-        if ((guildSettingData.member_gate.next && guildSettingData.member_gate.next !== null) && (guildSettingData.join_message && guildSettingData.join_message !== null)) {
+        if ((guildSettingData.welcome.next && guildSettingData.welcome.next !== null) && (guildSettingData.join_message && guildSettingData.join_message !== null)) {
           const joinMessageAuthor = '<@'+msg.author.id+'>';
           const joinServerName = msg.guild.name;
           let customJoinMessage = guildSettingData.join_message;
@@ -56,7 +56,7 @@ module.exports = class RegCommand extends Command {
           customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
           customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
 
-          msg.guild.channels.cache.find((ch) => ch.id === guildSettingData.member_gate.next).send(customJoinMessage);
+          msg.guild.channels.cache.find((ch) => ch.id === guildSettingData.welcome.next).send(customJoinMessage);
         }
       }
     } else {
