@@ -25,7 +25,7 @@ module.exports = class GuildSettingsCommand extends Command {
       return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
     }
 
-    const subQuery = ['reset', 'twitter', 'koldrak', 'gate', 'joinmsg', 'show', 'admin', 'hunter'];
+    const subQuery = ['reset', 'twitter', 'koldrak', 'welcome', 'joinmsg', 'show', 'admin', 'hunter'];
     let msgData = '';
     let embedData;
     // checking permission
@@ -63,7 +63,7 @@ module.exports = class GuildSettingsCommand extends Command {
             },
             {
               'name': 'New Member Verification',
-              'value': 'Change: `'+botPrefix+'setting gate #welcome-channel #follow-up-channel @role-name`\nDisable: `'+botPrefix+'setting gate disable disable disable`\nNote: You can just replace one of them to `disable` if you want that feature disabled (like the follow-up or auto role assignment).',
+              'value': 'Change:',
             },
             {
               'name': 'Join Command Custom Message',
@@ -87,17 +87,21 @@ module.exports = class GuildSettingsCommand extends Command {
 
       let settingResetChannelText = '*No Channel Selected*';
       let settingTwitterChannelText = '*No Channel Selected*';
+
       let settingKoldrakChannelText = '*No Channel Selected*';
-      let settingGateChannelText = '*No Channel Selected*';
-      let settingGateFollowupChannelText = '*No Channel Selected*';
-      let settingGateRoleText = '*No Role Selected*';
+      let settingWelcomeChannelText = '*No Channel Selected*';
+      let settingWelcomeFollowupChannelText = '*No Channel Selected*';
+      let settingWelcomeRoleText = '*No Role Selected*';
+      let settingWelcomeMessageText = '*No Message Set*';
+
       let settingFollowupMessageText = '*No Message Set*';
+
       let settingAdminRoleText = '*No Role Set*';
+
       let settingHuntersRefugeeText = '*No Channel Selected*';
 
-      let settingGateChannel;
-      let settingGateFollowupChannel;
-      let settingGateRole;
+      let welcomeSettings;
+      let settingWelcomeMessage;
 
       let settingFollowupMessage;
 
@@ -214,85 +218,128 @@ module.exports = class GuildSettingsCommand extends Command {
         ];
         break;
 
-      case 'gate':
-        if (query[1]) {
-          if (query[1] === 'disable') {
-            settingGateChannel = null;
-          } else {
-            const channelId = utils.getChannelId(query[1]);
-
-            settingGateChannel = channelId;
-            settingGateChannelText = '<#'+channelId+'>';
-          }
-
-          changed = true;
+      case 'welcome':
+        if(guildSettings.welcome){
+          welcomeSettings = guildSettings.welcome;
         }
 
-        if (query[2]) {
-          if (query[2] === 'disable') {
-            settingGateFollowupChannel = null;
-          } else {
-            const channelId = utils.getChannelId(query[2]);
+        switch(query[1]){
+        case 'disable':
+          welcomeSettings.channel_id = null;
+          changed = true;
 
-            settingGateFollowupChannel = channelId;
-            settingGateFollowupChannelText = '<#'+channelId+'>';
+          optionEmbedData = [
+            {
+              'name': 'New Member Welcome',
+              'value': 'Disabled',
+            },
+          ];          
+          break;
+
+        case 'channel':
+          welcomeSettings.channel_id = utils.getChannelId(query[2]);
+          settingWelcomeChannelText = '<#'+utils.getChannelId(query[2])+'>';          
+          changed = true;
+
+          optionEmbedData = [
+            {
+              'name': 'Welcome Channel',
+              'value': settingWelcomeChannelText,
+            },
+          ];
+          break;
+
+        case 'followup':
+          welcomeSettings.next = utils.getChannelId(query[2]);
+          settingWelcomeChannelText = '<#'+utils.getChannelId(query[2])+'>';          
+          changed = true;
+
+          optionEmbedData = [
+            {
+              'name': 'Follow-up Channel',
+              'value': settingWelcomeFollowupChannelText,
+            },
+          ];
+          break;
+
+        case 'role':
+          welcomeSettings.role_id = utils.getRoleId(query[2]);
+          settingWelcomeRoleText = '<@&'+utils.getRoleId(query[2])+'>';          
+          changed = true;
+
+          optionEmbedData = [
+            {
+              'name': 'Member Role',
+              'value': settingWelcomeRoleText,
+            },
+          ];
+          break;
+        
+        case 'msg': 
+          query.shift();
+
+          settingWelcomeMessage = query.join(' ');
+
+          if (settingWelcomeMessage.length > 0) {
+            if (settingWelcomeMessage === 'disable') {
+              settingWelcomeMessage = null;
+            }
           }
 
+          welcomeSettings.message = settingWelcomeMessage;
           changed = true;
-        }
 
-        if (query[3]) {
-          if (query[3] === 'disable') {
-            settingGateRole = null;
-          } else {
-            const roleId = utils.getRoleId(query[3]);
+          optionEmbedData = [
+            {
+              'name': 'Welcome Message',
+              'value': settingWelcomeMessage,
+            },
+          ];
+          break;   
+          
+        default:
+          optionDisplayName = 'New Member Welcome';
+          optionDescription = 'New member Welcome channel roles and message.';
 
-            settingGateRole = roleId;
-            settingGateRoleText = '<@&'+roleId+'>';
-          }
-
-          changed = true;
+          optionEmbedData = [
+            {
+              'name': 'To Disable',
+              'value': `${botPrefix}set welcome disable`,
+            },
+            {
+              'name': 'Welcome Channel',
+              'value': `Change: ${botPrefix}set welcome channel #channel-name\nDisable: ${botPrefix}set welcome channel disable`,
+            },
+            {
+              'name': 'Follow-up Channel',
+              'value': `Change: ${botPrefix}set welcome followup #channel-name\nDisable: Change: ${botPrefix}set welcome followup disable`
+            },
+            {
+              'name': 'Member Role',
+              'value': `Change: ${botPrefix}set welcome role @role\nDisable: Change: ${botPrefix}set welcome role disable`
+            },
+            {
+              'name': 'Welcome Message',
+              'value': `Change: ${botPrefix}set welcome msg message here\nDisable: Change: ${botPrefix}set welcome msg disable\nNotes: To add member name use \`MEMBER_NAME\`, to add server name use \`SERVER_NAME\` to add bot prefix use \`BOT_PREFIX\`.`
+            },
+          ];
+          break;
         }
 
         if (!changed) {
-          if (guildSettings) {
-            if (guildSettings.member_gate.channel_id && guildSettings.member_gate.channel_id !== null) {
-              settingGateChannelText = '<#'+guildSettings.member_gate.channel_id+'>';
-            }
-            if (guildSettings.member_gate.next && guildSettings.member_gate.next !== null) {
-              settingGateFollowupChannelText = '<#'+guildSettings.member_gate.next+'>';
-            }
-            if (guildSettings.member_gate.role_id && guildSettings.member_gate.role_id !== null) {
-              settingGateRoleText = '<@&'+guildSettings.member_gate.role_id+'>';
-            }
+          if (guildSettings.welcome) {
+            if (guildSettings.welcome.channel_id) settingWelcomeChannelText = '<#'+guildSettings.welcome.channel_id+'>';
+            if (guildSettings.welcome.next) settingWelcomeFollowupChannelText = '<#'+guildSettings.welcome.next+'>';
+            if (guildSettings.welcome.role_id) settingWelcomeRoleText = '<@&'+guildSettings.welcome.role_id+'>';
+            if (guildSettings.welcome.message) settingWelcomeMessage = guildSettings.welcome.message;
           }
         }
 
-        optionDisplayName = 'New Member Verification';
-        optionDescription = 'New member varification channel and roles.';
-        optionEmbedData = [
-          {
-            'name': 'Welcome Channel',
-            'value': settingGateChannelText,
-          },
-          {
-            'name': 'Follow-up Channel',
-            'value': settingGateFollowupChannelText,
-          },
-          {
-            'name': 'Member Role',
-            'value': settingGateRoleText,
-          },
-        ];
+        optionDisplayName = 'New Member Welcome';
+        optionDescription = 'New member Welcome channel roles and message.';
 
-        if (changed) {
-          // update the database
-          this.client.emit('newMemberChannelChange', msg.guild.id, {
-            channel_id: settingGateChannel,
-            role_id: settingGateRole,
-            next: settingGateFollowupChannel,
-          });
-        }
+        // update the database
+        this.client.emit('newMemberChannelChange', msg.guild.id, welcomeSettings);
         break;
 
       case 'joinmsg':
@@ -333,48 +380,33 @@ module.exports = class GuildSettingsCommand extends Command {
       case 'show':
         if (guildSettings) {
           // reset notification
-          if (guildSettings.quest_reset && guildSettings.quest_reset !== null) {
-            settingResetChannelText = '<#'+guildSettings.quest_reset+'>';
-          }
+          if (guildSettings.quest_reset) settingResetChannelText = '<#'+guildSettings.quest_reset+'>';
 
           // twitter
-          if (guildSettings.twitter && guildSettings.twitter !== null) {
-            settingTwitterChannelText = '<#'+guildSettings.twitter+'>';
-          }
+          if (guildSettings.twitter) settingTwitterChannelText = '<#'+guildSettings.twitter+'>';
 
           // koldrak's lair
-          if (guildSettings.koldrak && guildSettings.koldrak !== null) {
-            settingKoldrakChannelText = '<#'+guildSettings.koldrak+'>';
-          }
+          if (guildSettings.koldrak) settingKoldrakChannelText = '<#'+guildSettings.koldrak+'>';
 
           // hunter's refugee
-          if (guildSettings.hunters_refugee && guildSettings.hunters_refugee !== null) {
-            settingHuntersRefugeeText = '<#'+guildSettings.hunters_refugee+'>';
-          }
+          if (guildSettings.hunters_refugee) settingHuntersRefugeeText = '<#'+guildSettings.hunters_refugee+'>';
 
-          // new member gate
-          if (guildSettings.member_gate.channel_id && guildSettings.member_gate.channel_id !== null) {
-            settingGateChannelText = '<#'+guildSettings.member_gate.channel_id+'>';
-          }
-          if (guildSettings.member_gate.next && guildSettings.member_gate.next !== null) {
-            settingGateFollowupChannelText = '<#'+guildSettings.member_gate.next+'>';
-          }
-          if (guildSettings.member_gate.role_id && guildSettings.member_gate.role_id !== null) {
-            settingGateRoleText = '<@&'+guildSettings.member_gate.role_id+'>';
-          }
+          // new member welcome
+          if (guildSettings.welcome.channel_id) settingWelcomeChannelText = '<#'+guildSettings.welcome.channel_id+'>';
+          if (guildSettings.welcome.next) settingWelcomeFollowupChannelText = '<#'+guildSettings.welcome.next+'>';
+          if (guildSettings.welcome.role_id) settingWelcomeRoleText = '<@&'+guildSettings.welcome.role_id+'>';
+          if (guildSettings.welcome.message) settingWelcomeMessageText = guildSettings.welcome.message;
 
           // join command custom message
-          if (guildSettings.join_message && guildSettings.join_message !== null) {
-            settingFollowupMessageText = guildSettings.join_message;
-          }
+          if (guildSettings.join_message) settingFollowupMessageText = guildSettings.join_message;
 
           // bot's admins
           if (guildSettings.admin_roles && guildSettings.admin_roles[0] !== null) {
             settingAdminRoleText = []; // emptying the array
 
-            for (let i=0; i<guildSettings.admin_roles.length; i++) {
-              settingAdminRoleText.push('<@&'+guildSettings.admin_roles[i]+'>');
-            }
+            guildSettings.admin_roles.map(roles => {
+              settingAdminRoleText.push(`<@&${roles}+>`);
+            });
           }
         }
 
@@ -398,8 +430,8 @@ module.exports = class GuildSettingsCommand extends Command {
             'value': settingHuntersRefugeeText,
           },
           {
-            'name': 'New Member Verification',
-            'value': 'Welcome Channel: '+settingGateChannelText+'\nFollow-up Channel: '+settingGateFollowupChannelText+'\nMember Role: '+settingGateRoleText,
+            'name': 'New Member Welcome',
+            'value': `Welcome Channel: ${settingWelcomeChannelText}\nFollow-up Channel: ${settingWelcomeFollowupChannelText}\nMember Role: ${settingWelcomeRoleText}\nMessage:\n${settingWelcomeMessageText}`,
           },
           {
             'name': 'Join Command Custom Message',

@@ -20,6 +20,8 @@ module.exports = async function(system) {
     return settingsData[0].settings.reset;
   case 'twitter':
     return settingsData[0].settings.twitter;
+  case 'welcome':
+    return settingsData[0].settings.welcome;
 
   case 'bid':
     return settingsData[0].settings.bid;

@@ -79,36 +79,30 @@ clientDiscord
     if (config.bot.maintenance) {
       await services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
     } else {
-      await services.sendLog('query', command, 'Request received.');
+      await services.sendLog('query', command.name, 'Request received.');
     }
   })
   .on('guildMemberAdd', async (member) => {
-    const guildSettingData = await utils.getGuildSettings(member.guild.id);
-    let guildCommandPrefix = guildSettingData.prefix;
+    const guildSettings = await utils.getGuildSettings(member.guild.id);
+    const globalSettings = await utils.getGlobalSetting('welcome');
 
-    if (guildCommandPrefix === undefined || guildCommandPrefix === null) {
-      guildCommandPrefix = config.bot.default_prefix;
-    }
-
-    if (guildSettingData) {
-      const memberGate = guildSettingData.member_gate;
+    if (guildSettings) {
+      const memberGate = guildSettings.welcome;
 
       // checking if the guild have the channel and the message set
-      // TODO: make the message customizable
       if (memberGate) {
+        const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:config.bot.default_prefix;
+
+        let guildWelcomeMessage = (guildSettings.welcome.message)? guildSettings.welcome.message: globalSettings;
+        guildWelcomeMessage = guildWelcomeMessage.replace(/SERVER_NAME/gm, member.guild.name);
+        guildWelcomeMessage = guildWelcomeMessage.replace(/MEMBER_NAME/gm, `<@${member.user.id}>`);
+        guildWelcomeMessage = guildWelcomeMessage.replace(/BOT_PREFIX/gm, guildCommandPrefix);
+
         if (memberGate.channel_id) {
-          member.guild.channels.cache.find((ch) => ch.id === memberGate.channel_id).send(
-            'Hi <@'+member.user.id+'>! Welcome to ***'+member.guild.name+'***!\n\n'+
-
-            'Before I give you access to the rest of the server I need to know your character\'s name, to do that please use the following command with your information in it\n\n'+
-
-            '`'+guildCommandPrefix+'join character name`\n'+
-            '**Example**:\n'+
-            '`'+guildCommandPrefix+'join jinsoyun `\n\n'+
-
-            'if you need any assistance you can mention or DM available admins, thank you ❤'
-          );
+          member.guild.channels.cache.find((ch) => ch.id === memberGate.channel_id).send(guildWelcomeMessage);
         }
+
+        await services.sendLog('query', 'Welcome', 'Server welcome requested.');
       }
     }
   })
