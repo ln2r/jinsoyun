@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const utils = require('../utils/index.js');
 const sendLog = require('./sendLog');
+const configs = require('../config.json');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -20,32 +21,29 @@ module.exports = async function() {
     const updateTime = (end-start)/1000+'s';
     await sendLog('warn', 'Items', `'Data update failed. (${updateTime})\n${itemsData}`);
   } else {
-    const itemsCollectionName = 'items';
-    const marketCollectionName = 'market';
-
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
       const dbo = db.db(dbName);
 
-      dbo.listCollections({name: itemsCollectionName})
+      dbo.listCollections({name: configs.collection.items})
         .next(async function(err, collinfo) {
           if (err) throw err;
 
           // checking if the collection is exist or not
           if (collinfo) {
-            dbo.collection(itemsCollectionName).drop(function(err) {
+            dbo.collection(configs.collection.items).drop(function(err) {
               if (err) throw err;
             });
           }
 
           // updating items data
-          dbo.collection(itemsCollectionName).insertMany(itemsData, function(err) {
+          dbo.collection(configs.collection.items).insertMany(itemsData, function(err) {
             if (err) throw err;
             db.close();
           });
 
           // updating market data
-          dbo.collection(marketCollectionName).insertMany(marketData, function(err) {
+          dbo.collection(configs.collection.market).insertMany(marketData, function(err) {
             if (err) throw err;
             db.close();
           });

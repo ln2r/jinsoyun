@@ -2,6 +2,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const dateformat = require('dateformat');
 const utils = require('../utils/index.js');
+const configs = require('../config.json');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -29,7 +30,7 @@ module.exports = async function(level, location, message){
       if (err) throw err;
       const dbo = db.db(dbName);    
   
-      dbo.collection('logs').insertOne(payload, function(err) {
+      dbo.collection(configs.collection.logs).insertOne(payload, function(err) {
         if (err) throw err;
         db.close();
       });
@@ -38,7 +39,7 @@ module.exports = async function(level, location, message){
   
   // bot request counting
   if(level === 'query'){
-    const statsData = await utils.fetchDB('botStats', {currentTime: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
+    const statsData = await utils.fetchDB(configs.collection.stats, {currentTime: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
     let todayStats = 0;
     let payload;
   
@@ -58,12 +59,12 @@ module.exports = async function(level, location, message){
       const dbo = db.db(dbName);
   
       if (statsData.length === 0) {
-        dbo.collection('botStats').insertOne(payload, function(err) {
+        dbo.collection(configs.collection.stats).insertOne(payload, function(err) {
           if (err) throw err;
           db.close();
         });
       } else {
-        dbo.collection('botStats').updateOne({'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy')},
+        dbo.collection(configs.collection.stats).updateOne({'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy')},
           {$set: {'count': todayStats}}, function(err) {
             if (err) throw err;
             db.close();
