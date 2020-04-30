@@ -19,7 +19,8 @@ module.exports = async function(address) {
       return response.json();
     })
     .catch(async (error) => {
-      await services.sendLog('error', 'fetchSite', error);
+      // only log errors other than FetchError, because "not found" still trigger error and it's not "log worthy"
+      if(error.name != 'FetchError') services.sendLog('error', 'fetchSite', error);
       return {'status': 'error', error};
     });
 };
