@@ -57,25 +57,18 @@ Template:
   ```JSON
   {
     "bot":{
-      "default_prefix": "!",
-      "author_id": ["YOUR DISCORD ID HERE"],
-      "maintenance": false
-    },
-    "database":{
-      "url": "YOUR MONGODB CONNECTION URL HERE",
-      "name": "YOUR MONGODB DATABASE NAME HERE"
-    },
-    "key":{
-      "discord": "YOUR DISCORD TOKEN HERE",
-      "twitter":{
-        "consumer_key": "YOUR TWITTER CONSUMER KEY HERE",
-        "consumer_secret": "YOUR TWITTER CONSUMER SECRET KEY HERE",
-        "token_key": "YOUR TWITTER TOKEN KEY HERE",
-        "token_secret": "YOUR TWITTER TOKEN SECRET HERE"
-      }
+      "default_prefix": "BOT_DEFAULT_PREFIX",
+      "author_id": ["ARRAY_OF_DISCORD_ID"],
+      "maintenance": false,
     },
     "twitter":{
-      "id": "TWITTER ID NUMBER HERE"
+      "id": "TWITTER_ACCOUNT_ID"
+    },
+    "collection":{
+      "logs": "BOT_LOGS_COLLECTION_NAME",
+      "market": "MARKET_DATA_COLLECTION_NAME",
+      "items": "ITEMS_DATA_COLLECTION_NAME",
+      "stats": "BOT_STATS_COLLECTION_NAME"
     }
   }
   ```
@@ -111,7 +104,6 @@ Explanation:
   * [BnSTools](https://bnstools.info/) - Smart Bid Algorithm
 
 ## Support
-If you find this bot useful and want to give some tips or something like that you can use this thing below.
 * [ko-fi](https://ko-fi.com/ln2rworks)
 
 ## License
