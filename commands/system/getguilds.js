@@ -15,7 +15,7 @@ module.exports = class GetGuildsCommand extends Command {
   }
 
   async run(msg) {
-    const guildsData = this.client.guilds;
+    const guildsData = this.client.guilds.cache;
     const data = [];
     let count = guildsData.length;
 
