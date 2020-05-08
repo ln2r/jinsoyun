@@ -16,11 +16,12 @@ module.exports = class GetGuildsCommand extends Command {
 
   async run(msg) {
     const guildsData = this.client.guilds.cache;
-    const data = [];
-    let count = guildsData.length;
+    let data = [];
+    let guildsCount = 0;
 
     guildsData.map((g) => {
       data.push(g.id+': '+g.name+' ('+g.owner.user.username+'#'+g.owner.user.discriminator+')');
+      guildsCount++;
     });
 
     const embed = {
@@ -29,6 +30,6 @@ module.exports = class GetGuildsCommand extends Command {
         'color': 16741688,
       },
     };
-    return msg.say('Fetched '+count+' connected guilds data', embed);
+    return msg.say('Fetched '+guildsCount+' connected guilds data', embed);
   }
 };
