@@ -72,24 +72,33 @@ module.exports = class ReactionRoleMessageCommand extends Command {
             msgData = 'Reaction-role message with id: `'+messageId+'` selected.';
           }
 
-          msg.guild.currentMessage = messageId;
+          let messageFields = [{
+            'name': 'Message Id',
+            'value': messageId,
+          },
+          {
+            'name': 'Content',
+            'value': reactionMessageData.content,
+          }];
 
+          // adding embeds data if available
+          if(reactionMessageData.embeds){
+            reactionMessageData.embeds.map((embeds, index) => {
+              messageFields.push({
+                'name': `Message Embed ${index+1}`,
+                'value': `Title: ${embeds.title}\nDescription: ${embeds.description}`,
+              });
+            });
+          }
+
+          msg.guild.currentMessage = messageId;
           embedData = {
             'embed': {
               'title': 'Message Data',
               'url': 'https://discordapp.com/channels/'+msg.guild.id+'/'+msg.channel.id+'/'+messageId,
               'description': 'Click this embed title to see the original message.',
               'color': 2061822,
-              'fields': [
-                {
-                  'name': 'Message Id',
-                  'value': messageId,
-                },
-                {
-                  'name': 'Content',
-                  'value': reactionMessageData.content,
-                },
-              ],
+              'fields': messageFields,
             },
           };
         } else {
