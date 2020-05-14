@@ -38,7 +38,7 @@ module.exports = class WhoCommand extends Command {
     let errorStatus = false;
 
     // getting api data
-    const apiData = await utils.fetchDB('apis', {}, {_id: 1});
+    const apiData = await utils.fetchDB('apis');
 
     // getting character equipments api address from the database
     const charaAPIAddress = apiData[0].address;
@@ -54,12 +54,13 @@ module.exports = class WhoCommand extends Command {
     // getting the character name, if the user doesn't give any, their discord nickname will be used instead
     let charaQuery;
     if (args.length === 0) {
-      // check if the message author have nickname or not
-      // if not use their display name instead
-      if (msg.member.nickname === null) {
-        charaQuery = msg.member.displayName;
-      } else {
-        charaQuery = msg.member.nickname;
+      // check if it's on dm
+      if(msg.member){
+        // check if the message author have nickname or not
+        // if not use their display name instead
+        charaQuery = (msg.member.nickname)? msg.member.nickname: msg.member.user.username;
+      }else{
+        charaQuery = msg.author.username;
       }
     } else {
       // encoding uri component so character with "circumflex" still searchable
@@ -129,21 +130,11 @@ module.exports = class WhoCommand extends Command {
 
       const gearData = [charaData.ringName, charaData.earringName, charaData.necklaceName, charaData.braceletName, charaData.beltName, charaData.gloves, charaData.soulName, charaData.soulName2, charaData.petAuraName, charaData.talismanName, charaData.soulBadgeName, charaData.mysticBadgeName];
 
-      let charaClanName;
-      if (utils.formatString(charaData.guild) !== '') {
-        charaClanName = utils.formatString(charaData.guild);
-      } else {
-        charaClanName = '*Not in any clan*';
-      }
+      let charaClanName = (utils.formatString(charaData.guild) !== '')? charaClanName = utils.formatString(charaData.guild):charaClanName = '*Not in any clan*';
 
-      let charaAliases;
-      if (charaData.otherNames.length !== 0) {
-        charaAliases = charaData.otherNames.join(', ');
-      } else {
-        charaAliases = '*No known aliases*';
-      }
+      let charaAliases = (charaData.otherNames.length !== 0)? charaAliases = charaData.otherNames.join(', '):charaAliases = '*No known aliases*';
 
-      const imageName = (charaData.playerClass === 'Kung Fu Master')?'kungfufighter':(charaData.playerClass.toLowerCase()).replace(/ /gm, '');
+      let imageName = (charaData.playerClass === 'Kung Fu Master')?'kungfufighter':(charaData.playerClass.toLowerCase()).replace(/ /gm, '');
       imageUrl = ncsoftCharacterClassImageAddress+imageName+'.png';
 
       embedColour = 1879160;
