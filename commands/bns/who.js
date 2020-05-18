@@ -1,5 +1,6 @@
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
+const services = require('../../services/index.js');
 
 module.exports = class WhoCommand extends Command {
   constructor(client) {
@@ -38,7 +39,7 @@ module.exports = class WhoCommand extends Command {
     let errorStatus = false;
 
     // getting api data
-    const apiData = await utils.fetchDB('apis');
+    const apiData = await utils.fetchDB('apis', {}, {_id: 1});
 
     // getting character equipments api address from the database
     const charaAPIAddress = apiData[0].address;
@@ -58,7 +59,7 @@ module.exports = class WhoCommand extends Command {
       if(msg.member){
         // check if the message author have nickname or not
         // if not use their display name instead
-        charaQuery = (msg.member.nickname)? msg.member.nickname: msg.member.user.username;
+        charaQuery = (msg.member.nickname)? msg.member.nickname : msg.member.user.username;
       }else{
         charaQuery = msg.author.username;
       }
@@ -66,6 +67,9 @@ module.exports = class WhoCommand extends Command {
       // encoding uri component so character with "circumflex" still searchable
       charaQuery = encodeURIComponent(args);
     }
+
+    // temp fix for silver's api
+    charaQuery = charaQuery.toLowerCase();
 
     let f2ProfileURL = ncsoftPlayerInformationAPIAddress+charaQuery;
     f2ProfileURL = f2ProfileURL.replace(' ', '%20'); // replacing the space so discord.js embed wont screaming error
@@ -85,6 +89,8 @@ module.exports = class WhoCommand extends Command {
       imageUrl = await utils.getGlobalSetting('not_found');
       descriptionMessage = 'Unable to get character data.\nSite might be unreachable or unavailable.';
       embedColour = 15605837;
+
+      await services.sendLog('error', 'who', charaData);
 
       errorStatus = true;
     } else if (charaData.error || !traitsData || !skillsData) {
@@ -130,9 +136,9 @@ module.exports = class WhoCommand extends Command {
 
       const gearData = [charaData.ringName, charaData.earringName, charaData.necklaceName, charaData.braceletName, charaData.beltName, charaData.gloves, charaData.soulName, charaData.soulName2, charaData.petAuraName, charaData.talismanName, charaData.soulBadgeName, charaData.mysticBadgeName];
 
-      let charaClanName = (utils.formatString(charaData.guild) !== '')? charaClanName = utils.formatString(charaData.guild):charaClanName = '*Not in any clan*';
+      let charaClanName = (charaData.guild)? charaData.guild:'*Not in any clan*';
 
-      let charaAliases = (charaData.otherNames.length !== 0)? charaAliases = charaData.otherNames.join(', '):charaAliases = '*No known aliases*';
+      let charaAliases = (charaData.otherNames.length > 0)? charaData.otherNames.join(', '):'*No known aliases*';
 
       let imageName = (charaData.playerClass === 'Kung Fu Master')?'kungfufighter':(charaData.playerClass.toLowerCase()).replace(/ /gm, '');
       imageUrl = ncsoftCharacterClassImageAddress+imageName+'.png';
@@ -142,42 +148,38 @@ module.exports = class WhoCommand extends Command {
         {
           'name': 'Basic Information',
           'value': '**Health**: '+utils.formatNumber(charaData.hp)+
-                            '\n**Attack Power**: '+utils.formatNumber(charaData.ap)+
-                            '\n**Defense**: '+utils.formatNumber(charaData.defence)+
-                            '\n**Clan**: '+charaClanName+
-                            '\n**Faction**: '+utils.formatString(charaData.faction)+' ('+utils.formatString(charaData.factionRank)+')'+
-                            '\n**Aliases**: '+charaAliases+
-                            '\n\u200B',
+          '\n**Attack Power**: '+utils.formatNumber(charaData.ap)+
+          '\n**Defense**: '+utils.formatNumber(charaData.defence)+
+          '\n**Clan**: '+charaClanName+
+          '\n**Faction**: '+utils.formatString(charaData.faction)+' ('+utils.formatString(charaData.factionRank)+')'+
+          '\n**Aliases**: '+charaAliases+
+          '\n\u200B',
         },
         {
           'name': 'Stats',
           'value': '**Mystic**: '+utils.formatNumber(charaData.mystic)+' ('+(utils.formatNumber(charaData.mysticRate)*100).toFixed(2)+'%)'+
-                            '\n**Block**: '+utils.formatNumber(charaData.block)+' ('+(utils.formatNumber(charaData.blockRate)*100).toFixed(2)+'%)'+
-                            '\n**Evasion**: '+utils.formatNumber(charaData.evasion)+' ('+(utils.formatNumber(charaData.evasionRate)*100).toFixed(2)+'%)'+
-                            '\n**Boss (Attack Power - Defense)**: '+utils.formatNumber(charaData.ap_boss)+' - '+utils.formatNumber(charaData.defence_boss)+
-                            '\n**Critical Hit**: '+utils.formatNumber(charaData.crit)+' ('+(utils.formatNumber(charaData.critRate)*100).toFixed(2)+'%)'+
-                            '\n**Critical Damage**: '+utils.formatNumber(charaData.critDamage)+' ('+(utils.formatNumber(charaData.critDamageRate)*100).toFixed(2)+'%)'+
-                            '\n\u200B',
+          '\n**Block**: '+utils.formatNumber(charaData.block)+' ('+(utils.formatNumber(charaData.blockRate)*100).toFixed(2)+'%)'+
+          '\n**Evasion**: '+utils.formatNumber(charaData.evasion)+' ('+(utils.formatNumber(charaData.evasionRate)*100).toFixed(2)+'%)'+
+          '\n**Boss (Attack Power - Defense)**: '+utils.formatNumber(charaData.ap_boss)+' - '+utils.formatNumber(charaData.defence_boss)+
+          '\n**Critical Hit**: '+utils.formatNumber(charaData.crit)+' ('+(utils.formatNumber(charaData.critRate)*100).toFixed(2)+'%)'+
+          '\n**Critical Damage**: '+utils.formatNumber(charaData.critDamage)+' ('+(utils.formatNumber(charaData.critDamageRate)*100).toFixed(2)+'%)'+
+          '\n\u200B',
         },
         {
           'name': 'Weapon',
-          'value': utils.formatString(charaData.weaponName)
-                            +'\n\u200B',
+          'value': utils.formatString(charaData.weaponName)+'\n\u200B',
         },
         {
           'name': 'Gems',
-          'value': utils.formatArray(gemData, '- ', true)
-                            +'\n\u200B',
+          'value': utils.formatArray(gemData, '- ', true)+'\n\u200B',
         },
         {
           'name': 'Soulshield',
-          'value': utils.formatArray(soulshieldData, '- ', true)
-                            +'\n\u200B',
+          'value': utils.formatArray(soulshieldData, '- ', true)+'\n\u200B',
         },
         {
           'name': 'Accesories',
-          'value': utils.formatArray(gearData, '- ', true)
-                            +'\n\u200B',
+          'value': utils.formatArray(gearData, '- ', true)+'\n\u200B',
         },
         {
           'inline': true,
