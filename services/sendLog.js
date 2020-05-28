@@ -18,7 +18,7 @@ module.exports = async function(level, location, message){
   const currentTime = new Date();
 
   // error logging
-  if(level === 'error'){
+  if(level === 'error' || level === 'warn'){
     const payload = {
       'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
       'level': level,
@@ -39,7 +39,7 @@ module.exports = async function(level, location, message){
   
   // bot request counting
   if(level === 'query'){
-    const statsData = await utils.fetchDB(configs.collection.stats, {currentTime: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
+    const statsData = await utils.fetchDB(configs.collection.stats, {date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
     let todayStats = 0;
     let payload;
   
@@ -47,7 +47,7 @@ module.exports = async function(level, location, message){
       todayStats++;
   
       payload = {
-        'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
+        'date': currentTime,
         'count': todayStats,
       };
     } else {
@@ -64,7 +64,7 @@ module.exports = async function(level, location, message){
           db.close();
         });
       } else {
-        dbo.collection(configs.collection.stats).updateOne({'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy')},
+        dbo.collection(configs.collection.stats).updateOne({date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')},
           {$set: {'count': todayStats}}, function(err) {
             if (err) throw err;
             db.close();
