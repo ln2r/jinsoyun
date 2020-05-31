@@ -47,7 +47,7 @@ module.exports = async function(level, location, message){
       todayStats++;
   
       payload = {
-        'date': currentTime,
+        'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
         'count': todayStats,
       };
     } else {
