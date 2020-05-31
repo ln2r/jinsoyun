@@ -33,16 +33,17 @@ module.exports = class BotAuditCommand extends Command {
       logsDataContent = logsDataContent + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
     });
 
-    // update the audit status
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
       const dbo = db.db(dbName);
 
+      // update the audit status
       dbo.collection(configs.collection.logs).updateMany({audit: false},
         {$set: {'audit': true}}, function(err) {
           if (err) throw err;
+
           db.close();
-        });
+        });     
     });
 
     // getting connected guilds data
