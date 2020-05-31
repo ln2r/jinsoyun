@@ -11,9 +11,13 @@ const services = require('./services/index.js');
 const utils = require('./utils/index.js');
 const dateformat = require('dateformat');
 
-
 // Load config file
 //services.loadConfig();
+
+// Error handler
+process.on('uncaughtException', async (err) => {
+  await services.sendLog('error', err.name, `${err.message}\n${err.stack}`);
+});
 
 // Discord.js Commando scripts start here
 const clientDiscord = new CommandoClient({
