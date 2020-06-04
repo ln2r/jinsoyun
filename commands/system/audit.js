@@ -65,7 +65,7 @@ module.exports = class BotAuditCommand extends Command {
         'fields': [
           {
             'name': 'Requests',
-            'value': `${(statsData.count)? statsData.count:0} requests received.`,
+            'value': `${(statsData[0])? statsData[0].count:0} requests received.`,
           },
           {
             'name': `${guildsCount} Connected Guilds`,
