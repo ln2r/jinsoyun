@@ -4,10 +4,11 @@ module.exports = async function(reactionData, user, action, botId) {
   if(user.id === botId) return;
 
   const guildSettings = await utils.getGuildSettings(reactionData.message.channel.guild.id);
-  const emojiId = (reactionData.emoji.id)? reactionData.emoji.name+':'+reactionData.emoji.id: reactionData.emoji.name;
-  const userMemberData = await reactionData.message.channel.guild.members.fetch(user.id);
 
   if(guildSettings && guildSettings.react_role){    
+    const emojiId = (reactionData.emoji.id)? reactionData.emoji.name+':'+reactionData.emoji.id: reactionData.emoji.name;
+    const userMemberData = await reactionData.message.channel.guild.members.fetch(user.id);
+    
     guildSettings.react_role.map(r => {
       if(reactionData.message.channel.id === r.channel && reactionData.message.id === r.id){
         r.reactions.map(reactions => {
