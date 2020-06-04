@@ -13,10 +13,14 @@ const dbName = process.env.SOYUN_BOT_DB_NAME;
 module.exports = async function() {
   const start = Date.now();
 
-  const itemsData = await utils.fetchSite('https://api.silveress.ie/bns/v3/items');
-  const marketData = await utils.fetchSite('https://api.silveress.ie/bns/v3/market/na/current/lowest');
+  // getting api data
+  const apiData = await utils.fetchDB('apis', {}, {_id: 1});
+  // getting items api address
+  const itemsData = apiData[2].address;
+  // getting market api address
+  const marketData = apiData[1].address;
 
-  if (itemsData.status === 'error' || itemsData.status === 'error') {
+  if (itemsData.status === 'error' || marketData.status === 'error') {
     const end = Date.now();
     const updateTime = (end-start)/1000+'s';
     await sendLog('warn', 'Items', `'Data update failed. (${updateTime})\n${itemsData}`);
