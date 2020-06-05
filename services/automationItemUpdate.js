@@ -16,9 +16,9 @@ module.exports = async function() {
   // getting api data
   const apiData = await utils.fetchDB('apis', {}, {_id: 1});
   // getting items api address
-  const itemsData = apiData[2].address;
+  const itemsData = await utils.fetchSite(apiData[2].address);
   // getting market api address
-  const marketData = apiData[1].address;
+  const marketData = await utils.fetchSite(apiData[1].address);
 
   if (itemsData.status === 'error' || marketData.status === 'error') {
     const end = Date.now();
