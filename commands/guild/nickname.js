@@ -41,9 +41,9 @@ module.exports = class NicknameChangeCommand extends Command {
     }
 
     // changing and formatting the nickname
-    msg.guild.members.get(msg.author.id).setNickname(name.replace(/(^|\s)\S/g, (l) => l.toUpperCase()));
+    msg.guild.members.cache.get(msg.author.id).setNickname(name.replace(/(^|\s)\S/g, (l) => l.toUpperCase()));
 
     msg.channel.stopTyping();
-    return msg.say('successfully changed your nickname. hello **'+name+'**! nice to meet you!');
+    return msg.say(`Successfully changed your nickname. Hello **${name}**!`);
   }
 };

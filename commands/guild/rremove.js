@@ -79,7 +79,7 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
         // removing reaction and update db
         if (msgFound && emojiFound) {
           // getting the channel data
-          const channel = this.client.channels.get(reactionRoleData[messageIndex].channel);
+          const channel = this.client.channels.cache.get(reactionRoleData[messageIndex].channel);
           // get the message and remove the reaction
           const emojiName = emojiId.replace(/\:(.*?)$/, '');
           // console.debug("emoji name: "+emojiName);
