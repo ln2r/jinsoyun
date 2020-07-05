@@ -24,6 +24,7 @@ module.exports = async function(level, location, message){
       'level': level,
       'location': location,
       'message': message,
+      'audit': false
     };
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
