@@ -10,7 +10,6 @@ module.exports = class RemoveCustomRoleCommand extends Command {
       memberName: 'bid',
       description: 'Get a calculation how much you should bid for an item. (item price is in copper so 1g = 10000)\nYou can use item name if it\'s available.',
       examples: ['bid <player count> <item name/item price>', 'bid 12 moonstone', 'bid 12 500'],
-      guildOnly: true,
       args: [
         {
           key: 'playerCount',

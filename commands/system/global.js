@@ -1,5 +1,6 @@
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
+const configs = require('../../config.json');
 
 module.exports = class ResetNotificationCommand extends Command {
   constructor(client) {
@@ -16,19 +17,17 @@ module.exports = class ResetNotificationCommand extends Command {
   async run(msg, args) {
     msg.channel.startTyping();
 
-    const guildSettings = await utils.getGuildSettings(msg.guild.id);
-    let botPrefix;
+    let botPrefix = configs.bot.default_prefix;
+    if(msg.guild.id){
+      const guildSettings = await utils.getGuildSettings(msg.guild.id);
+      (guildSettings.prefix)? botPrefix = guildSettings.prefix : botPrefix;
+    }
 
     let optionDisplayStatus;
     let optionDisplayMessage;
 
     let settingData;
 
-    if (guildSettings) {
-      botPrefix = guildSettings.prefix;
-    } else {
-      botPrefix = '!';
-    }
 
     let msgData = '';
     let embedData = {

@@ -11,7 +11,6 @@ module.exports = class GrandHarvestCommand extends Command {
       description: 'Get Grand Harvest Raid access time',
       examples: ['grandharvest'],
       hidden: true,
-      ownerOnly: true,
     });
   }
 

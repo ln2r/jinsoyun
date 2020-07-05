@@ -9,6 +9,7 @@ module.exports = class ItemsUpdateCommand extends Command {
       memberName: 'items',
       description: 'Force update item data.',
       examples: ['items'],
+      hidden: true,
       ownerOnly: true,
     });
   }

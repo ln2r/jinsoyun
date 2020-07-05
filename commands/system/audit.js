@@ -15,6 +15,7 @@ module.exports = class BotAuditCommand extends Command {
       memberName: 'audit',
       description: 'Get bot system reports.',
       examples: ['audit'],
+      hidden: true,
       ownerOnly: true,
     });
   }

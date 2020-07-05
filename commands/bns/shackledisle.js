@@ -11,7 +11,6 @@ module.exports = class ShackledIsleCommand extends Command {
       description: 'Get Shackled Isle access time',
       examples: ['shackledisle'],
       hidden: true,
-      ownerOnly: true,
     });
   }
 
