@@ -62,16 +62,19 @@ module.exports = class GuildSettingsCommand extends Command {
               'value': 'Change: `'+botPrefix+'setting reset #channel-name`\nDisable: `'+botPrefix+'setting reset disable`',
             },
             {
-              'name': 'New Member Verification',
-              'value': 'Change:',
+              'name': 'Bot Admin Roles',
+              'value': 'Change: `'+botPrefix+'setting admin @mentioned-role.`\nDisable: `'+botPrefix+'setting admin disable `\nNote: Guild/Server owner will always have permission regardles having the roles or not.',
             },
             {
               'name': 'Join Command Custom Message',
               'value': 'Change: `'+botPrefix+'setting joinmsg Your message here.`\nDisable: `'+botPrefix+'setting joinmsg disable `\nNote: If you want to mention the message author use MESSAGE_AUTHOR, and SERVER_NAME when you want to add the server name.',
-            },
+            },            
             {
-              'name': 'Bot Admin Roles',
-              'value': 'Change: `'+botPrefix+'setting admin @mentioned-role.`\nDisable: `'+botPrefix+'setting admin disable `\nNote: Guild/Server owner will always have permission regardles having the roles or not.',
+              'name': 'New Member Welcome',
+              'value':  `**Channel Selection**\nChange: \`${botPrefix}set welcome channel #channel-name\`\nDisable: \`${botPrefix}set welcome channel disable\`\n              
+              **Followup Channel Selection (after join command used)**\nChange: \`${botPrefix}set welcome followup #channel-name\`\nDisable: \`${botPrefix}set welcome followup disable\`\n
+              **Member Role**\nChange: \`${botPrefix}set welcome role @role-name\`\nDisable: \`${botPrefix}set welcome role disable\`\n
+              **Message**\nChange: \`${botPrefix}set welcome msg message here\`\nDisable: \`${botPrefix}set welcome msg disable\`\nNotes: To add member name use \`MEMBER_NAME\`, to add server name use \`SERVER_NAME\`, to add bot prefix use \`BOT_PREFIX\`.`,
             },
           ],
         },
@@ -217,12 +220,14 @@ module.exports = class GuildSettingsCommand extends Command {
           },
         ];
         break;
-
+        
+        
       case 'welcome':
         if(guildSettings.welcome){
           welcomeSettings = guildSettings.welcome;
         }
 
+        // Disable welcome system
         switch(query[1]){
         case 'disable':
           welcomeSettings.channel_id = null;
@@ -236,6 +241,7 @@ module.exports = class GuildSettingsCommand extends Command {
           ];          
           break;
 
+        // channel selection
         case 'channel':
           welcomeSettings.channel_id = utils.getChannelId(query[2]);
           settingWelcomeChannelText = '<#'+utils.getChannelId(query[2])+'>';          
@@ -249,6 +255,7 @@ module.exports = class GuildSettingsCommand extends Command {
           ];
           break;
 
+        // after they did join command
         case 'followup':
           welcomeSettings.next = utils.getChannelId(query[2]);
           settingWelcomeChannelText = '<#'+utils.getChannelId(query[2])+'>';          
@@ -262,6 +269,7 @@ module.exports = class GuildSettingsCommand extends Command {
           ];
           break;
 
+        // role given
         case 'role':
           welcomeSettings.role_id = utils.getRoleId(query[2]);
           settingWelcomeRoleText = '<@&'+utils.getRoleId(query[2])+'>';          
@@ -275,6 +283,7 @@ module.exports = class GuildSettingsCommand extends Command {
           ];
           break;
         
+        // join msg
         case 'msg': 
           query.shift();
 
