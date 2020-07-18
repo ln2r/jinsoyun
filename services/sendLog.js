@@ -6,6 +6,7 @@ const configs = require('../config.json');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
+const maintenance = configs.bot.maintenance;
 
 /**
  * SendLog
@@ -18,24 +19,26 @@ module.exports = async function(level, location, message){
   const currentTime = new Date();
 
   // error logging
-  if(level === 'error' || level === 'warn'){
-    const payload = {
-      'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
-      'level': level,
-      'location': location,
-      'message': message,
-      'audit': false
-    };
+  if(!maintenance){
+    if(level === 'error' || level === 'warn'){
+      const payload = {
+        'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
+        'level': level,
+        'location': location,
+        'message': message,
+        'audit': false
+      };
 
-    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-      if (err) throw err;
-      const dbo = db.db(dbName);    
-  
-      dbo.collection(configs.collection.logs).insertOne(payload, function(err) {
+      MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
         if (err) throw err;
-        db.close();
+        const dbo = db.db(dbName);    
+    
+        dbo.collection(configs.collection.logs).insertOne(payload, function(err) {
+          if (err) throw err;
+          db.close();
+        });
       });
-    });
+    }
   }
   
   // bot request counting
