@@ -94,7 +94,7 @@ clientDiscord
       const memberGate = guildSettings.welcome;
 
       // checking if the guild have the channel and the message set
-      if (memberGate) {
+      if (memberGate.status !== 'disable' || memberGate) {
         const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:config.bot.default_prefix;
 
         let guildWelcomeMessage = (guildSettings.welcome.message)? guildSettings.welcome.message: globalSettings;
@@ -102,8 +102,8 @@ clientDiscord
         guildWelcomeMessage = guildWelcomeMessage.replace(/MEMBER_NAME/gm, `<@${member.user.id}>`);
         guildWelcomeMessage = guildWelcomeMessage.replace(/BOT_PREFIX/gm, guildCommandPrefix);
 
-        if (memberGate.channel_id) {
-          member.guild.channels.cache.find((ch) => ch.id === memberGate.channel_id).send(guildWelcomeMessage);
+        if (memberGate.channel) {
+          member.guild.channels.cache.find((ch) => ch.id === memberGate.channel).send(guildWelcomeMessage);
         }
 
         await services.sendLog('query', 'Welcome', 'Server welcome requested.');
