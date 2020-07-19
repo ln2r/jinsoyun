@@ -94,7 +94,7 @@ clientDiscord
       const memberGate = guildSettings.welcome;
 
       // checking if the guild have the channel and the message set
-      if (memberGate.status !== 'disable' || memberGate) {
+      if (memberGate.status !== 'disable') {
         const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:config.bot.default_prefix;
 
         let guildWelcomeMessage = (guildSettings.welcome.message)? guildSettings.welcome.message: globalSettings;
