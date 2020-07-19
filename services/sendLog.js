@@ -77,5 +77,9 @@ module.exports = async function(level, location, message){
     });  
   }
 
-  console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}`);
+  if(maintenance && level == 'debug'){
+    console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}`);
+  }else{
+    console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}`);
+  }  
 };
