@@ -91,22 +91,22 @@ clientDiscord
     const globalSettings = await utils.getGlobalSetting('welcome');
 
     if (guildSettings) {
-      const memberGate = guildSettings.welcome;
+      if(guildSettings.welcome){
+        // checking if the guild have the channel and the message set
+        if (guildSettings.welcome.status !== 'disable') {
+          const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:config.bot.default_prefix;
 
-      // checking if the guild have the channel and the message set
-      if (memberGate.status !== 'disable') {
-        const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:config.bot.default_prefix;
+          let guildWelcomeMessage = (guildSettings.welcome.message)? guildSettings.welcome.message: globalSettings;
+          guildWelcomeMessage = guildWelcomeMessage.replace(/SERVER_NAME/gm, member.guild.name);
+          guildWelcomeMessage = guildWelcomeMessage.replace(/MEMBER_NAME/gm, `<@${member.user.id}>`);
+          guildWelcomeMessage = guildWelcomeMessage.replace(/BOT_PREFIX/gm, guildCommandPrefix);
 
-        let guildWelcomeMessage = (guildSettings.welcome.message)? guildSettings.welcome.message: globalSettings;
-        guildWelcomeMessage = guildWelcomeMessage.replace(/SERVER_NAME/gm, member.guild.name);
-        guildWelcomeMessage = guildWelcomeMessage.replace(/MEMBER_NAME/gm, `<@${member.user.id}>`);
-        guildWelcomeMessage = guildWelcomeMessage.replace(/BOT_PREFIX/gm, guildCommandPrefix);
+          if (guildSettings.welcome.channel) {
+            member.guild.channels.cache.find((ch) => ch.id === guildSettings.welcome.channel).send(guildWelcomeMessage);
+          }
 
-        if (memberGate.channel) {
-          member.guild.channels.cache.find((ch) => ch.id === memberGate.channel).send(guildWelcomeMessage);
+          await services.sendLog('query', 'Welcome', 'Server welcome requested.');
         }
-
-        await services.sendLog('query', 'Welcome', 'Server welcome requested.');
       }
     }
   })
