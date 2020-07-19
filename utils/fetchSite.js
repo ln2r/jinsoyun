@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const sendLog = require('../services/sendLog');
+const services = require('../services/index');
 
 /**
  * getSiteData
@@ -14,31 +14,13 @@ const sendLog = require('../services/sendLog');
  *  core.getSiteData("https://api.silveress.ie/bns/v3/items");
  */
 module.exports = async function(address) {
-  const FETCH_TIMEOUT = 10000;
-  let timedOut = false;
-
-  sendLog('debug', 'fetchSite', `Fetching data from ${address}...`);
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(function() {
-      timedOut = true;
-      sendLog('warn', 'fetchSite', `Request to '${address}' timed out.`);
-    }, FETCH_TIMEOUT);
-      
-    return fetch (address)
-      .then((res) => {
-        clearTimeout(timeout);
-        if(!timedOut){
-          resolve(res.json());
-        }else{
-          resolve({'status':'error', 'message':`Request to '${address}' timed out.`}); 
-        }
-      }).catch((err) => {
-        if(timedOut) return;
-        reject(err);           
-      });
-  }).then(()=>{
-    sendLog('debug', 'fetchSite', 'Fetched without problem.');
-  }).catch((err) => {
-    sendLog('error', 'fetchSite', err);
-  });
+  return await fetch(address)
+    .then((response) => {
+      return response.json();
+    })
+    .catch(async (error) => {
+      // only log errors other than FetchError, because "not found" still trigger error and it's not "log worthy"
+      if(error.name != 'FetchError') services.sendLog('error', 'fetchSite', error);
+      return {'status': 'error', error};
+    });
 };
