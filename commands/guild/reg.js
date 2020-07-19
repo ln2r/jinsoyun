@@ -22,8 +22,6 @@ module.exports = class RegCommand extends Command {
     // checking if the command disabled or not
     const globalSettings = await utils.getGlobalSetting('reg');
     if (!globalSettings.status) {
-      msg.channel.stopTyping();
-
       return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
     }
 
