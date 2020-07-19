@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const services = require('../services/index');
+const sendLog = require('../services/sendLog');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -19,6 +19,7 @@ module.exports = async function (collname, filter, sorting, limit) {
   limit = (limit === null || limit === undefined)? 0 : limit;
 
   try {
+    sendLog('debug', 'fetchDB', `Fetching data from ${collname}...`);
     return MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
       .then(async function(db) {
         const dbo = db.db(dbName);
@@ -29,9 +30,10 @@ module.exports = async function (collname, filter, sorting, limit) {
         return result;
       })
       .then(function(items) {
+        sendLog('debug', 'fetchDB', 'Fetched data without problems.');
         return items;
       });
   } catch (err) {
-    await services.sendLog('error', 'fetchDB', err);
+    await sendLog('error', 'fetchDB', err);
   }
 };
