@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const MongoClient = require('mongodb').MongoClient;
 const dateformat = require('dateformat');
-const fetchDB = require('../utils/fetchDB');
+const fetchDB = require('../utils/fetchDB.js');
 const configs = require('../config.json');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
