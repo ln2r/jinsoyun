@@ -25,13 +25,14 @@ module.exports = class BotAuditCommand extends Command {
 
     const currentTime = new Date();
 
-    // getting stats and logs data
+    // getting logs data
     const logsData = await utils.fetchDB(configs.collection.logs, {audit: false});
-    const statsData = await utils.fetchDB(configs.collection.stats, {date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
 
-    let logsDataContent = '';
+    let logsDataError = '';
+    let logsDataWarn =  '';
     logsData.map(data => {
-      logsDataContent = logsDataContent + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
+      if(data.level === 'warn') logsDataWarn + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
+      if(data.level === 'error') logsDataError + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
     });
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
@@ -47,16 +48,6 @@ module.exports = class BotAuditCommand extends Command {
         });     
     });
 
-    // getting connected guilds data
-    const guildsData = this.client.guilds.cache;
-    let data = [];
-    let guildsCount = 0;
-
-    guildsData.map((g) => {
-      data.push(g.id+': '+g.name+' ('+g.owner.user.username+'#'+g.owner.user.discriminator+')');
-      guildsCount++;
-    });
-
     msg.channel.stopTyping();
     return msg.say({
       'embed': {
@@ -65,17 +56,13 @@ module.exports = class BotAuditCommand extends Command {
         'description': `Today: ${dateformat(currentTime, 'UTC:dd mmmm yyyy')} UTC\nHeartbeat: ${Math.round(this.client.ws.ping)}ms`,
         'fields': [
           {
-            'name': 'Requests',
-            'value': `${(statsData[0])? statsData[0].count:0} requests received.`,
-          },
-          {
-            'name': `${guildsCount} Connected Guilds`,
-            'value': utils.formatArray(data, '- ', true),
-          },
+            'name': 'Warnings',
+            'value': (logsDataWarn === '')? 'Everything is normal, nothing\'s here.':logsDataWarn,
+          }, 
           {
             'name': 'Errors',
-            'value': (logsDataContent === '')? 'Everything is normal, nothing\'s here.':logsDataContent,
-          }          
+            'value': (logsDataError === '')? 'Everything is normal, nothing\'s here.':logsDataError,
+          }      
         ],
       },
     });
