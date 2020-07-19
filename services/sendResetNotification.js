@@ -8,6 +8,7 @@ const sendLog = require('./sendLog');
  * @param {Guild} clientGuildData discord bot client guild/server connected data
  */
 module.exports = async function(clientData) {
+  sendLog('info', 'Reset', 'Sending reset notification...');
   const eventSetting = await utils.getGlobalSetting('event');
   const dailySetting = await utils.getGlobalSetting('daily');
   const weeklySetting = await utils.getGlobalSetting('weekly');
@@ -79,15 +80,19 @@ module.exports = async function(clientData) {
       let found = 0;
       guild.channels.cache.map((ch) => {
         if (found === 0) {
-          if (ch.id === resetChannel) {
+          if (ch.id === resetChannel && resetChannel !== '' && resetChannel !== 'disable') {
             found = 1;
-            if (ch.permissionsFor(clientData.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
+            sendLog('debug', 'Reset', `Sending one to "${guild.name}"...`);           
+            if (ch.permissionsFor(clientData.user).has('VIEW_CHANNEL') && ch.permissionsFor(clientData.user).has('SEND_MESSAGES')) {
               ch.send(msgData, embedData);
+              sendLog('debug', 'Reset', 'Notification sent sucessfully.');              
+            }else{
+              sendLog('warn', 'Reset', `Failed to notify "${guild.name}", issue with permission.`);
             }
           }
         }
       });
     }
   });
-  await sendLog('info', 'Reset', 'Reset notification sent');
+  sendLog('info', 'Reset', 'Reset notification sent to guilds.');
 };
