@@ -7,10 +7,11 @@ const sendLog = require('./sendLog');
  * send koldrak access to enabled guild
  */
 module.exports = async function(clientData) {
+  sendLog('info', 'Announce-Koldrak', 'Sending Koldrak notification...');
   // checking global settings
   const globalSettings = await utils.getGlobalSetting('koldrak_announce');
   if (!globalSettings.status) {
-    await sendLog('warn', 'koldrak-announce', 'koldrak access notification disabled, '+globalSettings.message);
+    await sendLog('warn', 'Announce-Koldrak', 'koldrak access notification disabled, '+globalSettings.message);
     return;
   }
 
@@ -28,8 +29,9 @@ module.exports = async function(clientData) {
       guild.channels.cache.map((ch) => {
         if (found === 0) {
           if (ch.id === koldrakChannel && koldrakChannel !== '' && koldrakChannel !== 'disable') {
+            sendLog('debug', 'Announce-Koldrak', `Sending one to ${guild.name}...`);
             found = 1;
-            if (ch.permissionsFor(clientData.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
+            if (ch.permissionsFor(clientData.user).has('VIEW_CHANNEL') && ch.permissionsFor(clientData.user).has('SEND_MESSAGES')) {
               ch.send({
                 'embed': {
                   'color': 8388736,
@@ -44,12 +46,16 @@ module.exports = async function(clientData) {
                   },
                 },
               });
+              
+              sendLog('debug', 'Announce-Koldrak', 'Notification sent sucessfully.');
+            }else{
+              sendLog('warn', 'Announce-Koldrak', `Failed to notify "${guild.name}", issue with permission.`);
             }
           }
         }
       });
     }
   });
-  await sendLog('info', 'Koldrak Announce', 'Koldrak access notification sent');
+  await sendLog('info', 'Announce-Koldrak', 'Koldrak access notification sent to guilds.');
   return;
 };
