@@ -31,8 +31,8 @@ module.exports = class BotAuditCommand extends Command {
     let logsDataError = '';
     let logsDataWarn =  '';
     logsData.map(data => {
-      if(data.level === 'warn') logsDataWarn + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
-      if(data.level === 'error') logsDataError + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
+      if(data.level === 'warn') logsDataWarn = logsDataWarn + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
+      if(data.level === 'error') logsDataError = logsDataError + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
     });
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
@@ -45,7 +45,7 @@ module.exports = class BotAuditCommand extends Command {
           if (err) throw err;
 
           db.close();
-        });     
+        });
     });
 
     msg.channel.stopTyping();
