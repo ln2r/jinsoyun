@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const services = require('../services/index');
+const sendLog = require('../services/sendLog');
 
 /**
  * getSiteData
@@ -7,20 +7,29 @@ const services = require('../services/index');
  * @param {String} address site address
  * @return data fetched from site in JSON format
  * @example
- *  // Using the function locally
- *  module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
- *
- *  // Using the function outside the file
- *  core.getSiteData("https://api.silveress.ie/bns/v3/items");
+ *  fetchSite("https://api.silveress.ie/bns/v3/items");
  */
-module.exports = async function(address) {
-  return await fetch(address)
-    .then((response) => {
-      return response.json();
-    })
-    .catch(async (error) => {
-      // only log errors other than FetchError, because "not found" still trigger error and it's not "log worthy"
-      if(error.name != 'FetchError') services.sendLog('error', 'fetchSite', error);
-      return {'status': 'error', error};
+module.exports = function(address) {
+  const FETCH_TIMEOUT = 10000;
+  let timedOut = false;
+
+  sendLog('debug', 'fetchSite', `Fetching data from ${address}...`);
+  const timeOut = setTimeout(function() {
+    timedOut = true;
+    sendLog('warn', 'fetchSite', `Request to '${address}' timed out.`);
+  }, FETCH_TIMEOUT);
+  
+  return fetch(address)
+    .then((res) => {
+      clearTimeout(timeOut);
+      if(!timedOut){
+        sendLog('debug', 'fetchSite', 'Fetched without problem.');
+        return res.json();
+      } else if(timedOut){
+        return {'status':'error', 'message':`Request to '${address}' timed out.`};
+      }      
+    }).catch((err) => {
+      sendLog('error', 'fetchSite', err);
+      return {'status': 'error', err};
     });
 };
