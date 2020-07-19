@@ -17,6 +17,7 @@ module.exports = class RegCommand extends Command {
 
   async run(msg, args) {
     args = args.toLowerCase();
+    let failed = true;
 
     // checking if the command disabled or not
     const globalSettings = await utils.getGlobalSetting('reg');
@@ -27,39 +28,43 @@ module.exports = class RegCommand extends Command {
     }
 
     // console.debug("[soyun] [reg] ["+msg.guild.name+"] roles data: "+rolesList);
-    let guildSettingData = await utils.getGuildSettings(msg.guild.id);
+    const guildSettingData = await utils.getGuildSettings(msg.guild.id);
 
     // formatting the nickname
     const userCharaName = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
     if (guildSettingData) {
-      if (guildSettingData.join || guildSettingData.join.status !== 'disable') {
-        // changing the nickname
-        if (msg.author.id !== msg.guild.ownerID) {
-          msg.guild.members.cache.get(msg.author.id).setNickname(userCharaName);
-        }
-
-        // checking and adding the role
-        if (guildSettingData.join.role) {
-          // checking if the guild have the role, add if yes
-          if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.join.role)) !== null) {
-            msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.join.role);
+      if (guildSettingData.join) {
+        if(guildSettingData.join.status !== 'disable'){
+          // changing the nickname
+          if (msg.author.id !== msg.guild.ownerID) {
+            msg.guild.members.cache.get(msg.author.id).setNickname(userCharaName);
           }
-        }
 
-        if ((guildSettingData.join.channel && guildSettingData.join.channel !== null) && (guildSettingData.join.message && guildSettingData.join.message !== null)) {
-          const joinMessageAuthor = '<@'+msg.author.id+'>';
-          const joinServerName = msg.guild.name;
-          let customJoinMessage = guildSettingData.join.message;
-          // replacing some stuff
-          customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
-          customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
+          // checking and adding the role
+          if (guildSettingData.join.role) {
+            // checking if the guild have the role, add if yes
+            if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.join.role)) !== null) {
+              msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.join.role);
+            }
+          }
 
-          msg.guild.channels.cache.find((ch) => ch.id === guildSettingData.join.channel).send(customJoinMessage);
+          if ((guildSettingData.join.channel && guildSettingData.join.channel !== null) && (guildSettingData.join.message && guildSettingData.join.message !== null)) {
+            const joinMessageAuthor = '<@'+msg.author.id+'>';
+            const joinServerName = msg.guild.name;
+            let customJoinMessage = guildSettingData.join.message;
+            // replacing some stuff
+            customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
+            customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
+
+            msg.guild.channels.cache.find((ch) => ch.id === guildSettingData.join.channel).send(customJoinMessage);
+          }
+
+          failed = false;
         }
       }
-    } else {
-      msg.channel.send('This guild/server don\'t have member verification set.');
     }
+
+    if(failed) msg.channel.send('This guild/server don\'t have member verification set.');
   }
 };
