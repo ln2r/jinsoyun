@@ -1,4 +1,3 @@
-//const loadConfig = require('./loadConfig');
 const reactionRole = require('./reactionRole');
 const automationItemUpdate = require('./automationItemUpdate');
 const sendResetNotification = require('./sendResetNotification');
