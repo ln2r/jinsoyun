@@ -233,7 +233,10 @@ module.exports = class GuildSettingsCommand extends Command {
           break;
           
         // welcome system 
-        case 'welcome':
+        case 'welcome':          
+          optionDisplayName = 'New Member Welcome';
+          optionDescription = 'New member Welcome channel roles and message.';
+
           if(guildSettings.welcome)welcomeSettings = guildSettings.welcome;
           changed = false;
   
@@ -300,10 +303,7 @@ module.exports = class GuildSettingsCommand extends Command {
             ];
             break;   
             
-          default:
-            optionDisplayName = 'New Member Welcome';
-            optionDescription = 'New member Welcome channel roles and message.';
-  
+          default:  
             optionEmbedData = [
               {
                 'name': 'To Disable',
@@ -332,6 +332,9 @@ module.exports = class GuildSettingsCommand extends Command {
   
         // join command
         case 'join':
+          optionDisplayName = 'Join Command';
+          optionDescription = 'Join command, role and channel selection.';
+
           if(guildSettings.join)joinSettings = guildSettings.join;
           changed = false;
   
@@ -423,10 +426,7 @@ module.exports = class GuildSettingsCommand extends Command {
             ];
             break;
   
-          default:
-            optionDisplayName = 'Join Command';
-            optionDescription = 'Join command, role and channel selection.';
-  
+          default:           
             optionEmbedData = [
               {
                 'name': 'To Disable',
