@@ -25,9 +25,9 @@ module.exports = async function() {
     const end = Date.now();
     const updateTime = (end-start)/1000+'s';
 
-    sendLog('warn', 'Items', `Data update failed. (${updateTime})`);
-    if(itemsData.status === 'error') sendLog('error', 'Auto-Items', itemsData.err);
-    if(marketData.status === 'error') sendLog('error', 'Auto-Items', marketData.err);
+    sendLog('warn', 'Auto-Items', `Data update failed. (${updateTime})`);
+    if(itemsData.status === 'error') sendLog('error', 'Auto-Items', itemsData);
+    if(marketData.status === 'error') sendLog('error', 'Auto-Items', marketData);
 
   } else {
     sendLog('debug', 'Auto-Items', `Connecting to ${url}...`);
