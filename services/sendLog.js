@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const MongoClient = require('mongodb').MongoClient;
 const dateformat = require('dateformat');
-const utils = require('../utils/index.js');
+const fetchDB = require('../utils/fetchDB');
 const configs = require('../config.json');
 
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
@@ -43,7 +43,7 @@ module.exports = async function(level, location, message){
   
   // bot request counting
   if(level === 'query'){
-    const statsData = await utils.fetchDB(configs.collection.stats, {date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
+    const statsData = await fetchDB(configs.collection.stats, {date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
     let todayStats = 0;
     let payload;
   
@@ -76,10 +76,5 @@ module.exports = async function(level, location, message){
       }
     });  
   }
-
-  if(maintenance && level == 'debug'){
-    console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}`);
-  }else{
-    console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}`);
-  }  
+  console.log(`${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}`);
 };
