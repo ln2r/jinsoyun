@@ -2,6 +2,7 @@ const reactionRole = require('./reactionRole');
 const automationItemUpdate = require('./automationItemUpdate');
 const sendResetNotification = require('./sendResetNotification');
 const sendLog = require('./sendLog');
+const checkConfig = require('./checkConfig');
 
 const twitterStream = require('./twitterStream');
 
@@ -14,6 +15,7 @@ module.exports = {
   automationItemUpdate,
   sendResetNotification,
   sendLog,
+  checkConfig,
 
   twitterStream,
 
