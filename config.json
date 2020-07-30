@@ -11,6 +11,7 @@
     "logs": "logs",
     "market": "market",
     "items": "items",
-    "stats": "stats"
+    "stats": "stats",
+    "configs": "configs"
   }
 }
