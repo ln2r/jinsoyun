@@ -30,10 +30,24 @@ module.exports = class BotAuditCommand extends Command {
 
     let logsDataError = '';
     let logsDataWarn =  '';
+
+    let logsDataWarnCount = 0;
+    let logsDataErrorCount = 0;
+    
     logsData.map(data => {
-      if(data.level === 'warn') logsDataWarn = logsDataWarn + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
-      if(data.level === 'error') logsDataError = logsDataError + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
-    });
+      if(data.level === 'warn') {
+        if(logsDataWarnCount <= 5){
+          logsDataWarn = logsDataWarn + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
+        }  
+        logsDataWarnCount ++;      
+      }
+      if(data.level === 'error') {
+        if(logsDataErrorCount <= 5){
+          logsDataError = logsDataError + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
+        }
+        logsDataErrorCount ++;
+      }
+    });    
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
@@ -56,11 +70,11 @@ module.exports = class BotAuditCommand extends Command {
         'description': `Today: ${dateformat(currentTime, 'UTC:dd mmmm yyyy')} UTC\nHeartbeat: ${Math.round(this.client.ws.ping)}ms`,
         'fields': [
           {
-            'name': 'Warnings',
+            'name': `Warnings ${(logsDataWarnCount > 5)? '(+'+logsDataWarnCount-5+')':''}`,
             'value': (logsDataWarn === '')? 'Everything is normal, nothing\'s here.':logsDataWarn,
           }, 
           {
-            'name': 'Errors',
+            'name': `Errors ${(logsDataErrorCount > 5)? '(+'+logsDataErrorCount-5+')':''}`,
             'value': (logsDataError === '')? 'Everything is normal, nothing\'s here.':logsDataError,
           }      
         ],
