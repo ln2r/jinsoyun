@@ -47,14 +47,14 @@ module.exports = async function() {
           }
 
           // updating items data
-          sendLog('debug', 'Auto-Items', `Updating ${configs.collection.items} data...`);
+          sendLog('debug', 'Auto-Items', `Updating "${configs.collection.items}" data...`);
           dbo.collection(configs.collection.items).insertMany(itemsData, async function(err) {
             if (err) sendLog('error', 'Auto-Items', err);
             db.close();
           });
 
           // updating market data
-          sendLog('debug', 'Auto-Items', `Updating ${configs.collection.market} data...`);
+          sendLog('debug', 'Auto-Items', `Updating "${configs.collection.market}" data...`);
           dbo.collection(configs.collection.market).insertMany(marketData, async function(err) {
             if (err) sendLog('error', 'Auto-Items', err);
             db.close();
