@@ -28,7 +28,7 @@ module.exports = async function(address) {
   return fetch_(address)
     .then((res) =>{
       sendLog('debug', 'fetchSite', 'Fetched without problem.');
-      return res;
+      return res.json();
     }).catch((err) => {
       sendLog('error', 'fetchSite', err);
       return {'status': 'error', err};
