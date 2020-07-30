@@ -1,0 +1,108 @@
+[{
+  "_id": {
+    "$oid": "5dcbd7f74a94a0d276ba79ea"
+  },
+  "guild": 0,
+  "settings": {
+    "daily": {
+      "status": true,
+      "message": ""
+    },
+    "koldrak_announce": {
+      "status": true,
+      "message": ""
+    },
+    "reset": {
+      "status": true,
+      "message": ""
+    },
+    "twitter": {
+      "status": true,
+      "message": ""
+    },
+    "drop": {
+      "status": true,
+      "message": ""
+    },
+    "dungeon": {
+      "status": true,
+      "message": ""
+    },
+    "event": {
+      "status": true,
+      "message": ""
+    },
+    "grandharvest": {
+      "status": true,
+      "message": ""
+    },
+    "shackledisle": {
+      "status": true,
+      "message": ""
+    },
+    "weekly": {
+      "status": true,
+      "message": ""
+    },
+    "who": {
+      "status": true,
+      "message": ""
+    },
+    "nickname": {
+      "status": true,
+      "message": ""
+    },
+    "radd": {
+      "status": true,
+      "message": ""
+    },
+    "raddonce": {
+      "status": true,
+      "message": ""
+    },
+    "rmessage": {
+      "status": true,
+      "message": ""
+    },
+    "rremove": {
+      "status": true,
+      "message": ""
+    },
+    "setting": {
+      "status": true,
+      "message": ""
+    },
+    "koldrak": {
+      "status": true,
+      "message": ""
+    },
+    "market": {
+      "status": true,
+      "message": ""
+    },
+    "bid": {
+      "status": true,
+      "message": ""
+    },
+    "reg": {
+      "status": true,
+      "message": ""
+    },
+    "not_found": "https://cdn.discordapp.com/attachments/426043840714244097/518272794077954048/soyun-notfound.png",
+    "status": {
+      "activity": {
+        "name": "!help",
+        "type": "LISTENING"
+      },
+      "status": "online"
+    },
+    "hunters_refugee": {
+      "status": true,
+      "message": ""
+    },
+    "item_update": {
+      "status": true,
+      "message": ""
+    }
+  }
+}]
