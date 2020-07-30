@@ -11,8 +11,8 @@ const services = require('./services/index.js');
 const utils = require('./utils/index.js');
 const dateformat = require('dateformat');
 
-// Load config file
-//services.loadConfig();
+// checking global setting
+services.checkConfig();
 
 // Error handler
 process.on('uncaughtException', async (err) => {
@@ -198,6 +198,17 @@ if (config.bot.maintenance) {
     reset.done();
     return;
   });
+
+  // hourly cron
+  // ontime({
+  //   cycle: ['00:50'],
+  //   utc: true,
+  // }, async (hourly) => {
+  //   await services.automationHourly(clientDiscord);
+
+  //   hourly.done();
+  //   return;
+  // });
 
   // Koldrak's Lair access
   ontime({
