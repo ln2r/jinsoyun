@@ -21,7 +21,7 @@ module.exports = async function(clientDiscord) {
       access_token_secret: process.env.SOYUN_BOT_TWITTER_ACCESS_SECRET,
     });
 
-    await sendLog('info', 'Twitter', 'Twitter stream started.');
+    sendLog('info', 'Twitter', 'Twitter stream started.');
 
     clientTwitter.stream('statuses/filter', {follow: config.twitter.id}, async function(stream) {
       const twitterAPIData = await utils.fetchDB('apis', {name: 'Twitter'});
@@ -32,6 +32,7 @@ module.exports = async function(clientDiscord) {
       let twtThumbnail;
 
       stream.on('data', async function(tweet) {
+        sendLog('info', 'Twitter', 'Stream activity detected');
         let payloadStatus = true;
 
         // checking if it's valid account
@@ -45,7 +46,7 @@ module.exports = async function(clientDiscord) {
           // checking global settings
           const globalSettings = await utils.getGlobalSetting('twitter');
           if (!globalSettings.status) {
-            await sendLog('warn', 'Twitter', 'Twitter stream disabled, '+globalSettings.message);
+            sendLog('warn', 'Twitter', 'Twitter stream disabled, '+globalSettings.message);
             payloadStatus = false;
           }
 
@@ -113,21 +114,26 @@ module.exports = async function(clientDiscord) {
                 if (found === 0) {
                   if (ch.id === twitterChannel && twitterChannel !== '' && twitterChannel !== 'disable') {
                     found = 1;
-                    if (ch.permissionsFor(clientDiscord.user).has('EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL')) {
+                    sendLog('debug', 'Twitter', `Sending one to "${guild.name}"...`);
+
+                    if (ch.permissionsFor(clientDiscord.user).has('VIEW_CHANNEL') && ch.permissionsFor(clientDiscord.user).has('SEND_MESSAGES')) {
                       ch.send(embedData);
+                      
+                      sendLog('debug', 'Twitter', 'Notification sent sucessfully.');
+                    }else{
+                      sendLog('warn', 'Twitter', `Failed to notify "${guild.name}", issue with permission.`);
                     }
                   }
                 }
               });
             });
-            await sendLog('info', 'Twitter', tweet.user.name+'\'s tweet sent');
+            sendLog('info', 'Twitter', tweet.user.name+'\'s tweet sent');
           }
         }
-        await sendLog('info', 'Twitter', 'Stream activity detected');
       });
 
       stream.on('error', async function(error) {
-        await sendLog('info', 'Twitter', 'Error occured on Twitter stream.\n'+error);
+        sendLog('info', 'Twitter', 'Error occured on Twitter stream.\n'+error);
       });
     });
   }
