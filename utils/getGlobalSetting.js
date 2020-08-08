@@ -14,7 +14,7 @@ module.exports = async function(system) {
     return settingsData[0].settings.not_found;
   case 'koldrak_announce':
     return settingsData[0].settings.koldrak_announce;
-  case 'hunters_refugee':
+  case 'hunter_announce':
     return settingsData[0].settings.hunters_refugee;
   case 'reset':
     return settingsData[0].settings.reset;
@@ -22,6 +22,8 @@ module.exports = async function(system) {
     return settingsData[0].settings.twitter;
   case 'welcome':
     return settingsData[0].settings.welcome;
+  case 'auto_items':
+    return settingsData[0].settings.item_update;
 
   case 'bid':
     return settingsData[0].settings.bid;
