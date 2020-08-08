@@ -1,3 +1,8 @@
+<!-- TODO:
+  - do checks
+  - do test with 0 db content
+ -->
+
 # Jinsoyun
 A discord bot built for Blade &amp; Soul's NA Server
 
@@ -8,7 +13,7 @@ A discord bot built for Blade &amp; Soul's NA Server
 
 ## Installation / Getting Started
 ### Invitation Url
-DM me on discord for the invitation url (Username and tag on the bottom of this file).
+You can invite Jinsoyun to your server by going [here](https://ln2r.github.io/jinsoyun.html).
 
 ### Self-Host
 If you want to host the bot yourself just follow the instruction below. The downside is you need to update daily, weekly and event data manually.
@@ -103,8 +108,10 @@ Explanation:
   * [Commando MongoDBProvider](https://github.com/paulhobbel/commando-provider-mongo) - MongoDB provider for Commando
   * [BnSTools](https://bnstools.info/) - Smart Bid Algorithm
 
-## Support
+## Help & Support
+You can contact me via Discord (`ln2r#1691`) or by submitting new issue [here](https://github.com/ln2r/jinsoyun/issues).
 * [ko-fi](https://ko-fi.com/ln2rworks)
+* [GitHub](https://github.com/ln2r/)
 
 ## License
 *Code of this project is licensed under MIT license*
