@@ -11,6 +11,8 @@ const services = require('./services/index.js');
 const utils = require('./utils/index.js');
 const dateformat = require('dateformat');
 
+const cron = require('./cron/cron');
+
 // checking global setting
 services.checkConfig();
 
@@ -87,6 +89,7 @@ clientDiscord
     }
   })
   .on('guildMemberAdd', async (member) => {
+    // TODO: move to services
     const guildSettings = await utils.getGuildSettings(member.guild.id);
     const globalSettings = await utils.getGlobalSetting('welcome');
 
@@ -110,13 +113,14 @@ clientDiscord
       }
     }
   })
-  .on('commandError', async (error, command, message) => {
+  .on('commandError', (error, command, message) => {
+    // TODO: move to services
     let errorLocation;
     let guildOwnerId;
     let guildOwnerData;
   
     if (config.bot.maintenance) {
-      await services.sendLog('info', 'onCommandError', 'Error dm reporting is disabled');
+      services.sendLog('info', 'onCommandError', 'Error dm reporting is disabled');
     } else {
       if (message.guild) {
         errorLocation = message.guild.name;
@@ -149,13 +153,13 @@ clientDiscord
             '\n**Guild Owner**: '+guildOwnerData+
             '\n**Content**: `'+message.content+'`'+
             '\n**Message**:\n'+command.name+': '+command.message
-        ).catch(async (err) => {
-          await services.sendLog('error', 'onCommandError', err);
+        ).catch((err) => {
+          services.sendLog('error', 'onCommandError', err);
         });
       }
 
       // logging the error report
-      await services.sendLog('error', errorLocation, command.message);
+      services.sendLog('error', errorLocation, command.message);
     }  
   })
   .on('messageReactionAdd', async (reaction, user) => {
@@ -185,61 +189,18 @@ clientDiscord.setProvider(
 services.twitterStream(clientDiscord);
 
 // Automation
-// Quest reset notification
 if (config.bot.maintenance) {
   services.sendLog('warn', 'Automation', 'Maintenance mode is enabled, automation disabled.');
 } else {
+  //TODO: test and use
   ontime({
-    cycle: ['12:00:00'],
+    cycle: ['50:00'],
     utc: true,
-  }, async function(reset) {
-    await services.automationQuestReset(clientDiscord);
-
-    reset.done();
-    return;
-  });
-
-  // hourly cron
-  // ontime({
-  //   cycle: ['00:50'],
-  //   utc: true,
-  // }, async (hourly) => {
-  //   await services.automationHourly(clientDiscord);
-
-  //   hourly.done();
-  //   return;
-  // });
-
-  // Koldrak's Lair access
-  ontime({
-    cycle: ['00:50:00', '03:50:00', '06:50:00', '18:50:00', '21:50:00'],
-    utc: true,
-  }, async function(koldrak) {
-    await services.automationKoldrak(clientDiscord);
-
-    koldrak.done();
-    return;
-  });
-
-  // Hunter's Refugee access
-  ontime({
-    cycle: ['01:50:00'],
-    utc: true,
-  }, async function(hunter) {
-    await services.automationHunters(clientDiscord);
-
-    hunter.done();
-    return;
-  });
-
-  // Item data update
-  ontime({
-    cycle: ['00:02'],
-    utc: true,
-  }, function(items) {
-    services.automationItemUpdate();
-
-    items.done();
+  }, async (hourly) => {
+    services.sendLog('info', 'Automation', 'Running "hourly" automation process...');
+    
+    await cron(clientDiscord);
+    hourly.done();
     return;
   });
 }

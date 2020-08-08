@@ -1,14 +1,14 @@
 const dateformat = require('dateformat');
 const utils = require('../utils/index.js');
-const sendLog = require('./sendLog');
+const services = require('../services/index');
 
 /**
  * sendResetNotification
  * Used to send quest reset notification
  * @param {Guild} clientGuildData discord bot client guild/server connected data
  */
-module.exports = async function(clientData) {
-  sendLog('info', 'Reset', 'Sending reset notification...');
+module.exports = async (clientData) => {
+  services.sendLog('info', 'Reset', 'Sending reset notification...');
   const eventSetting = await utils.getGlobalSetting('event');
   const dailySetting = await utils.getGlobalSetting('daily');
   const weeklySetting = await utils.getGlobalSetting('weekly');
@@ -36,7 +36,7 @@ module.exports = async function(clientData) {
 
     fieldsData.push({
       'name': 'Daily Challenges',
-      'value': '**Rewards**'+utils.formatArray(dailiesRewards, '', true)+'\n\u200B'+
+      'value': '**Rewards**'+utils.formatArray(dailiesRewards, '', true)+'\n'+
               '**Quests**'+utils.formatArray(dailiesData.quests, '- ', true)+'\n\u200B',
     });
   }
@@ -47,12 +47,12 @@ module.exports = async function(clientData) {
 
     fieldsData.push({
       'name': 'Weekly Challenges',
-      'value': '**Rewards**'+utils.formatArray(weekliesRewards, '', true)+'\n\u200B'+
+      'value': '**Rewards**'+utils.formatArray(weekliesRewards, '', true)+'\n'+
                 '**Quests**'+utils.formatArray(weekliesData.quests, '- ', true)+'\n\u200B',
     });
   }
 
-  const msgData = 'Hello! It\'s time for reset. Have a good day!';
+  const msgData = 'Quest\'s and dungeon lockout reset in **10 minutes**';
 
   const embedData = {
     'embed': {
@@ -82,17 +82,17 @@ module.exports = async function(clientData) {
         if (found === 0) {
           if (ch.id === resetChannel && resetChannel !== '' && resetChannel !== 'disable') {
             found = 1;
-            sendLog('debug', 'Reset', `Sending one to "${guild.name}"...`);           
+            services.sendLog('debug', 'Reset', `Sending one to "${guild.name}"...`);           
             if (ch.permissionsFor(clientData.user).has('VIEW_CHANNEL') && ch.permissionsFor(clientData.user).has('SEND_MESSAGES')) {
               ch.send(msgData, embedData);
-              sendLog('debug', 'Reset', 'Notification sent sucessfully.');              
+              services.sendLog('debug', 'Reset', 'Notification sent sucessfully.');              
             }else{
-              sendLog('warn', 'Reset', `Failed to notify "${guild.name}", issue with permission.`);
+              services.sendLog('warn', 'Reset', `Failed to notify "${guild.name}", issue with permission.`);
             }
           }
         }
       });
     }
   });
-  sendLog('info', 'Reset', 'Reset notification sent to guilds.');
+  services.sendLog('info', 'Reset', 'Reset notification sent to guilds.');
 };

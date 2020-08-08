@@ -1,5 +1,5 @@
 const {Command} = require('discord.js-commando');
-const service = require('../../services/index');
+const reset = require('../../cron/reset');
 
 module.exports = class ResetNotificationCommand extends Command {
   constructor(client) {
@@ -14,6 +14,6 @@ module.exports = class ResetNotificationCommand extends Command {
   }
 
   async run() {
-    service.automationQuestReset(this.client);
+    reset(this.client);
   }
 };
