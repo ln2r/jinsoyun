@@ -1,62 +1,1802 @@
-{"_id":{"$oid":"5d7ee2bdcdff4f13b4efb7d0"},"id":{"$numberInt":"43"},"name":"Celestial Basin","type":{"$numberInt":"0"},"requirements":["Level 57","Chapter 11: The Grand Enchantress"],"guides":[],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Scaleburn Weapon","rewards":[]}
-{"_id":{"$oid":"5d7b6ffa3d11a705d037f2df"},"id":{"$numberInt":"6"},"name":"Ransacked Treasury","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 16)","The Emperor's Tomb - Chapter 5: Stealing the Light"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1qhEdnTJB9eJYNPPRUyBX3duynL7psNyH77JpqB2tsE8"}],"attack_power":{"easy":{"$numberInt":"1130"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":["Innovator Eye Patch","Innovator Outfit","Amara Weapon Chest","Amara Soul Shield","Forgotten Hive Queen Soul Shield Chest","Amara Ring","Skysunder Elevation Chest - Stage 1","Imperial Mask","Silver Scale","Hellion Core","Rare Element","Amara's Psyche","Lucent Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7ee5d3cdff4f13b4efb7d9"},"id":{"$numberInt":"52"},"name":"Nova Core","type":{"$numberInt":"6"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b73423d11a705d037f2ea"},"id":{"$numberInt":"17"},"name":"The Shattered Masts","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 7)","Chapter 31: Relics of The Past"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"670"},"hard":{"$numberInt":"0"}},"weapon":"Unrefined Scaleburn Weapon","rewards":[]}
-{"_id":{"$oid":"5d7ee27dcdff4f13b4efb7cf"},"id":{"$numberInt":"42"},"name":"Moon Refuge","type":{"$numberInt":"0"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 13)"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"900"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee130cdff4f13b4efb7c8"},"id":{"$numberInt":"35"},"name":"Trial Arena","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 13)"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee1afcdff4f13b4efb7cb"},"id":{"$numberInt":"38"},"name":"Hall of Keeper","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 10)","The Emperor's Tomb - Chapter 5: Stealing the Light"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee036cdff4f13b4efb7c4"},"id":{"$numberInt":"31"},"name":"Titan Chamber","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 14)","Temple of Succession - Chapter 8: Breaching the Gate"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7b76233d11a705d037f2ef"},"id":{"$numberInt":"22"},"name":"Awakened Necropolis","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 3)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"540"},"hard":{"$numberInt":"0"}},"weapon":"Sterling Weapon","rewards":[]}
-{"_id":{"$oid":"5d7ee251cdff4f13b4efb7ce"},"id":{"$numberInt":"41"},"name":"Midnight Skypetal Plains","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 8)","CHapter 31: Relics of the Past"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"900"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee2f7cdff4f13b4efb7d1"},"id":{"$numberInt":"44"},"name":"Frozen Carnival","type":{"$numberInt":"6"},"requirements":["Level 16"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7edf12cdff4f13b4efb7bf"},"id":{"$numberInt":"26"},"name":"Nightfall Sanctuary","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 17)","The Emperor's Tomb - Chapter 5: Stealing the Light"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Aransu Weapon - Stage 9","rewards":[]}
-{"_id":{"$oid":"5d7ee195cdff4f13b4efb7ca"},"id":{"$numberInt":"37"},"name":"Hall of Templar","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 11)","The Emperor's Tomb - Chapter 5: Stealing the Light"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1uFrjeP8nArdlyKv5R1dVkqPmPX3miHAfV1bhFfeVP1w"},{"author":"Eckogen","url":"https://www.youtube.com/watch?v=esxkKyvs9MI"}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":["Sealed Legendary Gem Hammer","Grand Celestial Wing","Hive Queen's Wing"]}
-{"_id":{"$oid":"5d7ee5c4cdff4f13b4efb7d8"},"id":{"$numberInt":"51"},"name":"Nova Core","type":{"$numberInt":"6"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7edf77cdff4f13b4efb7c1"},"id":{"$numberInt":"28"},"name":"Scion's Keep","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 15)","Divide and Conquer"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 6","rewards":[]}
-{"_id":{"$oid":"5d7b717c3d11a705d037f2e5"},"id":{"$numberInt":"12"},"name":"Naryu Sanctum","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 55 HM 13)","Chapter 11: The Grand Enchantress"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"845"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 7","rewards":[]}
-{"_id":{"$oid":"5d7ee59ccdff4f13b4efb7d6"},"id":{"$numberInt":"49"},"name":"Whirlwind Valley","type":{"$numberInt":"6"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7ee0e2cdff4f13b4efb7c6"},"id":{"$numberInt":"33"},"name":"Den of Ancients","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 17)","Chapter 20: Restorations"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Aransu Weapon - Stage 6","rewards":[]}
-{"_id":{"$oid":"5d7b70623d11a705d037f2e0"},"id":{"$numberInt":"7"},"name":"Drowning Deeps","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 16)","Chapter 20: Restorations"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=12KIXEgJl9z70FetTgIrFI6ZLEe78k3z1Vy6pE5Lscjo"}],"attack_power":{"easy":{"$numberInt":"1055"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 12","rewards":["Demon Slayer Outfit","Numok Weapon Chest","Numok Soul Shield","Forgotten Hive Queen Soul Shield Chest","Numok Earring ","Numok Bracelet","Skyguard Horizon Belt Chest - Stage 1","Silver Scale","Hellion Core","Rare Element","Numok's Psyche","Peculiar Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7edf4fcdff4f13b4efb7c0"},"id":{"$numberInt":"27"},"name":"Temple of Eluvium","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 15)","Fate of Aransu - Chapter 4: Vale of Tears"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 9","rewards":[]}
-{"_id":{"$oid":"5da0c0ab1c9d44000086195b"},"id":{"$numberInt":"57"},"name":"Candycloud Park","type":{"$numberInt":"6"},"requirements":[],"guides":[],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b6c947ebcc405d0b1cdc8"},"id":{"$numberInt":"0"},"name":"Hongsil's Workshop","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 1)"],"guides":[{"author":"Eckogen","url":"https://www.youtube.com/watch?v=k2wx9FJGp_0"},{"author":"BnS Academy","url":"https://drive.google.com/open?id=1xeiGkVhUuu8gYwx5S_FLcKS4Wz-0L1J4XH-X74cXHww"}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d81ac951c9d440000907c03"},"id":{"$numberInt":"55"},"name":"Cathedra Cliffs","type":{"$numberInt":"6"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 21)"],"guides":[{"author":"Imlerith/건강 할수 없는","url":"https://docs.google.com/document/d/1PkJ6txFOr7CNGmkFRxubvZTtSYw-gJoCgqnDBDMHs1M/"}],"attack_power":{"easy":{"$numberInt":"1530"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"1760"}},"weapon":"","rewards":["Ayanka Ring","Elder Scale Fragment","Locked Ayanka Weapon","Sealed Storm Speaker Bracelet Chest","Storm Speaker Bracelet Chest","Hidden Promise Treasure Chest","Artisan Material Chest","Storm Seeker","Storm Seeker Mask","Storm Seeker Adornment","Ayanka's Psyche","Rare Hidden Promise Treasure Chest","Master Material Chest","Sealed Elder Scale","Elder Scale","Pet Pack","Sacred Vial"]}
-{"_id":{"$oid":"5d7ee211cdff4f13b4efb7cd"},"id":{"$numberInt":"40"},"name":"Mushin's Tower - 20th Floor","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 13)","Mushin's Tower - The Climb Continues"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d81ae0e1c9d440000907c04"},"id":{"$numberInt":"56"},"name":"Throne of Oblivion","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 17)","The Tomb of Oblivion"],"guides":[],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":["Unrefined Celestial Emperor Ring Chest","Unrefined Celestial Emperor Earring Chest","Unrefined Stormsiege Bracelet","Unrefined Windsong Bracelet","Unrefined Thundercall Bracelet","Oblivion Fragment","Grand Celestial Wing","Onyx Scale Fragment","Grand Celestial Steel","Orb of Ascension Shard","Prime Reputation Charm","Superior Reputation Charm","Sterling Reputation Charm","Hongmoon Gem Powder","Heptagonal Diamond Pet Gem","Heptagonal Obsidian Pet Gem","Heptagonal Garnet Pet Gem"]}
-{"_id":{"$oid":"5d7b714c3d11a705d037f2e4"},"id":{"$numberInt":"11"},"name":"Irontech Forge","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 55 HM 14)","Chapter 11: The Grand Enchantress"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1qAMUCVzdMnWOz6aJVIJWRkSupm8zYMYR6CWWOqQPZjo"}],"attack_power":{"easy":{"$numberInt":"890"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 9","rewards":["Mechanizer Weapon Chest","Mechanizer Soul Shield","Forgotten Raven King Soul Shield Chest","Mechanizer Ring","Mechanizer Bracelet","Blackstone","Mechanizer's Psyche","Awakened Transcendence Engine","Hellion Core"]}
-{"_id":{"$oid":"5d7b6fa23d11a705d037f2de"},"id":{"$numberInt":"5"},"name":"Sandstorm Temple","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 16)","Chapter 20: Restorations"],"guides":[{"author":"OhMyTofu","url":"https://docs.google.com/document/d/1JHr4QVX7T1lEc4Wluj1cvGJJPqiQmjM7KaBINdqx2r4/"},{"author":"BnS Academy","url":"https://docs.google.com/document/d/1amXQqV9Pv-ruFXI79Vi9y-GeHcg0ugABOvZrg1Tkn2Q/"}],"attack_power":{"easy":{"$numberInt":"1140"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":["Aurora Outfit","Rukesh Weapon Chest","Rukesh Soul Shield","Forgotten Hive Queen Soul Shield Chest","Rukesh Earring","Sandstorm Temple Bracelet Chest","Silver Scale","Hellion Core","Rare Element","Rukesh's Psyche","Lucent Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7b71bf3d11a705d037f2e6"},"id":{"$numberInt":"13"},"name":"Naryu Foundry","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 55 HM 12)","Khadar Vihar - Chapter 5: Mournful Tidings"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"770"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 5","rewards":[]}
-{"_id":{"$oid":"5d7ee5afcdff4f13b4efb7d7"},"id":{"$numberInt":"50"},"name":"Beluga Lagoon","type":{"$numberInt":"6"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7ee4fecdff4f13b4efb7d4"},"id":{"$numberInt":"47"},"name":"Whirlwind Valley","type":{"$numberInt":"6"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b76573d11a705d037f2f0"},"id":{"$numberInt":"23"},"name":"Heaven's Mandate","type":{"$numberInt":"6"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 12)","Chapter 36: The Emperor Strikes Back"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"960"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee517cdff4f13b4efb7d5"},"id":{"$numberInt":"48"},"name":"Beluga Lagoon","type":{"$numberInt":"6"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b6e833d11a705d037f2db"},"id":{"$numberInt":"2"},"name":"Brood Chamber","type":{"$numberInt":"6"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 17)","Chapter 18: What Remains"],"guides":[{"author":"Eckogen","url":"https://www.youtube.com/playlist?list=PLAdXxT-oH9ypsGuLbV3vWV8R4TyJyYutr"}],"attack_power":{"easy":{"$numberInt":"1340"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"1640"}},"weapon":"Raven Weapon - Stage 6","rewards":["Skyreach Gloves","Discordia Necklace","Onyx Scale","Onyx Scale Fragment","Locked Brood Weapon ","Imperial Core","Hidden Promises Treasure Chest","Rare Element","Bloodlust Outfit","Bloodlust Headpiece","Bloodlust Mantle","Veratex's Psyche","Rare Hidden Promises Treasure Chest","Sealed Onyx Scale"]}
-{"_id":{"$oid":"5d7b74fc3d11a705d037f2ed"},"id":{"$numberInt":"20"},"name":"Cold Storage","type":{"$numberInt":"6"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 12)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"960"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7b6d993d11a705d037f2da"},"id":{"$numberInt":"1"},"name":"Realmrift Supply Chain","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50)"],"guides":[{"author":"Eckogen","url":"https://www.youtube.com/watch?v=ooe07nInHYw"}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7ef58d1c9d4400006e45bf"},"id":{"$numberInt":"53"},"name":"Snowjade Fortress","type":{"$numberInt":"12"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b6edc3d11a705d037f2dc"},"id":{"$numberInt":"3"},"name":"Dreamsong Theater","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 17)","Chapter 18: What Remains"],"guides":[{"author":"Eckogen","url":"https://www.youtube.com/playlist?list=PLAdXxT-oH9yq6iTcZnjDrtjWYuRtlQkRt"}],"attack_power":{"easy":{"$numberInt":"1320"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"1620"}},"weapon":"Raven Weapon - Stage 6","rewards":["Locked Dreamsong Weapon","Imperial Earring","Dreamsong Necklace - Stage 1","Sealed Dreamsong Treasure Chest","Demon Fang","Onyx Scale","Imperial Core","Onyx Scale Fragment","Hidden Promises Treasure Chest","Rare Element","Dreamcatcher Outfit","Dreamcatcher Head Adornment","Dreamcatcher Mask","Mazuko's Psyche","Rare Hidden Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7ef5aa1c9d4400006e45c0"},"id":{"$numberInt":"54"},"name":"Fallen Aransu School","type":{"$numberInt":"12"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b76883d11a705d037f2f1"},"id":{"$numberInt":"24"},"name":"Lair of the Frozen Fang","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 3)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"520"},"hard":{"$numberInt":"0"}},"weapon":"Sterling Weapon","rewards":[]}
-{"_id":{"$oid":"5d7b6f133d11a705d037f2dd"},"id":{"$numberInt":"4"},"name":"The Shadowmoor","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 16)","Chapter 20: Restorations"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1O_W8P1I7rN8p1C5IcsIgsTwMnaXqN5PZ9ycq_JCgowE"},{"author":"Eckogen","url":"https://www.youtube.com/playlist?list=PLAdXxT-oH9yp7yyyRydCvmyl9Kd3hNSuM"}],"attack_power":{"easy":{"$numberInt":"1160"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 4","rewards":["Shadowmoor Captain Outfit","Shadow Captain Hat","Locked Shadowmoor Weapon","Heavenly Wrath Myth Ring - Stage 1 Chest","Shadowmoor Ring","Shadowmoor Belt","Silver Scale","Imperial Core","Rare Element","Captain Mookwan's Psyche","Heptagonal Garnet","Lucent Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7b753d3d11a705d037f2ee"},"id":{"$numberInt":"21"},"name":"Avalanche Den","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 3)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"530"},"hard":{"$numberInt":"0"}},"weapon":"Sterling Weapon","rewards":[]}
-{"_id":{"$oid":"5d7ee0b2cdff4f13b4efb7c5"},"id":{"$numberInt":"32"},"name":"Skybreak Spire","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 13)","Khadar Vihar - Chapter 5: Mournful Tidings","To Khadar Vihar"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7b72953d11a705d037f2e9"},"id":{"$numberInt":"16"},"name":"Sogun's Lament","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 7)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"680"},"hard":{"$numberInt":"0"}},"weapon":"Unrefined Scaleburn Weapon","rewards":[]}
-{"_id":{"$oid":"5d7edfb6cdff4f13b4efb7c2"},"id":{"$numberInt":"29"},"name":"Warped Citadel","type":{"$numberInt":"6"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 18)"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"1430"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"1670"}},"weapon":"Aransu Weapon - Stage 9","rewards":["Imperial Belt","Dreadnought Bracelet","Dreadnought Belt","Sealed Imperial Belt Chest","Locked Dreadnought Weapon","Onyx Scale","Hidden Promises Treasure Chest ","Rare Element","Dreadnought Outfit","Dreadnought Headpiece","Dreadnought Cape","Sobu's Psyche","Rare Hidden Promises Treasure Chest","Sealed Onyx Scale"]}
-{"_id":{"$oid":"5d7b72213d11a705d037f2e7"},"id":{"$numberInt":"14"},"name":"Desolate Tomb","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 55 HM 10)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"730"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 4","rewards":[]}
-{"_id":{"$oid":"5d7edebbcdff4f13b4efb7be"},"id":{"$numberInt":"25"},"name":"Scarlet Conservatory","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 21)","Temple of Succession - Chapter 8: Breaching"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Grand Celestial Weapon - Stage 6","rewards":[]}
-{"_id":{"$oid":"5d7ee001cdff4f13b4efb7c3"},"id":{"$numberInt":"30"},"name":"Botany Center","type":{"$numberInt":"12"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 14)","Temple of Succession - Chapter 8: Breaching the Gate"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7b744f3d11a705d037f2ec"},"id":{"$numberInt":"19"},"name":"Gloomdross Incursion","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 6)","Chapter 31: Relics of The Past"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"630"},"hard":{"$numberInt":"0"}},"weapon":"Eidolon Weapon","rewards":[]}
-{"_id":{"$oid":"5d7b737b3d11a705d037f2eb"},"id":{"$numberInt":"18"},"name":"Sundered Nexus","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 50 HM 6)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"640"},"hard":{"$numberInt":"0"}},"weapon":"Eidolon Weapon","rewards":[]}
-{"_id":{"$oid":"5d7ee4e5cdff4f13b4efb7d3"},"id":{"$numberInt":"46"},"name":"Arena Match","type":{"$numberInt":"1"},"requirements":[""],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7b70ad3d11a705d037f2e1"},"id":{"$numberInt":"8"},"name":"Hollow's Heart","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 15)","Chapter 20: Restorations"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1fSUcmPPCHXHO2hr8PYV_vdDcrR1LZcGOSAb3g-SFPAU"}],"attack_power":{"easy":{"$numberInt":"1045"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 12","rewards":["Wildwood Outfit","Wildwood Crown","Rootwell Weapon Chest","Khasabi Soul Shield","Forgotten Raven King Soul Shield Chest","Rootwell Bracelet","King Gloves","Blackstone","Hellion Core","Rare Element","Jurupos's Psyche","Peculiar Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7b711a3d11a705d037f2e3"},"id":{"$numberInt":"10"},"name":"Ebondrake Lair","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 55 HM 14)","Fate of Aransu - Chapter 4: Vale of Tears"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1iiEd7Vm19vjNj761s_bPoePUGGMQ3dZgwZ2bPBMNokY"}],"attack_power":{"easy":{"$numberInt":"904"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 10","rewards":["Rising Flame Outfit","Rising Flame Ornament","Dark Vicar Weapon Chest","Dark Vicar Soul Shield","Forgotten Raven King Soul Shield Chest","Dark Vicar Necklace","Sky's Inheritance Ring Chest","Blackstone","Dark Vicar's Psyche","Awakened Transcendence Engine","Charm Pellet","Hellion Core"]}
-{"_id":{"$oid":"5d7b72493d11a705d037f2e8"},"id":{"$numberInt":"15"},"name":"Ebondrake Citadel","type":{"$numberInt":"6"},"requirements":["Level 50 or Higher (Recommended Level 55 HM 9)","Chapter 10: The Gates Open"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"720"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 4","rewards":[]}
-{"_id":{"$oid":"5d7b70dc3d11a705d037f2e2"},"id":{"$numberInt":"9"},"name":"Starstone Mines","type":{"$numberInt":"6"},"requirements":["Level 55 or Higher (Recommended Level 55 HM 15)","Chapter 20: Restorations"],"guides":[{"author":"BnS Academy","url":"https://drive.google.com/open?id=1yFQ-nIlCI8pbxRVBTaHtqlWqkqVpJZhCslB6hNnBRe8"}],"attack_power":{"easy":{"$numberInt":"1040"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Seraph Weapon - Stage 11","rewards":["White Wolf Hat","Starstone Weapon Chest","Starstone Soul Shield","Forgotten Raven King Soul Shield Chest","Starstone Gloves","Starstone Belt","Skypearl Apex Chest - Stage 1","Blackstone","Hellion Core","Rare Element","Volberus's Psyche","Peculiar Promises Treasure Chest"]}
-{"_id":{"$oid":"5d7ee329cdff4f13b4efb7d2"},"id":{"$numberInt":"45"},"name":"Hongsil's Secret Storehouse","type":{"$numberInt":"1"},"requirements":["Level 55"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":[]}
-{"_id":{"$oid":"5d7ee1d0cdff4f13b4efb7cc"},"id":{"$numberInt":"39"},"name":"Outlaw Island","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 15)","Blackram Battle Royale"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee105cdff4f13b4efb7c7"},"id":{"$numberInt":"34"},"name":"Tower of Infinity","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 13)"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 3","rewards":[]}
-{"_id":{"$oid":"5d7ee155cdff4f13b4efb7c9"},"id":{"$numberInt":"36"},"name":"Circle of Sundering","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 16)","Chapter 20: Restorations"],"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"Raven Weapon - Stage 9","rewards":[]}
-{"_id":{"$oid":"5df197250231da2864b9e28d"},"id":{"$numberInt":"58"},"name":"Hangar 0","type":{"$numberInt":"6"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 22)"],"guides":[],"attack_power":{"easy":{"$numberInt":"1610"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"1940"}},"weapon":"Raven Weapon - Stage 6","rewards":["Silversteel Gloves","Silversteel Ring","Elder Scale Fragement","Locked Prime Directive Weapon","Storm Speaker Selection Chest","Sealed Storm Speaker Selection Chest","Hidden Promise Treasure Chest","Rare Element","Prime Directive Outfit","Prime Directive Face Adornment","Prime Directive Adornment","Prime Directive Hair","Silversteel Psyche","Rare Hidden Promises Treasure Chest","Sealed Elder Scale","Elder Scale","Pet Pack","Sacred Vial"]}
-{"_id":{"$oid":"5e280e4e0f2c53038c057c6b"},"id":{"$numberInt":"59"},"name":"Mushin's Tower - 8th Floor","type":{"$numberInt":"1"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 10)","The Calling of Naryu Sage"],"guides":[],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":"","rewards":["Traitor Outfit","Fury Weapon Chest","Mushin Soul Shield","Elysian Orb"]}
-{"_id":{"$oid":"5e8be97af0e15b1c34b52fc3"},"requirements":["Level 60 or Higher (Recommended Level 60 HM 22)"],"rewards":["Stonescale Belt","Stonescale Necklace","Elder Scale Fragment","Locked Stonescale Weapon","Stonescale Treasure Chest","Sealed Stonescale Treasure Chest","Hidden Promise Treasure Chest","Rare Element","Styx and Stones Outfit","Styx and Stones Headpiece","Stonescale Psyche","Rare Hidden Promise Treasure Chest","Sealed Elder Scale","Elder Scale","Pet Pack","Sacred Vial","Sealed Hongmoon Master Scroll","Triple Threat Pet Gem Chest"],"id":{"$numberInt":"60"},"name":"Stonescale Passage","type":{"$numberInt":"6"},"guides":[{"author":"kerropi","url":"https://www.youtube.com/watch?v=SBxCLRXkd4A"}],"attack_power":{"easy":{"$numberInt":"1665"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"2030"}},"weapon":"Raven Weapon - Stage 6"}
-{"_id":{"$oid":"5e90676bf92a5f24d88d5a47"},"requirements":[""],"rewards":[""],"id":{"$numberInt":"61"},"name":"Koldrak's Lair","type":{"$numberInt":"12"},"guides":[{"author":"","url":""}],"attack_power":{"easy":{"$numberInt":"0"},"normal":{"$numberInt":"0"},"hard":{"$numberInt":"0"}},"weapon":""}
+[{
+  "_id": {
+    "$oid": "5d7ee2bdcdff4f13b4efb7d0"
+  },
+  "id": 43,
+  "name": "Celestial Basin",
+  "type": 0,
+  "requirements": [
+    "Level 57",
+    "Chapter 11: The Grand Enchantress"
+  ],
+  "guides": [],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Scaleburn Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b6ffa3d11a705d037f2df"
+  },
+  "id": 6,
+  "name": "Ransacked Treasury",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 16)",
+    "The Emperor's Tomb - Chapter 5: Stealing the Light"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1qhEdnTJB9eJYNPPRUyBX3duynL7psNyH77JpqB2tsE8"
+    }
+  ],
+  "attack_power": {
+    "easy": 1130,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": [
+    "Innovator Eye Patch",
+    "Innovator Outfit",
+    "Amara Weapon Chest",
+    "Amara Soul Shield",
+    "Forgotten Hive Queen Soul Shield Chest",
+    "Amara Ring",
+    "Skysunder Elevation Chest - Stage 1",
+    "Imperial Mask",
+    "Silver Scale",
+    "Hellion Core",
+    "Rare Element",
+    "Amara's Psyche",
+    "Lucent Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7ee5d3cdff4f13b4efb7d9"
+  },
+  "id": 52,
+  "name": "Nova Core",
+  "type": 6,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b73423d11a705d037f2ea"
+  },
+  "id": 17,
+  "name": "The Shattered Masts",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 7)",
+    "Chapter 31: Relics of The Past"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 670,
+    "hard": 0
+  },
+  "weapon": "Unrefined Scaleburn Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee27dcdff4f13b4efb7cf"
+  },
+  "id": 42,
+  "name": "Moon Refuge",
+  "type": 0,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 13)"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 900,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee130cdff4f13b4efb7c8"
+  },
+  "id": 35,
+  "name": "Trial Arena",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 13)"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee1afcdff4f13b4efb7cb"
+  },
+  "id": 38,
+  "name": "Hall of Keeper",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 10)",
+    "The Emperor's Tomb - Chapter 5: Stealing the Light"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee036cdff4f13b4efb7c4"
+  },
+  "id": 31,
+  "name": "Titan Chamber",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 14)",
+    "Temple of Succession - Chapter 8: Breaching the Gate"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b76233d11a705d037f2ef"
+  },
+  "id": 22,
+  "name": "Awakened Necropolis",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 3)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 540,
+    "hard": 0
+  },
+  "weapon": "Sterling Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee251cdff4f13b4efb7ce"
+  },
+  "id": 41,
+  "name": "Midnight Skypetal Plains",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 8)",
+    "CHapter 31: Relics of the Past"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 900,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee2f7cdff4f13b4efb7d1"
+  },
+  "id": 44,
+  "name": "Frozen Carnival",
+  "type": 6,
+  "requirements": [
+    "Level 16"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7edf12cdff4f13b4efb7bf"
+  },
+  "id": 26,
+  "name": "Nightfall Sanctuary",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 17)",
+    "The Emperor's Tomb - Chapter 5: Stealing the Light"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Aransu Weapon - Stage 9",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee195cdff4f13b4efb7ca"
+  },
+  "id": 37,
+  "name": "Hall of Templar",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 11)",
+    "The Emperor's Tomb - Chapter 5: Stealing the Light"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1uFrjeP8nArdlyKv5R1dVkqPmPX3miHAfV1bhFfeVP1w"
+    },
+    {
+      "author": "Eckogen",
+      "url": "https://www.youtube.com/watch?v=esxkKyvs9MI"
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": [
+    "Sealed Legendary Gem Hammer",
+    "Grand Celestial Wing",
+    "Hive Queen's Wing"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7ee5c4cdff4f13b4efb7d8"
+  },
+  "id": 51,
+  "name": "Nova Core",
+  "type": 6,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7edf77cdff4f13b4efb7c1"
+  },
+  "id": 28,
+  "name": "Scion's Keep",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 15)",
+    "Divide and Conquer"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 6",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b717c3d11a705d037f2e5"
+  },
+  "id": 12,
+  "name": "Naryu Sanctum",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 55 HM 13)",
+    "Chapter 11: The Grand Enchantress"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 845,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 7",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee59ccdff4f13b4efb7d6"
+  },
+  "id": 49,
+  "name": "Whirlwind Valley",
+  "type": 6,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee0e2cdff4f13b4efb7c6"
+  },
+  "id": 33,
+  "name": "Den of Ancients",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 17)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Aransu Weapon - Stage 6",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b70623d11a705d037f2e0"
+  },
+  "id": 7,
+  "name": "Drowning Deeps",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 16)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=12KIXEgJl9z70FetTgIrFI6ZLEe78k3z1Vy6pE5Lscjo"
+    }
+  ],
+  "attack_power": {
+    "easy": 1055,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 12",
+  "rewards": [
+    "Demon Slayer Outfit",
+    "Numok Weapon Chest",
+    "Numok Soul Shield",
+    "Forgotten Hive Queen Soul Shield Chest",
+    "Numok Earring ",
+    "Numok Bracelet",
+    "Skyguard Horizon Belt Chest - Stage 1",
+    "Silver Scale",
+    "Hellion Core",
+    "Rare Element",
+    "Numok's Psyche",
+    "Peculiar Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7edf4fcdff4f13b4efb7c0"
+  },
+  "id": 27,
+  "name": "Temple of Eluvium",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 15)",
+    "Fate of Aransu - Chapter 4: Vale of Tears"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 9",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5da0c0ab1c9d44000086195b"
+  },
+  "id": 57,
+  "name": "Candycloud Park",
+  "type": 6,
+  "requirements": [],
+  "guides": [],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b6c947ebcc405d0b1cdc8"
+  },
+  "id": 0,
+  "name": "Hongsil's Workshop",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 1)"
+  ],
+  "guides": [
+    {
+      "author": "Eckogen",
+      "url": "https://www.youtube.com/watch?v=k2wx9FJGp_0"
+    },
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1xeiGkVhUuu8gYwx5S_FLcKS4Wz-0L1J4XH-X74cXHww"
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d81ac951c9d440000907c03"
+  },
+  "id": 55,
+  "name": "Cathedra Cliffs",
+  "type": 6,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 21)"
+  ],
+  "guides": [
+    {
+      "author": "Imlerith/건강 할수 없는",
+      "url": "https://docs.google.com/document/d/1PkJ6txFOr7CNGmkFRxubvZTtSYw-gJoCgqnDBDMHs1M/"
+    }
+  ],
+  "attack_power": {
+    "easy": 1530,
+    "normal": 0,
+    "hard": 1760
+  },
+  "weapon": "",
+  "rewards": [
+    "Ayanka Ring",
+    "Elder Scale Fragment",
+    "Locked Ayanka Weapon",
+    "Sealed Storm Speaker Bracelet Chest",
+    "Storm Speaker Bracelet Chest",
+    "Hidden Promise Treasure Chest",
+    "Artisan Material Chest",
+    "Storm Seeker",
+    "Storm Seeker Mask",
+    "Storm Seeker Adornment",
+    "Ayanka's Psyche",
+    "Rare Hidden Promise Treasure Chest",
+    "Master Material Chest",
+    "Sealed Elder Scale",
+    "Elder Scale",
+    "Pet Pack",
+    "Sacred Vial"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7ee211cdff4f13b4efb7cd"
+  },
+  "id": 40,
+  "name": "Mushin's Tower - 20th Floor",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 13)",
+    "Mushin's Tower - The Climb Continues"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d81ae0e1c9d440000907c04"
+  },
+  "id": 56,
+  "name": "Throne of Oblivion",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 17)",
+    "The Tomb of Oblivion"
+  ],
+  "guides": [],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": [
+    "Unrefined Celestial Emperor Ring Chest",
+    "Unrefined Celestial Emperor Earring Chest",
+    "Unrefined Stormsiege Bracelet",
+    "Unrefined Windsong Bracelet",
+    "Unrefined Thundercall Bracelet",
+    "Oblivion Fragment",
+    "Grand Celestial Wing",
+    "Onyx Scale Fragment",
+    "Grand Celestial Steel",
+    "Orb of Ascension Shard",
+    "Prime Reputation Charm",
+    "Superior Reputation Charm",
+    "Sterling Reputation Charm",
+    "Hongmoon Gem Powder",
+    "Heptagonal Diamond Pet Gem",
+    "Heptagonal Obsidian Pet Gem",
+    "Heptagonal Garnet Pet Gem"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b714c3d11a705d037f2e4"
+  },
+  "id": 11,
+  "name": "Irontech Forge",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 55 HM 14)",
+    "Chapter 11: The Grand Enchantress"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1qAMUCVzdMnWOz6aJVIJWRkSupm8zYMYR6CWWOqQPZjo"
+    }
+  ],
+  "attack_power": {
+    "easy": 890,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 9",
+  "rewards": [
+    "Mechanizer Weapon Chest",
+    "Mechanizer Soul Shield",
+    "Forgotten Raven King Soul Shield Chest",
+    "Mechanizer Ring",
+    "Mechanizer Bracelet",
+    "Blackstone",
+    "Mechanizer's Psyche",
+    "Awakened Transcendence Engine",
+    "Hellion Core"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b6fa23d11a705d037f2de"
+  },
+  "id": 5,
+  "name": "Sandstorm Temple",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 16)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "OhMyTofu",
+      "url": "https://docs.google.com/document/d/1JHr4QVX7T1lEc4Wluj1cvGJJPqiQmjM7KaBINdqx2r4/"
+    },
+    {
+      "author": "BnS Academy",
+      "url": "https://docs.google.com/document/d/1amXQqV9Pv-ruFXI79Vi9y-GeHcg0ugABOvZrg1Tkn2Q/"
+    }
+  ],
+  "attack_power": {
+    "easy": 1140,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": [
+    "Aurora Outfit",
+    "Rukesh Weapon Chest",
+    "Rukesh Soul Shield",
+    "Forgotten Hive Queen Soul Shield Chest",
+    "Rukesh Earring",
+    "Sandstorm Temple Bracelet Chest",
+    "Silver Scale",
+    "Hellion Core",
+    "Rare Element",
+    "Rukesh's Psyche",
+    "Lucent Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b71bf3d11a705d037f2e6"
+  },
+  "id": 13,
+  "name": "Naryu Foundry",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 55 HM 12)",
+    "Khadar Vihar - Chapter 5: Mournful Tidings"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 770,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 5",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee5afcdff4f13b4efb7d7"
+  },
+  "id": 50,
+  "name": "Beluga Lagoon",
+  "type": 6,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee4fecdff4f13b4efb7d4"
+  },
+  "id": 47,
+  "name": "Whirlwind Valley",
+  "type": 6,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b76573d11a705d037f2f0"
+  },
+  "id": 23,
+  "name": "Heaven's Mandate",
+  "type": 6,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 12)",
+    "Chapter 36: The Emperor Strikes Back"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 960,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee517cdff4f13b4efb7d5"
+  },
+  "id": 48,
+  "name": "Beluga Lagoon",
+  "type": 6,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b6e833d11a705d037f2db"
+  },
+  "id": 2,
+  "name": "Brood Chamber",
+  "type": 6,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 17)",
+    "Chapter 18: What Remains"
+  ],
+  "guides": [
+    {
+      "author": "Eckogen",
+      "url": "https://www.youtube.com/playlist?list=PLAdXxT-oH9ypsGuLbV3vWV8R4TyJyYutr"
+    }
+  ],
+  "attack_power": {
+    "easy": 1340,
+    "normal": 0,
+    "hard": 1640
+  },
+  "weapon": "Raven Weapon - Stage 6",
+  "rewards": [
+    "Skyreach Gloves",
+    "Discordia Necklace",
+    "Onyx Scale",
+    "Onyx Scale Fragment",
+    "Locked Brood Weapon ",
+    "Imperial Core",
+    "Hidden Promises Treasure Chest",
+    "Rare Element",
+    "Bloodlust Outfit",
+    "Bloodlust Headpiece",
+    "Bloodlust Mantle",
+    "Veratex's Psyche",
+    "Rare Hidden Promises Treasure Chest",
+    "Sealed Onyx Scale"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b74fc3d11a705d037f2ed"
+  },
+  "id": 20,
+  "name": "Cold Storage",
+  "type": 6,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 12)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 960,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b6d993d11a705d037f2da"
+  },
+  "id": 1,
+  "name": "Realmrift Supply Chain",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50)"
+  ],
+  "guides": [
+    {
+      "author": "Eckogen",
+      "url": "https://www.youtube.com/watch?v=ooe07nInHYw"
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ef58d1c9d4400006e45bf"
+  },
+  "id": 53,
+  "name": "Snowjade Fortress",
+  "type": 12,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b6edc3d11a705d037f2dc"
+  },
+  "id": 3,
+  "name": "Dreamsong Theater",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 17)",
+    "Chapter 18: What Remains"
+  ],
+  "guides": [
+    {
+      "author": "Eckogen",
+      "url": "https://www.youtube.com/playlist?list=PLAdXxT-oH9yq6iTcZnjDrtjWYuRtlQkRt"
+    }
+  ],
+  "attack_power": {
+    "easy": 1320,
+    "normal": 0,
+    "hard": 1620
+  },
+  "weapon": "Raven Weapon - Stage 6",
+  "rewards": [
+    "Locked Dreamsong Weapon",
+    "Imperial Earring",
+    "Dreamsong Necklace - Stage 1",
+    "Sealed Dreamsong Treasure Chest",
+    "Demon Fang",
+    "Onyx Scale",
+    "Imperial Core",
+    "Onyx Scale Fragment",
+    "Hidden Promises Treasure Chest",
+    "Rare Element",
+    "Dreamcatcher Outfit",
+    "Dreamcatcher Head Adornment",
+    "Dreamcatcher Mask",
+    "Mazuko's Psyche",
+    "Rare Hidden Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7ef5aa1c9d4400006e45c0"
+  },
+  "id": 54,
+  "name": "Fallen Aransu School",
+  "type": 12,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b76883d11a705d037f2f1"
+  },
+  "id": 24,
+  "name": "Lair of the Frozen Fang",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 3)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 520,
+    "hard": 0
+  },
+  "weapon": "Sterling Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b6f133d11a705d037f2dd"
+  },
+  "id": 4,
+  "name": "The Shadowmoor",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 16)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1O_W8P1I7rN8p1C5IcsIgsTwMnaXqN5PZ9ycq_JCgowE"
+    },
+    {
+      "author": "Eckogen",
+      "url": "https://www.youtube.com/playlist?list=PLAdXxT-oH9yp7yyyRydCvmyl9Kd3hNSuM"
+    }
+  ],
+  "attack_power": {
+    "easy": 1160,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 4",
+  "rewards": [
+    "Shadowmoor Captain Outfit",
+    "Shadow Captain Hat",
+    "Locked Shadowmoor Weapon",
+    "Heavenly Wrath Myth Ring - Stage 1 Chest",
+    "Shadowmoor Ring",
+    "Shadowmoor Belt",
+    "Silver Scale",
+    "Imperial Core",
+    "Rare Element",
+    "Captain Mookwan's Psyche",
+    "Heptagonal Garnet",
+    "Lucent Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b753d3d11a705d037f2ee"
+  },
+  "id": 21,
+  "name": "Avalanche Den",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 3)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 530,
+    "hard": 0
+  },
+  "weapon": "Sterling Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee0b2cdff4f13b4efb7c5"
+  },
+  "id": 32,
+  "name": "Skybreak Spire",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 13)",
+    "Khadar Vihar - Chapter 5: Mournful Tidings",
+    "To Khadar Vihar"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b72953d11a705d037f2e9"
+  },
+  "id": 16,
+  "name": "Sogun's Lament",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 7)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 680,
+    "hard": 0
+  },
+  "weapon": "Unrefined Scaleburn Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7edfb6cdff4f13b4efb7c2"
+  },
+  "id": 29,
+  "name": "Warped Citadel",
+  "type": 6,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 18)"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 1430,
+    "normal": 0,
+    "hard": 1670
+  },
+  "weapon": "Aransu Weapon - Stage 9",
+  "rewards": [
+    "Imperial Belt",
+    "Dreadnought Bracelet",
+    "Dreadnought Belt",
+    "Sealed Imperial Belt Chest",
+    "Locked Dreadnought Weapon",
+    "Onyx Scale",
+    "Hidden Promises Treasure Chest ",
+    "Rare Element",
+    "Dreadnought Outfit",
+    "Dreadnought Headpiece",
+    "Dreadnought Cape",
+    "Sobu's Psyche",
+    "Rare Hidden Promises Treasure Chest",
+    "Sealed Onyx Scale"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b72213d11a705d037f2e7"
+  },
+  "id": 14,
+  "name": "Desolate Tomb",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 55 HM 10)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 730,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 4",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7edebbcdff4f13b4efb7be"
+  },
+  "id": 25,
+  "name": "Scarlet Conservatory",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 21)",
+    "Temple of Succession - Chapter 8: Breaching"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Grand Celestial Weapon - Stage 6",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee001cdff4f13b4efb7c3"
+  },
+  "id": 30,
+  "name": "Botany Center",
+  "type": 12,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 14)",
+    "Temple of Succession - Chapter 8: Breaching the Gate"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b744f3d11a705d037f2ec"
+  },
+  "id": 19,
+  "name": "Gloomdross Incursion",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 6)",
+    "Chapter 31: Relics of The Past"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 630,
+    "hard": 0
+  },
+  "weapon": "Eidolon Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b737b3d11a705d037f2eb"
+  },
+  "id": 18,
+  "name": "Sundered Nexus",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 50 HM 6)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 640,
+    "hard": 0
+  },
+  "weapon": "Eidolon Weapon",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee4e5cdff4f13b4efb7d3"
+  },
+  "id": 46,
+  "name": "Arena Match",
+  "type": 1,
+  "requirements": [
+    ""
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b70ad3d11a705d037f2e1"
+  },
+  "id": 8,
+  "name": "Hollow's Heart",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 15)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1fSUcmPPCHXHO2hr8PYV_vdDcrR1LZcGOSAb3g-SFPAU"
+    }
+  ],
+  "attack_power": {
+    "easy": 1045,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 12",
+  "rewards": [
+    "Wildwood Outfit",
+    "Wildwood Crown",
+    "Rootwell Weapon Chest",
+    "Khasabi Soul Shield",
+    "Forgotten Raven King Soul Shield Chest",
+    "Rootwell Bracelet",
+    "King Gloves",
+    "Blackstone",
+    "Hellion Core",
+    "Rare Element",
+    "Jurupos's Psyche",
+    "Peculiar Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b711a3d11a705d037f2e3"
+  },
+  "id": 10,
+  "name": "Ebondrake Lair",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 55 HM 14)",
+    "Fate of Aransu - Chapter 4: Vale of Tears"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1iiEd7Vm19vjNj761s_bPoePUGGMQ3dZgwZ2bPBMNokY"
+    }
+  ],
+  "attack_power": {
+    "easy": 904,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 10",
+  "rewards": [
+    "Rising Flame Outfit",
+    "Rising Flame Ornament",
+    "Dark Vicar Weapon Chest",
+    "Dark Vicar Soul Shield",
+    "Forgotten Raven King Soul Shield Chest",
+    "Dark Vicar Necklace",
+    "Sky's Inheritance Ring Chest",
+    "Blackstone",
+    "Dark Vicar's Psyche",
+    "Awakened Transcendence Engine",
+    "Charm Pellet",
+    "Hellion Core"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7b72493d11a705d037f2e8"
+  },
+  "id": 15,
+  "name": "Ebondrake Citadel",
+  "type": 6,
+  "requirements": [
+    "Level 50 or Higher (Recommended Level 55 HM 9)",
+    "Chapter 10: The Gates Open"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 720,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 4",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7b70dc3d11a705d037f2e2"
+  },
+  "id": 9,
+  "name": "Starstone Mines",
+  "type": 6,
+  "requirements": [
+    "Level 55 or Higher (Recommended Level 55 HM 15)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "BnS Academy",
+      "url": "https://drive.google.com/open?id=1yFQ-nIlCI8pbxRVBTaHtqlWqkqVpJZhCslB6hNnBRe8"
+    }
+  ],
+  "attack_power": {
+    "easy": 1040,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Seraph Weapon - Stage 11",
+  "rewards": [
+    "White Wolf Hat",
+    "Starstone Weapon Chest",
+    "Starstone Soul Shield",
+    "Forgotten Raven King Soul Shield Chest",
+    "Starstone Gloves",
+    "Starstone Belt",
+    "Skypearl Apex Chest - Stage 1",
+    "Blackstone",
+    "Hellion Core",
+    "Rare Element",
+    "Volberus's Psyche",
+    "Peculiar Promises Treasure Chest"
+  ]
+},{
+  "_id": {
+    "$oid": "5d7ee329cdff4f13b4efb7d2"
+  },
+  "id": 45,
+  "name": "Hongsil's Secret Storehouse",
+  "type": 1,
+  "requirements": [
+    "Level 55"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee1d0cdff4f13b4efb7cc"
+  },
+  "id": 39,
+  "name": "Outlaw Island",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 15)",
+    "Blackram Battle Royale"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee105cdff4f13b4efb7c7"
+  },
+  "id": 34,
+  "name": "Tower of Infinity",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 13)"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 3",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5d7ee155cdff4f13b4efb7c9"
+  },
+  "id": 36,
+  "name": "Circle of Sundering",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 16)",
+    "Chapter 20: Restorations"
+  ],
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "Raven Weapon - Stage 9",
+  "rewards": []
+},{
+  "_id": {
+    "$oid": "5df197250231da2864b9e28d"
+  },
+  "id": 58,
+  "name": "Hangar 0",
+  "type": 6,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 22)"
+  ],
+  "guides": [],
+  "attack_power": {
+    "easy": 1610,
+    "normal": 0,
+    "hard": 1940
+  },
+  "weapon": "Raven Weapon - Stage 6",
+  "rewards": [
+    "Silversteel Gloves",
+    "Silversteel Ring",
+    "Elder Scale Fragement",
+    "Locked Prime Directive Weapon",
+    "Storm Speaker Selection Chest",
+    "Sealed Storm Speaker Selection Chest",
+    "Hidden Promise Treasure Chest",
+    "Rare Element",
+    "Prime Directive Outfit",
+    "Prime Directive Face Adornment",
+    "Prime Directive Adornment",
+    "Prime Directive Hair",
+    "Silversteel Psyche",
+    "Rare Hidden Promises Treasure Chest",
+    "Sealed Elder Scale",
+    "Elder Scale",
+    "Pet Pack",
+    "Sacred Vial"
+  ]
+},{
+  "_id": {
+    "$oid": "5e280e4e0f2c53038c057c6b"
+  },
+  "id": 59,
+  "name": "Mushin's Tower - 8th Floor",
+  "type": 1,
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 10)",
+    "The Calling of Naryu Sage"
+  ],
+  "guides": [],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": "",
+  "rewards": [
+    "Traitor Outfit",
+    "Fury Weapon Chest",
+    "Mushin Soul Shield",
+    "Elysian Orb"
+  ]
+},{
+  "_id": {
+    "$oid": "5e8be97af0e15b1c34b52fc3"
+  },
+  "requirements": [
+    "Level 60 or Higher (Recommended Level 60 HM 22)"
+  ],
+  "rewards": [
+    "Stonescale Belt",
+    "Stonescale Necklace",
+    "Elder Scale Fragment",
+    "Locked Stonescale Weapon",
+    "Stonescale Treasure Chest",
+    "Sealed Stonescale Treasure Chest",
+    "Hidden Promise Treasure Chest",
+    "Rare Element",
+    "Styx and Stones Outfit",
+    "Styx and Stones Headpiece",
+    "Stonescale Psyche",
+    "Rare Hidden Promise Treasure Chest",
+    "Sealed Elder Scale",
+    "Elder Scale",
+    "Pet Pack",
+    "Sacred Vial",
+    "Sealed Hongmoon Master Scroll",
+    "Triple Threat Pet Gem Chest"
+  ],
+  "id": 59,
+  "name": "Stonescale Passage",
+  "type": 6,
+  "guides": [
+    {
+      "author": "kerropi",
+      "url": "https://www.youtube.com/watch?v=SBxCLRXkd4A"
+    }
+  ],
+  "attack_power": {
+    "easy": 1665,
+    "normal": 0,
+    "hard": 2030
+  },
+  "weapon": "Raven Weapon - Stage 6"
+},{
+  "_id": {
+    "$oid": "5e90676bf92a5f24d88d5a47"
+  },
+  "requirements": [
+    ""
+  ],
+  "rewards": [
+    ""
+  ],
+  "id": 60,
+  "name": "Koldrak's Lair",
+  "type": 12,
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": ""
+},{
+  "_id": {
+    "$oid": "5f2a8d231d647f0df4ad2c8b"
+  },
+  "requirements": [
+    "Level 60 (Recommended Level 60 HM 24)",
+    "Silversteel - Chapter 5: Steel Trap"
+  ],
+  "rewards": [
+    "Gear Shift Outfit",
+    "Gear Shift Headpiece",
+    "Kingslayer Outfit",
+    "Kingslayer Headpiece",
+    "Kingslayer Adornment",
+    "Steel Blade Soulshields",
+    "Unrefined Silversteel Ring",
+    "Unrefined Silversteel Earring",
+    "Mech Heart",
+    "Transmitter",
+    "Silver Sheath",
+    "Steel Array",
+    "Silversteel Ore",
+    "Wonder Ascension Stone Chest",
+    "Silversteel Amulet Chest",
+    "Elder Scale"
+  ],
+  "id": 62,
+  "name": "The Steelbreaker",
+  "type": 12,
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": ""
+},{
+  "_id": {
+    "$oid": "5f2a8feb1d647f0df4ad2c8c"
+  },
+  "requirements": [
+    "Level 60 (Recommended Level 60 HM 23)"
+  ],
+  "rewards": [
+    "Halcyon Earring",
+    "Elder Scale Fragment",
+    "Sealed Halcyon Weapon Chest",
+    "Jaechun's Energy",
+    "Halcyon Hills Treasure Chest",
+    "Sealed Halcyon Hills Treasure Chest",
+    "Rare Element",
+    "Hidden Promise Treasure Chest",
+    "Wukong Outfit",
+    "Wukong Outfit Headpiece",
+    "Legendary Champion's Psyche",
+    "Triple Threat Pet Gem Chest",
+    "Sealed Hongmoon Master Scroll",
+    "Sacred Vial",
+    "Pet Pack",
+    "Elder Scale",
+    "Sealed Elder Scale",
+    "Jaechun's Psyche",
+    "Rare Hidden Promises Treasure Chest",
+    "Divine Splendor Psyche Chest"
+  ],
+  "id": 63,
+  "name": "Halcyon Hills",
+  "type": 6,
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 1755,
+    "normal": 0,
+    "hard": 2140
+  },
+  "weapon": ""
+},{
+  "_id": {
+    "$oid": "5f2a90441d647f0df4ad2c8d"
+  },
+  "requirements": [
+    "Level 60 (Recommended Level 60 HM 16)",
+    "Silversteel - Chapter 5: Steel Trap"
+  ],
+  "rewards": [
+    "Scarlet Bloom",
+    "Mech Heart",
+    "Elder Scale Fragment"
+  ],
+  "id": 64,
+  "name": "Silversteel Laboratory",
+  "type": 12,
+  "guides": [
+    {
+      "author": "",
+      "url": ""
+    }
+  ],
+  "attack_power": {
+    "easy": 0,
+    "normal": 0,
+    "hard": 0
+  },
+  "weapon": ""
+}]

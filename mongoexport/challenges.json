@@ -1,8 +1,1135 @@
-{"_id":{"$oid":"5e05da0f68670c1964f5055c"},"id":{"$numberInt":"3"},"name":"Thursday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Heaven's Mandate"],"name":"Rose from the Past"},{"location":["Drowning Deeps"],"name":"Rolling in the Deeps"},{"location":["Ransacked Treasury"],"name":"Live by the Sword"},{"location":["Sandstorm Temple"],"name":"Bad Karma"},{"location":["Dreamsong Theater"],"name":"Setting the Stage for Revenge"},{"location":["Warped Citadel"],"name":"Warped Beyond Reason"},{"location":["Cathedra Cliffs"],"name":"Waiting in the Wings"},{"location":["Arena Match"],"name":"Tag Match Win"},{"location":["Whirlwind Valley"],"name":"One Whirlwind Valley"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
-{"_id":{"$oid":"5e05d5edd8df641964f08aa0"},"id":{"$numberInt":"0"},"name":"Monday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Cold Storage"],"name":"In the Dead of the Winter"},{"location":["Starstone Mines"],"name":"The Leader of the Pack"},{"location":["Drowning Deeps"],"name":"Rolling in the Deeps"},{"location":["Sandstorm Temple"],"name":"Bad Karma"},{"location":["The Shadowmoor"],"name":"Shadowmoor Rising"},{"location":["Dreamsong Theater"],"name":"Setting the Stage for Revenge"},{"location":["Brood Chamber"],"name":"Brood Awakening"},{"location":["Hangar 0"],"name":"Ground Zero"},{"location":["Stonescale Passage"],"name":"Sword and Scale"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
-{"_id":{"$oid":"5e05d86c68670c1964f5055a"},"id":{"$numberInt":"1"},"name":"Tuesday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Heaven's Mandate"],"name":"Rose from the Past"},{"location":["Drowning Deeps"],"name":"Rolling in the Deeps"},{"location":["Ransacked Treasury"],"name":"Live by the Sword"},{"location":["The Shadowmoor"],"name":"Shadowmoor Rising"},{"location":["Dreamsong Theater"],"name":"Setting the Stage for Revenge"},{"location":["Warped Citadel"],"name":"Warped Beyond Reason"},{"location":["Cathedra Cliffs"],"name":"Waiting in the Wings"},{"location":["Arena Match"],"name":"Tag Match Win"},{"location":["Whirlwind Valley"],"name":"One Whirlwind Valley"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
-{"_id":{"$oid":"5e05da8968670c1964f5055e"},"id":{"$numberInt":"5"},"name":"Saturday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Heaven's Mandate"],"name":"Rose from the Past"},{"location":["Starstone Mines"],"name":"The Leader of the Pack"},{"location":["Hollow's Heart"],"name":"Horrors of the Hollow"},{"location":["Sandstorm Temple"],"name":"Bad Karma"},{"location":["Dreamsong Theater"],"name":"Setting the Stage for Revenge"},{"location":["Warped Citadel"],"name":"Warped Beyond Reason"},{"location":["Cathedra Cliffs"],"name":"Waiting in the Wings"},{"location":["Hangar 0"],"name":"Ground Zero"},{"location":["Stonescale Passage"],"name":"Sword and Scale"},{"location":["Arena Match"],"name":"Tag Match Win"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
-{"_id":{"$oid":"5e05da3468670c1964f5055d"},"id":{"$numberInt":"4"},"name":"Friday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Cold Storage"],"name":"In the Dead of the Winter"},{"location":["Starstone Mines"],"name":"The Leader of the Pack"},{"location":["Drowning Deeps"],"name":"Rolling in the Deeps"},{"location":["Ransacked Treasury"],"name":"Live by the Sword"},{"location":["The Shadowmoor"],"name":"Shadowmoor Rising"},{"location":["Dreamsong Theater"],"name":"Setting the Stage for Revenge"},{"location":["Brood Chamber"],"name":"Brood Awakening"},{"location":["Hangar 0"],"name":"Ground Zero"},{"location":["Stonescale Passage"],"name":"Sword and Scale"},{"location":["Arena Match"],"name":"One on One"},{"location":["Whirlwind Valley"],"name":"One Whirlwind Valley"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
-{"_id":{"$oid":"5e05db5a68670c1964f50560"},"id":{"$numberInt":"7"},"name":"Weekly","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Armory Selection Box","tier":{"$numberInt":"2"}},{"name":"Weekly Challenges Treasure Chest","tier":{"$numberInt":"2"}},{"name":"Weekly Challenges Reward Chest","tier":{"$numberInt":"4"}},{"name":"Weekly Challenges Treasure Chest","tier":{"$numberInt":"4"}},{"name":"Small Honing Oil Chest","tier":{"$numberInt":"4"}},{"name":"Ord Shard x3","tier":{"$numberInt":"4"}},{"name":"Weekly Challenges Upgrade Selection Chest","tier":{"$numberInt":"5"}},{"name":"Challenger's Splendor Stone Chest","tier":{"$numberInt":"5"}}],"quests":[{"location":["Whirlwind Valley"],"name":"Whirlwind Valley Triple Crown"},{"location":["Beluga Lagoon"],"name":"Beluga Lagoon Triple Crown"},{"location":["Nova Core"],"name":"Go Supernova"},{"location":["Snowjade Fortress"],"name":"Undying Fire"},{"location":["Hall of Keeper"],"name":"Breaking the Barrier"},{"location":["Hall of Templar"],"name":"Templar of Doom"},{"location":["Titan Chamber"],"name":"Double Dose"},{"location":["Botany Center"],"name":"Which Doctor"},{"location":["Sandstorm Temple","Cathedra Cliffs","The Shadowmoor","Hangar 0","Brood Chamber","Stonescale Passage"],"name":"Favor and Fortune"},{"location":["Brood Chamber","Stonescale Passage"],"name":"A Masterful Task"}]}
-{"_id":{"$oid":"5e05d9e668670c1964f5055b"},"id":{"$numberInt":"2"},"name":"Wednesday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Cold Storage"],"name":"In the Dead of the Winter"},{"location":["Hollow's Heart"],"name":"Horrors of the Hollow"},{"location":["Sandstorm Temple"],"name":"Bad Karma"},{"location":["The Shadowmoor"],"name":"Shadowmoor Rising"},{"location":["Brood Chamber"],"name":"Brood Awakening"},{"location":["Warped Citadel"],"name":"Warped Beyond Reason"},{"location":["Hangar 0"],"name":"Ground Zero"},{"location":["Stonescale Passage"],"name":"Sword and Scale"},{"location":["Arena Match"],"name":"One on One"},{"location":["Nova Core"],"name":"Shot at Stardom"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
-{"_id":{"$oid":"5e05daab68670c1964f5055f"},"id":{"$numberInt":"6"},"name":"Sunday","updated":{"$date":{"$numberLong":"1577432952000"}},"rewards":[{"name":"Daily Challenges Reward Chest","tier":{"$numberInt":"3"}},{"name":"Superior Daily Challenges Treasure Chest","tier":{"$numberInt":"3"}},{"name":"Orb Shard","tier":{"$numberInt":"3"}},{"name":"Reputation x10000","tier":{"$numberInt":"3"}},{"name":"Gold x10","tier":{"$numberInt":"3"}},{"name":"Arena Key","tier":{"$numberInt":"5"}},{"name":"Armory Selection Chest","tier":{"$numberInt":"5"}},{"name":"Daily Challenges Treasure Chest","tier":{"$numberInt":"5"}},{"name":"Reputation x15000","tier":{"$numberInt":"5"}},{"name":"Superior Reputation Charm","tier":{"$numberInt":"7"}},{"name":"Challangers Splendor Stone Chest","tier":{"$numberInt":"7"}},{"name":"Elder Fragment x3","tier":{"$numberInt":"7"}},{"name":"Honing Oil x5","tier":{"$numberInt":"7"}},{"name":"Reputation x20000","tier":{"$numberInt":"7"}}],"quests":[{"location":["Mushin's Tower - 8th Floor"],"name":"The Final Training"},{"location":["Moon Refuge"],"name":"A Mid-Bummer Night's Dream"},{"location":["Cold Storage"],"name":"In the Dead of the Winter"},{"location":["Starstone Mines"],"name":"The Leader of the Pack"},{"location":["Drowning Deeps"],"name":"Rolling in the Deeps"},{"location":["Ransacked Treasury"],"name":"Live by the Sword"},{"location":["Sandstorm Temple"],"name":"Bad Karma"},{"location":["Brood Chamber"],"name":"Brood Awakening"},{"location":["Warped Citadel"],"name":"Warped Beyond Reason"},{"location":["Cathedra Cliffs"],"name":"Waiting in the Wings"},{"location":["Hangar 0"],"name":"Ground Zero"},{"location":["Stonescale Passage"],"name":"Sword and Scale"},{"location":["Arena Match"],"name":"One on One"},{"location":["Koldrak's Lair"],"name":"The Dragon's Lair"}]}
+[{
+  "_id": {
+    "$oid": "5e05da0f68670c1964f5055c"
+  },
+  "id": 3,
+  "name": "Thursday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Heaven's Mandate"
+      ],
+      "name": "Rose from the Past"
+    },
+    {
+      "location": [
+        "Drowning Deeps"
+      ],
+      "name": "Rolling in the Deeps"
+    },
+    {
+      "location": [
+        "Ransacked Treasury"
+      ],
+      "name": "Live by the Sword"
+    },
+    {
+      "location": [
+        "Sandstorm Temple"
+      ],
+      "name": "Bad Karma"
+    },
+    {
+      "location": [
+        "Dreamsong Theater"
+      ],
+      "name": "Setting the Stage for Revenge"
+    },
+    {
+      "location": [
+        "Warped Citadel"
+      ],
+      "name": "Warped Beyond Reason"
+    },
+    {
+      "location": [
+        "Cathedra Cliffs"
+      ],
+      "name": "Waiting in the Wings"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "Tag Match Win"
+    },
+    {
+      "location": [
+        "Whirlwind Valley"
+      ],
+      "name": "One Whirlwind Valley"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05d5edd8df641964f08aa0"
+  },
+  "id": 0,
+  "name": "Monday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Cold Storage"
+      ],
+      "name": "In the Dead of the Winter"
+    },
+    {
+      "location": [
+        "Starstone Mines"
+      ],
+      "name": "The Leader of the Pack"
+    },
+    {
+      "location": [
+        "Drowning Deeps"
+      ],
+      "name": "Rolling in the Deeps"
+    },
+    {
+      "location": [
+        "Sandstorm Temple"
+      ],
+      "name": "Bad Karma"
+    },
+    {
+      "location": [
+        "The Shadowmoor"
+      ],
+      "name": "Shadowmoor Rising"
+    },
+    {
+      "location": [
+        "Dreamsong Theater"
+      ],
+      "name": "Setting the Stage for Revenge"
+    },
+    {
+      "location": [
+        "Brood Chamber"
+      ],
+      "name": "Brood Awakening"
+    },
+    {
+      "location": [
+        "Hangar 0"
+      ],
+      "name": "Ground Zero"
+    },
+    {
+      "location": [
+        "Stonescale Passage"
+      ],
+      "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05d86c68670c1964f5055a"
+  },
+  "id": 1,
+  "name": "Tuesday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Heaven's Mandate"
+      ],
+      "name": "Rose from the Past"
+    },
+    {
+      "location": [
+        "Drowning Deeps"
+      ],
+      "name": "Rolling in the Deeps"
+    },
+    {
+      "location": [
+        "Ransacked Treasury"
+      ],
+      "name": "Live by the Sword"
+    },
+    {
+      "location": [
+        "The Shadowmoor"
+      ],
+      "name": "Shadowmoor Rising"
+    },
+    {
+      "location": [
+        "Dreamsong Theater"
+      ],
+      "name": "Setting the Stage for Revenge"
+    },
+    {
+      "location": [
+        "Warped Citadel"
+      ],
+      "name": "Warped Beyond Reason"
+    },
+    {
+      "location": [
+        "Cathedra Cliffs"
+      ],
+      "name": "Waiting in the Wings"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "Tag Match Win"
+    },
+    {
+      "location": [
+        "Whirlwind Valley"
+      ],
+      "name": "One Whirlwind Valley"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05da8968670c1964f5055e"
+  },
+  "id": 5,
+  "name": "Saturday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Heaven's Mandate"
+      ],
+      "name": "Rose from the Past"
+    },
+    {
+      "location": [
+        "Starstone Mines"
+      ],
+      "name": "The Leader of the Pack"
+    },
+    {
+      "location": [
+        "Hollow's Heart"
+      ],
+      "name": "Horrors of the Hollow"
+    },
+    {
+      "location": [
+        "Sandstorm Temple"
+      ],
+      "name": "Bad Karma"
+    },
+    {
+      "location": [
+        "Dreamsong Theater"
+      ],
+      "name": "Setting the Stage for Revenge"
+    },
+    {
+      "location": [
+        "Warped Citadel"
+      ],
+      "name": "Warped Beyond Reason"
+    },
+    {
+      "location": [
+        "Cathedra Cliffs"
+      ],
+      "name": "Waiting in the Wings"
+    },
+    {
+      "location": [
+        "Hangar 0"
+      ],
+      "name": "Ground Zero"
+    },
+    {
+      "location": [
+        "Stonescale Passage"
+      ],
+      "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "Tag Match Win"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05da3468670c1964f5055d"
+  },
+  "id": 4,
+  "name": "Friday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Cold Storage"
+      ],
+      "name": "In the Dead of the Winter"
+    },
+    {
+      "location": [
+        "Starstone Mines"
+      ],
+      "name": "The Leader of the Pack"
+    },
+    {
+      "location": [
+        "Drowning Deeps"
+      ],
+      "name": "Rolling in the Deeps"
+    },
+    {
+      "location": [
+        "Ransacked Treasury"
+      ],
+      "name": "Live by the Sword"
+    },
+    {
+      "location": [
+        "The Shadowmoor"
+      ],
+      "name": "Shadowmoor Rising"
+    },
+    {
+      "location": [
+        "Dreamsong Theater"
+      ],
+      "name": "Setting the Stage for Revenge"
+    },
+    {
+      "location": [
+        "Brood Chamber"
+      ],
+      "name": "Brood Awakening"
+    },
+    {
+      "location": [
+        "Hangar 0"
+      ],
+      "name": "Ground Zero"
+    },
+    {
+      "location": [
+        "Stonescale Passage"
+      ],
+      "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "One on One"
+    },
+    {
+      "location": [
+        "Whirlwind Valley"
+      ],
+      "name": "One Whirlwind Valley"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05db5a68670c1964f50560"
+  },
+  "id": 7,
+  "name": "Weekly",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Armory Selection Box",
+      "tier": 2
+    },
+    {
+      "name": "Weekly Challenges Treasure Chest",
+      "tier": 2
+    },
+    {
+      "name": "Weekly Challenges Reward Chest",
+      "tier": 4
+    },
+    {
+      "name": "Weekly Challenges Treasure Chest",
+      "tier": 4
+    },
+    {
+      "name": "Small Honing Oil Chest",
+      "tier": 4
+    },
+    {
+      "name": "Ord Shard x3",
+      "tier": 4
+    },
+    {
+      "name": "Weekly Challenges Upgrade Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Challenger's Splendor Stone Chest",
+      "tier": 5
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Whirlwind Valley"
+      ],
+      "name": "Whirlwind Valley Triple Crown"
+    },
+    {
+      "location": [
+        "Beluga Lagoon"
+      ],
+      "name": "Beluga Lagoon Triple Crown"
+    },
+    {
+      "location": [
+        "Nova Core"
+      ],
+      "name": "Go Supernova"
+    },
+    {
+      "location": [
+        "Hall of Keeper"
+      ],
+      "name": "Breaking the Barrier"
+    },
+    {
+      "location": [
+        "Hall of Templar"
+      ],
+      "name": "Templar of Doom"
+    },
+    {
+      "location": [
+        "Titan Chamber"
+      ],
+      "name": "Double Dose"
+    },
+    {
+      "location": [
+        "Botany Center"
+      ],
+      "name": "Which Doctor"
+    },
+    {
+      "location": [
+        "Sandstorm Temple",
+        "Cathedra Cliffs",
+        "The Shadowmoor",
+        "Hangar 0",
+        "Brood Chamber",
+        "Stonescale Passage"
+      ],
+      "name": "Favor and Fortune"
+    },
+    {
+      "location": [
+        "Brood Chamber",
+        "Stonescale Passage"
+      ],
+      "name": "A Masterful Task"
+    },
+    {
+      "location": [
+        "Silversteel Laboratory"
+      ],
+      "name": "Data Driven"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05d9e668670c1964f5055b"
+  },
+  "id": 2,
+  "name": "Wednesday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Cold Storage"
+      ],
+      "name": "In the Dead of the Winter"
+    },
+    {
+      "location": [
+        "Hollow's Heart"
+      ],
+      "name": "Horrors of the Hollow"
+    },
+    {
+      "location": [
+        "Sandstorm Temple"
+      ],
+      "name": "Bad Karma"
+    },
+    {
+      "location": [
+        "The Shadowmoor"
+      ],
+      "name": "Shadowmoor Rising"
+    },
+    {
+      "location": [
+        "Brood Chamber"
+      ],
+      "name": "Brood Awakening"
+    },
+    {
+      "location": [
+        "Warped Citadel"
+      ],
+      "name": "Warped Beyond Reason"
+    },
+    {
+      "location": [
+        "Hangar 0"
+      ],
+      "name": "Ground Zero"
+    },
+    {
+      "location": [
+        "Stonescale Passage"
+      ],
+      "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "One on One"
+    },
+    {
+      "location": [
+        "Nova Core"
+      ],
+      "name": "Shot at Stardom"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "5e05daab68670c1964f5055f"
+  },
+  "id": 6,
+  "name": "Sunday",
+  "updated": {
+    "$date": "2019-12-27T07:49:12Z"
+  },
+  "rewards": [
+    {
+      "name": "Daily Challenges Reward Chest",
+      "tier": 3
+    },
+    {
+      "name": "Superior Daily Challenges Treasure Chest",
+      "tier": 3
+    },
+    {
+      "name": "Orb Shard",
+      "tier": 3
+    },
+    {
+      "name": "Reputation x10000",
+      "tier": 3
+    },
+    {
+      "name": "Gold x10",
+      "tier": 3
+    },
+    {
+      "name": "Arena Key",
+      "tier": 5
+    },
+    {
+      "name": "Armory Selection Chest",
+      "tier": 5
+    },
+    {
+      "name": "Daily Challenges Treasure Chest",
+      "tier": 5
+    },
+    {
+      "name": "Reputation x15000",
+      "tier": 5
+    },
+    {
+      "name": "Superior Reputation Charm",
+      "tier": 7
+    },
+    {
+      "name": "Challangers Splendor Stone Chest",
+      "tier": 7
+    },
+    {
+      "name": "Elder Fragment x3",
+      "tier": 7
+    },
+    {
+      "name": "Honing Oil x5",
+      "tier": 7
+    },
+    {
+      "name": "Reputation x20000",
+      "tier": 7
+    }
+  ],
+  "quests": [
+    {
+      "location": [
+        "Mushin's Tower - 8th Floor"
+      ],
+      "name": "The Final Training"
+    },
+    {
+      "location": [
+        "Moon Refuge"
+      ],
+      "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Cold Storage"
+      ],
+      "name": "In the Dead of the Winter"
+    },
+    {
+      "location": [
+        "Starstone Mines"
+      ],
+      "name": "The Leader of the Pack"
+    },
+    {
+      "location": [
+        "Drowning Deeps"
+      ],
+      "name": "Rolling in the Deeps"
+    },
+    {
+      "location": [
+        "Ransacked Treasury"
+      ],
+      "name": "Live by the Sword"
+    },
+    {
+      "location": [
+        "Sandstorm Temple"
+      ],
+      "name": "Bad Karma"
+    },
+    {
+      "location": [
+        "Brood Chamber"
+      ],
+      "name": "Brood Awakening"
+    },
+    {
+      "location": [
+        "Warped Citadel"
+      ],
+      "name": "Warped Beyond Reason"
+    },
+    {
+      "location": [
+        "Cathedra Cliffs"
+      ],
+      "name": "Waiting in the Wings"
+    },
+    {
+      "location": [
+        "Hangar 0"
+      ],
+      "name": "Ground Zero"
+    },
+    {
+      "location": [
+        "Stonescale Passage"
+      ],
+      "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "One on One"
+    },
+    {
+      "location": [
+        "Koldrak's Lair"
+      ],
+      "name": "The Dragon's Lair"
+    }
+  ]
+}]

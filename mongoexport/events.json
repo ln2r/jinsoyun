@@ -1,1 +1,103 @@
-{"_id":{"$oid":"5e612ebc028fee246ceb3a13"},"id":{"$numberInt":"0"},"name":"Ebon Hunting Grounds, Call to Arms","duration":"March 25 – April 22","redeem":"March 25 – May 20","last_event":"Ebon Hunting Grounds, Call to Arms","last_event_redeem":"March 25 – May 20","event_page":"https://www.bladeandsoul.com/en/news/forgotten-souls-events-preview/","rewards":{"daily":[{"name":"Daily Challenge Remnant","tier":{"$numberInt":"5"}}],"weekly":[{"name":"Weekly Challenge Remnant","tier":{"$numberInt":"7"}}]},"todo":["Ebon Hunting Grounds","Daily Challenges","Weekly Challenges","Den of the Ancient","Specified Dungeon","Arena/Battleground"],"quests":[{"location":["Drowning Deeps"],"day":["Monday","Tuesday","Thursday","Friday"],"name":"Rolling in the Deeps"},{"location":["Sandstorm Temple"],"day":["Monday","Wednesday","Thursday","Friday","Sunday"],"name":"Bad Karma"},{"location":["The Shadowmoor"],"day":["Monday","Tuesday","Wednesday","Friday"],"name":"Shadowmoor Rising"},{"location":["Dreamsong Theater"],"day":["Monday","Tuesday","Wednesday","Friday","Saturday"],"name":"Setting the Stage for Revenge"},{"location":["Brood Chamber"],"day":["Monday","Wednesday","Friday","Sunday"],"name":"Brood Awakening"},{"location":["Hangar 0"],"day":["Monday","Wednesday","Friday","Saturday","Sunday"],"name":"Ground Zero"},{"location":["Stonescale Passage"],"day":["Monday","Wednesday","Friday","Saturday","Sunday"],"name":"Sword and Scale"},{"location":["Ransacked Treasury"],"day":["Tuesday","Thursday","Friday","Sunday"],"name":"Live by the Sword"},{"location":["Warped Citadel"],"day":["Tuesday","Wednesday","Thursday","Saturday","Sunday"],"name":"Warped Beyond Reason"},{"location":["Cathedra Cliffs"],"day":["Tuesday","Thursday","Saturday","Sunday"],"name":"Waiting in the Wings"},{"location":["Hollow's Heart"],"day":["Wednesday","Saturday"],"name":"Horrors of the Hollow"},{"location":["Beluga Lagoon"],"day":["Monday"],"name":"One Win on Beluga Lagoon"},{"location":["Whirlwind Valley"],"day":["Tuesday","Thursday"],"name":"One Whirlwind Valley"},{"location":["Nova Core"],"day":["Wednesday"],"name":"Shot at Stardom"}],"__v":{"$numberInt":"1"}}
+[{
+  "_id": {
+    "$oid": "5e612ebc028fee246ceb3a13"
+  },
+  "id": 0,
+  "name": "Dark Passage",
+  "duration": "July 22 – August 19",
+  "redeem": "July 22 – September 23",
+  "last_event": "Not Available",
+  "last_event_redeem": "NA",
+  "event_page": "https://www.bladeandsoul.com/en/news/dark-passage-events-preview/",
+  "rewards": {
+    "daily": [
+      {
+        "name": "Polishing Cloths",
+        "tier": 5
+      }
+    ],
+    "weekly": []
+  },
+  "todo": [
+    "Koldrak’s Lair",
+    "Daily Challenges"
+  ],
+  "quests": [
+    {
+      "location": [
+        "Skybreak Spire"
+      ],
+      "day": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "name": "The Raven King"
+    },
+    {
+      "location": [
+        "Temple of Eluvium"
+      ],
+      "day": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "name": "The Great Thrall Brawl"
+    },
+    {
+      "location": [
+        "Nightfall Sanctuary"
+      ],
+      "day": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "name": "Stealer of the Light"
+    },
+    {
+      "location": [
+        "Scarlet Conservatory"
+      ],
+      "day": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "name": "Dowager's Downfall"
+    },
+    {
+      "location": [
+        "The Steelbreaker"
+      ],
+      "day": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "name": "Cold as Steel"
+    }
+  ],
+  "__v": 1
+}]
