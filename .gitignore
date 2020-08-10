@@ -7,6 +7,7 @@ package-lock.json
 
 # Config Files
 .env
+config.json
 
 # test folder
 commands/dev/
