@@ -9,7 +9,6 @@ const ontime = require('ontime');
 const config = require('./config.json');
 const services = require('./services/index.js');
 const utils = require('./utils/index.js');
-const dateformat = require('dateformat');
 
 const cron = require('./cron/cron');
 
@@ -17,8 +16,8 @@ const cron = require('./cron/cron');
 services.checkConfig();
 
 // Error handler
-process.on('uncaughtException', async (err) => {
-  await services.sendLog('error', err.name, `${err.message}\n${err.stack}`);
+process.on('uncaughtException', (err) => {
+  services.sendLog('error', err.name, `${err.message}\n${err.stack}`);
 });
 
 // Discord.js Commando scripts start here
@@ -47,32 +46,32 @@ clientDiscord.registry
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 clientDiscord
-  .on('error', async (error) => {
-    await services.sendLog('error', 'Discord', error);
+  .on('error', (error) => {
+    services.sendLog('error', 'Discord', error);
   })
-  .on('warn', async (warn) => {
-    await services.sendLog('warn', 'Discord', warn);
+  .on('warn', (warn) => {
+    services.sendLog('warn', 'Discord', warn);
   })
 // remove "//" below to enable debug log
 // .on("debug", console.log)
-  .on('disconnect', async () => {
-    await services.sendLog('warn', 'Discord', 'Connection disconnected!');
+  .on('disconnect', () => {
+    services.sendLog('warn', 'Discord', 'Connection disconnected!');
   })
-  .on('reconnecting', async () => {
-    await services.sendLog('info', 'Discord', 'Trying to reconnect...');
+  .on('reconnecting', () => {
+    services.sendLog('info', 'Discord', 'Trying to reconnect...');
   })
   .on('ready', async () => {
     const globalSettings = await utils.getGuildSettings(0);
     let botStatus = globalSettings.status;
 
     if (config.bot.maintenance) {
-      await services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
+      services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
     }
 
     clientDiscord.user.setPresence(botStatus).catch(async (error) => {
-      await services.sendLog('error', 'Bot', error);
+      services.sendLog('error', 'Bot', error);
     });
-    await services.sendLog('info', 'Bot', 'Logged in and ready.');
+    services.sendLog('info', 'Bot', 'Logged in and ready.');
   })
   .on('guildCreate', async (guild) => {
     const guildSettingData = await utils.getGuildSettings(guild.id);
@@ -80,41 +79,20 @@ clientDiscord
     if (!guildSettingData) {
       clientDiscord.emit('commandPrefixChange', guild.id, process.env.bot_default_prefix);
     }
+
+    services.sendLog('info', 'Bot', `Joined new legendary guild called "${guild.name}"`);
   })
-  .on('commandRun', async (command) => {
+  .on('commandRun', (command) => {
     if (config.bot.maintenance) {
-      await services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
+      services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
     } else {
-      await services.sendLog('query', command.name, 'Request received.');
+      services.sendLog('query', command.name, 'Request received.');
     }
   })
   .on('guildMemberAdd', async (member) => {
-    // TODO: move to services
-    const guildSettings = await utils.getGuildSettings(member.guild.id);
-    const globalSettings = await utils.getGlobalSetting('welcome');
-
-    if (guildSettings) {
-      if(guildSettings.welcome){
-        // checking if the guild have the channel and the message set
-        if (guildSettings.welcome.status !== 'disable') {
-          const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:config.bot.default_prefix;
-
-          let guildWelcomeMessage = (guildSettings.welcome.message)? guildSettings.welcome.message: globalSettings;
-          guildWelcomeMessage = guildWelcomeMessage.replace(/SERVER_NAME/gm, member.guild.name);
-          guildWelcomeMessage = guildWelcomeMessage.replace(/MEMBER_NAME/gm, `<@${member.user.id}>`);
-          guildWelcomeMessage = guildWelcomeMessage.replace(/BOT_PREFIX/gm, guildCommandPrefix);
-
-          if (guildSettings.welcome.channel) {
-            member.guild.channels.cache.find((ch) => ch.id === guildSettings.welcome.channel).send(guildWelcomeMessage);
-          }
-
-          await services.sendLog('query', 'Welcome', 'Server welcome requested.');
-        }
-      }
-    }
+    services.newMember(member);
   })
   .on('commandError', (error, command, message) => {
-    // TODO: move to services
     let errorLocation;
     let guildOwnerId;
     let guildOwnerData;
@@ -142,24 +120,9 @@ clientDiscord
           }
         });
       });
-  
-      // sending dm
-      for (let i=0; i < clientDiscord.owners.length; i++) {
-        clientDiscord.owners[i].send(
-          'Error Occured on `'+error.name+'`'+
-            '\n__Details__:'+
-            '\n**Time**: '+dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')+
-            '\n**Location**: '+errorLocation+
-            '\n**Guild Owner**: '+guildOwnerData+
-            '\n**Content**: `'+message.content+'`'+
-            '\n**Message**:\n'+command.name+': '+command.message
-        ).catch((err) => {
-          services.sendLog('error', 'onCommandError', err);
-        });
-      }
 
-      // logging the error report
-      services.sendLog('error', errorLocation, command.message);
+      // sending report
+      services.sendLog('error', 'Commands', `\`${error.name}:${command.name}\` - "${message.content}\n${command.name}:${command.message}" @ ${errorLocation} (${guildOwnerData})`, clientDiscord);
     }  
   })
   .on('messageReactionAdd', async (reaction, user) => {
@@ -192,7 +155,6 @@ services.twitterStream(clientDiscord);
 if (config.bot.maintenance) {
   services.sendLog('warn', 'Automation', 'Maintenance mode is enabled, automation disabled.');
 } else {
-  //TODO: test and use
   ontime({
     cycle: ['50:00'],
     utc: true,
