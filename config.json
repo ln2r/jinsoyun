@@ -13,5 +13,9 @@
     "items": "items",
     "stats": "stats",
     "configs": "configs"
+  },
+  "logs":{
+    "time": true,
+    "save": true
   }
 }
