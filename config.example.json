@@ -1,0 +1,21 @@
+{
+  "bot":{
+    "default_prefix": "BOT_DEFAULT_PREFIX",
+    "author_id": ["YOUR_DISCORD_ID"],
+    "maintenance": false
+  },
+  "twitter":{
+    "id": "FOLLOWED_TWITTER_ID"
+  },
+  "collection":{
+    "logs": "LOGS_COLLECTION_NAME",
+    "market": "MARKET_COLLECTION_NAME",
+    "items": "ITEMS_COLLECTION_NAME",
+    "stats": "STATS_COLLECTION_NAME",
+    "configs": "CONFIGS_COLLECTION_NAME"
+  },
+  "logs":{
+    "time": true,
+    "save": true
+  }
+}

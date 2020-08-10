@@ -7,9 +7,10 @@
 A discord bot built for Blade &amp; Soul's NA Server
 
 ## Noteable Features
-* Daily, weekly and event information and announcement on reset
+* Daily, weekly, and event summary announcement on reset
 * Character searching
 * Marketplace data
+* Time based dungeon access announcement (Koldrak)
 
 ## Installation / Getting Started
 ### Invitation Url
@@ -23,10 +24,9 @@ If you want to host the bot yourself just follow the instruction below. The down
 * [Twitter API Token](https://developer.twitter.com/) - [Guide how to get Twitter API Token](https://developer.twitter.com/en/docs/basics/authentication/guides/access-tokens.html)
 * [node.js](https://nodejs.org/)
 * [MongoDB](https://www.mongodb.com/)
-* [Jinsoyun Bot Database](http://jinsoyun.ln2r.web.id/api/)
 
 **How-to**:
-* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](https://github.com/ln2r/jinsoyun/tree/stable/mongoexport) folder)
+* Make a MongoDB database with the name you specified and then make these collections (check [`mongoexport`](/mongoexport) folder)
   - `apis` api info 
   - `challenges` dailies and weeklies rewards and quests
   - `configs` bot configuration data
@@ -35,62 +35,40 @@ If you want to host the bot yourself just follow the instruction below. The down
   - `items` item data and it's market data
   - `quests` quests data
 * [Create `.env` file](#.env)
+* [Create `config.json` file](#.config.json)
 * Open Node.js command prompt and navigate to your bot directory.
 * Do `npm install` to get bot dependencies.
 * Do `node index.js` to run the bot.
 
 ## Bot Configurations
-Bot configuration data is located in 2 places, theres one in `config.json` and `.env` for sensitive variables.
+Local bot configuration data is located in 3 places, theres one in `config.json` for local configuration and `.env` for sensitive data, and in `configs` collection for global configuration data.
 
 ### config.json
+You can check the template [here](/config.example.json)
 * `bot.default_prefix` - `String`: bot command default prefix.
 * `bot.author_id` - `Array`: array of bot author id.
 * `bot.maintenance` - `Boolean`: bot maintenance mode, will disable some feature if enabled.
 * `twitter.id` - `String`: followed accounts id.
+* `collection.logs` - `String`: logs collection name.
+* `collection.market` - `String`: market collection name.
+* `collection.items` - `String`: items collection name.
+* `collection.stats` - `String`: stats collection name.
+* `collection.configs` - `String`: configs collection name.
+* `logs.time` - `Boolean`: show logs timestamp.
+* `logs.save` - `Boolean`: save logs to db.
 
 ### .env
+You can check the template [here](/example.env)
 * `SOYUN_BOT_DB_CONNECT_URL` = Your MongoDB database connection URL.
 * `SOYUN_BOT_DB_NAME` = Your MongoDB database name.
-
 * `SOYUN_BOT_DISCORD_SECRET` = Your Discord token.
 * `SOYUN_BOT_TWITTER_CONSUMER_KEY` = Your twitter consumer key. 
 * `SOYUN_BOT_TWITTER_CONSUMER_SECRET` = Your twitter consumer secret key. 
 * `SOYUN_BOT_TWITTER_ACCESS_KEY` = Your twitter access token key. 
 * `SOYUN_BOT_TWITTER_ACCESS_SECRET` = Your twitter access token secret key.
 
-Template:
-  ```JSON
-  {
-    "bot":{
-      "default_prefix": "BOT_DEFAULT_PREFIX",
-      "author_id": ["ARRAY_OF_DISCORD_ID"],
-      "maintenance": false,
-    },
-    "twitter":{
-      "id": "TWITTER_ACCOUNT_ID"
-    },
-    "collection":{
-      "logs": "BOT_LOGS_COLLECTION_NAME",
-      "market": "MARKET_DATA_COLLECTION_NAME",
-      "items": "ITEMS_DATA_COLLECTION_NAME",
-      "stats": "BOT_STATS_COLLECTION_NAME"
-    }
-  }
-  ```
-
-  ```.env
-  SOYUN_BOT_DB_CONNECT_URL =
-  SOYUN_BOT_DB_NAME = 
-
-  SOYUN_BOT_DISCORD_SECRET = 
-  SOYUN_BOT_TWITTER_CONSUMER_KEY =  
-  SOYUN_BOT_TWITTER_CONSUMER_SECRET =  
-  SOYUN_BOT_TWITTER_ACCESS_KEY =  
-  SOYUN_BOT_TWITTER_ACCESS_SECRET = 
-  ```
-
-### Bot Configuration Data
-Bot configuration is now saved in `configs` with `guild` id `0`, you can check the data in [mongoexport/config.json](https://github.com/ln2r/jinsoyun/blob/dev/mongoexport/configs.json)
+### Global Bot Configuration Data
+There's also another configuration file for global settings, this configuration contains if some commands or system enabled or not. You can check the template in [globalSettings.example.json](/globalSettings.example.json) file.
 Explanation:
 * `reset`: Reset notification containing daily, weekly challenges and event summary.
 * `twitter`: Blade & Soul and Blade & Soul ops twitter post.
