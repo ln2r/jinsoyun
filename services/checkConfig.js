@@ -17,13 +17,13 @@ module.exports = async () => {
   if(globalSettings.length == 0){
     sendLog('info', 'Configs', 'Global settings not found, creating one...');
 
-    const configsBase = require('../globalSettings.example.json');
+    const globalBase = require('../globalSettings.example.json');
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, async function(err, db) {
       if (err) sendLog('error', 'Configs', err);
       const dbo = db.db(dbName);
 
-      dbo.collection(config.collection.configs).insert(configsBase, async function(err) {
+      dbo.collection(config.collection.configs).insert(globalBase, async function(err) {
         if (err) sendLog('error', 'Configs', err);
         db.close();
 
