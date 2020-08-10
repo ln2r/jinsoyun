@@ -90,6 +90,7 @@ clientDiscord
     }
   })
   .on('guildMemberAdd', async (member) => {
+    
     services.newMember(member);
   })
   .on('commandError', (error, command, message) => {

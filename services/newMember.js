@@ -27,6 +27,7 @@ module.exports = async (member) =>{
         }
 
         sendLog('query', 'Welcome', 'Server welcome requested.');
+        
       }
     }
   }
