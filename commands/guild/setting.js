@@ -1,11 +1,6 @@
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
-/**
- * TODO:
- * - final check
- */
-
 module.exports = class GuildSettingsCommand extends Command {
   constructor(client) {
     super(client, {
