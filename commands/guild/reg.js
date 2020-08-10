@@ -1,5 +1,6 @@
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
+const services = require('../../services/index.js');
 
 module.exports = class RegCommand extends Command {
   constructor(client) {
@@ -11,7 +12,7 @@ module.exports = class RegCommand extends Command {
       description: 'Register yourself into the guild so you can access the rest of the guild',
       examples: ['reg <charcter name> <character class>', 'reg jinsoyun blade dancer'],
       guildOnly: true,
-      clientPermissions: ['CHANGE_NICKNAME', 'MANAGE_NICKNAMES', 'MANAGE_ROLES'],
+      clientPermissions: ['CHANGE_NICKNAME', 'MANAGE_NICKNAMES'],
     });
   }
 
@@ -34,7 +35,7 @@ module.exports = class RegCommand extends Command {
     if (guildSettingData) {
       if (guildSettingData.join && guildSettingData.join.status !== 'disable') {
         // changing the nickname
-        if (msg.channel.permissionFor(this.client.user).has('MANAGE_ROLES') || msg.author.id !== msg.guild.ownerID) {
+        if (msg.channel.permissionsFor(this.client.user).has('MANAGE_NICKNAMES') || msg.author.id !== msg.guild.ownerID) {
           msg.guild.members.cache.get(msg.author.id).setNickname(userCharaName);
         }else{
           message = 'I don\'t have the permission to modify your nickname.';
@@ -43,13 +44,15 @@ module.exports = class RegCommand extends Command {
         // checking and adding the role
         if (guildSettingData.join.role) {
           // checking if the guild have the role, add if yes add them
-          if(msg.channel.permissionFor(this.client.user).has('MANAGE_ROLES')){
+          if(msg.channel.permissionsFor(this.client.user).has('MANAGE_ROLES')){
             if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.join.role)) !== null) {
               msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.join.role);
             }
           }else{
             message = 'I don\'t have the permission to modify your role.';
           }            
+        }else{
+          services.sendLog('warn', 'Cmd-Join', `${msg.guild.name}: Join command requested, but no role has been set.`);
         }
 
         // checking guild setting and permission to send join message
