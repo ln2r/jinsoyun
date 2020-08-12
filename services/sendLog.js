@@ -15,6 +15,7 @@ const maintenance = configs.bot.maintenance;
  * @param {String} level log level
  * @param {String} location current log location
  * @param {String} message log message 
+ * @param {Object} clientData discord cliemt data
  */
 module.exports = async (level, location, message, clientData) => {
   const currentTime = new Date();
