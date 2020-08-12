@@ -1,10 +1,12 @@
+const sendLog = require('../services/sendLog');
+
 /**
  * getUTCTimeDifference
  * Used to get time difference in UTC
  * @param {Array} data time data, preferably array of time data
  * @return {Object} containing closest time index and time difference data
  */
-module.exports = function(data) {
+module.exports = (data) => {
   if (data.constructor !== Array) {
     data = [data];
   }
@@ -16,15 +18,14 @@ module.exports = function(data) {
   let timeDifferenceData;
   let timeDifferenceHourMax = 24;
 
-  // console.debug("[core] [time difference] now: "+timeNow);
+  sendLog('debug', 'getUTCTimeDifference', `It's now "${timeNow}"`);
 
   for (let i = 0; i < data.length; i++) {
     const timeData = new Date(0, 0, 0, data[i], 0);
-    // console.debug("[core] [time difference] time data "+timeData);
+    sendLog('debug', 'getUTCTimeDifference', `Checking ${timeData}`);
 
     const timeRemaining = (timeData - timeNow);
-    // console.debug("[core] [time difference] current: "+timeData);
-    // console.debug("[core] [time difference] remain: "+timeRemaining);
+    sendLog('debug', 'getUTCTimeDifference', `Time remaining: ${timeRemaining}`);
 
     // formatting the data
     const timeDifferenceHour = Math.abs(Math.floor(timeRemaining / 1000 / 60 / 60));
@@ -33,7 +34,7 @@ module.exports = function(data) {
 
     const timeDifferenceMinute = Math.abs(Math.floor(timeDifferenceHourRaw / 1000 / 60));
 
-    // console.debug("[core] [time difference] left: "+timeDifferenceHour+"h "+timeDifferenceMinute+"m")
+    sendLog('debug', 'getUTCTimeDifference', `Exact timing: ${timeDifferenceHour}h ${timeDifferenceMinute}m`);
 
     // checking if current time is smaller than last one or not
     if (timeDifferenceHour <= timeDifferenceHourMax && timeRemaining > 0) {
@@ -43,11 +44,12 @@ module.exports = function(data) {
       timeDifferenceData = [timeDifferenceHour, timeDifferenceMinute];
     }
   }
-  // console.debug("[core] [time difference] selected: "+new Date(0, 0, 0, data[closestTime], 0));
-  // console.debug("[core] [time difference] time left: "+timeDifferenceData[0]+" hours, "+timeDifferenceData[1]+" minutes");
+
+  sendLog('debug', 'getUTCTimeDifference', `Selected: ${new Date(0, 0, 0, data[closestTime], 0)}`);
+  sendLog('debug', 'getUTCTimeDifference', `Time left: ${timeDifferenceData[0]}h ${timeDifferenceData[1]}`);
 
   return {
-    'time_index': closestTime,
-    'time_difference_data': timeDifferenceData,
+    'index': closestTime,
+    'left': timeDifferenceData,
   };
 };
