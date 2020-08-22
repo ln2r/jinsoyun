@@ -470,15 +470,19 @@ module.exports = class GuildSettingsCommand extends Command {
             if (guildSettings.hunters_refugee) settingHuntersRefugeeText = '<#'+guildSettings.hunters_refugee+'>';
   
             // new member welcome
-            if (guildSettings.welcome.channel) settingWelcomeChannelText = '<#'+guildSettings.welcome.channel+'>';
-            if (guildSettings.welcome.message) settingWelcomeMessageText = guildSettings.welcome.message;
+            if(guildSettings.welcome){
+              if (guildSettings.welcome.channel) settingWelcomeChannelText = '<#'+guildSettings.welcome.channel+'>';
+              if (guildSettings.welcome.message) settingWelcomeMessageText = guildSettings.welcome.message;
+            }         
   
             // join command custom message
-            if (guildSettings.join.status) joinSettingsStatusText = (guildSettings.join.status)? '*Enabled*':'*Disabled*';
-            if (guildSettings.join.message) joinSettingsMessageText = guildSettings.join.message;
-            if (guildSettings.join.channel) joinSettingsChannelText = '<#'+guildSettings.join.channel+'>';
-            if (guildSettings.join.role) joinSettingsRoleText = '<@&'+guildSettings.join.role+'>';
-  
+            if(guildSettings.join){
+              if (guildSettings.join.status) joinSettingsStatusText = (guildSettings.join.status)? '*Enabled*':'*Disabled*';
+              if (guildSettings.join.message) joinSettingsMessageText = guildSettings.join.message;
+              if (guildSettings.join.channel) joinSettingsChannelText = '<#'+guildSettings.join.channel+'>';
+              if (guildSettings.join.role) joinSettingsRoleText = '<@&'+guildSettings.join.role+'>';
+            }
+            
             // bot's admins
             if (guildSettings.admin_roles && guildSettings.admin_roles[0] !== null) {
               settingAdminRoleText = []; // emptying the array
