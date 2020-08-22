@@ -61,5 +61,7 @@ module.exports = async function(system) {
     return settingsData[0].settings.rremove;
   case 'setting':
     return settingsData[0].settings.setting;
-  }
+  case 'access':
+    return settingsData[0].settings.access;
+  }  
 };

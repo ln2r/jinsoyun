@@ -17,12 +17,12 @@ module.exports = class KoldrakCommand extends Command {
     msg.channel.startTyping();
 
     // checking if the command disabled or not
-    // const globalSettings = await utils.getGlobalSetting('access');
-    // if (!globalSettings.status) {
-    //   msg.channel.stopTyping();
+    const globalSettings = await utils.getGlobalSetting('access');
+    if (!globalSettings.status) {
+      msg.channel.stopTyping();
 
-    //   return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
-    // }
+      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+    }
 
     const start = Date.now();
     let end;
