@@ -77,7 +77,7 @@ clientDiscord
     const guildSettingData = await utils.getGuildSettings(guild.id);
 
     if (!guildSettingData) {
-      clientDiscord.emit('commandPrefixChange', guild.id, process.env.bot_default_prefix);
+      clientDiscord.emit('commandPrefixChange', guild.id, config.bot.default_prefix);
     }
 
     services.sendLog('info', 'Bot', `Joined new legendary guild called "${guild.name}"`);
