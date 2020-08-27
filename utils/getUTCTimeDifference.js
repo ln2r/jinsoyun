@@ -37,7 +37,7 @@ module.exports = (data) => {
     sendLog('debug', 'getUTCTimeDifference', `Exact timing: ${timeDifferenceHour}h ${timeDifferenceMinute}m`);
 
     // checking if current time is smaller than last one or not
-    if (timeDifferenceHour <= timeDifferenceHourMax && timeRemaining > 0) {
+    if (timeDifferenceHour <= timeDifferenceHourMax ) {
       timeDifferenceHourMax = timeDifferenceHour;
       closestTime = i;
       // storing the formatted data into an array
@@ -45,6 +45,7 @@ module.exports = (data) => {
     }
   }
 
+  sendLog('debug', 'getUTCTimeDifference', `Index: ${closestTime}, ${data[closestTime]}`);
   sendLog('debug', 'getUTCTimeDifference', `Selected: ${new Date(0, 0, 0, data[closestTime], 0)}`);
   sendLog('debug', 'getUTCTimeDifference', `Time left: ${timeDifferenceData[0]}h ${timeDifferenceData[1]}`);
 
