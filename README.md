@@ -86,6 +86,25 @@ Explanation:
   * [Commando MongoDBProvider](https://github.com/paulhobbel/commando-provider-mongo) - MongoDB provider for Commando
   * [BnSTools](https://bnstools.info/) - Smart Bid Algorithm
 
+## Privacy Policy
+This bot collect some data which will be used for debug, statistical, and personal use only. If you have any issue with this feel free to [contact](#.Help & Support) me.
+
+# Data Collected
+* User Discord ID
+* User Discord Username
+* User Discord Discriminator
+* Guild ID
+* Guild Name
+* Guild Region
+* Guild Member Count
+* Guild Availability 
+* Bot Joined Date
+
+# Usage
+* `cmd-dump`
+* `cmd-guilds`
+* `cmd-audit`
+
 ## Help & Support
 You can contact me via Discord (`ln2r#1691`) or by submitting new issue [here](https://github.com/ln2r/jinsoyun/issues).
 * [ko-fi](https://ko-fi.com/ln2rworks)
