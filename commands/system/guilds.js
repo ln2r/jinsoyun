@@ -1,7 +1,5 @@
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index');
-const dateformat = require('dateformat');
-const configs = require('../../config.json');
 
 module.exports = class BotGetGuildsCommand extends Command {
   constructor(client) {
@@ -19,19 +17,14 @@ module.exports = class BotGetGuildsCommand extends Command {
   async run(msg) {
     msg.channel.startTyping();
 
-    const currentTime = new Date();
-
-    // getting stats
-    const statsData = await utils.fetchDB(configs.collection.stats, {date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
-
     // getting connected guilds data
     const guildsData = this.client.guilds.cache;
     let data = [];
-    let guildsCount = 0;
+    let count = 0;
 
     guildsData.map((g) => {
-      data.push(g.id+': '+g.name+' ('+g.owner.user.username+'#'+g.owner.user.discriminator+')');
-      guildsCount++;
+      data.push(`${g.name} - ${g.owner.user.username}#${g.owner.user.discriminator}`);
+      count++;
     });
 
     msg.channel.stopTyping();
@@ -39,13 +32,10 @@ module.exports = class BotGetGuildsCommand extends Command {
       'embed': {
         'title': 'List of Connected Guilds',
         'color': 16741688,
+        'description': 'Showing connected guilds, use `dump` for detailed info.',
         'fields': [
           {
-            'name': 'Requests',
-            'value': `${(statsData[0])? statsData[0].count:0} requests received.`,
-          },
-          {
-            'name': `${guildsCount} Connected Guilds`,
+            'name': `${count} Connected Guilds`,
             'value': utils.formatArray(data, '- ', true),
           }        
         ],
