@@ -53,7 +53,7 @@ module.exports = class ResetNotificationCommand extends Command {
     const query = args.split(' ');
     let changed = false;
 
-    const systems = ['hunters_refugee', 'koldrak_announce', 'reset', 'twitter', 'bid', 'daily', 'drop', 'dungeon', 'event', 'grandharvest', 'koldrak', 'shackledisle', 'market', 'weekly', 'who', 'nickname', 'radd', 'raddonce', 'reg', 'rmessage', 'rremove', 'setting'];
+    const systems = ['hunters_refugee', 'koldrak_announce', 'reset', 'twitter', 'bid', 'daily', 'drop', 'dungeon', 'event', 'grandharvest', 'koldrak', 'shackledisle', 'market', 'weekly', 'who', 'nickname', 'radd', 'raddonce', 'reg', 'rmessage', 'rremove', 'setting', 'access'];
 
     const system = query[0];
     const valid = systems.indexOf(system);
