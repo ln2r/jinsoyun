@@ -20,25 +20,38 @@ module.exports = class BotGetGuildsCommand extends Command {
     msg.channel.startTyping();
 
     // getting global settings data
-    const globalSettings = await utils.fetchDB('configs', {'guild': 0});
+    const globalSettings = await utils.fetchDB('configs');
+    let global;
 
     // getting connected guilds data
     const guildsData = this.client.guilds.cache;
     let guilds = [];
 
-    guildsData.map((g) => {
-      guilds.push({
-        'id': g.id,
-        'name': g.name,
-        'joined': g.joinedAt,
-        'memberCount': g.memberCount,
-        'available': g.available,
-        'region': g.region,
-        'owner': {
-          'id': g.owner.id,
-          'user': `${g.owner.user.username}#${g.owner.user.discriminator}`
-        }
-      });
+    globalSettings.map((s) => {
+      if(s.guild === 0){
+        global = s;
+      }else{
+        guildsData.map((g) => {
+          let setting;
+          if(g.id === s.guild){
+            setting = s;
+
+            guilds.push({
+              'id': g.id,
+              'name': g.name,
+              'joined': g.joinedAt,
+              'memberCount': g.memberCount,
+              'available': g.available,
+              'region': g.region,
+              'owner': {
+                'id': g.owner.id,
+                'user': `${g.owner.user.username}#${g.owner.user.discriminator}`
+              },
+              'settings': setting
+            });
+          }
+        });
+      }
     });
 
     const data = {
@@ -48,7 +61,7 @@ module.exports = class BotGetGuildsCommand extends Command {
       },
       'settings': {
         configs,
-        'global': globalSettings        
+        'global': global        
       },
       'guilds': guilds
     };
