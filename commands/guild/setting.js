@@ -232,7 +232,7 @@ module.exports = class GuildSettingsCommand extends Command {
           optionDisplayName = 'New Member Welcome';
           optionDescription = 'New member Welcome channel roles and message.';
 
-          if(guildSettings.welcome)welcomeSettings = guildSettings.welcome;
+          welcomeSettings = (guildSettings.welcome)?guildSettings.welcome : {};
           changed = false;
   
           // Disable welcome system
@@ -330,7 +330,7 @@ module.exports = class GuildSettingsCommand extends Command {
           optionDisplayName = 'Join Command';
           optionDescription = 'Join command, role and channel selection.';
 
-          if(guildSettings.join)joinSettings = guildSettings.join;
+          joinSettings = (guildSettings.join)? guildSettings.join : {};
           changed = false;
   
           // member joined message
@@ -403,7 +403,7 @@ module.exports = class GuildSettingsCommand extends Command {
   
           // role given
           case 'role':
-            if(query[2] !== 'disable'){
+            if(query[2] == 'disable'){
               joinSettings.role = 'disable';
               joinSettingsRoleText = 'disable';          
               changed = true;
