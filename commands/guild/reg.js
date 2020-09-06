@@ -1,6 +1,6 @@
 const {Command} = require('discord.js-commando');
-const utils = require('../../utils/index.js');
-const services = require('../../services/index.js');
+const Utils = require('../../Utils/index.js');
+const Services = require('../../Services/index.js');
 
 module.exports = class RegCommand extends Command {
   constructor(client) {
@@ -18,59 +18,74 @@ module.exports = class RegCommand extends Command {
 
   async run(msg, args) {
     args = args.toLowerCase();
-    let failed = true;
-    let message = 'This guild/server don\'t have member verification set or it\'s possible I don\'t have permission to send message there.';
+    let Failed = true;
+    let Message = '';
 
     // checking if the command disabled or not
-    const globalSettings = await utils.getGlobalSetting('reg');
-    if (!globalSettings.status) {
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+    const GlobalSettings = await Utils.getGlobalSetting('reg');
+    if (!GlobalSettings.status) {
+      return msg.say('This command is currently disabled.\nReason: '+GlobalSettings.Message);
     }
 
-    const guildSettingData = await utils.getGuildSettings(msg.guild.id);
+    const GuildSettingData = await Utils.getGuildSettings(msg.guild.id);
 
     // formatting the nickname
-    const userCharaName = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
+    const UserNickname = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
-    if (guildSettingData) {
-      if (guildSettingData.join && guildSettingData.join.status !== 'disable') {
+    if (GuildSettingData) {
+      if (GuildSettingData.join && GuildSettingData.join.status !== 'disable') {
         // changing the nickname
-        if (msg.channel.permissionsFor(this.client.user).has('MANAGE_NICKNAMES') || msg.author.id !== msg.guild.ownerID) {
-          msg.guild.members.cache.get(msg.author.id).setNickname(userCharaName);
+        if (msg.channel.permissionsFor(this.client.user).has('MANAGE_NICKNAMES') && msg.author.id !== msg.guild.owner.id) {
+          msg.guild.members.cache.get(msg.author.id).setNickname(UserNickname);
         }else{
-          message = 'I don\'t have the permission to modify your nickname.';
+          Message = 'Warning: Nickname isn\'t changed, permission not granted.';
         }
 
         // checking and adding the role
-        if (guildSettingData.join.role) {
+        if (GuildSettingData.join.role) {
           // checking if the guild have the role, add if yes add them
           if(msg.channel.permissionsFor(this.client.user).has('MANAGE_ROLES')){
-            if ((msg.guild.roles.cache.find((role) => role.id === guildSettingData.join.role)) !== null) {
-              msg.guild.members.cache.get(msg.author.id).roles.add(guildSettingData.join.role);
+            if ((msg.guild.roles.cache.find((role) => role.id === GuildSettingData.join.role)) !== null) {
+              msg.guild.members.cache.get(msg.author.id).roles.add(GuildSettingData.join.role);
             }
           }else{
-            message = 'I don\'t have the permission to modify your role.';
+            Message = 'Warning: Role isn\'t added, permission not granted';
           }            
+        }
+
+        // checking guild setting 
+        Services.sendLog('debug', 'Cmd-Join', `ch: ${GuildSettingData.join.channel}, msg: ${GuildSettingData.join.message}`);
+
+        if ((GuildSettingData.join.channel && GuildSettingData.join.channel !== null) && (GuildSettingData.join.message && GuildSettingData.join.Message !== null)) {
+
+          // checking permission
+          const PermissionView = msg.channel.permissionsFor(this.client.user).has('VIEW_CHANNEL');
+          const PermissionSend = msg.channel.permissionsFor(this.client.user).has('SEND_MESSAGES');
+          Services.sendLog('debug', 'Cmd-Join', `perm-view: ${PermissionView}, perm-send: ${PermissionSend}`);
+
+          if(PermissionView && PermissionSend){
+            const joinMessageAuthor = '<@'+msg.author.id+'>';
+            const joinServerName = msg.guild.name;
+
+            let customJoinMessage = GuildSettingData.join.message;
+            // replacing some stuff
+            customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
+            customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
+
+            msg.guild.channels.cache.find((ch) => ch.id === GuildSettingData.join.channel).send(`${customJoinMessage}\n\n${Message}`);
+
+            Failed = false;
+          }else{
+            Message = 'I don\'t have permission to see or write on that channel.';
+          }          
         }else{
-          services.sendLog('warn', 'Cmd-Join', `${msg.guild.name}: Join command requested, but no role has been set.`);
+          Message = 'This guild/server don\'t have member verification set.';
         }
-
-        // checking guild setting and permission to send join message
-        if ((guildSettingData.join.channel && guildSettingData.join.channel !== null) && (guildSettingData.join.message && guildSettingData.join.message !== null) && (msg.channel.permissionsFor(this.client.user).has('VIEW_CHANNEL') && msg.channel.permissionsFor(this.client.user).has('SEND_MESSAGES'))) {
-          const joinMessageAuthor = '<@'+msg.author.id+'>';
-          const joinServerName = msg.guild.name;
-          let customJoinMessage = guildSettingData.join.message;
-          // replacing some stuff
-          customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
-          customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
-
-          msg.guild.channels.cache.find((ch) => ch.id === guildSettingData.join.channel).send(customJoinMessage);
-
-          failed = false;
-        }
+      }else{
+        Message = 'This guild/server don\'t have member verification set.';
       }
     }
 
-    if(failed) msg.channel.send(message);
+    if(Failed) msg.channel.send(Message);
   }
 };
