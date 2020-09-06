@@ -277,7 +277,7 @@ module.exports = class GuildSettingsCommand extends Command {
           
           // welcome message
           case 'msg': 
-            query.shift();
+            query.splice(0,2);
   
             settingWelcomeMessage = query.join(' ');
   
@@ -360,7 +360,7 @@ module.exports = class GuildSettingsCommand extends Command {
             break;
   
           case 'msg':
-            query.shift();
+            query.splice(0,2);
             joinSettingsMessage = query.join(' ');
             
             if (joinSettingsMessage.length > 0) {
@@ -488,7 +488,7 @@ module.exports = class GuildSettingsCommand extends Command {
               settingAdminRoleText = []; // emptying the array
   
               guildSettings.admin_roles.map(roles => {
-                settingAdminRoleText.push(`<@&${roles}+>`);
+                settingAdminRoleText.push(`<@&${roles}>`);
               });
             }
           }
