@@ -1,5 +1,5 @@
 const {Command} = require('discord.js-commando');
-const service = require('../../services/index');
+const items = require('../../cron/items');
 
 module.exports = class ItemsUpdateCommand extends Command {
   constructor(client) {
@@ -15,7 +15,7 @@ module.exports = class ItemsUpdateCommand extends Command {
   }
 
   run(msg) {
-    service.automationItemUpdate();
+    items();
 
     return msg.say('Updating items data');
   }

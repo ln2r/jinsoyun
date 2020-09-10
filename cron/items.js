@@ -15,19 +15,16 @@ module.exports = async () => {
   const start = Date.now();
 
   // getting api data
-  const apiData = await utils.fetchDB('apis', {}, {_id: 1});
+  const apiData = await utils.fetchDB('apis', {name: 'Silveress Item'});
   // getting items api address
-  const itemsData = await utils.fetchSite(apiData[2].address);
-  // getting market api address
-  const marketData = await utils.fetchSite(apiData[1].address);
+  const itemsData = await utils.fetchSite(apiData[0].address);
 
-  if (itemsData.status === 'error' || marketData.status === 'error') {
+  if (itemsData.status === 'error') {
     const end = Date.now();
     const updateTime = (end-start)/1000+'s';
 
     services.sendLog('warn', 'Items', `Data update failed. (${updateTime})`);
     if(itemsData.status === 'error') services.sendLog('error', 'Auto-Items', itemsData.err);
-    if(marketData.status === 'error') services.sendLog('error', 'Auto-Items', marketData.err);
 
   } else {
     services.sendLog('debug', 'Auto-Items', `Connecting to ${url}...`);
@@ -39,23 +36,16 @@ module.exports = async () => {
         .next(async function(err, collinfo) {
           if (err) services.sendLog('error', 'Auto-Items', err);
 
-          // checking if the collection is exist or not
+          // "clean" the collection if its exist
           if (collinfo) {
             dbo.collection(configs.collection.items).drop(async function(err) {
               if (err) services.sendLog('error', 'Auto-Items', err);
             });
           }
 
-          // updating items data
+          // updating
           services.sendLog('debug', 'Auto-Items', `Updating "${configs.collection.items}" data...`);
           dbo.collection(configs.collection.items).insertMany(itemsData, async function(err) {
-            if (err) services.sendLog('error', 'Auto-Items', err);
-            db.close();
-          });
-
-          // updating market data
-          services.sendLog('debug', 'Auto-Items', `Updating "${configs.collection.market}" data...`);
-          dbo.collection(configs.collection.market).insertMany(marketData, async function(err) {
             if (err) services.sendLog('error', 'Auto-Items', err);
             db.close();
           });

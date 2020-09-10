@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
-const dateformat = require('dateformat');
 const utils = require('../../utils/index.js');
+const services = require('../../services/index.js');
 
 module.exports = class MarketCommand extends Command {
   constructor(client) {
@@ -61,6 +61,8 @@ module.exports = class MarketCommand extends Command {
     let itemsData;
     let marketError = false;
 
+    services.sendLog('debug', 'cmd-market', `query: ${searchQuery} regex:${regx}`);
+
     // getting the item data
     try {
       itemsData = await utils.fetchDB('items', dbSearchQuery);
@@ -68,6 +70,7 @@ module.exports = class MarketCommand extends Command {
       marketError = true;
     }
 
+    services.sendLog('debug', 'cmd-market', JSON.stringify(itemsData, null, 2));
 
     // checking the market status
     if (!marketError) {
@@ -89,22 +92,14 @@ module.exports = class MarketCommand extends Command {
 
         // populating the results
         for (let i = 0; i < maxItemLength; i++) {
-          // getting the item price
-          const marketData = await utils.fetchDB('market', {id: itemsData[i].id}, {ISO: -1}, 2);
-
-          // checking if the item have market data
-          if (marketData.length !== 0) {
-            // comparising the prices
-            const oldPrice = (marketData[1] !== undefined)? marketData[1].priceEach : 0;
-            const priceStatus = utils.getPriceStatus(oldPrice, marketData[0].priceEach);
-
-            queryResult = queryResult + (
-              '**'+itemsData[i].name+'** `'+dateformat(marketData[0].ISO, 'UTC:dd-mm-yy:HH.MM')+' UTC`\n'+
-                            '- Each: '+utils.formatCurrency(marketData[0].priceEach)+' `'+priceStatus+'`\n'+
-                            '- Lowest: '+utils.formatCurrency(marketData[0].priceTotal)+' for '+marketData[0].quantity+'\n'
-            );
-          }
+          queryResult = queryResult + (
+            `**${itemsData[i].name}** \`${itemsData[i].price_update}\`
+            - Each: ${utils.formatCurrency(itemsData[i].price_min)}
+            - Lowest: ${utils.formatCurrency(itemsData[i].price_min * itemsData[i].quantity_min)} for ${itemsData[i].quantity_min}\n`
+          );
         }
+
+        services.sendLog('debug', 'cmd-market', queryResult);
 
         end = Date.now();
         serveTime = (end-start)/1000+'s';
