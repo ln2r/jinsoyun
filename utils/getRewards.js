@@ -1,54 +1,59 @@
 const fetchDB = require('./fetchDB');
+const getGlobalSetting = require('./getGlobalSetting');
+const sendLog = require('../services/sendLog');
 
 /**
  * getRewards
  * getting rewards list with the tier
- * @param {String} challengesType challenges day/type
+ * @param {String} name challenges name/type
  * @return {Array} formatted rewards list
  */
 module.exports = async function(name) {
-  const eventData = await fetchDB('event', {});
-  let eventRewards;
-  const challengesData = await fetchDB('challenges', {name: name});
-  let challengesRewards;
-
-  challengesRewards = challengesData[0].rewards;
-  eventRewards = (name === 'Weekly')? eventData[0].rewards.weekly : eventData[0].rewards.daily;
+  const ChallengesData = await fetchDB('challenges', {name: name});
+  let ChallengesRewards = ChallengesData[0].rewards;  
 
   // adding event rewards
-  if (eventRewards.length !== 0) {
-    for (let i=0; i<eventRewards.length; i++) {
-      challengesRewards.push(
-        {
-          name: eventRewards[i].name + ' (Event)',
-          tier: eventRewards[i].tier,
-        }
-      );
-    }
-  }
+  const EventStatus = await getGlobalSetting('event');
+  if(EventStatus.status){
+    const EventData = await fetchDB('event', {});
+    const EventRewards = (name === 'Weekly')? EventData[0].rewards.weekly : EventData[0].rewards.daily;
 
-  let tieredRewardsList = [];
+    if (EventRewards.length !== 0) {
+      for (let i=0; i<EventRewards.length; i++) {
+        ChallengesRewards.push(
+          {
+            name: EventRewards[i].name + ' (Event)',
+            tier: EventRewards[i].tier,
+          }
+        );
+      }
+    }
+  }else{
+    sendLog('warn', 'getRewards', 'Event rewards not shown, event disabled.');
+  }  
+
+  let TieredRewardsList = [];
   // getting the tier
-  for (let i=0; i<challengesRewards.length; i++) {
-    const currentTier = challengesRewards[i].tier;
-    if (challengesRewards[i].tier === currentTier) {
+  for (let i=0; i<ChallengesRewards.length; i++) {
+    const currentTier = ChallengesRewards[i].tier;
+    if (ChallengesRewards[i].tier === currentTier) {
       // gathering rewards which have the same tier
       const currentTierRewards = [];
-      for (let j=0; j<challengesRewards.length; j++) {
-        if (challengesRewards[j].tier === currentTier) {
-          currentTierRewards.push(challengesRewards[j].name);
+      for (let j=0; j<ChallengesRewards.length; j++) {
+        if (ChallengesRewards[j].tier === currentTier) {
+          currentTierRewards.push(ChallengesRewards[j].name);
         }
       }
 
       // checking if the tier already exist to prevent duplicate
-      let found = false;
-      for (let j=0; j<tieredRewardsList.length; j++) {
-        if (tieredRewardsList[j].tier === currentTier) {
-          found = true;
+      let Found = false;
+      for (let j=0; j<TieredRewardsList.length; j++) {
+        if (TieredRewardsList[j].tier === currentTier) {
+          Found = true;
         }
       }
-      if (!found) {
-        tieredRewardsList.push({
+      if (!Found) {
+        TieredRewardsList.push({
           tier: currentTier,
           rewards: currentTierRewards,
         });
@@ -57,9 +62,9 @@ module.exports = async function(name) {
   }
 
   // sorting the rewards
-  tieredRewardsList = tieredRewardsList.sort(function(a, b) {
+  TieredRewardsList = TieredRewardsList.sort(function(a, b) {
     return a.tier - b.tier;
   });
 
-  return tieredRewardsList;
+  return TieredRewardsList;
 };
