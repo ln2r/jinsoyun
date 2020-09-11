@@ -41,16 +41,18 @@ module.exports = class WhoCommand extends Command {
     // getting api data
     const apiData = await utils.fetchDB('apis', {}, {_id: 1});
 
+    services.sendLog('debug', 'cmd-who', JSON.stringify(apiData, null, 2));
+
     // getting character equipments api address from the database
     const charaAPIAddress = apiData[0].address;
     // getting character traits data api address
-    const ncsoftPlayerTraitsAPIAddress = apiData[7].address;
+    const ncsoftPlayerTraitsAPIAddress = apiData[6].address;
     // getting character skills data api address
-    const ncsoftPlayerSkillsAPIAddress = apiData[5].address;
+    const ncsoftPlayerSkillsAPIAddress = apiData[4].address;
     // getting bnstree site address
-    const ncsoftPlayerInformationAPIAddress = apiData[6].address;
+    const ncsoftPlayerInformationAPIAddress = apiData[5].address;
     // getting class icon for embed
-    const ncsoftCharacterClassImageAddress = apiData[8].address;
+    const ncsoftCharacterClassImageAddress = apiData[7].address;
 
     // getting the character name, if the user doesn't give any, their discord nickname will be used instead
     let charaQuery;
