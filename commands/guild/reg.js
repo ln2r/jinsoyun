@@ -1,6 +1,6 @@
 const {Command} = require('discord.js-commando');
-const Utils = require('../../Utils/index.js');
-const Services = require('../../Services/index.js');
+const Utils = require('../../utils/index.js');
+const Services = require('../../services/index.js');
 
 module.exports = class RegCommand extends Command {
   constructor(client) {
@@ -64,15 +64,15 @@ module.exports = class RegCommand extends Command {
           Services.sendLog('debug', 'Cmd-Join', `perm-view: ${PermissionView}, perm-send: ${PermissionSend}`);
 
           if(PermissionView && PermissionSend){
-            const joinMessageAuthor = '<@'+msg.author.id+'>';
-            const joinServerName = msg.guild.name;
+            const JoinMessageAuthor = '<@'+msg.author.id+'>';
+            const JoinServerName = msg.guild.name;
 
-            let customJoinMessage = GuildSettingData.join.message;
+            let CustomJoinMessage = GuildSettingData.join.message;
             // replacing some stuff
-            customJoinMessage = customJoinMessage.replace('MESSAGE_AUTHOR', joinMessageAuthor);
-            customJoinMessage = customJoinMessage.replace('SERVER_NAME', joinServerName);
+            CustomJoinMessage = CustomJoinMessage.replace('MESSAGE_AUTHOR', JoinMessageAuthor);
+            CustomJoinMessage = CustomJoinMessage.replace('SERVER_NAME', JoinServerName);
 
-            msg.guild.channels.cache.find((ch) => ch.id === GuildSettingData.join.channel).send(`${customJoinMessage}\n\n${Message}`);
+            msg.guild.channels.cache.find((ch) => ch.id === GuildSettingData.join.channel).send(`${CustomJoinMessage}\n\n${Message}`);
 
             Failed = false;
           }else{
