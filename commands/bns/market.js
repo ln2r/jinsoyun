@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 /* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
@@ -10,8 +12,11 @@ module.exports = class MarketCommand extends Command {
       aliases: ['mp', 'f5'],
       group: 'bns',
       memberName: 'market',
-      description: 'Get item marketplace data. Use `<>` to get exact item match',
-      examples: ['market item name', 'market <item name>'],
+      description: 'Get item marketplace data. Use `<>` to get exact match',
+      examples: [
+        'market item name',
+        'market <item name>',
+      ],
       args: [
         {
           key: 'searchQuery',
@@ -30,7 +35,7 @@ module.exports = class MarketCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     let regx;
@@ -48,12 +53,15 @@ module.exports = class MarketCommand extends Command {
 
     // checking the search query
     if (searchQuery.match(/[<>]/g)) {
-      searchQuery = searchQuery.replace(/[<>]/g, ''); // removing the "<>" characters
+      // removing the "<>" characters
+      searchQuery = searchQuery.replace(/[<>]/g, '');
       searchQuery = searchQuery.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
-      regx = new RegExp('(?:^|\W)'+searchQuery+'+(?:$|\W)', 'ig'); // exact search
+      // exact search
+      regx = new RegExp('(?:^|\W)'+searchQuery+'+(?:$|\W)', 'ig');
     } else {
-      regx = new RegExp('('+searchQuery+'+)', 'ig'); // rough search
+      // rough search
+      regx = new RegExp('('+searchQuery+'+)', 'ig');
     }
 
     const dbSearchQuery = {'name': regx};
@@ -61,7 +69,7 @@ module.exports = class MarketCommand extends Command {
     let itemsData;
     let marketError = false;
 
-    services.sendLog('debug', 'cmd-market', `query: ${searchQuery} regex:${regx}`);
+    services.sendLog('debug', 'cmd-market', `q: ${searchQuery} r:${regx}`);
 
     // getting the item data
     try {
@@ -78,13 +86,13 @@ module.exports = class MarketCommand extends Command {
         end = Date.now();
         serveTime = (end-start)/1000+'s';
 
-        queryResult = 'No Result found on **'+searchQuery+'**.\nPlease check your search and try again.';
+        queryResult = 'No Result on **'+searchQuery+'**.';
       } else {
         itemImage = itemsData[0].img;
 
         // adding limit to the result
         if (itemsData.length > 5) {
-          msgData = 'Found **'+itemsData.length+'** matching items, please use exact search to get more accurate result. (`market <'+searchQuery+'>`)';
+          msgData = 'Found **'+itemsData.length+'** matching items. Use exact search for more accurate result. (`market <'+searchQuery+'>`)';
           maxItemLength = 5;
         } else {
           maxItemLength = itemsData.length;
@@ -108,13 +116,14 @@ module.exports = class MarketCommand extends Command {
       end = Date.now();
       serveTime = (end-start)/1000+'s';
 
-      queryResult = 'Unable to get result on **'+searchQuery+'**.\nPlease try to be more specific with your search and try again.';
+      queryResult = 'No result on **'+searchQuery+'**.';
     }
 
+    const itemName = searchQuery.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
     embedData = {
       'embed': {
         'author': {
-          'name': 'Marketplace - Search result of '+searchQuery.replace(/(^|\s)\S/g, (l) => l.toUpperCase()),
+          'name': 'Marketplace - '+itemName,
           'icon_url': 'https://cdn.discordapp.com/emojis/464036617531686913.png?v=1',
         },
         'description': queryResult,

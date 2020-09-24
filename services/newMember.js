@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const utils = require('../utils/index');
 const sendLog = require('./sendLog');
 const configs = require('../config.json');
@@ -5,14 +6,15 @@ const configs = require('../config.json');
 /**
  * newMember
  * New member welcome system
- * @param {Object} member 
+ *
+ * @param {Object} member Discord member object
  */
 module.exports = async (member) =>{
   const guildSettings = await utils.getGuildSettings(member.guild.id);
   const globalSettings = await utils.getGlobalSetting('welcome');
 
   if (guildSettings) {
-    if(guildSettings.welcome){
+    if (guildSettings.welcome) {
       // checking if the guild have the channel and the message set
       if (guildSettings.welcome.status !== 'disable') {
         const guildCommandPrefix = (guildSettings.prefix)? guildSettings.prefix:configs.bot.default_prefix;
@@ -27,7 +29,6 @@ module.exports = async (member) =>{
         }
 
         sendLog('query', 'Welcome', 'Server welcome requested.');
-        
       }
     }
   }

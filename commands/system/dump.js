@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
-const { MessageAttachment } = require('discord.js');
+const {MessageAttachment} = require('discord.js');
 const utils = require('../../utils/index');
 const configs = require('../../config.json');
 
@@ -25,15 +27,16 @@ module.exports = class BotGetGuildsCommand extends Command {
 
     // getting connected guilds data
     const guildsData = this.client.guilds.cache;
+    // eslint-disable-next-line prefer-const
     let guilds = [];
 
     globalSettings.map((s) => {
-      if(s.guild === 0){
+      if (s.guild === 0) {
         global = s;
-      }else{
+      } else {
         guildsData.map((g) => {
           let setting;
-          if(g.id === s.guild){
+          if (g.id === s.guild) {
             setting = s;
 
             guilds.push({
@@ -45,9 +48,9 @@ module.exports = class BotGetGuildsCommand extends Command {
               'region': g.region,
               'owner': {
                 'id': g.owner.id,
-                'user': `${g.owner.user.username}#${g.owner.user.discriminator}`
+                'user': `${g.owner.user.username}#${g.owner.user.discriminator}`,
               },
-              'settings': setting
+              'settings': setting,
             });
           }
         });
@@ -57,13 +60,13 @@ module.exports = class BotGetGuildsCommand extends Command {
     const data = {
       'bot': {
         'user': this.client.user,
-        'options': this.client.options
+        'options': this.client.option,
       },
       'settings': {
         configs,
-        'global': global        
+        'global': global,
       },
-      'guilds': guilds
+      'guilds': guilds,
     };
 
     // converting "data" to buffer

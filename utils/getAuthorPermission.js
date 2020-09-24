@@ -11,7 +11,7 @@ module.exports = async function(messageData, guildId) {
   const guildSettings = await getGuildSettings(guildId);
   const guildAdminRolesData = guildSettings.admin_roles;
   let found;
-  
+
   // checking if the guild have admin roles set
   if (guildAdminRolesData && guildAdminRolesData !== null) {
   // check if its the guild owner
@@ -30,6 +30,7 @@ module.exports = async function(messageData, guildId) {
 
     return (found)? true : false;
   } else {
+    // eslint-disable-next-line max-len
     return messageData.channel.permissionsFor(messageData.author).has('MANAGE_ROLES', false);
   }
 };

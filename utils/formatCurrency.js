@@ -2,8 +2,8 @@
  * formatCurrency
  * Used to set the currency format to more readable version
  * Note: for this one the function using discord emoji as the symbol
- * @param {Number} Number nominal
- * @return formatted data
+ * @param {Number} data nominal
+ * @return {String} formatted data
  * @example
  * formatCurrency(2000) // return 20s0c
  */

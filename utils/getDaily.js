@@ -5,13 +5,15 @@ const getRewards = require('./getRewards');
  * getDaily
  * Used to get specified daily data
  * @param {String} day dddd formatted day value
- * @return object, daily data (reward, quests list)
+ * @return {Object} daily data (reward, quests list)
  */
 module.exports = async function(day) {
   const challengesData = await fetchDB('challenges', {name: day});
+  // eslint-disable-next-line prefer-const
   let questsList = [];
 
-  for(let i=0; i<challengesData[0].quests.length; i++){
+  for (let i=0; i<challengesData[0].quests.length; i++) {
+    // eslint-disable-next-line max-len
     questsList.push(`**${challengesData[0].quests[i].name}** - ${challengesData[0].quests[i].location.join(', ')}`);
   }
 

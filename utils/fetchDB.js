@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const MongoClient = require('mongodb').MongoClient;
 const url = process.env.SOYUN_BOT_DB_CONNECT_URL;
 const dbName = process.env.SOYUN_BOT_DB_NAME;
@@ -9,9 +10,9 @@ const dbName = process.env.SOYUN_BOT_DB_NAME;
  * @param {Object} filter data filter
  * @param {Object} sorting sort data filter
  * @param {Number} limit max data fetched
- * @return data fetched from databse
+ * @return {Array} data fetched from databse
  */
-module.exports = async function (collname, filter, sorting, limit) {
+module.exports = async function(collname, filter, sorting, limit) {
   filter = (filter === null || filter === undefined)? {} : filter;
   sorting = (sorting === null || sorting === undefined)? {} : sorting;
   limit = (limit === null || limit === undefined)? 0 : limit;

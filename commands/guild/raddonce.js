@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 /* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
@@ -24,7 +26,7 @@ module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     let msgData;
@@ -71,9 +73,9 @@ module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
             if (messageFound) {
               // get the message
               msg.channel.fetch(msg.guild.currentMessage)
-                .then(m => {
-                  m.messages.cache.map(x =>{
-                    if(x.id == msg.guild.currentMessage){
+                .then((m) => {
+                  m.messages.cache.map((x) =>{
+                    if (x.id == msg.guild.currentMessage) {
                       x.react(emojiId);
                     }
                   });
@@ -110,13 +112,13 @@ module.exports = class ReactionRoleReactionAddOnceCommand extends Command {
               // saving
               this.client.emit('guildReactionRoleChange', msg.guild.id, reactionRoleData);
             } else {
-              msgData = 'I can\'t find any messages, try to add or select one using `rmessage`.';
+              msgData = 'Can\'t find any messages, try add or select using `rmessage`.';
             }
           } else {
-            msgData = 'It seems I can\'t find that role.';
+            msgData = 'Can\'t find selected role.';
           }
         } else {
-          msgData = 'It seems I can\'t find any role there.';
+          msgData = 'Can\'t find role on the command.';
         }
       }
     } else {

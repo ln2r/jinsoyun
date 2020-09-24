@@ -4,7 +4,7 @@
  * @param {Array} data the array data
  * @param {String} symbol list symbol
  * @param {Boolean} newline add new line at every start of the item or not
- * @return formatted list-like data
+ * @return {String} formatted list-like data
  */
 module.exports = function(data, symbol, newline) {
   if (data.length === 0) {

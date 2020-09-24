@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -28,38 +29,38 @@ module.exports = class LootCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     const start = Date.now();
-    let end;
-    let serveTime;
-
     const regx = new RegExp('('+item+'+)', 'ig'); // regex for search
 
     // getting the data and pushing them into an array
+    // eslint-disable-next-line max-len
     const dungeonData = await utils.fetchDB('dungeons', {'rewards': {$all: [regx]}});
 
     // getting the dungeon name and formatting it
     let dropData = '';
     for (let i = 0; i < dungeonData.length; i++) {
+      // eslint-disable-next-line max-len
       dropData = dropData + ('\n- '+dungeonData[i].name+' ('+dungeonData[i].rewards.find((value) => regx.test(value))+')');
     }
 
-    end = Date.now();
-    serveTime = (end-start)/1000+'s';
+    const end = Date.now();
+    const serveTime = (end-start)/1000+'s';
 
     // result formatting
-    let result = 'Can\'t find any dungeon that drop **'+item+'**, please check and try again (Item name can\'t be abbreviated)';
+    let result = 'Can\'t find dungeon contain **'+item+'**.';
     if (dropData !== '') {
-      result = 'Dungeon that contain **'+item+'** drop:'+dropData;
+      result = 'Dungeon which has **'+item+'** drop:'+dropData;
     }
 
     // filling up the embed data
+    const itemName = item.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
     const embedData = {
       'embed': {
         'author': {
-          'name': 'Dungeon Item Drop Search - '+item.replace(/(^|\s)\S/g, (l) => l.toUpperCase()),
+          'name': `Item Drop Search - ${itemName}`,
           'icon_url': 'https://cdn.discordapp.com/emojis/551588918479290408.png?v=1',
         },
         'color': 16753920,

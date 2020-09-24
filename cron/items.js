@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const MongoClient = require('mongodb').MongoClient;
 const utils = require('../utils/index.js');
 const services = require('../services/index');
@@ -24,8 +25,7 @@ module.exports = async () => {
     const updateTime = (end-start)/1000+'s';
 
     services.sendLog('warn', 'Items', `Data update failed. (${updateTime})`);
-    if(itemsData.status === 'error') services.sendLog('error', 'Auto-Items', itemsData.err);
-
+    if (itemsData.status === 'error') services.sendLog('error', 'Auto-Items', itemsData.err);
   } else {
     services.sendLog('debug', 'Auto-Items', `Connecting to ${url}...`);
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, async function(err, db) {
@@ -52,7 +52,6 @@ module.exports = async () => {
 
           const end = Date.now();
           const updateTime = (end-start)/1000+'s';
-                    
           services.sendLog('info', 'Auto-Items', 'Data updated, time: '+updateTime);
         });
     });

@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -8,7 +9,7 @@ module.exports = class DungeonCommand extends Command {
       aliases: ['dg', 'guide'],
       group: 'bns',
       memberName: 'dungeon',
-      description: 'Get the dungeon info and it\'s guide if available',
+      description: 'Get dungeon info.',
       examples: ['dungeon <dungeon name>', 'dungeon naryu sanctum'],
       args: [
         {
@@ -28,7 +29,7 @@ module.exports = class DungeonCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     const start = Date.now();
@@ -46,9 +47,14 @@ module.exports = class DungeonCommand extends Command {
     if (dungeonsData) {
       // formatting
       let apInfo = '*Unspecified*';
-      const apEasy = (dungeonsData.attack_power.easy === 0)? '' : 'Easy: '+dungeonsData.attack_power.easy+'+ ';
-      const apNormal = (dungeonsData.attack_power.normal === 0)? '' : 'Normal: '+dungeonsData.attack_power.normal+'+ ';
-      const apHard = (dungeonsData.attack_power.hard === 0)? '' : 'Hard: '+dungeonsData.attack_power.hard+'+ ';
+      const apEasy = (dungeonsData.attack_power.easy === 0)?
+        '' : 'Easy: '+dungeonsData.attack_power.easy+'+ ';
+
+      const apNormal = (dungeonsData.attack_power.normal === 0)?
+        '' : 'Normal: '+dungeonsData.attack_power.normal+'+ ';
+
+      const apHard = (dungeonsData.attack_power.hard === 0)?
+        '' : 'Hard: '+dungeonsData.attack_power.hard+'+ ';
 
       if (apEasy !== '' || apNormal !== '' || apHard !== '') {
         apInfo = apEasy+apNormal+apHard;
@@ -73,11 +79,13 @@ module.exports = class DungeonCommand extends Command {
       const guidesData = [];
       if (dungeonsData.guides.length !== 0) {
         for (let i=0; i<dungeonsData.guides.length; i++) {
-          guidesData.push('['+dungeonsData.guides[i].author+']('+dungeonsData.guides[i].url+')');
+          // eslint-disable-next-line max-len
+          guidesData.push(`[${dungeonsData.guides[i].author}](${dungeonsData.guides[i].url})`);
         }
       }
 
-      const weaponSuggestion = (dungeonsData.weapon === '')? '*Unspecified Weapon*': dungeonsData.weapon;
+      const weaponSuggestion = (dungeonsData.weapon === '')?
+        '*Unspecified Weapon*': dungeonsData.weapon;
 
       const challengesInfo = await utils.getChallengesList(dungeonsData.id);
 
@@ -85,10 +93,12 @@ module.exports = class DungeonCommand extends Command {
       serveTime = (end-start)/1000+'s';
 
       // filling up the embed data
+      // eslint-disable-next-line max-len
+      const dungeonName = dungeon.replace(/(^|\s)\S/g, (l) => l.toUpperCase())+' ('+instanceType+')';
       embedData = {
         'embed': {
           'author': {
-            'name': 'Dungeon Info - '+dungeon.replace(/(^|\s)\S/g, (l) => l.toUpperCase())+' ('+instanceType+')',
+            'name': 'Dungeon Info - '+dungeonName,
             'icon_url': 'https://cdn.discordapp.com/emojis/463569668045537290.png?v=1',
           },
           'color': 10040319,
@@ -102,7 +112,8 @@ module.exports = class DungeonCommand extends Command {
             },
             {
               'name': 'Challenges',
-              'value': (challengesInfo.length === 0)? '*Not in any challenges*' : challengesInfo.join(', '),
+              'value': (challengesInfo.length === 0)?
+                '*Not in any challenges*' : challengesInfo.join(', '),
             },
             {
               'name': 'Recommended Attack Power',
@@ -114,7 +125,8 @@ module.exports = class DungeonCommand extends Command {
             },
             {
               'name': 'Guides',
-              'value': (guidesData[0] === '[]()' || guidesData.length === 0)? '*No data available*' : utils.formatArray(guidesData, '- ', true),
+              'value': (guidesData[0] === '[]()' || guidesData.length === 0)?
+                '*No data*' : utils.formatArray(guidesData, '- ', true),
             },
             {
               'name': 'Rewards',
@@ -129,7 +141,7 @@ module.exports = class DungeonCommand extends Command {
       end = Date.now();
       serveTime = (end-start)/1000+'s';
 
-      msgData = 'I can\'t find dungeon data under ***'+dungeon+'***, please check your command and try again.';
+      msgData = 'Can\'t find dungeon with name ***'+dungeon+'***.';
       msg.channel.stopTyping();
     }
 

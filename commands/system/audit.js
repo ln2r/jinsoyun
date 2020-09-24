@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const MongoClient = require('mongodb').MongoClient;
 const utils = require('../../utils/index');
@@ -29,25 +30,25 @@ module.exports = class BotAuditCommand extends Command {
     const logsData = await utils.fetchDB(configs.collection.logs, {audit: false});
 
     let logsDataError = '';
-    let logsDataWarn =  '';
+    let logsDataWarn = '';
 
     let logsDataWarnCount = 0;
     let logsDataErrorCount = 0;
-    
-    logsData.map(data => {
-      if(data.level === 'warn') {
-        if(logsDataWarnCount <= 5){
+
+    logsData.map((data) => {
+      if (data.level === 'warn') {
+        if (logsDataWarnCount <= 5) {
           logsDataWarn = logsDataWarn + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
-        }  
-        logsDataWarnCount ++;      
+        }
+        logsDataWarnCount ++;
       }
-      if(data.level === 'error') {
-        if(logsDataErrorCount <= 5){
+      if (data.level === 'error') {
+        if (logsDataErrorCount <= 5) {
           logsDataError = logsDataError + `Location: ${data.location}\nMessage: ${data.message}\n\n`;
         }
         logsDataErrorCount ++;
       }
-    });    
+    });
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
@@ -62,6 +63,13 @@ module.exports = class BotAuditCommand extends Command {
         });
     });
 
+    /**
+     * TODO:
+     * change: !audit only show how much warnings and errors
+     * add: !audit warn = show warnings
+     * add: !audit error = show errors
+     */
+
     msg.channel.stopTyping();
     return msg.say({
       'embed': {
@@ -72,11 +80,11 @@ module.exports = class BotAuditCommand extends Command {
           {
             'name': `Warnings ${(logsDataWarnCount > 5)? '(+'+logsDataWarnCount-5+')':''}`,
             'value': (logsDataWarn === '')? 'Everything is normal, nothing\'s here.':logsDataWarn,
-          }, 
+          },
           {
             'name': `Errors ${(logsDataErrorCount > 5)? '(+'+logsDataErrorCount-5+')':''}`,
             'value': (logsDataError === '')? 'Everything is normal, nothing\'s here.':logsDataError,
-          }      
+          },
         ],
       },
     });

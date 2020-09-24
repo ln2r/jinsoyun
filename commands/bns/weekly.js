@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -21,18 +22,14 @@ module.exports = class WeeklyCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     const start = Date.now();
-    let end;
-    let serveTime;
-
     const weeklyData = await utils.getWeekly();
     const weeklyRewards = utils.formatRewards(weeklyData.rewards);
-
-    end = Date.now();
-    serveTime = (end-start)/1000+'s';
+    const end = Date.now();
+    const serveTime = (end-start)/1000+'s';
 
     const embedData = {
       'embed': {

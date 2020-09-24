@@ -10,12 +10,14 @@ const sendLog = require('../services/sendLog');
  */
 module.exports = async function(name) {
   const ChallengesData = await fetchDB('challenges', {name: name});
-  let ChallengesRewards = ChallengesData[0].rewards;  
+  // eslint-disable-next-line prefer-const
+  let ChallengesRewards = ChallengesData[0].rewards;
 
   // adding event rewards
   const EventStatus = await getGlobalSetting('event');
-  if(EventStatus.status){
+  if (EventStatus.status) {
     const EventData = await fetchDB('event', {});
+    // eslint-disable-next-line max-len
     const EventRewards = (name === 'Weekly')? EventData[0].rewards.weekly : EventData[0].rewards.daily;
 
     if (EventRewards.length !== 0) {
@@ -24,13 +26,13 @@ module.exports = async function(name) {
           {
             name: EventRewards[i].name + ' (Event)',
             tier: EventRewards[i].tier,
-          }
+          },
         );
       }
     }
-  }else{
+  } else {
     sendLog('warn', 'getRewards', 'Event rewards not shown, event disabled.');
-  }  
+  }
 
   let TieredRewardsList = [];
   // getting the tier

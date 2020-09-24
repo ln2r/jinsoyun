@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -8,8 +9,12 @@ module.exports = class RemoveCustomRoleCommand extends Command {
       aliases: ['smartbid'],
       group: 'bns',
       memberName: 'bid',
-      description: 'Get a calculation how much you should bid for an item. (item price is in copper so 1g = 10000)\nYou can use item name if it\'s available.',
-      examples: ['bid <player count> <item name/item price>', 'bid 12 moonstone', 'bid 12 500'],
+      description: 'Get calculation for how much you should bid for an item.',
+      examples: [
+        'bid <player count> <item name/item price>',
+        'bid 12 moonstone',
+        'bid 12 500',
+      ],
       args: [
         {
           key: 'playerCount',
@@ -29,15 +34,13 @@ module.exports = class RemoveCustomRoleCommand extends Command {
     msg.channel.startTyping();
 
     const start = Date.now();
-    let end;
-    let serveTime;
 
     // checking if the command disabled or not
     const globalSettings = await utils.getGlobalSetting('bid');
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     // removing "<>" if the user decided to used it
@@ -68,19 +71,22 @@ module.exports = class RemoveCustomRoleCommand extends Command {
     // smart bid algorithm thanks to BnSTools - https://bnstools.info/
 
     if (invalidItem) {
-      bidData = 'No Result found on **'+itemName+'**.\nPlease check your search and try again.';
+      // eslint-disable-next-line max-len
+      bidData = `No Result on **${itemName}**.\nCheck your search and try again.`;
     } else {
+      // eslint-disable-next-line max-len
       const selfBid = Math.floor(1 * itemPrice * ((playerCount - 1)/playerCount));
+      // eslint-disable-next-line max-len
       const marketBid = Math.floor((1 * itemPrice * ((playerCount - 1)/playerCount)) * (1 - .05 * 1));
 
-      bidData = '**Max bid for the price of '+utils.formatCurrency(itemPrice)+'**\n'+
-                      '- Keeping the item for yourself\n'+utils.formatCurrency(selfBid)+'\n'+
-                      '- Sell to market\n'+utils.formatCurrency(marketBid);
+      bidData = '**Max bid: '+utils.formatCurrency(itemPrice)+'**\n'+
+      '- Keep:'+utils.formatCurrency(selfBid)+'\n'+
+      '- Sell:'+utils.formatCurrency(marketBid);
     }
 
     msg.channel.stopTyping();
-    end = Date.now();
-    serveTime = (end-start)/1000+'s';
+    const end = Date.now();
+    const serveTime = (end-start)/1000+'s';
 
     const embedData = {
       'embed': {

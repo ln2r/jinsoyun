@@ -3,7 +3,7 @@ const fetchDB = require('./fetchDB');
 /**
  * getChallengesList
  * getting any data if the dungeon is in any challenges
- * @param {Number} id dungeon id
+ * @param {Number} name dungeon name
  * @return {Array} challenges list
  */
 module.exports = async function(name) {

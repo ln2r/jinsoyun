@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const dateformat = require('dateformat');
 const utils = require('../utils/index.js');
 const services = require('../services/index');
@@ -5,7 +6,7 @@ const services = require('../services/index');
 /**
  * sendResetNotification
  * Used to send quest reset notification
- * @param {Guild} clientGuildData discord bot client guild/server connected data
+ * @param {Guild} clientData discord bot client guild/server connected data
  */
 module.exports = async (clientData) => {
   services.sendLog('info', 'Reset', 'Sending reset notification...');
@@ -68,10 +69,10 @@ module.exports = async (clientData) => {
     },
   };
 
-  clientData.guilds.cache.map(async function(guild) {  
+  clientData.guilds.cache.map(async function(guild) {
     if (guild.available) {
       // getting guild setting data
-      let guildSettingData = await utils.getGuildSettings(guild.id);
+      const guildSettingData = await utils.getGuildSettings(guild.id);
       let resetChannel = '';
       if (guildSettingData !== undefined) {
         resetChannel = guildSettingData.quest_reset;
@@ -82,11 +83,11 @@ module.exports = async (clientData) => {
         if (found === 0) {
           if (ch.id === resetChannel && resetChannel !== '' && resetChannel !== 'disable') {
             found = 1;
-            services.sendLog('debug', 'Reset', `Sending one to "${guild.name}"...`);           
+            services.sendLog('debug', 'Reset', `Sending one to "${guild.name}"...`);
             if (ch.permissionsFor(clientData.user).has('VIEW_CHANNEL') && ch.permissionsFor(clientData.user).has('SEND_MESSAGES')) {
               ch.send(msgData, embedData);
-              services.sendLog('debug', 'Reset', 'Notification sent sucessfully.');              
-            }else{
+              services.sendLog('debug', 'Reset', 'Notification sent sucessfully.');
+            } else {
               services.sendLog('warn', 'Reset', `Failed to notify "${guild.name}", issue with permission.`);
             }
           }

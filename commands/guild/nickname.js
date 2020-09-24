@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -37,10 +38,11 @@ module.exports = class NicknameChangeCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     // changing and formatting the nickname
+    // eslint-disable-next-line max-len
     msg.guild.members.cache.get(msg.author.id).setNickname(name.replace(/(^|\s)\S/g, (l) => l.toUpperCase()));
 
     msg.channel.stopTyping();

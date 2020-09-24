@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const utils = require('../utils/index.js');
 const dateformat = require('dateformat');
 const services = require('../services/index');
@@ -5,15 +6,15 @@ const services = require('../services/index');
 /**
  * access
  * Used to send access Notification
- * @param {Object} clientData 
- * @param {String} type 
+ * @param {Object} clientData Discord client data
+ * @param {String} type access type
  */
 module.exports = async (clientData, type) => {
-  let typeName = type.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
-  let settingName = `${type}_announce`;
+  const typeName = type.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
+  const settingName = `${type}_announce`;
 
   services.sendLog('info', typeName, `Sending ${typeName} notification...`);
-  services.sendLog('debug', 'Access', `type: ${type}, typeName: ${typeName}, settingName: ${settingName}`);
+  services.sendLog('debug', 'Access', `y: ${type}, n: ${typeName}, s: ${settingName}`);
 
   // checking global settings
   const globalSettings = await utils.getGlobalSetting(settingName);
@@ -22,17 +23,17 @@ module.exports = async (clientData, type) => {
     return;
   }
 
-  clientData.guilds.cache.map(async function(guild) {    
-    if(guild.available){
+  clientData.guilds.cache.map(async function(guild) {
+    if (guild.available) {
       // getting guild setting data
       const guildSettingData = await utils.getGuildSettings(guild.id);
 
       // getting settings data and selecting dungeon names
       let selectedChannel;
       let dungonName;
-      if (guildSettingData !== undefined) {       
-        switch(type){
-        case'koldrak':
+      if (guildSettingData !== undefined) {
+        switch (type) {
+        case 'koldrak':
           selectedChannel = guildSettingData.koldrak;
           dungonName = 'Koldrak\'s Lair';
           break;
@@ -67,9 +68,8 @@ module.exports = async (clientData, type) => {
                   },
                 },
               });
-              
               services.sendLog('debug', typeName, 'Notification sent sucessfully.');
-            }else{
+            } else {
               services.sendLog('warn', typeName, `Failed to notify "${guild.name}", issue with permission.`);
             }
           }

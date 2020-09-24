@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 const configs = require('../../config.json');
@@ -18,7 +20,7 @@ module.exports = class ResetNotificationCommand extends Command {
     msg.channel.startTyping();
 
     let botPrefix = configs.bot.default_prefix;
-    if(msg.guild.id){
+    if (msg.guild.id) {
       const guildSettings = await utils.getGuildSettings(msg.guild.id);
       (guildSettings.prefix)? botPrefix = guildSettings.prefix : botPrefix;
     }
@@ -33,7 +35,7 @@ module.exports = class ResetNotificationCommand extends Command {
     let embedData = {
       'embed': {
         'title': 'Jinsoyun Bot - Global Settings',
-        'description': 'To configure use `'+botPrefix+'global system-name (enable/disable) message`. Examples:',
+        'description': 'To configure use `'+botPrefix+'global system-name (enable/disable) message`.',
         'color': 16741688,
         'fields': [
           {
@@ -53,7 +55,29 @@ module.exports = class ResetNotificationCommand extends Command {
     const query = args.split(' ');
     let changed = false;
 
-    const systems = ['hunters_refugee', 'koldrak_announce', 'reset', 'twitter', 'bid', 'daily', 'drop', 'dungeon', 'event', 'grandharvest', 'koldrak', 'shackledisle', 'market', 'weekly', 'who', 'nickname', 'radd', 'raddonce', 'reg', 'rmessage', 'rremove', 'setting', 'access'];
+    const systems = ['hunters_refugee',
+      'koldrak_announce',
+      'reset', 'twitter',
+      'bid',
+      'daily',
+      'drop',
+      'dungeon',
+      'event',
+      'grandharvest',
+      'koldrak',
+      'shackledisle',
+      'market',
+      'weekly',
+      'who',
+      'nickname',
+      'radd',
+      'raddonce',
+      'reg',
+      'rmessage',
+      'rremove',
+      'setting',
+      'access',
+    ];
 
     const system = query[0];
     const valid = systems.indexOf(system);

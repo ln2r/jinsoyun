@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const utils = require('../utils/index.js');
 const sendLog = require('./sendLog');
 const config = require('../config.json');
@@ -14,7 +15,7 @@ module.exports = async () => {
   sendLog('info', 'Configs', 'Checking global settings data...');
   const globalSettings = await utils.fetchDB(config.collection.configs, {guild: 0});
 
-  if(globalSettings.length == 0){
+  if (globalSettings.length == 0) {
     sendLog('info', 'Configs', 'Global settings not found, creating one...');
 
     const globalBase = require('../globalSettings.example.json');
@@ -30,7 +31,7 @@ module.exports = async () => {
         sendLog('info', 'Configs', 'Global setting data added.');
       });
     });
-  }else{
+  } else {
     sendLog('info', 'Configs', 'Global settings found, proceeding normally.');
   }
 };

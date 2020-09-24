@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 const services = require('../../services/index');
@@ -23,7 +25,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     let msgData;
@@ -54,13 +56,13 @@ module.exports = class ReactionRoleMessageCommand extends Command {
           }
         }
 
-        // check and get message data        
+        // check and get message data
         reactionMessageData = await msg.channel.messages.fetch(messageId).catch(async (err) => {
           await services.sendLog('error', 'Reaction Message', err);
           reactionMessageData = false;
         });
 
-        if (reactionMessageData) {                            
+        if (reactionMessageData) {
           // present message content and url
           if (!found) {
             reactionRoleData.push({id: messageId, channel: msg.channel.id});
@@ -72,7 +74,7 @@ module.exports = class ReactionRoleMessageCommand extends Command {
             msgData = 'Reaction-role message with id: `'+messageId+'` selected.';
           }
 
-          let messageFields = [{
+          const messageFields = [{
             'name': 'Message Id',
             'value': messageId,
           },
@@ -82,11 +84,12 @@ module.exports = class ReactionRoleMessageCommand extends Command {
           }];
 
           // adding embeds data if available
-          if(reactionMessageData.embeds){
+          if (reactionMessageData.embeds) {
             reactionMessageData.embeds.map((embeds, index) => {
               messageFields.push({
                 'name': `Message Embed ${index+1}`,
-                'value': `Title: ${embeds.title}\nDescription: ${embeds.description}`,
+                'value': `Title: ${embeds.title}
+                Description: ${embeds.description}`,
               });
             });
           }
@@ -96,13 +99,13 @@ module.exports = class ReactionRoleMessageCommand extends Command {
             'embed': {
               'title': 'Message Data',
               'url': 'https://discordapp.com/channels/'+msg.guild.id+'/'+msg.channel.id+'/'+messageId,
-              'description': 'Click this embed title to see the original message.',
+              'description': 'Click title to see the original message.',
               'color': 2061822,
               'fields': messageFields,
             },
           };
         } else {
-          msgData = 'Can\'t find message with id: `'+messageId+'` in this channel (try to use the command on the same channel as the message).';
+          msgData = 'Can\'t find message with id: `'+messageId+'` (use command on the same channel).';
         }
       } else {
         msgData = 'That doesn\'t look like a message id';

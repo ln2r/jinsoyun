@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 /* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
@@ -24,7 +26,7 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     let msgData;
@@ -76,9 +78,9 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
             if (messageFound) {
               // get the message
               msg.channel.fetch(msg.guild.currentMessage)
-                .then(m => {
-                  m.messages.cache.map(x =>{
-                    if(x.id == msg.guild.currentMessage){
+                .then((m) => {
+                  m.messages.cache.map((x) => {
+                    if (x.id == msg.guild.currentMessage) {
                       x.react(emojiId);
                     }
                   });
@@ -86,7 +88,7 @@ module.exports = class ReactionRoleReactionAddCommand extends Command {
                 .catch(async (err) => {
                   await services.sendLog('error', 'Reaction Add', err);
                 });
-              
+
               // check if the reaction already exist
               let reactionIndex;
               let reactionFound = false;

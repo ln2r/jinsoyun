@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const services = require('../../services/index');
 
@@ -47,7 +49,7 @@ module.exports = class ResetNotificationCommand extends Command {
 
       msg.channel.stopTyping();
 
-      return msg.say('Bot status changed to `'+status+'`, with type `'+type+'` and message `'+text+'`');
+      return msg.say('Status changed to `'+status+'`, with `'+type+'` and `'+text+'`');
     } else {
       msg.channel.stopTyping();
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const utils = require('../utils/index');
 const services = require('../services/index');
 const items = require('./items');
@@ -11,18 +12,18 @@ const access = require('./access');
  */
 module.exports = async (clientData) => {
   const t = new Date();
-  let time = t.getUTCHours();
+  const time = t.getUTCHours();
 
   // items update
   const autoItemsStatus = await utils.getGlobalSetting('auto_items');
-  if(autoItemsStatus.status){
+  if (autoItemsStatus.status) {
     items();
-  }else{
+  } else {
     services.sendLog('warn', 'Auto-Items', `Items update disabled, ${autoItemsStatus.message}`);
   }
 
   // selecting which one
-  switch(time){
+  switch (time) {
   case 0:
     // koldrak
     access(clientData, 'koldrak');
@@ -49,6 +50,6 @@ module.exports = async (clientData) => {
     break;
   case 11:
     reset(clientData);
-    break;  
+    break;
   }
 };

@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -24,12 +25,10 @@ module.exports = class DailyCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     const start = Date.now();
-    let end;
-    let serveTime;
 
     if (args === '') {
       dayQuery = utils.getDay(Date.now(), 'now');
@@ -58,8 +57,8 @@ module.exports = class DailyCommand extends Command {
     let embedData;
     let msgData = '';
 
-    end = Date.now();
-    serveTime = (end-start)/1000+'s';
+    const end = Date.now();
+    const serveTime = (end-start)/1000+'s';
 
     if (dailyData) {
       embedData = {
@@ -85,7 +84,7 @@ module.exports = class DailyCommand extends Command {
         },
       };
     } else {
-      msgData = 'I can\'t find daily data under ***'+args+'***, please check your command and try again.';
+      msgData = `Can\'t find daily under ***${args}***.`;
     }
 
     msg.channel.stopTyping();

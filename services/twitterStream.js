@@ -4,7 +4,7 @@ const config = require('../config.json');
 const sendLog = require('./sendLog');
 
 // Maintenance mode
-const maintenanceMode = config.bot.maintenance;
+const maintenanceMode = true; // disabled
 
 /**
  * twitterStream
@@ -12,7 +12,7 @@ const maintenanceMode = config.bot.maintenance;
  */
 module.exports = async function(clientDiscord) {
   if (maintenanceMode) {
-    await sendLog('warn', 'Twitter', 'Maintenance mode is enabled, twitter disabled.');
+    await sendLog('warn', 'Twitter', 'Twitter disabled.');
   } else {
     const clientTwitter = new Twitter({
       consumer_key: process.env.SOYUN_BOT_TWITTER_CONSUMER_KEY,

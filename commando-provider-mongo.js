@@ -1,10 +1,14 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
+/* eslint-disable valid-jsdoc */
 /**
  * Commando MongoDBProvider by paulhobbel
  *
  * Commando is the official framework for discord.js,
- * I like how easy it is to get started with it and add own commands, types, etc.
+ * I like how easy it is to get started with it add own commands, types, etc.
  * Recently I started working on a bot that required to be connected to MongoDB.
- * I converted the default SQLLiteProvider into a provider that could use MongoDB as storage.
+ * I converted the default SQLLiteProvider into a provider that
+ * could use MongoDB as storage.
  *
  * https://github.com/paulhobbel/commando-provider-mongo
  */
@@ -17,38 +21,39 @@ const SettingProvider = require('discord.js-commando').SettingProvider;
  */
 class MongoDBProvider extends SettingProvider {
   /**
-	 * @param {Db} db - Database for the provider
-	 */
+  * @param {Db} db - Database for the provider
+  */
   constructor(mongoClient, dbName) {
     super();
 
     /**
-		 * Database that will be used for storing/retrieving settings
-		 * @type {Db}
-		 */
+     * Database that will be used for storing/retrieving settings
+     * @type {Db}
+     */
     this.mongoClient = mongoClient;
     this.db = mongoClient.db(dbName);
 
     /**
-		 * Client that the provider is for (set once the client is ready, after using {@link CommandoClient#setProvider})
-		 * @name SQLiteProvider#client
-		 * @type {CommandoClient}
-		 * @readonly
-		 */
+     * Client that the provider is for (set once the client is ready,
+     * after using {@link CommandoClient#setProvider})
+     * @name SQLiteProvider#client
+     * @type {CommandoClient}
+     * @readonly
+     */
     Object.defineProperty(this, 'client', {value: null, writable: true});
 
     /**
-		 * Settings cached in memory, mapped by guild ID (or "global")
-		 * @type {Map}
-		 * @private
-		 */
+     * Settings cached in memory, mapped by guild ID (or "global")
+     * @type {Map}
+     * @private
+     */
     this.settings = new Map();
 
     /**
-		 * Listeners on the Client, mapped by the event name
-		 * @type {Map}
-		 * @private
-		 */
+     * Listeners on the Client, mapped by the event name
+     * @type {Map}
+     * @private
+     */
     this.listeners = new Map();
   }
 
@@ -167,11 +172,11 @@ class MongoDBProvider extends SettingProvider {
   }
 
   /**
-	 * Loads all settings for a guild
-	 * @param {string} guild - Guild ID to load the settings of (or "global")
-	 * @param {Object} settings - Settings to load
-	 * @private
-	 */
+   * Loads all settings for a guild
+   * @param {string} guild - Guild ID to load the settings of (or "global")
+   * @param {Object} settings - Settings to load
+   * @private
+   */
   setupGuild(guild, settings) {
     if (typeof guild !== 'string') throw new TypeError('The guild must be a guild ID or "global".');
     guild = this.client.guilds.cache.get(guild) || null;
@@ -188,12 +193,12 @@ class MongoDBProvider extends SettingProvider {
   }
 
   /**
-	 * Sets up a command"s status in a guild from the guild"s settings
-	 * @param {?Guild} guild - Guild to set the status in
-	 * @param {Command} command - Command to set the status of
-	 * @param {Object} settings - Settings of the guild
-	 * @private
-	 */
+   * Sets up a command"s status in a guild from the guild"s settings
+   * @param {?Guild} guild - Guild to set the status in
+   * @param {Command} command - Command to set the status of
+   * @param {Object} settings - Settings of the guild
+   * @private
+   */
   setupGuildCommand(guild, command, settings) {
     if (typeof settings[`cmd-${command.name}`] === 'undefined') return;
     if (guild) {
@@ -205,12 +210,12 @@ class MongoDBProvider extends SettingProvider {
   }
 
   /**
-	 * Sets up a group"s status in a guild from the guild"s settings
-	 * @param {?Guild} guild - Guild to set the status in
-	 * @param {CommandGroup} group - Group to set the status of
-	 * @param {Object} settings - Settings of the guild
-	 * @private
-	 */
+   * Sets up a group"s status in a guild from the guild"s settings
+   * @param {?Guild} guild - Guild to set the status in
+   * @param {CommandGroup} group - Group to set the status of
+   * @param {Object} settings - Settings of the guild
+   * @private
+   */
   setupGuildGroup(guild, group, settings) {
     if (typeof settings[`grp-${group.id}`] === 'undefined') return;
     if (guild) {
@@ -222,25 +227,25 @@ class MongoDBProvider extends SettingProvider {
   }
 
   /**
-	 * Updates a global setting on all other shards if using the {@link ShardingManager}.
-	 * @param {string} key - Key of the setting to update
-	 * @param {*} val - Value of the setting
-	 * @private
-	 */
+   * Updates a global setting on all other shards if using the {@link ShardingManager}.
+   * @param {string} key - Key of the setting to update
+   * @param {*} val - Value of the setting
+   * @private
+   */
   updateOtherShards(key, val) {
     if (!this.client.shard) return;
     key = JSON.stringify(key);
     val = typeof val !== 'undefined' ? JSON.stringify(val) : 'undefined';
     this.client.shard.broadcastEval(`
-			if(this.shard.id !== ${this.client.shard.id} && this.provider && this.provider.settings) {
-				let global = this.provider.settings.get("global");
-				if(!global) {
-					global = {};
-					this.provider.settings.set("global", global);
-				}
-				global[${key}] = ${val};
-			}
-		`);
+      if(this.shard.id !== ${this.client.shard.id} && this.provider && this.provider.settings) {
+        let global = this.provider.settings.get("global");
+        if(!global) {
+          global = {};
+          this.provider.settings.set("global", global);
+        }
+        global[${key}] = ${val};
+      }
+    `);
   }
 }
 

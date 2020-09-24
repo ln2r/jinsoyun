@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-console */
 const MongoClient = require('mongodb').MongoClient;
 const dateformat = require('dateformat');
@@ -12,29 +13,30 @@ const maintenance = configs.bot.maintenance;
 /**
  * SendLog
  * for logging
+ *
  * @param {String} level log level
  * @param {String} location current log location
- * @param {String} message log message 
+ * @param {String} message log message
  * @param {Object} clientData discord cliemt data
  */
 module.exports = async (level, location, message, clientData) => {
   const currentTime = new Date();
 
   // error logging
-  if(!maintenance){
-    if((level === 'error' || level === 'warn') && configs.logs.save){
+  if (!maintenance) {
+    if ((level === 'error' || level === 'warn') && configs.logs.save) {
       const payload = {
         'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
         'level': level,
         'location': location,
         'message': message,
-        'audit': false
+        'audit': false,
       };
 
       MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
         if (err) throw err;
-        const dbo = db.db(dbName);    
-    
+        const dbo = db.db(dbName);
+
         dbo.collection(configs.collection.logs).insertOne(payload, function(err) {
           if (err) throw err;
           db.close();
@@ -42,7 +44,7 @@ module.exports = async (level, location, message, clientData) => {
       });
     }
 
-    if(clientData){
+    if (clientData) {
       // sending dm
       for (let i=0; i < clientData.owners.length; i++) {
         clientData.owners[i].send(
@@ -51,21 +53,21 @@ module.exports = async (level, location, message, clientData) => {
             `\nType: ${level}`+
             `\n**Time**: ${dateformat(Date.now(), 'dddd, dS mmmm yyyy, h:MM:ss TT')}`+
             `\n**Location**: ${location}`+
-            `\n**Content**: ${message}`
+            `\n**Content**: ${message}`,
         );
       }
     }
   }
-  
+
   // bot request counter
-  if(level === 'query'){
+  if (level === 'query') {
     const statsData = await fetchDB(configs.collection.stats, {date: dateformat(currentTime, 'UTC:dd-mmmm-yyyy')});
     let todayStats = 0;
     let payload;
-  
+
     if (statsData.length === 0) {
       todayStats++;
-  
+
       payload = {
         'date': dateformat(currentTime, 'UTC:dd-mmmm-yyyy'),
         'count': todayStats,
@@ -73,11 +75,11 @@ module.exports = async (level, location, message, clientData) => {
     } else {
       todayStats = statsData[0].count + 1;
     }
-  
+
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
       if (err) throw err;
       const dbo = db.db(dbName);
-  
+
       if (statsData.length === 0) {
         dbo.collection(configs.collection.stats).insertOne(payload, function(err) {
           if (err) throw err;
@@ -90,15 +92,15 @@ module.exports = async (level, location, message, clientData) => {
             db.close();
           });
       }
-    });  
+    });
   }
 
   // inefficient, pls fix
   const format = (configs.logs.time)? `${dateformat(currentTime, 'UTC:dd-mm-yyyy HH:MM:ss')} UTC [${location}] ${level}: ${message}` : `[${location}] ${level}: ${message}`;
 
-  if(level !== 'debug'){
+  if (level !== 'debug') {
     console.log(format);
-  }else{
-    if(maintenance) console.log(format);
+  } else {
+    if (maintenance) console.log(format);
   }
 };

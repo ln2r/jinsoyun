@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const sendLog = require('../services/sendLog');
 
 /**
@@ -16,7 +17,7 @@ module.exports = (data) => {
 
   let closestTime;
   let timeDifferenceData;
-  let timeDifferenceHourMax = 24;
+  let differenceHourMax = 24;
 
   sendLog('debug', 'getUTCTimeDifference', `It's now "${timeNow}"`);
 
@@ -28,26 +29,26 @@ module.exports = (data) => {
     sendLog('debug', 'getUTCTimeDifference', `Time remaining: ${timeRemaining}`);
 
     // formatting the data
-    const timeDifferenceHour = Math.abs(Math.floor(timeRemaining / 1000 / 60 / 60));
+    const differenceHour = Math.abs(Math.floor(timeRemaining / 1000 / 60 / 60));
     // use extra variable so "timerRemaining" variable remain unchanged
-    const timeDifferenceHourRaw = timeRemaining - (timeDifferenceHour * 1000 * 60 *60);
+    const differenceHourRaw = timeRemaining - (differenceHour * 1000 * 60 *60);
 
-    const timeDifferenceMinute = Math.abs(Math.floor(timeDifferenceHourRaw / 1000 / 60));
+    const differenceMinute = Math.abs(Math.floor(differenceHourRaw / 1000 / 60));
 
-    sendLog('debug', 'getUTCTimeDifference', `Exact timing: ${timeDifferenceHour}h ${timeDifferenceMinute}m`);
+    sendLog('debug', 'getUTCTimeDifference', `Exact timing: ${differenceHour}h ${differenceMinute}m`);
 
     // checking if current time is smaller than last one or not
-    if (timeDifferenceHour <= timeDifferenceHourMax ) {
-      timeDifferenceHourMax = timeDifferenceHour;
+    if (differenceHour <= differenceHourMax ) {
+      differenceHourMax = differenceHour;
       closestTime = i;
       // storing the formatted data into an array
-      timeDifferenceData = [timeDifferenceHour, timeDifferenceMinute];
+      timeDifferenceData = [differenceHour, differenceMinute];
     }
   }
 
-  sendLog('debug', 'getUTCTimeDifference', `Index: ${closestTime}, ${data[closestTime]}`);
-  sendLog('debug', 'getUTCTimeDifference', `Selected: ${new Date(0, 0, 0, data[closestTime], 0)}`);
-  sendLog('debug', 'getUTCTimeDifference', `Time left: ${timeDifferenceData[0]}h ${timeDifferenceData[1]}`);
+  sendLog('debug', 'timeDiff', `Index: ${closestTime}, ${data[closestTime]}`);
+  sendLog('debug', 'timeDiff', `Selected: ${new Date(0, 0, 0, data[closestTime], 0)}`);
+  sendLog('debug', 'timeDiff', `Time left: ${timeDifferenceData[0]}h ${timeDifferenceData[1]}`);
 
   return {
     'index': closestTime,

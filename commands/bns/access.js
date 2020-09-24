@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 
@@ -21,20 +22,16 @@ module.exports = class KoldrakCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     const start = Date.now();
-    let end;
-    let serveTime;
-
-    let accessData = await utils.fetchDB('access', {name: args});
-
+    const accessData = await utils.fetchDB('access', {name: args});
     const closestTime = utils.getUTCTimeDifference(accessData[0].time);
     let accessName;
     let embedData;
 
-    switch(args){
+    switch (args) {
     case 'koldrak':
       accessName = 'Koldrak\'s Lair';
       break;
@@ -49,10 +46,10 @@ module.exports = class KoldrakCommand extends Command {
     }
 
     msg.channel.stopTyping();
-    end = Date.now();
-    serveTime = (end-start)/1000+'s';
+    const end = Date.now();
+    const serveTime = (end-start)/1000+'s';
 
-    if(accessName){
+    if (accessName) {
       embedData = {
         'embed': {
           'author': {
@@ -63,10 +60,11 @@ module.exports = class KoldrakCommand extends Command {
             'icon_url': 'https://cdn.discordapp.com/emojis/463569669584977932.png?v=1',
             'text': 'Dungeon Access - Served in '+serveTime,
           },
-          'description': 'Available in '+closestTime.left[0]+' hour(s) and '+closestTime.left[1]+' minute(s)',
-        }
+          // eslint-disable-next-line max-len
+          'description': `Available in ${closestTime.left[0]} hour(s) and ${closestTime.left[1]} minute(s)`,
+        },
       };
-    }else{
+    } else {
       embedData = {
         'embed': {
           'author': {
@@ -77,8 +75,12 @@ module.exports = class KoldrakCommand extends Command {
             'icon_url': 'https://cdn.discordapp.com/emojis/463569669584977932.png?v=1',
             'text': 'Dungeon Access - Served in '+serveTime,
           },
-          'description': 'Invalid request. Available request:\n-`koldrak`: Koldrak\'s Lair\n-`hunter`: Hunter\'s Refugee\n-`harvest`: Grand Harvest Raid',
-        }
+          'description': 'Invalid. '+
+                        'Available:'+
+                        '\n-`koldrak`: Koldrak\'s Lair'+
+                        '\n-`hunter`: Hunter\'s Refugee'+
+                        '\n-`harvest`: Grand Harvest Raid',
+        },
       };
     }
     return msg.say(embedData);

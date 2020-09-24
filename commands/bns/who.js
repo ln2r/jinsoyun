@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
 const services = require('../../services/index.js');
@@ -22,21 +23,40 @@ module.exports = class WhoCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say('Command\'s currently disabled.'+globalSettings.message);
     }
 
     const start = Date.now();
-    let end;
-    let serveTime;
 
     let messageOutput;
     let imageUrl;
-    let descriptionMessage;
+    let description;
     let embedColour;
 
     let charaStats;
 
     let errorStatus = false;
+
+    // getting the character name, if the user doesn't give any
+    // their discord nickname will be used instead
+    let query;
+    if (args.length === 0) {
+      // check if it's on dm
+      if (msg.member) {
+        // check if the message author have nickname or not
+        // if not use their display name instead
+        const authorNick = msg.member.nickname;
+        query = (authorNick)? authorNick : msg.member.user.username;
+      } else {
+        query = msg.author.username;
+      }
+    } else {
+      // encoding uri component so character with "circumflex" still searchable
+      query = encodeURIComponent(args);
+    }
+
+    // temp fix for silver's api
+    query = query.toLowerCase();
 
     // getting api data
     const apiData = await utils.fetchDB('apis', {}, {_id: 1});
@@ -46,50 +66,32 @@ module.exports = class WhoCommand extends Command {
     // getting character equipments api address from the database
     const charaAPIAddress = apiData[0].address;
     // getting character traits data api address
-    const ncsoftPlayerTraitsAPIAddress = apiData[6].address;
+    const playerTraitsAPI = apiData[6].address.replace('CHARACTER_NAME', query);
     // getting character skills data api address
-    const ncsoftPlayerSkillsAPIAddress = apiData[4].address;
+    const playerSkillsAPI = apiData[4].address.replace('CHARACTER_NAME', query);
     // getting bnstree site address
-    const ncsoftPlayerInformationAPIAddress = apiData[5].address;
+    const playerInformationAPI = apiData[5].address;
     // getting class icon for embed
-    const ncsoftCharacterClassImageAddress = apiData[7].address;
+    const characterClassImage = apiData[7].address;
 
-    // getting the character name, if the user doesn't give any, their discord nickname will be used instead
-    let charaQuery;
-    if (args.length === 0) {
-      // check if it's on dm
-      if(msg.member){
-        // check if the message author have nickname or not
-        // if not use their display name instead
-        charaQuery = (msg.member.nickname)? msg.member.nickname : msg.member.user.username;
-      }else{
-        charaQuery = msg.author.username;
-      }
-    } else {
-      // encoding uri component so character with "circumflex" still searchable
-      charaQuery = encodeURIComponent(args);
-    }
-
-    // temp fix for silver's api
-    charaQuery = charaQuery.toLowerCase();
-
-    let f2ProfileURL = ncsoftPlayerInformationAPIAddress+charaQuery;
-    f2ProfileURL = f2ProfileURL.replace(' ', '%20'); // replacing the space so discord.js embed wont screaming error
+    let f2ProfileURL = playerInformationAPI+query;
+    // replacing the space so discord.js embed wont screaming error
+    f2ProfileURL = f2ProfileURL.replace(' ', '%20');
 
     // getting character equipments from silveress api
-    const charaData = await utils.fetchSite(charaAPIAddress+charaQuery);
+    const charaData = await utils.fetchSite(charaAPIAddress+query);
     // getting character selected traits from f2 page
-    let traitsData = await utils.fetchSite(ncsoftPlayerTraitsAPIAddress.replace('CHARACTER_NAME', charaQuery));
+    let traitsData = await utils.fetchSite(playerTraitsAPI);
     traitsData = traitsData.records;
     // getting character skills points distributions
-    let skillsData = await utils.fetchSite(ncsoftPlayerSkillsAPIAddress.replace('CHARACTER_NAME', charaQuery));
+    let skillsData = await utils.fetchSite(playerSkillsAPI);
     skillsData = skillsData.records;
 
     // checking if the data fetch return data or error
     if (charaData.status === 'error') {
       // getting default image
       imageUrl = await utils.getGlobalSetting('not_found');
-      descriptionMessage = 'Unable to get character data.\nSite might be unreachable or unavailable.';
+      description = 'Unable to get character data.\nSite might be unreachable.';
       embedColour = 15605837;
 
       await services.sendLog('error', 'who', charaData);
@@ -97,7 +99,7 @@ module.exports = class WhoCommand extends Command {
       errorStatus = true;
     } else if (charaData.error || !traitsData || !skillsData) {
       imageUrl = await utils.getGlobalSetting('not_found');
-      descriptionMessage = 'No Result found on **'+charaQuery+'**.\nPlease check your search and try again.';
+      description = `No result on **${query}**`;
       embedColour = 16574595;
 
       errorStatus = true;
@@ -126,67 +128,122 @@ module.exports = class WhoCommand extends Command {
         for (let i = 0; i < skillsData.length; i++) {
           for (let j = 0; j < skillsData[i].skills.length; j++) {
             if (skillsData[i].skills[j].buildup_max_level !== 0) {
-              SPData.push(skillsData[i].skills[j].name+' ('+skillsData[i].skills[j].buildup_level+'/'+skillsData[i].skills[j].buildup_max_level+')');
+              // eslint-disable-next-line max-len
+              SPData.push(`${skillsData[i].skills[j].name} (${skillsData[i].skills[j].buildup_level}/${skillsData[i].skills[j].buildup_max_level})`);
             }
           }
         }
       }
 
-      const gemData = [charaData.gem1, charaData.gem2, charaData.gem3, charaData.gem4, charaData.gem5, charaData.gem6, charaData.gem7, charaData.gem8];
+      // gems data
+      const gemData = [
+        charaData.gem1,
+        charaData.gem2,
+        charaData.gem3,
+        charaData.gem4,
+        charaData.gem5,
+        charaData.gem6,
+        charaData.gem7,
+        charaData.gem8,
+      ];
 
-      const soulshieldData = [charaData.soulshield1, charaData.soulshield2, charaData.soulshield3, charaData.soulshield4, charaData.soulshield5, charaData.soulshield6, charaData.soulshield7, charaData.soulshield8];
+      // soulshields
+      const soulshieldData = [
+        charaData.soulshield1,
+        charaData.soulshield2,
+        charaData.soulshield3,
+        charaData.soulshield4,
+        charaData.soulshield5,
+        charaData.soulshield6,
+        charaData.soulshield7,
+        charaData.soulshield8,
+      ];
 
-      const gearData = [charaData.ringName, charaData.earringName, charaData.necklaceName, charaData.braceletName, charaData.beltName, charaData.gloves, charaData.soulName, charaData.soulName2, charaData.petAuraName, charaData.talismanName, charaData.soulBadgeName, charaData.mysticBadgeName];
+      // equipments
+      const gearData = [
+        charaData.ringName,
+        charaData.earringName,
+        charaData.necklaceName,
+        charaData.braceletName,
+        charaData.beltName,
+        charaData.gloves,
+        charaData.soulName,
+        charaData.soulName2,
+        charaData.petAuraName,
+        charaData.talismanName,
+        charaData.soulBadgeName,
+        charaData.mysticBadgeName,
+      ];
 
-      let charaClanName = (charaData.guild)? charaData.guild:'*Not in any clan*';
+      const clanName = (charaData.guild)? charaData.guild:'*Not in any clan*';
 
-      let charaAliases = (charaData.otherNames.length > 0)? charaData.otherNames.join(', '):'*No known aliases*';
+      // eslint-disable-next-line max-len
+      const aliases = (charaData.otherNames.length > 0)? charaData.otherNames.join(', '):'*No known aliases*';
 
-      let imageName = (charaData.playerClass === 'Kung Fu Master')?'kungfufighter':(charaData.playerClass.toLowerCase()).replace(/ /gm, '');
-      imageUrl = ncsoftCharacterClassImageAddress+imageName+'.png';
+      const className = charaData.playerClass.toLowerCase().replace(/ /gm, '');
+      // eslint-disable-next-line max-len
+      const imageName = (className === 'Kung Fu Master')?'kungfufighter': className;
+      imageUrl = characterClassImage+imageName+'.png';
+
+      // eslint-disable-next-line max-len
+      const faction = (charaData.faction !== '')? charaData.faction : '*Not in any faction*';
+
+      // stats data
+      const mystic = utils.formatNumber(charaData.mystic);
+      const mysticRate = utils.formatNumber(charaData.mysticRate) * 100;
+      const block = utils.formatNumber(charaData.block);
+      const blockRate = utils.formatNumber(charaData.blockRate) * 100;
+      const evasion = utils.formatNumber(charaData.evasion);
+      const evasionRate = utils.formatNumber(charaData.evasionRate) * 100;
+      const bossAP = utils.formatNumber(charaData.ap_boss);
+      const bossDef = utils.formatNumber(charaData.defence_boss);
+      const crit = utils.formatNumber(charaData.crit);
+      const critRate = utils.formatNumber(charaData.critRate) * 100;
+      const critDamage = utils.formatNumber(charaData.critDamage);
+      const critDamageRate = utils.formatNumber(charaData.critDamageRate) * 100;
 
       embedColour = 1879160;
       charaStats = [
         {
           'name': 'Basic Information',
-          'value': '**Health**: '+utils.formatNumber(charaData.hp)+
-          '\n**Attack Power**: '+utils.formatNumber(charaData.ap)+
-          '\n**Defense**: '+utils.formatNumber(charaData.defence)+
-          '\n**Clan**: '+charaClanName+
-          '\n**Faction**: '+utils.formatString(charaData.faction)+' ('+utils.formatString(charaData.factionRank)+')'+
-          '\n**Aliases**: '+charaAliases+
-          '\n\u200B',
+          'value': `**Class**: ${charaData.style} ${charaData.playerClass}\n`+
+          `**Health**: ${utils.formatNumber(charaData.hp)}\n`+
+          `**Level**: ${charaData.playerLevel} HM ${charaData.playerLevelHM}\n`+
+          `**Attack Power**: ${utils.formatNumber(charaData.ap)}\n`+
+          `**Defense**: ${utils.formatNumber(charaData.defence)}\n`+
+          `**Clan**: ${clanName}\n`+
+          `**Faction**: ${faction}\n`+
+          `**Aliases**: ${aliases}`,
         },
         {
           'name': 'Stats',
-          'value': '**Mystic**: '+utils.formatNumber(charaData.mystic)+' ('+(utils.formatNumber(charaData.mysticRate)*100).toFixed(2)+'%)'+
-          '\n**Block**: '+utils.formatNumber(charaData.block)+' ('+(utils.formatNumber(charaData.blockRate)*100).toFixed(2)+'%)'+
-          '\n**Evasion**: '+utils.formatNumber(charaData.evasion)+' ('+(utils.formatNumber(charaData.evasionRate)*100).toFixed(2)+'%)'+
-          '\n**Boss (Attack Power - Defense)**: '+utils.formatNumber(charaData.ap_boss)+' - '+utils.formatNumber(charaData.defence_boss)+
-          '\n**Critical Hit**: '+utils.formatNumber(charaData.crit)+' ('+(utils.formatNumber(charaData.critRate)*100).toFixed(2)+'%)'+
-          '\n**Critical Damage**: '+utils.formatNumber(charaData.critDamage)+' ('+(utils.formatNumber(charaData.critDamageRate)*100).toFixed(2)+'%)'+
-          '\n\u200B',
+          'value': `**Mystic**: ${mystic} (${mysticRate})\n`+
+          `**Block**: ${block} (${blockRate})\n`+
+          `**Evasion**: ${evasion} (${evasionRate})\n`+
+          `**Boss (Attack Power - Defense)**: ${bossAP} - ${bossDef}\n`+
+          `**Critical**: ${crit} (${critRate})\n`+
+          `**Critical Damage**: ${critDamage} (${critDamageRate})`,
         },
         {
           'name': 'Weapon',
-          'value': utils.formatString(charaData.weaponName)+'\n\u200B',
-        },
-        {
-          'name': 'Gems',
-          'value': utils.formatArray(gemData, '- ', true)+'\n\u200B',
-        },
-        {
-          'name': 'Soulshield',
-          'value': utils.formatArray(soulshieldData, '- ', true)+'\n\u200B',
+          'value': utils.formatString(charaData.weaponName),
         },
         {
           'name': 'Accesories',
-          'value': utils.formatArray(gearData, '- ', true)+'\n\u200B',
+          'value': utils.formatArray(gearData, '- ', true),
+        },
+        {
+          'name': 'Gems',
+          'value': utils.formatArray(gemData, '- ', true),
+        },
+        {
+          'name': 'Soulshields',
+          'value': utils.formatArray(soulshieldData, '- ', true),
         },
         {
           'inline': true,
           'name': 'Points Allocation',
-          'value': utils.formatArray(SPData, '- ', true)+'\n\u200B',
+          'value': utils.formatArray(SPData, '- ', true),
         },
         {
           'inline': true,
@@ -196,15 +253,15 @@ module.exports = class WhoCommand extends Command {
       ];
     }
 
-    end = Date.now();
-    serveTime = (end-start)/1000+'s';
+    const end = Date.now();
+    const serveTime = (end-start)/1000+'s';
 
     if (errorStatus) {
       messageOutput = {
         'embed': {
           'title': 'Character Search',
           'color': embedColour,
-          'description': descriptionMessage,
+          'description': description,
           'footer': {
             'icon_url': 'https://slate.silveress.ie/docs_bns/images/logo.png',
             'text': 'Powered by Silveress\'s BnS API - Served in '+serveTime,
@@ -217,16 +274,15 @@ module.exports = class WhoCommand extends Command {
     } else {
       messageOutput = {
         'embed': {
-          'title': charaData.server+'\'s '+charaData.style+' '+charaData.playerClass+' '+charaData.characterName+' - Level '+charaData.playerLevel+' HM Level '+charaData.playerLevelHM,
+          'title': `Character Information - ${charaData.characterName}`,
           'url': f2ProfileURL,
           'color': embedColour,
           'fields': charaStats,
           'footer': {
-            'icon_url': 'https://slate.silveress.ie/docs_bns/images/logo.png',
             'text': 'Powered by Silveress\'s BnS API - Served in '+serveTime,
           },
           'thumbnail': {
-            'url': imageUrl,
+            'url': charaData.characterImg,
           },
         },
       };

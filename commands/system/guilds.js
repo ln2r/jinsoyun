@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index');
 
@@ -19,6 +21,7 @@ module.exports = class BotGetGuildsCommand extends Command {
 
     // getting connected guilds data
     const guildsData = this.client.guilds.cache;
+    // eslint-disable-next-line prefer-const
     let data = [];
     let count = 0;
 
@@ -37,7 +40,7 @@ module.exports = class BotGetGuildsCommand extends Command {
           {
             'name': `${count} Connected Guilds`,
             'value': utils.formatArray(data, '- ', true),
-          }        
+          },
         ],
       },
     });

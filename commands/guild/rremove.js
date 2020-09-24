@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable require-jsdoc */
 /* eslint-disable no-useless-escape */
 const {Command} = require('discord.js-commando');
 const utils = require('../../utils/index.js');
@@ -30,7 +32,7 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
     if (!globalSettings.status) {
       msg.channel.stopTyping();
 
-      return msg.say('This command is currently disabled.\nReason: '+globalSettings.message);
+      return msg.say(`Command disabled. ${globalSettings.message}`);
     }
 
     let msgData;
@@ -97,7 +99,7 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
 
           msgData = 'Deleted '+msgEmoji+' from your reaction-role message.';
         } else {
-          msgData = 'I can\'t find any reaction-role messages or the emoji you inserted isn\'t used there (you can use `rmessage` to select the correct message).';
+          msgData = 'Can\'t find any reaction-role messages or the emoji you inserted isn\'t used.';
         }
       }
     } else {

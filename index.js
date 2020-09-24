@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 require('dotenv').config();
 
 const {CommandoClient} = require('discord.js-commando');
@@ -26,7 +27,7 @@ const clientDiscord = new CommandoClient({
   owner: config.bot.author_id,
   disableEveryone: true,
   unknownCommandResponse: false,
-  partials: ['MESSAGE', 'CHANNEL', 'REACTION']
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 
 clientDiscord.login(process.env.SOYUN_BOT_DISCORD_SECRET);
@@ -41,7 +42,7 @@ clientDiscord.registry
   ])
   .registerDefaultGroups()
   .registerDefaultCommands({
-    unknownCommand:false
+    unknownCommand: false,
   })
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
@@ -62,7 +63,7 @@ clientDiscord
   })
   .on('ready', async () => {
     const globalSettings = await utils.getGuildSettings(0);
-    let botStatus = globalSettings.status;
+    const botStatus = globalSettings.status;
 
     if (config.bot.maintenance) {
       services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
@@ -80,26 +81,25 @@ clientDiscord
       clientDiscord.emit('commandPrefixChange', guild.id, config.bot.default_prefix);
     }
 
-    services.sendLog('info', 'Bot', `Joined new legendary guild called "${guild.name}"`);
+    services.sendLog('info', 'Bot', `Joined new legendary guild: "${guild.name}"`);
   })
   .on('commandRun', (command) => {
     if (config.bot.maintenance) {
-      services.sendLog('warn', 'Stats', 'Maintenance mode is enabled, command stats disabled.');
+      services.sendLog('warn', 'Stats', 'Maintenance mode, stats disabled.');
     } else {
       services.sendLog('query', command.name, 'Request received.');
     }
   })
   .on('guildMemberAdd', async (member) => {
-    
     services.newMember(member);
   })
   .on('commandError', (error, command, message) => {
     let errorLocation;
     let guildOwnerId;
     let guildOwnerData;
-  
+
     if (config.bot.maintenance) {
-      services.sendLog('info', 'onCommandError', 'Error dm reporting is disabled');
+      services.sendLog('info', 'onCommandError', 'DM reporting disabled');
     } else {
       if (message.guild) {
         errorLocation = message.guild.name;
@@ -124,7 +124,7 @@ clientDiscord
 
       // sending report
       services.sendLog('error', 'Commands', `\`${error.name}:${command.name}\` - "${message.content}\n${command.name}:${command.message}" @ ${errorLocation} (${guildOwnerData})`, clientDiscord);
-    }  
+    }
   })
   .on('messageReactionAdd', async (reaction, user) => {
     // fetching the reaction data
@@ -142,8 +142,10 @@ clientDiscord
   });
 
 clientDiscord.setProvider(
-  MongoClient.connect(process.env.SOYUN_BOT_DB_CONNECT_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then((client) => new MongoDBProvider(client, process.env.SOYUN_BOT_DB_NAME))
-).catch(async (error) => {
+  MongoClient.connect(process.env.SOYUN_BOT_DB_CONNECT_URL, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then((client) => {
+      new MongoDBProvider(client, process.env.SOYUN_BOT_DB_NAME);
+    })).catch(async (error) => {
   await services.sendLog('error', 'Database', error);
 });
 
@@ -154,14 +156,13 @@ services.twitterStream(clientDiscord);
 
 // Automation
 if (config.bot.maintenance) {
-  services.sendLog('warn', 'Automation', 'Maintenance mode is enabled, automation disabled.');
+  services.sendLog('warn', 'Automation', 'Maintenance mode enabled, automation disabled.');
 } else {
   ontime({
     cycle: ['50:00'],
     utc: true,
   }, async (hourly) => {
     services.sendLog('info', 'Automation', 'Running "hourly" automation process...');
-    
     await cron(clientDiscord);
     hourly.done();
     return;
