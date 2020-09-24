@@ -32,8 +32,8 @@
     "twitter": "^1.7.1"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-google": "^0.12.0",
+    "eslint": "^7.9.0",
+    "eslint-config-google": "^0.14.0",
     "nodemon": "^2.0.4"
   }
 }
