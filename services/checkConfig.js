@@ -24,7 +24,7 @@ module.exports = async () => {
       if (err) sendLog('error', 'Configs', err);
       const dbo = db.db(dbName);
 
-      dbo.collection(config.collection.configs).insert(globalBase, async function(err) {
+      dbo.collection(config.collection.configs).insertOne(globalBase, async function(err) {
         if (err) sendLog('error', 'Configs', err);
         db.close();
 
