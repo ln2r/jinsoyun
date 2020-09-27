@@ -87,7 +87,7 @@ module.exports = class DungeonCommand extends Command {
       const weaponSuggestion = (dungeonsData.weapon === '')?
         '*Unspecified Weapon*': dungeonsData.weapon;
 
-      const challengesInfo = await utils.getChallengesList(dungeonsData.id);
+      const challengesInfo = await utils.getChallengesList(dungeonsData.name);
 
       end = Date.now();
       serveTime = (end-start)/1000+'s';
