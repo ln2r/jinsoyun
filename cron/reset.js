@@ -9,6 +9,13 @@ const services = require('../services/index');
  * @param {Guild} clientData discord bot client guild/server connected data
  */
 module.exports = async (clientData) => {
+  // checking global settings
+  const globalSettings = await utils.getGlobalSetting('reset');
+  if (!globalSettings.status) {
+    services.sendLog('warn', 'Reset', `Reset notification disabled, ${globalSettings.message}`);
+    return;
+  }
+
   services.sendLog('info', 'Reset', 'Sending reset notification...');
   const eventSetting = await utils.getGlobalSetting('event');
   const dailySetting = await utils.getGlobalSetting('daily');
