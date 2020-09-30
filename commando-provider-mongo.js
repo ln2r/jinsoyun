@@ -35,7 +35,7 @@ class MongoDBProvider extends SettingProvider {
     /**
      * Client that the provider is for (set once the client is ready,
      * after using {@link CommandoClient#setProvider})
-     * @name SQLiteProvider#client
+     * @name MongoDBProvider#client
      * @type {CommandoClient}
      * @readonly
      */
