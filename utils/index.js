@@ -7,7 +7,6 @@ const formatNumber = require('./formatNumber');
 const formatCurrency = require('./formatCurrency');
 const formatRewards = require('./formatRewards');
 
-const getPriceStatus = require('./getPriceStatus');
 const getDay = require('./getDay');
 const getDaily = require('./getDaily');
 const getWeekly = require('./getWeekly');
@@ -31,7 +30,6 @@ module.exports = {
   formatRewards,
   formatCurrency,
 
-  getPriceStatus,
   getDay,
   getDaily,
   getWeekly,
