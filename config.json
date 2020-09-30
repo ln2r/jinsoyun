@@ -2,7 +2,7 @@
   "bot":{
     "default_prefix": "!",
     "author_id": ["132712988875423745"],
-    "maintenance": true
+    "maintenance": false
   },
   "twitter":{
     "id": "3521186773, 819625154"
@@ -15,7 +15,7 @@
     "configs": "configs"
   },
   "logs":{
-    "time": true,
+    "time": false,
     "save": true
   }
 }
