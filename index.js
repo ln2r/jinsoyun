@@ -54,7 +54,7 @@ clientDiscord
     services.sendLog('warn', 'Discord', warn);
   })
 // remove "//" below to enable debug log
-// .on("debug", console.log)
+// .on('debug', console.log)
   .on('disconnect', () => {
     services.sendLog('warn', 'Discord', 'Connection disconnected!');
   })
@@ -66,7 +66,7 @@ clientDiscord
     const botStatus = globalSettings.status;
 
     if (config.bot.maintenance) {
-      services.sendLog('warn', 'Bot', 'Maintenance mode is enabled, some services disabled.');
+      services.sendLog('warn', 'Bot', 'Maintenance mode, some services disabled.');
     }
 
     clientDiscord.user.setPresence(botStatus).catch(async (error) => {
@@ -85,7 +85,7 @@ clientDiscord
   })
   .on('commandRun', (command) => {
     if (config.bot.maintenance) {
-      services.sendLog('warn', 'Stats', 'Maintenance mode, stats disabled.');
+      services.sendLog('warn', 'Stats', 'Stats disabled.');
     } else {
       services.sendLog('query', command.name, 'Request received.');
     }
@@ -143,11 +143,11 @@ clientDiscord
 
 clientDiscord.setProvider(
   MongoClient.connect(process.env.SOYUN_BOT_DB_CONNECT_URL, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then((client) => {
-      new MongoDBProvider(client, process.env.SOYUN_BOT_DB_NAME);
-    })).catch(async (error) => {
-  await services.sendLog('error', 'Database', error);
-});
+    .then((client) => new MongoDBProvider(client, process.env.SOYUN_BOT_DB_NAME))
+    .catch((error) => {
+      services.sendLog('error', 'DB-Provider', error);
+    }),
+);
 
 // Discord.js Commando scripts end here
 
@@ -156,7 +156,7 @@ services.twitterStream(clientDiscord);
 
 // Automation
 if (config.bot.maintenance) {
-  services.sendLog('warn', 'Automation', 'Maintenance mode enabled, automation disabled.');
+  services.sendLog('warn', 'Automation', 'Automation disabled.');
 } else {
   ontime({
     cycle: ['50:00'],
