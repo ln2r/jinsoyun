@@ -21,14 +21,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -38,10 +30,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -59,16 +47,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -77,6 +61,12 @@
         "Moon Refuge"
       ],
       "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Midnight Skypetal Plains"
+      ],
+      "name": "Rage Against the Longgui"
     },
     {
       "location": [
@@ -110,15 +100,15 @@
     },
     {
       "location": [
-        "Warped Citadel"
-      ],
-      "name": "Warped Beyond Reason"
-    },
-    {
-      "location": [
         "Cathedra Cliffs"
       ],
       "name": "Waiting in the Wings"
+    },
+    {
+      "location": [
+        "Halcyon Hills"
+      ],
+      "name": "Operation Monkey Shine"
     },
     {
       "location": [
@@ -128,9 +118,9 @@
     },
     {
       "location": [
-        "Whirlwind Valley"
+        "Beluga Lagoon"
       ],
-      "name": "One Whirlwind Valley"
+      "name": "Beluga Lagoon Triple Crown"
     },
     {
       "location": [
@@ -162,14 +152,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -179,10 +161,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -200,16 +178,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -224,12 +198,6 @@
         "Cold Storage"
       ],
       "name": "In the Dead of the Winter"
-    },
-    {
-      "location": [
-        "Starstone Mines"
-      ],
-      "name": "The Leader of the Pack"
     },
     {
       "location": [
@@ -275,6 +243,24 @@
     },
     {
       "location": [
+        "Naryu Sanctum"
+      ],
+      "name": "Gatecrasher at the Naryu Sanctum"
+    },
+    {
+      "location": [
+        "Arena Match"
+      ],
+      "name": "One on One"
+    },
+    {
+      "location": [
+        "Beluga Lagoon"
+      ],
+      "name": "Beluga Lagoon Triple Crown"
+    },
+    {
+      "location": [
         "Koldrak's Lair"
       ],
       "name": "The Dragon's Lair"
@@ -303,14 +289,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -320,10 +298,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -341,16 +315,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -359,6 +329,12 @@
         "Moon Refuge"
       ],
       "name": "A Mid-Bummer Night's Dream"
+    },
+    {
+      "location": [
+        "Midnight Skypetal Plains"
+      ],
+      "name": "Rage Against the Longgui"
     },
     {
       "location": [
@@ -404,6 +380,12 @@
     },
     {
       "location": [
+        "Halcyon Hills"
+      ],
+      "name": "Operation Monkey Shine"
+    },
+    {
+      "location": [
         "Arena Match"
       ],
       "name": "Tag Match Win"
@@ -412,7 +394,7 @@
       "location": [
         "Whirlwind Valley"
       ],
-      "name": "One Whirlwind Valley"
+      "name": "Whirlwind Valley Triple Crown"
     },
     {
       "location": [
@@ -444,14 +426,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -461,10 +435,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -482,16 +452,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -503,27 +469,27 @@
     },
     {
       "location": [
+        "Midnight Skypetal Plains"
+      ],
+      "name": "Rage Against the Longgui"
+    },
+    {
+      "location": [
         "Heaven's Mandate"
       ],
       "name": "Rose from the Past"
     },
     {
       "location": [
-        "Starstone Mines"
-      ],
-      "name": "The Leader of the Pack"
-    },
-    {
-      "location": [
-        "Hollow's Heart"
-      ],
-      "name": "Horrors of the Hollow"
-    },
-    {
-      "location": [
         "Sandstorm Temple"
       ],
       "name": "Bad Karma"
+    },
+    {
+      "location": [
+        "The Shadowmoor"
+      ],
+      "name": "Shadowmoor Rising"
     },
     {
       "location": [
@@ -554,6 +520,18 @@
         "Stonescale Passage"
       ],
       "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Halcyon Hills"
+      ],
+      "name": "Operation Monkey Shine"
+    },
+    {
+      "location": [
+        "Naryu Sanctum"
+      ],
+      "name": "Gatecrasher at the Naryu Sanctum"
     },
     {
       "location": [
@@ -591,14 +569,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -608,10 +578,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -629,16 +595,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -650,15 +612,15 @@
     },
     {
       "location": [
-        "Cold Storage"
+        "Midnight Skypetal Plains"
       ],
-      "name": "In the Dead of the Winter"
+      "name": "Rage Against the Longgui"
     },
     {
       "location": [
-        "Starstone Mines"
+        "Cold Storage"
       ],
-      "name": "The Leader of the Pack"
+      "name": "In the Dead of the Winter"
     },
     {
       "location": [
@@ -688,7 +650,7 @@
       "location": [
         "Brood Chamber"
       ],
-      "name": "Brood Awakening"
+      "name": "Brood Awakening (Hard)"
     },
     {
       "location": [
@@ -704,6 +666,12 @@
     },
     {
       "location": [
+        "Naryu Sanctum"
+      ],
+      "name": "Gatecrasher at the Naryu Sanctum"
+    },
+    {
+      "location": [
         "Arena Match"
       ],
       "name": "One on One"
@@ -712,7 +680,7 @@
       "location": [
         "Whirlwind Valley"
       ],
-      "name": "One Whirlwind Valley"
+      "name": "Whirlwind Valley Triple Crown"
     },
     {
       "location": [
@@ -820,8 +788,8 @@
     },
     {
       "location": [
-        "Brood Chamber",
-        "Stonescale Passage"
+        "Cathedra Cliffs",
+        "Naryu Sanctum"
       ],
       "name": "A Masterful Task"
     },
@@ -855,14 +823,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -872,10 +832,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -893,16 +849,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -914,15 +866,15 @@
     },
     {
       "location": [
-        "Cold Storage"
+        "Midnight Skypetal Plains"
       ],
-      "name": "In the Dead of the Winter"
+      "name": "Rage Against the Longgui"
     },
     {
       "location": [
-        "Hollow's Heart"
+        "Cold Storage"
       ],
-      "name": "Horrors of the Hollow"
+      "name": "In the Dead of the Winter"
     },
     {
       "location": [
@@ -940,7 +892,7 @@
       "location": [
         "Brood Chamber"
       ],
-      "name": "Brood Awakening"
+      "name": "Brood Awakening (Hard)"
     },
     {
       "location": [
@@ -962,6 +914,12 @@
     },
     {
       "location": [
+        "Naryu Sanctum"
+      ],
+      "name": "Gatecrasher at the Naryu Sanctum"
+    },
+    {
+      "location": [
         "Arena Match"
       ],
       "name": "One on One"
@@ -970,7 +928,7 @@
       "location": [
         "Nova Core"
       ],
-      "name": "Shot at Stardom"
+      "name": "Go Supernova"
     },
     {
       "location": [
@@ -1002,14 +960,6 @@
       "tier": 3
     },
     {
-      "name": "Reputation x10000",
-      "tier": 3
-    },
-    {
-      "name": "Gold x10",
-      "tier": 3
-    },
-    {
       "name": "Arena Key",
       "tier": 5
     },
@@ -1019,10 +969,6 @@
     },
     {
       "name": "Daily Challenges Treasure Chest",
-      "tier": 5
-    },
-    {
-      "name": "Reputation x15000",
       "tier": 5
     },
     {
@@ -1040,16 +986,12 @@
     {
       "name": "Honing Oil x5",
       "tier": 7
-    },
-    {
-      "name": "Reputation x20000",
-      "tier": 7
     }
   ],
   "quests": [
     {
       "location": [
-        "Mushin's Tower - 8th Floor"
+        "Mushin's Tower - 7th Floor"
       ],
       "name": "The Final Training"
     },
@@ -1061,15 +1003,15 @@
     },
     {
       "location": [
-        "Cold Storage"
+        "Midnight Skypetal Plains"
       ],
-      "name": "In the Dead of the Winter"
+      "name": "Rage Against the Longgui"
     },
     {
       "location": [
-        "Starstone Mines"
+        "Cold Storage"
       ],
-      "name": "The Leader of the Pack"
+      "name": "In the Dead of the Winter"
     },
     {
       "location": [
@@ -1093,7 +1035,7 @@
       "location": [
         "Brood Chamber"
       ],
-      "name": "Brood Awakening"
+      "name": "Brood Awakening (Hard)"
     },
     {
       "location": [
@@ -1118,6 +1060,18 @@
         "Stonescale Passage"
       ],
       "name": "Sword and Scale"
+    },
+    {
+      "location": [
+        "Halcyon Hills"
+      ],
+      "name": "Operation Monkey Shine"
+    },
+    {
+      "location": [
+        "Naryu Sanctum"
+      ],
+      "name": "Gatecrasher at the Naryu Sanctum"
     },
     {
       "location": [

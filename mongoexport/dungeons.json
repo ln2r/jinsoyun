@@ -378,7 +378,7 @@
   "name": "Naryu Sanctum",
   "type": 6,
   "requirements": [
-    "Level 50 or Higher (Recommended Level 55 HM 13)",
+    "Level 60 or Higher (Recommended Level 60 HM 24)",
     "Chapter 11: The Grand Enchantress"
   ],
   "guides": [
@@ -389,11 +389,29 @@
   ],
   "attack_power": {
     "easy": 0,
-    "normal": 845,
-    "hard": 0
+    "normal": 1855,
+    "hard": 2320
   },
-  "weapon": "Seraph Weapon - Stage 7",
-  "rewards": []
+  "weapon": "",
+  "rewards": [
+    "Deception Outift",
+    "Greater Xanos Gloves",
+    "Nocturnal Scale Fragment",
+    "Locked Greater Xanos Weapon",
+    "Greater Naryu Sanctum Bracelet Chest",
+    "Sealed Greater Naryu Sanctum Bracelet Chest",
+    "Hidden Promise Treasure Chest",
+    "Rare Element",
+    "Dark Devotion Outfit",
+    "Greater Xanos' Psyche",
+    "Rare Hidden Promise Treasure Chest",
+    "Sealed Nocturnal Scale",
+    "Pet Pack",
+    "Sacred Vial",
+    "Sealed Hongmoon Master Scroll",
+    "Triple Threat Pet Gem Chest",
+    "Divine Splendor Psyche Chest"
+  ]
 },{
   "_id": {
     "$oid": "5d7ee59ccdff4f13b4efb7d6"
@@ -1600,7 +1618,7 @@
     "$oid": "5e280e4e0f2c53038c057c6b"
   },
   "id": 59,
-  "name": "Mushin's Tower - 8th Floor",
+  "name": "Mushin's Tower - 7th Floor",
   "type": 1,
   "requirements": [
     "Level 60 or Higher (Recommended Level 60 HM 10)",

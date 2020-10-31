@@ -370,7 +370,7 @@
   "id": 36,
   "name": "The Final Training",
   "location": [
-    "Mushin's Tower - 8th Floor"
+    "Mushin's Tower - 7th Floor"
   ],
   "type": 0
 },{
@@ -448,8 +448,8 @@
     "$oid": "5e906fd1f92a5f24d88d5a49"
   },
   "location": [
-    "Brood Chamber",
-    "Stonescale Passage"
+    "Cathedra Cliffs",
+    "Naryu Sanctum"
   ],
   "name": "A Masterful Task",
   "type": 1,
@@ -514,4 +514,24 @@
   "name": "Cold as Steel",
   "type": 2,
   "id": 49
+},{
+  "_id": {
+    "$oid": "5f816ec5710d781a44f1476f"
+  },
+  "location": [
+    "Halcyon Hills"
+  ],
+  "name": "Operation Monkey Shine",
+  "type": 0,
+  "id": 50
+},{
+  "_id": {
+    "$oid": "5f81704a710d781a44f14770"
+  },
+  "location": [
+    "Naryu Sanctum"
+  ],
+  "name": "Gatecrasher at the Naryu Sanctum",
+  "type": 0,
+  "id": 51
 }]
