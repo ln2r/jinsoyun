@@ -33,11 +33,14 @@ module.exports = class RegCommand extends Command {
     }
 
     const GuildSettingData = await Utils.getGuildSettings(msg.guild.id);
+    Services.sendLog('debug', 'cmd-join', `guild id: ${msg.guild.id}`);
+    Services.sendLog('debug', 'cmd-join', `\n${JSON.stringfy(GuildSettingData.join, null, 2)}`);
 
     // formatting the nickname
     const UserNickname = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
 
     if (GuildSettingData) {
+      // checking if guild have member verification set
       if (GuildSettingData.join && GuildSettingData.join.status !== 'disable') {
         // changing the nickname
         if (msg.channel.permissionsFor(this.client.user).has('MANAGE_NICKNAMES') && msg.author.id !== msg.guild.owner.id) {
@@ -66,7 +69,6 @@ module.exports = class RegCommand extends Command {
           const PermissionView = msg.channel.permissionsFor(this.client.user).has('VIEW_CHANNEL');
           const PermissionSend = msg.channel.permissionsFor(this.client.user).has('SEND_MESSAGES');
           Services.sendLog('debug', 'Cmd-Join', `perm-view: ${PermissionView}, perm-send: ${PermissionSend}`);
-
           if (PermissionView && PermissionSend) {
             const JoinMessageAuthor = '<@'+msg.author.id+'>';
             const JoinServerName = msg.guild.name;
