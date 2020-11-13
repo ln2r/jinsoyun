@@ -26,7 +26,11 @@ module.exports = class BotGetGuildsCommand extends Command {
     let count = 0;
 
     guildsData.map((g) => {
-      data.push(`${g.name} - ${g.owner.user.username}#${g.owner.user.discriminator}`);
+      if (g.owner && g) {
+        data.push(`${g.name} - ${g.owner.user.username}#${g.owner.user.discriminator}`);
+      } else {
+        data.push(`[REDACTED]`);
+      }
       count++;
     });
 
