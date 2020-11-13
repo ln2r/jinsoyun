@@ -8,7 +8,7 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'rremove',
-      aliases: ['reactremove', 'rre'],
+      aliases: ['reactremove', 'rre', 'rr'],
       group: 'guild',
       memberName: 'rremove',
       description: 'Remove reaction from reaction role message',
@@ -81,15 +81,20 @@ module.exports = class ReactionRoleReactionRemoveCommand extends Command {
         // removing reaction and update db
         if (msgFound && emojiFound) {
           // getting the channel data
-          const channel = this.client.channels.cache.get(reactionRoleData[messageIndex].channel);
           // get the message and remove the reaction
           const emojiName = emojiId.replace(/\:(.*?)$/, '');
           // console.debug("emoji name: "+emojiName);
-          channel.fetch(msg.guild.currentMessage).then((message) => {
-            const filtered = message.reactions.filter((reaction) => reaction.emoji.name === emojiName);
+          msg.channel.fetch(msg.guild.currentMessage)
+            .then((m) => {
+              m.messages.cache.map((x) => {
+                if (x.id == msg.guild.currentMessage) {
+                  const filtered = x.reactions.cache.filter((r) => r.emoji.name === emojiName);
 
-            filtered.forEach((reaction) => reaction.remove(this.client.user.id));
-          });
+                  // TODO: just remove the bot reaction
+                  filtered.forEach((r) => r.remove(this.client.user.id));
+                }
+              });
+            });
 
           // deletion
           reactionRoleData[messageIndex].reactions.splice(reactionIndex, 1);
