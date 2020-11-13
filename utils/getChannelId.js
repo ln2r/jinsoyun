@@ -5,8 +5,12 @@
  * @return {Snowflake | null} mentioned channel id
  */
 module.exports = function(message) {
-  if (message.startsWith('<#') && message.endsWith('>')) {
-    return message.slice(2, -1);
+  if (message) {
+    if (message.startsWith('<#') && message.endsWith('>')) {
+      return message.slice(2, -1);
+    } else {
+      return null;
+    }
   } else {
     return null;
   }
