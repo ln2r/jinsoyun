@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 const {Command} = require('discord.js-commando');
+const Services = require('../../services/index.js');
 const utils = require('../../utils/index.js');
 
 module.exports = class GuildSettingsCommand extends Command {
@@ -411,14 +412,16 @@ module.exports = class GuildSettingsCommand extends Command {
 
           // after they did join command
           case 'ch':
-            if (query[2] == 'disable') {
-              joinSettings.channel = 'disable';
-              joinChannelText = 'disable';
-              changed = true;
-            } else {
-              joinSettings.channel = utils.getChannelId(query[2]);
-              joinChannelText = '<#'+utils.getChannelId(query[2])+'>';
-              changed = true;
+            if (query.length > 2) {
+              if (query[2] == 'disable') {
+                joinSettings.channel = 'disable';
+                joinChannelText = 'disable';
+                changed = true;
+              } else {
+                joinSettings.channel = utils.getChannelId(query[2]);
+                joinChannelText = '<#'+utils.getChannelId(query[2])+'>';
+                changed = true;
+              }
             }
 
             optionEmbedData = [
@@ -431,14 +434,16 @@ module.exports = class GuildSettingsCommand extends Command {
 
           // role given
           case 'role':
-            if (query[2] == 'disable') {
-              joinSettings.role = 'disable';
-              joinRoleText = 'disable';
-              changed = true;
-            } else {
-              joinSettings.role = utils.getRoleId(query[2]);
-              joinRoleText = '<@&'+utils.getRoleId(query[2])+'>';
-              changed = true;
+            if (query.length > 2) {
+              if (query[2] == 'disable') {
+                joinSettings.role = 'disable';
+                joinRoleText = 'disable';
+                changed = true;
+              } else {
+                joinSettings.role = utils.getRoleId(query[2]);
+                joinRoleText = '<@&'+utils.getRoleId(query[2])+'>';
+                changed = true;
+              }
             }
 
             optionEmbedData = [
@@ -504,7 +509,7 @@ module.exports = class GuildSettingsCommand extends Command {
             }
             // join command custom message
             if (guildSettings.join) {
-              joinStatusText = (guildSettings.join.status)? '*Enabled*':'*Disabled*';
+              joinStatusText = (guildSettings.join.status !== 'disable')? '*Enabled*':'*Disabled*';
               joinMessageText = (guildSettings.join.message)? guildSettings.join.message : '*No Data*';
               joinChannelText = (guildSettings.join.channel)?'<#'+guildSettings.join.channel+'>' : '*No Data*';
               joinRoleText = (guildSettings.join.role)? '<@&'+guildSettings.join.role+'>' : '*No Data*';
@@ -635,6 +640,8 @@ module.exports = class GuildSettingsCommand extends Command {
           ];
           break;
         }
+
+        Services.sendLog('debug', `cmd-set:${query[0]}-${query[1]}`, `q: ${query}(${query.length}) changed: ${changed}`);
 
         if (changed === true) {
           msgData = msg.guild.name+'\'s setting for *'+optionDisplayName+'* has been changed.';
