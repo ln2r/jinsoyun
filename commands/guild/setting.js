@@ -208,7 +208,7 @@ module.exports = class GuildSettingsCommand extends Command {
           }
 
           optionDisplayName = 'Twitter News';
-          optionDescription = 'Blade & Soul and Blade & Soul Ops\'s tweets.';
+          optionDescription = '**Warning: Currently not working**\nBlade & Soul and Blade & Soul Ops\'s tweets.';
           optionEmbedData = [
             {
               'name': 'Channel Name',
