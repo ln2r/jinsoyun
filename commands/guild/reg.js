@@ -34,7 +34,7 @@ module.exports = class RegCommand extends Command {
 
     const GuildSettingData = await Utils.getGuildSettings(msg.guild.id);
     Services.sendLog('debug', 'cmd-join', `guild id: ${msg.guild.id}`);
-    Services.sendLog('debug', 'cmd-join', `\n${JSON.stringfy(GuildSettingData.join, null, 2)}`);
+    Services.sendLog('debug', 'cmd-join', GuildSettingData);
 
     // formatting the nickname
     const UserNickname = args.replace(/(^|\s)\S/g, (l) => l.toUpperCase());
