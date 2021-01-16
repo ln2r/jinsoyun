@@ -118,9 +118,9 @@ module.exports = async function(clientDiscord) {
 
                     if (ch.permissionsFor(clientDiscord.user).has('VIEW_CHANNEL') && ch.permissionsFor(clientDiscord.user).has('SEND_MESSAGES')) {
                       ch.send(embedData);
-                      
+
                       sendLog('debug', 'Twitter', 'Notification sent sucessfully.');
-                    }else{
+                    } else {
                       sendLog('warn', 'Twitter', `Failed to notify "${guild.name}", issue with permission.`);
                     }
                   }
