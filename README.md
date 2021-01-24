@@ -3,6 +3,9 @@
   - do test with 0 db content
  -->
 
+# THIS PROJECT CURRENTLY ON HIATUS
+Bot will be offilne. Any bug or new update wont be applied until future notice.
+
 # Jinsoyun
 A discord bot built for Blade &amp; Soul's NA Server
 
