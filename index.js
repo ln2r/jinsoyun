@@ -27,7 +27,7 @@ const clientDiscord = new CommandoClient({
   owner: config.bot.author_id,
   disableEveryone: true,
   unknownCommandResponse: false,
-  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+  partials: ['MESSAGE', 'CHANNEL'],
 });
 
 clientDiscord.login(process.env.SOYUN_BOT_DISCORD_SECRET);
@@ -90,9 +90,6 @@ clientDiscord
       services.sendLog('query', command.name, 'Request received.');
     }
   })
-  .on('guildMemberAdd', async (member) => {
-    services.newMember(member);
-  })
   .on('commandError', (error, command, message) => {
     let errorLocation;
     let guildOwnerId;
@@ -125,20 +122,6 @@ clientDiscord
       // sending report
       services.sendLog('error', 'Commands', `\`${error.name}:${command.name}\` - "${message.content}\n${command.name}:${command.message}" @ ${errorLocation} (${guildOwnerData})`, clientDiscord);
     }
-  })
-  .on('messageReactionAdd', async (reaction, user) => {
-    // fetching the reaction data
-    if (reaction.message.partial) await reaction.message.fetch();
-    if (reaction.partial) await reaction.fetch();
-
-    services.reactionRole(reaction, user, 'add', clientDiscord.user.id);
-  })
-  .on('messageReactionRemove', async (reaction, user) => {
-    // fetching the reaction data
-    if (reaction.message.partial) await reaction.message.fetch();
-    if (reaction.partial) await reaction.fetch();
-
-    services.reactionRole(reaction, user, 'remove', clientDiscord.user.id);
   });
 
 clientDiscord.setProvider(
