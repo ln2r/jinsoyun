@@ -18,7 +18,7 @@ module.exports = async () => {
   if (globalSettings.length == 0) {
     sendLog('info', 'Configs', 'Global settings not found, creating one...');
 
-    const globalBase = require('../globalSettings.example.json');
+    const globalBase = require('../template/globalSettings.example.json');
 
     MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, async function(err, db) {
       if (err) sendLog('error', 'Configs', err);
