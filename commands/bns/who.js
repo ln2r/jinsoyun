@@ -43,8 +43,6 @@ module.exports = class WhoCommand extends Command {
     if (args.length === 0) {
       // check if it's on dm
       if (msg.member) {
-        // check if the message author have nickname or not
-        // if not use their display name instead
         const authorNick = msg.member.nickname;
         query = (authorNick)? authorNick : msg.member.user.username;
       } else {
