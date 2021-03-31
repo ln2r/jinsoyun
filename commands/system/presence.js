@@ -3,13 +3,13 @@
 const {Command} = require('discord.js-commando');
 const services = require('../../services/index');
 
-module.exports = class ResetNotificationCommand extends Command {
+module.exports = class ChangePresenceCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'status',
+      name: 'presence',
       group: 'system',
-      memberName: 'status',
-      description: 'Change bot game status.',
+      memberName: 'presence',
+      description: 'Change bot presence status.',
       hidden: true,
       ownerOnly: true,
     });
