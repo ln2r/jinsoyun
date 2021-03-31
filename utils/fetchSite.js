@@ -7,11 +7,7 @@ const sendLog = require('../services/sendLog');
  * @param {String} address site address
  * @return {Object} data fetched from site in JSON format
  * @example
- *  // Using the function locally
- *  module.exports.getSiteData("https://api.silveress.ie/bns/v3/items");
- *
- *  // Using the function outside the file
- *  core.getSiteData("https://api.silveress.ie/bns/v3/items");
+ *  utils.getSiteData("https://api.silveress.ie/bns/v3/items");
  */
 module.exports = async function(address) {
   sendLog('debug', 'fetchSite', `Fetching data from ${address}...`);

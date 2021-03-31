@@ -47,18 +47,6 @@ module.exports = async function(system) {
     return settingsData[0].settings.weekly;
   case 'who':
     return settingsData[0].settings.who;
-  case 'nickname':
-    return settingsData[0].settings.nickname;
-  case 'radd':
-    return settingsData[0].settings.radd;
-  case 'raddonce':
-    return settingsData[0].settings.raddonce;
-  case 'reg':
-    return settingsData[0].settings.reg;
-  case 'rmessage':
-    return settingsData[0].settings.rmessage;
-  case 'rremove':
-    return settingsData[0].settings.rremove;
   case 'setting':
     return settingsData[0].settings.setting;
   case 'access':
