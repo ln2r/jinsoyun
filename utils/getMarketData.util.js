@@ -1,7 +1,7 @@
 import ago from 's-ago';
-import { MARKET_LIMIT } from "../consts/MarketLimit.const";
-import { getCurrency } from "./getCurrency.util";
-import { removeDuplicates } from "./removeDuplicates.util";
+import { MARKET_LIMIT } from "../consts/MarketLimit.const.js";
+import { getCurrency } from "./getCurrency.util.js";
+import { removeDuplicates } from "./removeDuplicates.util.js";
 
 export const getMarketData = (data) => {
   const clean = removeDuplicates(data);
