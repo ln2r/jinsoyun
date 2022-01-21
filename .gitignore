@@ -21,3 +21,7 @@ mongoexport/classes.json
 
 # pm2
 ecosystem.config.js
+
+# docker stuff
+*-compose.*
+Dockerfile
