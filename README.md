@@ -3,8 +3,8 @@
   - do test with 0 db content
  -->
 
-# THIS PROJECT CURRENTLY ON HIATUS
-Bot will be offilne. Any bug or new update wont be applied until future notice.
+# Rework
+There's currently a rework in progress using the new Discord Slash Command feature, [check it out here](https://github.com/ln2r/jinsoyun/tree/rework).
 
 # Jinsoyun
 A discord bot built for Blade &amp; Soul's NA Server
