@@ -31,8 +31,9 @@ Blade and Soul related Discord bot, originally built for Grumpy Butts clan
 
 ## Credits
 * Challenges data obtained from [Hongmoon Archives](https://www.hongmoon-archives.com/challenge/list-of-challenges)
-* Character data obtained from Blade and Soul character information page.
 * Market data obtained from [Silver BNS API](https://gitlab.com/Silver_BnS)
+* Character data obtained from Blade and Soul character information page.
+* Event data obtained from Blade and Soul news page.
 
 ## Contact
 * Discord: ln2r#1691
