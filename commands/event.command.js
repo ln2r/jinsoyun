@@ -11,7 +11,7 @@ export const command = {
     const events = []
     apiData.events.map(event => {
       events.push(`**${event.title}**
-      *${event.summary.replace(':', '.')}*
+      *"${event.summary.replace(':', '.')}"*
       - Duration: ${event.duration}
       - Redeem: ${event.redemption}
       - Currency: ${event.currency}
