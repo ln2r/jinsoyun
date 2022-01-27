@@ -32,9 +32,14 @@ export const command = {
       })  
     }
 
+    const characters = [];
+    apiData.characters.map(chara => {
+      characters.push(chara.name)      
+    });
+
     const embed = new MessageEmbed()
       .setColor('BLUE')
-      .setTitle(`${apiData.server} ${apiData.race} ${apiData.class} ${apiData.name}`)
+      .setTitle(`[${(apiData.playing)? 'Online' : 'Offline'}] ${apiData.server} ${apiData.race} ${apiData.class} ${apiData.name}`)
       .setDescription(`
         **Level:** ${apiData.level}
         **Attack Power**: ${apiData.stats.attackPower.value}
@@ -43,6 +48,11 @@ export const command = {
         **Faction**: ${(apiData.faction.name === null)? 'No Data' : apiData.faction.name } (${(apiData.faction.rank === null)? 'No Data' : apiData.faction.rank })
         **Last Seen**: ${apiData.lastSeen}
       `)
+      .addFields(
+        { name: 'Owned Characters',
+          value: (characters.length === 0)? 'No Data' : characters.join(', '),
+        },
+      )
       .addFields(
         { name: 'Stats', 
           value: `
