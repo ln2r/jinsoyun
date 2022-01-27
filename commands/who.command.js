@@ -41,12 +41,7 @@ export const command = {
       .setColor('BLUE')
       .setTitle(`[${(apiData.playing)? 'Online' : 'Offline'}] ${apiData.server} ${apiData.race} ${apiData.class} ${apiData.name}`)
       .setDescription(`
-        **Level:** ${apiData.level}
-        **Attack Power**: ${apiData.stats.attackPower.value}
-        **Defense**: ${apiData.stats.defense.value}
-        **Guild**: ${apiData.guild}
-        **Faction**: ${(apiData.faction.name === null)? 'No Data' : apiData.faction.name } (${(apiData.faction.rank === null)? 'No Data' : apiData.faction.rank })
-        **Last Seen**: ${apiData.lastSeen}
+        **Level:** ${apiData.level}\n**Attack Power**: ${apiData.stats.attackPower.value}\n**Defense**: ${apiData.stats.defense.value}\n**Guild**: ${apiData.guild}\n**Faction**: ${(apiData.faction.name === null)? 'No Data' : apiData.faction.name } (${(apiData.faction.rank === null)? 'No Data' : apiData.faction.rank })\n**Last Seen**: ${apiData.lastSeen}
       `)
       .addFields(
         { name: 'Owned Characters',
@@ -56,17 +51,7 @@ export const command = {
       .addFields(
         { name: 'Stats', 
           value: `
-            **HP**: ${apiData.stats.hp.value}
-            **Regeneration (In-Combat)**: ${apiData.stats.hp.regenCombat}
-            **Recovery**: ${apiData.stats.hp.recovery} (${apiData.stats.hp.recoveryRate}%)
-            **Critical**: ${apiData.stats.critical.value} (${apiData.stats.critical.rate}%)
-            **Critical Damage**: ${apiData.stats.critical.damage} (${apiData.stats.critical.damageRate}%)
-            **Mystic Damage**: ${apiData.stats.mystic.value} (${apiData.stats.mystic.rate}%)
-            **Block**: ${apiData.stats.block.value} (${apiData.stats.block.rate}%)
-            **Damage Reduction**: ${apiData.stats.block.reduction}%
-            **Evasion**: ${apiData.stats.evasion.value} (${apiData.stats.evasion.rate}%)
-            **Boss (Attack Power - Defense)**: ${apiData.stats.attackPower.boss} - ${apiData.stats.defense.boss}
-            **PVP (Attack Power - Defense)**: ${apiData.stats.attackPower.pvp} - ${apiData.stats.defense.pvp}
+            **HP**: ${apiData.stats.hp.value}\n**Regeneration (In-Combat)**: ${apiData.stats.hp.regenCombat}\n**Recovery**: ${apiData.stats.hp.recovery} (${apiData.stats.hp.recoveryRate}%)\n**Critical**: ${apiData.stats.critical.value} (${apiData.stats.critical.rate}%)\n**Critical Damage**: ${apiData.stats.critical.damage} (${apiData.stats.critical.damageRate}%)\n**Mystic Damage**: ${apiData.stats.mystic.value} (${apiData.stats.mystic.rate}%)\n**Block**: ${apiData.stats.block.value} (${apiData.stats.block.rate}%)\n**Damage Reduction**: ${apiData.stats.block.reduction}%\n**Evasion**: ${apiData.stats.evasion.value} (${apiData.stats.evasion.rate}%)\n**Boss (Attack Power - Defense)**: ${apiData.stats.attackPower.boss} - ${apiData.stats.defense.boss}\n**PVP (Attack Power - Defense)**: ${apiData.stats.attackPower.pvp} - ${apiData.stats.defense.pvp}
           `
         },
       )
