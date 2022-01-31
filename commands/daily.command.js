@@ -12,7 +12,9 @@ export const command = {
                   .setDescription('Day selection')
           ),
   async execute(interaction) {
-    const query = (interaction.options.get('day'))?.value || new Date().toLocaleString('en-us', { weekday: 'long' });
+    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const query = (interaction.options.get('day'))?.value || days[new Date().getUTCDay()];
+
     const apiData = await getApi(`${process.env.API_URL}/challenges/${query.toLowerCase()}`);
 
     const embed = new MessageEmbed()
