@@ -2,16 +2,18 @@ import get from 'axios'
 import { redisClient } from '../configs/redis.config.js';
 import { CACHE_AGE } from '../consts/CacheAge.const.js';
 
-export const getApi = async (url, {cache = true}) => {
+export const getApi = async (url, options) => {
+  const cache = (options)? options.cache : true;
+
   // convert to lower case, 
   // since user input is sometimes incosistence
   url = url.toLowerCase();
 
   if (cache) {
-    const cache = await redisClient.get(url);
-    if (cache) {
+    const redis = await redisClient.get(url);
+    if (redis) {
       console.debug(`fetch: cache hit`);
-      return JSON.parse(cache);
+      return JSON.parse(redis);
     }
     
     console.debug(`fetch: cache miss`);
