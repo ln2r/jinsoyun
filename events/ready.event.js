@@ -11,6 +11,7 @@ export const event = {
 
     discordClient.user.setPresence({ activities: [{ name: 'Blade and Soul' }], status: 'online' });
 
+    console.log(`Currently serving ${discordClient.guilds.cache.size} guild(s)`);
     console.log(`Ready! Logged in as ${client.user.tag}`);
   },
 }
