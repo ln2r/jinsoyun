@@ -3,6 +3,7 @@ import { redisClient } from '../configs/redis.config.js';
 import { CACHE_AGE } from '../consts/CacheAge.const.js';
 
 export const getApi = async (url, options) => {
+  console.debug(`fetch: hitting "${url}"`);
   const cache = (options)? options.cache : true;
 
   // convert to lower case, 
