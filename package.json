@@ -4,6 +4,7 @@
   "description": "Blade and Soul related Discord bot, originally built for Grumpy Butts clan",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "lint-todo": "eslint --ignore-path .gitignore .",
     "lint-fix": "eslint --fix --ignore-path .gitignore ."
@@ -30,5 +31,8 @@
     "dotenv": "^14.3.2",
     "ioredis": "^4.28.3",
     "s-ago": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
   }
 }
