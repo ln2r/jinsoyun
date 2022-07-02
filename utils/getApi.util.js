@@ -10,35 +10,38 @@ export const getApi = async (url, options) => {
   // since user input is sometimes incosistence
   url = url.toLowerCase();
 
-  if (cache) {
-    const redis = await redisClient.get(url);
-    if (redis) {
-      console.debug(`fetch: cache hit`);
-      return JSON.parse(redis);
-    }
+  // if (cache) {
+  //   const redis = await redisClient.get(url);
+  //   if (redis) {
+  //     console.debug(`fetch: cache hit`);
+  //     return JSON.parse(redis);
+  //   }
     
-    console.debug(`fetch: cache miss`);
-  }
+  //   console.debug(`fetch: cache miss`);
+  // }
   
   let apiResponse = null;
-  try {
-    apiResponse = await get(url);
-    apiResponse = apiResponse.data.body;
-  } catch(err) {
-    apiResponse = err.response.data.body.message;
-  } 
+  // try {
+  //   apiResponse = await get(url);
+  //   apiResponse = apiResponse.data.body;
+  // } catch(err) {
+  //   apiResponse = err.response.data.body.message;
+  // } 
 
+  apiResponse = await get(url);
   // update cache if its OK
-  if (cache) {
-    if (apiResponse !== null) {
-      await redisClient.set(
-        url,
-        JSON.stringify(apiResponse),
-        'EX',
-        CACHE_AGE
-      )
-    }
-  }
+  // if (cache) {
+  //   if (apiResponse !== null) {
+  //     await redisClient.set(
+  //       url,
+  //       JSON.stringify(apiResponse),
+  //       'EX',
+  //       CACHE_AGE
+  //     )
+  //   }
+  // }
 
-  return apiResponse;
+  console.log(apiResponse.data.body)
+
+  return apiResponse.data.body;
 }
