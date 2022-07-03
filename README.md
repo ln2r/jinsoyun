@@ -1,5 +1,5 @@
 # Jinsoyun
-Blade and Soul related Discord bot, originally built for Grumpy Butts clan
+Blade and Soul related Discord bot, originally built for Grumpy Butts clan.
 
 ## Noteable Features
 * Daily and weekly challenges data.
@@ -8,24 +8,21 @@ Blade and Soul related Discord bot, originally built for Grumpy Butts clan
 
 ## Installation / Getting Started
 ### Invitation Url
-~~You can invite Jinsoyun to your server by going [here](https://ln2r.github.io/jinsoyun.html).~~ **(TBA)**
+You can invite Jinsoyun to your server [here](https://discord.com/api/oauth2/authorize?client_id=427677590359375873&permissions=2147534848&scope=bot%20applications.commands).
 
 ### Self-Host
 **Requirements**:
 * [Discord App Token](https://discordapp.com/developers/applications/) - [Guide how to get Discord App Token](https://anidiots.guide/getting-started/getting-started-long-version)
 * [node.js](https://nodejs.org/)
-* [redis](https://redis.io/)
 * [Backend API](https://github.com/ln2r/jinsoyun-api)
 
 **How-to**:
-* Configuration located in `.env` file [Example](https://github.com/ln2r/jinsoyun/blob/.env.example)
+* Make `.env` config file which is located in root folder (the one with `package.json`) [Template](https://github.com/ln2r/jinsoyun/blob/.env.example)
   * `DISCORD_TOKEN` = your Discord bot token
   * `DISCORD_CLIENT_ID` = your Discord bot user id (right click on the bot > copy id)
-  * `DISCORD_GUILD_ID` = your guild id (same as how you obtain client id, right click on your server and copy id)
-  * `REDIS_URL` = your redis instance connection url
   * `API_URL` = your backend api url
 
-* Open Node.js command prompt and navigate to your root directory.
+* Open command prompt or any console interface which you like and navigate to the application root directory.
 * Do `npm i` or `npm update` to get dependencies.
 * Do `node index.js` to start the bot
 
