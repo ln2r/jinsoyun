@@ -1,10 +1,10 @@
 import get from 'axios'
-import { redisClient } from '../configs/redis.config.js';
-import { CACHE_AGE } from '../consts/CacheAge.const.js';
+// import { redisClient } from '../configs/redis.config.js';
+// import { CACHE_AGE } from '../consts/CacheAge.const.js';
 
 export const getApi = async (url, options) => {
   console.debug(`fetch: hitting "${url}"`);
-  const cache = (options)? options.cache : true;
+  // const cache = (options)? options.cache : true;
 
   // convert to lower case, 
   // since user input is sometimes incosistence
@@ -21,14 +21,13 @@ export const getApi = async (url, options) => {
   // }
   
   let apiResponse = null;
-  // try {
-  //   apiResponse = await get(url);
-  //   apiResponse = apiResponse.data.body;
-  // } catch(err) {
-  //   apiResponse = err.response.data.body.message;
-  // } 
+  try {
+    apiResponse = await get(url);
+    apiResponse = apiResponse.data.body;
+  } catch(err) {
+    apiResponse = err.response.data.body.message;
+  } 
 
-  apiResponse = await get(url);
   // update cache if its OK
   // if (cache) {
   //   if (apiResponse !== null) {
@@ -41,7 +40,5 @@ export const getApi = async (url, options) => {
   //   }
   // }
 
-  console.log(apiResponse.data.body)
-
-  return apiResponse.data.body;
+  return apiResponse;
 }
